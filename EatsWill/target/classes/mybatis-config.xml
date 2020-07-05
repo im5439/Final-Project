@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+<!-- spring과 다른 framework와 같이써서 프로젝트를 만들 경우 DB정보를 명시해줘야함 , spring만 쓸경우는 필요없다. -->
+<properties>
+	<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+	<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+	<property name="username" value="chung"/>
+	<property name="password" value="5439"/>
+</properties>
+
+<environments default="development">
+	<environment id="development">
+		<transactionManager type="JDBC"/>
+		<dataSource type="POOLED">
+			<property name="driver" value="${driver}"/>
+			<property name="url" value="${url}"/>
+			<property name="username" value="${username}"/>
+			<property name="password" value="${password}"/>
+		</dataSource>
+	</environment>
+</environments>
+<!-- spring과 다른 framework와 같이써서 프로젝트를 만들 경우 DB정보를 명시해줘야함 , spring만 쓸경우는 필요없다. -->
+
+
+<mappers>
+	<mapper resource="com/jdbc/mybatis/mapper.xml"/>
+</mappers>
+
+</configuration>
