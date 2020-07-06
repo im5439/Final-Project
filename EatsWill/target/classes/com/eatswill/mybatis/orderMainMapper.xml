@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="orderMainMapper">
+<!-- 해당 아이디의 주문 내역 출력 -->
+<select id="getLists" parameterType="int" resultType="com.eatswill.dto.OrderMainDTO">
+	select orderDate,orderCode,shopCode,oamount,orderStatus
+	from orderMain
+	where userId=#{userId}
+</select>
+</mapper>
