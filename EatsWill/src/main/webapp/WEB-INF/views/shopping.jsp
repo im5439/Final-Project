@@ -5,574 +5,1438 @@
 	String cp = request.getContextPath();
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang='ko' ng-controller='base_controller'>
+<html lang="ko">
 <head>
-<meta charset='utf-8'>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name='viewport'
-	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'>
-<meta name='apple-mobile-web-app-capable' content='yes' />
-<meta name='apple-mobile-web-app-status-bar-style'
-	content='black-translucent' />
-<meta name="google-site-verification"
-	content="U4GhkkNiUMneDT6RC-apM8m8D6hZJfAXVfXi2_SuyWU" />
-<meta name="keywords"
-	content="치킨, 요기요, 중국집, 피자, 치킨추천, 배달음식, 야식, 내주변맛집, 짜장면, 근처중국집, 배달, 뭐먹지, 맛있는치킨추천, 여기요, 점심메뉴추천, 요기요첫주문할인, 중화요리, 피자추천, 맛있는음식, 치킨배달, 피자배달, 근처중국집배달, 맛있는치킨순위, 야식추천, 근처치킨집, 후라이드치킨순위, 족발집, 낙지소면, 요기요쿠폰, 짜장면집, 배달앱, 족발배달, 피자집, 피자할인, 식사, 요기요할인, 낙지볶음배달, 곱창배달, 배달어플할인, 24시중국집, 배달어플, 치킨할인, 떡볶이배달, 야식배달, 낙지소면배달, 중국집배달, 냉면배달, 점심배달음식, 치킨집, 요기요첫주문, 요기요쿠폰코드, 배달떡볶이, 피자치킨세트, 야식어플, 배달피자, 배달앱추천, 보쌈, 요기요할인쿠폰, 배달요기요, 초밥배달, 근처피자집, 맛있는치킨, 배달야식추천, 24시간중국집, 족발, 돈까스배달, 배달맛집, 배달음식순위, 비비큐할인, 삼계탕배달, 24시간피자배달, 집들이음식배달, 맛있는피자, 분식배달, 24시치킨, 배달사이트, 저녁메뉴추천, 요기오, 부대찌개배달, 혼자배달음식, 배달음식추천, 요기요배달, 요기요치킨, 배달서비스, 스파게티배달, 아침식사배달, 24시야식배달, 24시배달, 배달할인, 여기요할인, 24시간배달, 24시간치킨, 요기여, 1인분배달, yogiyo, 치킨배달할인, 강남역배달, 배달죽, 요기요플러스, 플러스요기요">
-<meta name="description"
-	content="요기요에서 원하는 배달음식을 쉽고 편리하게! 먹어본 사람만 쓸 수 있는 클린리뷰로 배달맛집 인증, 다양한 할인 혜택과 함께 배달되지 않던 인기맛집까지, 지금 바로 요기요에서 주문하세요.">
-<script>
-	var is_yogiyo = window.location.hostname.indexOf('yogiyo.co.kr') >= 0;
-	var is_11st = window.location.hostname.indexOf('yogiyo.m.11st.co.kr') >= 0;
-	if (is_11st) {
-		document
-				.write('<link rel="apple-touch-icon-precomposed" href="//m.11st.co.kr/MW/img/mw11st_touchicon.png">');
-		document
-				.write('<link rel="shortcut icon" type="image/png" href="//m.11st.co.kr/MW/img/mw11st_touchicon.png" />');
-		document.write('<title>요기요배달상품 - 11번가모바일</title>');
-		document
-				.write('<s'
-						+ 'cript src="'
-						+ '//m.11st.co.kr/MW/js/lifecategory/delivery/inc_header_extra.js?random='
-						+ Math.random()
-						+ '" charset="euc-kr" type="text/javascript">'
-						+ '</s' + 'cript>');
-	} else {
-		document.write('<meta name="theme-color" content="#DC1400">');
-		document
-				.write('<meta property="og:title" content="요기요 - 즐거움은 요기부터. 배달음식 주문은 역시 요기요!">');
-		document
-				.write('<meta property="og:url" content="http://www.yogiyo.co.kr/">');
-		document
-				.write('<meta property="og:image" content="https://www.yogiyo.co.kr/mobile/image/app_img_560x292.png">');
-		document
-				.write('<meta property="og:description" content="요기요에서 원하는 배달음식을 쉽고 편리하게! 먹어본 사람만 쓸 수 있는 클린리뷰로 배달맛집 인증, 다양한 할인 혜택과 함께 배달되지 않던 인기맛집까지, 지금 바로 요기요에서 주문하세요.">');
-		document
-				.write('<title ng-if="! page.title">요기요 - 즐거움은 요기부터. 배달음식 주문은 역시 요기요!</title>');
-		document
-				.write('<title ng-if="page.title" ng-bind=\'page.title + " - 요기요"\'></title>');
-		document
-				.write('<link rel="apple-touch-icon-precomposed" href="https://www.yogiyo.co.kr/mobile/image/app_128x128.png">');
-		document
-				.write('<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://www.yogiyo.co.kr/mobile/image/app_144x144.png">');
-		document
-				.write('<link rel="icon" type="image/png" href="https://www.yogiyo.co.kr/mobile/image/favicon.ico" />');
+	<title>G마켓 - 일반 구매 회원가입 정보입력</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name='description' />
+	<meta name='keywords' />
+	<link rel='shortcut icon' href='https://sslimage.gmarket.co.kr/_Net/MyG/favicon/gmarket.ico' />	
+	<link rel="apple-touch-icon-precomposed" href='https://sslimage.gmarket.co.kr/_Net/apple-touch-icon-precomposed.png'/>
+    <link rel="apple-touch-icon" href='https://sslimage.gmarket.co.kr/_Net/apple-touch-icon.png'/>
+
+	<script type='text/javascript' src='https://www.gmarket.co.kr/challenge/neo_include/favicon_net.js'></script>
+	<script type="text/javascript" src="https://script.gmkt.kr/_Net/js/json2.js"></script>
+	<script type="text/javascript" src="https://script.gmkt.kr/_Net/js/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="https://script.gmkt.kr/_Net/js/jquery-ui-1.8.17.min.js"></script>
+    <script type="text/javascript" src="https://script.gmkt.kr/_Net/js/jquery.popupwindow.js"></script>
+    <script type="text/javascript" src="https://script.gmkt.kr/_Net/../fnp/desktop-layout.js"></script>
+	<script type="text/javascript" src="/Scripts/Common.js" ></script>
+	<script type="text/javascript" src="/Scripts/ScriptEventErrorHandler.js" ></script>
+	<script type="text/javascript">
+		$(document).jsErrorHandler();
+		var _ContentUrls = ["http://script.gmkt.kr/_Net/css/myg/","http://image.gmarket.co.kr/_Net/","http://script.gmkt.kr/_Net/","https://script.gmkt.kr/_Net/css/myg/ssl/","https://sslimage.gmarket.co.kr/_Net/","https://script.gmkt.kr/_Net/","http://myg.gmarket.co.kr/","https://myg.gmarket.co.kr/","http://member.gmarket.co.kr/","https://member.gmarket.co.kr/","http://gbank.gmarket.co.kr/","https://gbank.gmarket.co.kr/","http://claim.gmarket.co.kr/","https://claim.gmarket.co.kr/","http://escrow.gmarket.co.kr/","https://sslescrow.gmarket.co.kr/","http://diary.gmarket.co.kr/","http://event.gmarket.co.kr/","http://sns.gmarket.co.kr/","http://www.gmarket.co.kr/","https://www.gmarket.co.kr/","http://item.gmarket.co.kr/","http://shop.gmarket.co.kr/","http://member2.gmarket.co.kr/","https://sslmember2.gmarket.co.kr/","http://promotion.gmarket.co.kr/","http://diary2.gmarket.co.kr/","http://eventnet.gmarket.co.kr/","http://ebay.gmarket.co.kr/","http://www.g9.co.kr/","http://signin.gmarket.co.kr/","https://signinssl.gmarket.co.kr/","http://english.gmarket.co.kr/","https://english.gmarket.co.kr/","http://pics.gmkt.kr/","https://pics.gmkt.kr/","/","/","/","/","/","/","/","/","/","/","https://www.g9.co.kr/","http://diary2.gmarket.co.kr/",];
+
+    </script>
+	<script type="text/javascript" src="https://script.gmkt.kr/_Net/js/dimmed.js"></script>
+	<script type='text/javascript' src='https://script.gmkt.kr/_Net/js/gmkt.js?dummy=2012091327262'></script>
+	
+	<!-- 회원가입 Renewal //-->
+	<link rel="stylesheet" type="text/css" href="https://script.gmarket.co.kr/pc/css/ko/common.css" />	
+    <link rel="stylesheet" type="text/css" href="https://script.gmarket.co.kr/pc/css/common/kr/ui/desktop_layout.css" />
+	<script type="text/javascript" src="https://script.gmarket.co.kr/pc/js/ko/joinRenewal.js"></script>
+	<script type="text/javascript" src="https://script.gmarket.co.kr/js/common/pds_gmkt.js"></script>
+	<!-- 회원가입 Renewal //-->
+
+	<!--[if IE 6]>
+		<script src="https://script.gmkt.kr/_Net/js/DD_belatedPNG.js"></script>
+		<script>
+			DD_belatedPNG.fix('#main_menu .menu_list span');
+			DD_belatedPNG.fix('#main_menu .menu_list p');
+		</script>
+	<![endif]-->
+
+	
+	
+<script type="text/javascript" src='https://sslmember2.gmarket.co.kr/Scripts/Registration/PasswordValidation.js'></script>
+<script type="text/javascript">
+var idFlag = false;
+var pwFlag = false;
+var pwValidMsg = "";
+var nameFlag = false;
+var emailFlag = false;
+
+$(document).ready(function() {
+
+	if($("#CertType").val() == "I")
+	{
+		$('#hpno').show();
 	}
-</script>
-<link rel='stylesheet'
-	href='css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db'>
-</script>
-<!-- Start location.search generate Code for Naver 검색 유입 -->
-<script type='text/javascript'>
-	if (is_yogiyo) {
-		(function() {
-			function beginsWith(begin, whole) {
-				if (whole.indexOf(begin) === 0) {
-					return whole.substr(begin.length);
-				}
-			}
-			function urlResolve(url) {
-				var href = url;
-				if (msie) {
-					urlParsingNode.setAttribute('href', href);
-					href = urlParsingNode.href;
-				}
-				urlParsingNode.setAttribute('href', href);
-				return {
-					href : urlParsingNode.href,
-					protocol : urlParsingNode.protocol ? urlParsingNode.protocol
-							.replace(/:$/, '')
-							: '',
-					host : urlParsingNode.host,
-					search : urlParsingNode.search ? urlParsingNode.search
-							.replace(/^\?/, '') : '',
-					hash : urlParsingNode.hash ? urlParsingNode.hash.replace(
-							/^#/, '') : '',
-					hostname : urlParsingNode.hostname,
-					port : urlParsingNode.port,
-					pathname : (urlParsingNode.pathname.charAt(0) === '/') ? urlParsingNode.pathname
-							: '/' + urlParsingNode.pathname
-				};
-			}
-			var msie = document.documentMode;
-			var urlParsingNode = document.createElement('a');
-			var originUrl = urlResolve(window.location.href);
-			var originSearchUrl = originUrl.search;
-			var withoutHashUrl = originUrl.hash;
-			if (withoutHashUrl !== '') {
-				if (withoutHashUrl.charAt(0) === '#') {
-					withoutHashUrl = beginsWith('#', withoutHashUrl);
-				}
-				var hashUrl = urlResolve(withoutHashUrl);
-				if (hashUrl.search !== '' && originSearchUrl === '') {
-					window.location.search = hashUrl.search;
-				}
-			}
-		})();
-	} else {
-		if (document.styleSheets.length > 0
-				&& document.styleSheets[document.styleSheets.length - 1].cssRules) {
-			document.styleSheets[document.styleSheets.length - 1]
-					.insertRule(
-							'.asp_check .fake-header, .asp_check .category-list, .asp_check .footer { display: none; }',
-							document.styleSheets[document.styleSheets.length - 1].cssRules.length);
-		}
-	}
-</script>
-<!-- End location.search generate Code -->
-<!-- Start optimizely Code -->
-<script src="//cdn.optimizely.com/js/9026702317.js"></script>
-<!-- End optimizely Code -->
-<!--Start Facebook  Pixel  Code -->
-<script>
-	/* eslint-disable */
-	!function(f, b, e, v, n, t, s) {
-		if (f.fbq)
-			return;
-		n = f.fbq = function() {
-			n.callMethod ? n.callMethod.apply(n, arguments) : n.queue
-					.push(arguments)
-		};
-		if (!f._fbq)
-			f._fbq = n;
-		n.push = n;
-		n.loaded = !0;
-		n.version = '2.0';
-		n.queue = [];
-		t = b.createElement(e);
-		t.async = !0;
-		t.src = v;
-		s = b.getElementsByTagName(e)[0];
-		s.parentNode.insertBefore(t, s)
-	}(window, document, 'script', '//connect.facebook.net/en_US/fbevents.js');
-	fbq('init', '1041485915908980');/* eslint-enable */
-</script>
-<noscript>
-	<img height="1" width="1" style="display: none"
-		src="https://www.facebook.com/tr?id=1041485915908980&ev=PageView&noscript=1" />
-</noscript>
-<!--End Facebook  Pixel  Code -->
-<!-- Google Analytics -->
-<script>
-	/* eslint-disable */(function(i, s, o, g, r, a, m) {
-		i['GoogleAnalyticsObject'] = r;
-		i[r] = i[r] || function() {
-			(i[r].q = i[r].q || []).push(arguments)
-		}, i[r].l = 1 * new Date();
-		a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-		a.async = 1;
-		a.src = g;
-		m.parentNode.insertBefore(a, m)
-	})(window, document, 'script', '//www.google-analytics.com/analytics.js',
-			'ga');
-	ga('create', 'UA-42635603-1', 'auto');
-	ga('require', 'ec');/* eslint-enable */
-</script>
-<!-- // -->
-<!-- End Google Analytics -->
-<!-- Google Tag Manager -->
-<script>
-	var dataLayer = [];
-</script>
-<noscript>
-	<iframe src="//www.googletagmanager.com/ns.html?id=GTM-NSQ8BP"
-		height="0" width="0" style="display: none; visibility: hidden"></iframe>
-</noscript>
-<script>
-	/* eslint-disable */(function(w, d, s, l, i) {
-		w[l] = w[l] || [];
-		w[l].push({
-			'gtm.start' : new Date().getTime(),
-			event : 'gtm.js'
-		});
-		var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l='
-				+ l
-				: '';
-		j.async = true;
-		j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl;
-		f.parentNode.insertBefore(j, f);
-	})(window, document, 'script', 'dataLayer', 'GTM-NSQ8BP');/* eslint-enable */
-</script>
-<!-- End Google Tag Manager -->
-</head>
-<body class="asp_check">
-	<div class="newSb" style="display: none">
-		<div class="newSb__close">
-			<button type="button" id="newSb_btn_close">
-				<svg version="1.1" xmlns="http://www.w3.org/2000/svg"
-					xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 15 15"
-					width="10" height="10">
-					<path style="stroke:rgb(105,105,105);stroke-width:2"
-						d="M7.5 7.03L0.47 0L0 0.48L7 7.5L0 14.53L0.47 15L7.5 7.98L14.5 15L15 14.53L7.98 7.5L15 0.48L14.5 0L7.5 7.03Z"></path></svg>
-			</button>
-		</div>
-		<img class="newSb__logo" src="image/ico-5000-coupon.png"
-			alt="banner image" />
-		<div class="newSb__meta">
-			<header class="newSb__header">
-				요기요 첫 주문이라면<br>앱에서 누구나 5천원 즉시할인
-			</header>
-		</div>
-		<div class="newSb__applink">
-			<a class="newSb__applink__btn">열기</a>
-		</div>
-	</div>
-	<script type="text/javascript">
-		if (is_11st) {
-			HeaderExtra.init();
-		}
-	</script>
-	<div class="fake-header">
-		<div class="navigation" role="navigation">
-			<div class="navbar-fixed-top">
-				<div class="nav-top clearfix">
-					<h1 class="logo pull-left">요기요</h1>
-					<div id="cart" class="pull-right"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div yogiyo-header></div>
-	<div id='messages' class="messages"></div>
-	<div id='messages_bottom' class="messages messages-bottom"></div>
-	<div ng-show='on_loading' id='spinner' style="display: none;">
-		<div></div>
-		<span class='message'></span>
-	</div>
-	<div id='content' class='container-fluid' ng-view></div>
-	<div class="category-list" ng-hide='$location.path() != "/"'>
-		<div class="row">
-			<div class="col-xs-6 col-sm-4 col-md-3 category-banner"
-				ng-repeat='banner in banner_list' style="display: none"
-				on-finish-render="completeBannerListRender()">
-				<a href="" class="thumbnail" ng-click="setEvent($index, banner)"
-					ng-style="{'background': banner.background_color}"><img
-					ng-src="{{banner.event_image_url}}" alt="{{banner.event_name}}"><i
-					class="icon-move"></i></a>
-			</div>
-			<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-				<a href="" class="thumbnail" ng-click="select_home_category('all')"><div
-						class="category-title">전체보기</div>
-					<img src="image/category-01.png"></a>
-			</div>
-			<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-				<a href="" class="thumbnail"
-					ng-click="select_home_category('1인분주문')"><div
-						class="category-title">1인분 주문</div>
-					<img src="image/category-onedish.png"></a>
-			</div>
-			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail"
-					ng-click="select_home_category('프랜차이즈')"><div
-						class="category-title">프랜차이즈</div>
-					<img src="image/category-10.png"></a>
-			</div>
-			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail" ng-click="select_home_category('치킨')"><div
-						class="category-title">치킨</div>
-					<img src="image/category-02.png"></a>
-			</div>
-			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail" ng-click="select_home_category('피자양식')"><div
-						class="category-title">피자/양식</div>
-					<img src="image/category-03.png"></a>
-			</div>
-			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail" ng-click="select_home_category('중식')"><div
-						class="category-title">중국집</div>
-					<img src="image/category-04.png"></a>
-			</div>
-			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail" ng-click="select_home_category('한식')"><div
-						class="category-title">한식</div>
-					<img src="image/category-05.png"></a>
-			</div>
-			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail"
-					ng-click="select_home_category('일식돈까스')"><div
-						class="category-title">일식/돈까스</div>
-					<img src="image/category-06.png"></a>
-			</div>
-			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail" ng-click="select_home_category('족발보쌈')"><div
-						class="category-title">족발/보쌈</div>
-					<img src="image/category-07.png"></a>
-			</div>
-			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail" ng-click="select_home_category('야식')"><div
-						class="category-title">야식</div>
-					<img src="image/category-08.png"></a>
-			</div>
-			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail" ng-click="select_home_category('분식')"><div
-						class="category-title">분식</div>
-					<img src="image/category-09.png"></a>
-			</div>
-			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail"
-					ng-click="select_home_category('카페디저트')"><div
-						class="category-title">카페/디저트</div>
-					<img src="image/category-11.png"></a>
-			</div>
-			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail" ng-click="select_home_category('편의점')"><div
-						class="category-title">편의점/마트</div>
-					<img src="image/category-convenience-store.png"></a>
-			</div>
-		</div>
-	</div>
-	<div class="footer" ng-show="is_yogiyo && !session_storage.oauth_next">
-		<div class="footer-menu">
-			<ul>
-				<li class="mb" ng-show="!is_mobile_device"><a href="#/policy/">이용약관</a></li>
-				<li class="mb privacy-txt" ng-show="!is_mobile_device"><a
-					href="#/privacy/">개인정보처리방침</a></li>
-				<li class="mb cscenter" ng-show="!is_mobile_device"><a
-					href="#/point_policy/">회원등급정책</a></li>
-				<li class="mb" ng-show="is_mobile_device"><a
-					ng-bind="check_login() ? '로그아웃' : '로그인'" ng-click="login()">로그인</a></li>
-				<li class="mb cscenter" ng-show="is_mobile_device"><a
-					href="#/contact/">고객만족센터</a></li>
-				<li class="mb"><a href="https://www.deliveryhero.co.kr/"
-					rel="noopener noreferrer" target="_blank">회사소개</a></li>
-				<li><a href="https://www.yogiyo.co.kr/owner/login/"
-					target="_blank">요기요사장님</a></li>
-				<li class="mb lst"><a
-					href="https://owner.yogiyo.co.kr/owner/join/request/">입점문의</a></li>
-				<li class="mb down_app" ng-show="is_mobile_device"><a href=""
-					ng-click="download_app('footer')" class="app">APP설치</a></li>
-				<li class="mb notice"><a href="#/notice/">공지사항</a></li>
-				<li class="sns-link"><a
-					href="https://www.facebook.com/Yogiyokorea/" class="facebook"
-					rel="noopener noreferrer" target="_blank"><span></span>페이스북</a><a
-					href="http://blog.yogiyo.co.kr/" class="blog"
-					rel="noopener noreferrer" target="_blank"><span></span>블로그</a></li>
-			</ul>
-		</div>
-		<div class="company-wrap">
-			<div class="company-logo">
-				<a href="" ng-click="click_home()">요기요</a>
-			</div>
-			<div class="company-info">
-				<p>
-					<strong>(유)딜리버리히어로 코리아</strong><br>서울시 서초구 서초대로38길 12 마제스타시티
-					타워2 17층<span class="bar">|</span>대표자 : 강신봉<span class="bar">|</span>사업자등록번호:211-88-68802
-					<a href="http://www.ftc.go.kr/bizCommPop.do?wrkr_no=2118868802"
-						rel="noopener noreferrer" target="_blank" class="biz-info"
-						ng-show='!is_mobile_device'>사업자정보확인</a>통신판매업신고:제 2018-서울서초-2635호<span
-						class="bar">|</span>개인정보담당자 : <a
-						href="mailto:privacy@yogiyo.co.kr">privacy@yogiyo.co.kr</a><span
-						class="bar">|</span>제휴문의 : <a
-						href="mailto:partnership@deliveryhero.co.kr">partnership@deliveryhero.co.kr</a><span
-						class="bar">|</span>고객만족센터 : <span ng-show="is_mobile_width"
-						class="pnum">1661-5270 (24시간, 연중무휴)</span> <a
-						href="mailto:support@yogiyo.co.kr">support@yogiyo.co.kr</a><span
-						class="bar">|</span>호스트서비스사업자 : (주)심플렉스인터넷
-				</p>
-				<div class="footer-terms" ng-show='is_mobile_device'>
-					<a href="#/policy/">이용약관</a><span class="bar">|</span><a
-						href="#/privacy/"><strong>개인정보처리방침</strong></a><span class="bar">|</span><a
-						href="#/point_policy/">회원등급정책</a><span class="bar">|</span><a
-						href="http://www.ftc.go.kr/bizCommPop.do?wrkr_no=2118868802"
-						rel="noopener noreferrer" target="_blank">사업자정보확인</a>
-				</div>
-			</div>
-		</div>
-		<div class="service-info">
-			<div class="bpg">
-				<a href="#/trust/"><span class="img"></span><span class="text">요기요<br />안심센터
-				</span></a>
-			</div>
-			<div class="cleanreview">
-				<a href="#/cleanreview/"><span class="img"></span><span
-					class="text">요기요 100%<br />클린리뷰
-				</span></a>
-			</div>
-			<div class="csc">
-				<em>고객만족센터</em> <strong>1661-5270</strong> <span>24시간, 연중무휴</span>
-			</div>
-		</div>
-		<div class="guide">
-			<p>(유)딜리버리히어로 코리아는 통신판매중개자이며 통신판매의 당사자가 아닙니다. 따라서 상품/ 거래정보 및 거래와
-				관련하여 요기요에 등록된 판매자의 고의 또는 과실로 소비자에게 발생하는 손해에 대해 (유)딜리버리히어로 코리아는 책임을
-				지지 않습니다. 상품 및 거래에 관하여 보다 정확한 정보는 해당 판매자에게 직접 확인하여 주시기 바랍니다.
-				Copyright YOGIYO. All Rights Reserved.</p>
-		</div>
-	</div>
-	<script type="text/javascript">
-		if (is_11st) {
-			document
-					.write('<s'
-							+ 'cript src="'
-							+ '//m.11st.co.kr/MW/js/lifecategory/delivery/inc_footer_extra.js?random='
-							+ Math.random()
-							+ '" charset="euc-kr" type="text/javascript">'
-							+ '</s' + 'cript>');
-		}
-	</script>
-	<script type="text/javascript"
-		src='js/jquery-2.1.3.min.js?v=254ddffd1cab420620ca23002fe458eea88e05db'></script>
-	<script src="//nsp.pay.naver.com/sdk/js/naverpay.min.js"></script>
-	<script type="text/javascript"
-		src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"
-		charset="utf-8"></script>
-	<script type="text/javascript"
-		src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-	<script type="text/javascript"
-		src="https://pg.cnspay.co.kr/dlp/scripts/postmessage.js"
-		charset="utf-8"></script>
-	<script type="text/javascript"
-		src="https://pg.cnspay.co.kr/dlp/scripts/cnspay.js" charset="utf-8"></script>
-	<script type="text/javascript">
-		if (is_yogiyo) {
-			if (window.naver) {
-				var naver_login = new naver.LoginWithNaverId({
-					clientId : '96m5xiTC0SajLMvqJOUH',
-					callbackUrl : location.protocol + '//' + location.hostname
-							+ '/mobile/',
-					isPopup : false
-				});
-				naver_login.init();
-				window.naver_login = naver_login;
-			}
-			if (window.Kakao) {
-				Kakao.init('92dcdbf99967e46645137d9983a77fc9');
-			}
-		}
-	</script>
-	<script src='js/require.js?v=254ddffd1cab420620ca23002fe458eea88e05db'></script>
-	<script src='js/app.js?v=254ddffd1cab420620ca23002fe458eea88e05db'></script>
-	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5QSVWW0EUN3p9RoHwOJdsSovksfPkqg0"
-		type="text/javascript"></script>
-	<script language='javascript'>
-		/**/
-		window.isMobile = function() {
-			var check = false;/* eslint-disable */
-			(function(a) {
-				if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i
-						.test(a)
-						|| /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i
-								.test(a.substr(0, 4)))
-					check = true;
-			})(navigator.userAgent || navigator.vendor || window.opera);
-			return check;/* eslint-enable */
-		};
-	</script>
-	<!-- Naver Analytics -->
-	<script type="text/javascript" src="//wcs.naver.net/wcslog.js">
+
+	// 공백입력방지
+	$("#login_id, #hp_no2, #hp_no3, #pwd1, #pwd2, #email1, #email2").bind("keypress", function (e) {
+		Events.PreventSpace(e);
+	});
+
+	// 한글입력방지
+	$("#login_id, #hp_no2, #hp_no3, #email1, #email2").css("ime-mode", "disabled");
+
+	// 숫자만입력
+	$("#hp_no2, #hp_no3").bind("keypress", function (e) {
+		Events.CheckDigit(e);
+	});	
 		
-	</script>
-	<script type="text/javascript">
-		if (!wcs_add)
-			var wcs_add = {};
-		wcs_add['wa'] = 's_51119d387dfa';
-	</script>
-	<!-- End Naver Analytics -->
-	<!-- // -->
-	<!-- // -->
-	<!-- // -->
-	<!-- // -->
-	<script type="text/javascript">
-		var is_smart_banner_closed = false;
-		var smart_banner_margin_top = 76;
-		var menu_detail_top = 60;
-		function showSmartBanner() {
-			if (is_smart_banner_closed) {
-				return;
-			}
-			$('body').css('margin-top', smart_banner_margin_top + 'px');
-			$('.newSb').show().css('margin-top', 0);
+	$("#cancel").click(function () {
+		location.href = 'https://sslmember2.gmarket.co.kr/Registration/MemberRegistrationBuyer';
+	});
+
+	/////////////////////////////// 휴대폰 체크 ///////////////////////////////
+	$("#hp_no2").blur(function(){
+		var phone = document.getElementById("hp_no2").value;
+		var phone3 = document.getElementById("hp_no3").value;
+		var oMsg = document.getElementById("hpMsg");
+		var oMsgC = document.getElementById("hpMsgCheck");
+
+		if (phone == "" || (getStringByteLength(phone) < 3)) {
+			oMsg.style.display = "block";
+			oMsg.innerHTML = "전화번호를 정확히 입력해 주세요.";
+			oMsgC.className = "bg_area icon_bg chk";
+			return false;
 		}
-		function hideSmartBanner() {
-			if (is_smart_banner_closed) {
-				return;
-			}
-			$('body').css('margin-top', '0px');
-			$('.newSb').hide();
+
+		if ( passonlynum($("#hp_no2").val()) ) {
+			oMsg.style.display = "block";
+			oMsg.innerHTML = "전화번호는 숫자로만 입력하세요.";
+			oMsgC.className = "bg_area icon_bg chk";
+			$("#hp_no2").val("");
+			return false;
 		}
-		function smartbanner_click(adjustToken) {
-			window.location.href = adjustToken ? smartbanner_tracking_link
-					.replace('ft8dqw_m86r2k', adjustToken)
-					: smartbanner_tracking_link;
+
+		if (phone3 != "") {
+			oMsgC.className = "bg_area icon_bg chk submit";
 		}
-		if (is_yogiyo && isMobile()) {
-			var urlParam = window.location.search.replace(/^\?/, '');
-			if (window.location.search.indexOf('referrer=') >= 0) {
-				urlParam = decodeURIComponent(urlParam.replace('referrer=', ''));
-			}
-			$.extend({
-				getUrlVars : function() {
-					var vars = [], hash;
-					var hashes = window.location.href.slice(
-							window.location.href.indexOf('?') + 1).split('&');
-					for (var i = 0; i < hashes.length; i++) {
-						hash = hashes[i].split('=');
-						vars.push(hash[0]);
-						vars[hash[0]] = hash[1];
+
+		if (true) {
+			oMsg.style.display = "none";		
+			return true;
+		}
+
+		return true;
+	});
+	
+	$("#hp_no3").blur(function(){
+		var phone = document.getElementById("hp_no3").value;
+		var phone2 = document.getElementById("hp_no2").value;
+		var oMsg = document.getElementById("hpMsg");
+		var oMsgC = document.getElementById("hpMsgCheck");
+
+		if (phone == "" || (getStringByteLength(phone) != 4)) {
+			oMsg.style.display = "block";
+			oMsg.innerHTML = "전화번호를 정확히 입력해 주세요.";
+			oMsgC.className = "bg_area icon_bg chk";
+			return false;
+		}
+
+		if ( passonlynum($("#hp_no3").val()) ) {
+			oMsg.style.display = "block";
+			oMsg.innerHTML = "전화번호는 숫자로만 입력하세요.";
+			oMsgC.className = "bg_area icon_bg chk";
+			$("#hp_no3").val("");
+			return false;
+		}
+		
+		if (phone2 != "") {
+			oMsgC.className = "bg_area icon_bg chk submit";
+		}
+
+		if (true) {
+			oMsg.style.display = "none";
+			return true;
+		}
+		return true;
+	});
+	/////////////////////////////// 휴대폰 체크 ///////////////////////////////
+
+	/////////////////////////////// 아이디 체크 /////////////////////////////// 
+	$("#login_id").blur(function(){
+		var id = document.getElementById("login_id").value;
+		var oMsg = document.getElementById("idMsg");
+		var oMsgC = document.getElementById("idMsgCheck");
+
+		idFlag = false;
+
+		if (id == "") {
+			oMsg.style.display = "block";
+			oMsg.className = "ability_chk";
+			oMsg.innerHTML = "필수 정보입니다.";
+			return false;
+		}
+		var isID = /^[a-zA-Z0-9]{6,10}$/;
+		if (!isID.test(id)) {
+			oMsg.style.display = "block";
+			oMsg.className = "ability_chk";
+			oMsg.innerHTML = "회원 아이디(ID)는 띄어쓰기 없이 6~10자리의 영문자와 숫자 조합만 가능합니다.";
+			$("#login_id").focus();
+//			$("#login_id").val("");
+			return false;
+		}
+
+		try {
+			// 성공 Api
+			var url = 'https://sslmember2.gmarket.co.kr/Registration/VerificationLoginId';
+			var param = [{ name: "loginId", value: id }];
+
+			$.ajax({
+				url: url,
+				data: param,
+				type: "GET",
+				contentType: "application/json;",
+				dataType: "json",
+				success: function (data) {
+					if (data) {
+						oMsg.style.display = "block";
+						oMsg.className = "ability_chk";
+						oMsg.innerHTML = "이미 사용중인 아이디입니다.";
+						$("#login_id").focus();
+//						$("#login_id").val("");
+						return false;
+					} else {
+						oMsg.style.display = "block";
+						oMsg.className = "ability_chk submit";
+						oMsg.innerHTML = "사용가능한 아이디 입니다.";
+						oMsgC.className = "bg_area icon_bg chk submit";
 					}
-					return vars;
+					idFlag = true;
+					return true;
 				},
-				getUrlVar : function(name) {
-					return $.getUrlVars()[name];
+				error: function (error) {
+					alert("Error");
 				}
 			});
-			var campaign_id = $.getUrlVar('utm_campaign') || '';
-			var adgroup_id = $.getUrlVar('utm_source') || '';
-			var creative_id = $.getUrlVar('utm_term') || '';
-			var label_id = $.getUrlVar('utm_id') || '';
-			var gclid = $.getUrlVar('gclid') || '';
-			var pathname = window.location.pathname;
-			var deeplink_id = encodeURIComponent('yogiyoapp://open?' + urlParam
-					+ '&referrer=' + encodeURIComponent(urlParam));
-			var smartbanner_tracking_link = 'https://app.adjust.com/ft8dqw_m86r2k?campaign='
-					+ campaign_id
-					+ '&adgroup='
-					+ adgroup_id
-					+ '&creative='
-					+ creative_id
-					+ '&label='
-					+ label_id
-					+ '&gclid='
-					+ gclid
-					+ '&deep_link=' + deeplink_id;
-			$('#newSb_btn_close').on('click', function() {
-				is_smart_banner_closed = true;
-				$('.ygy-app-down-btn-close').css('top', 0);
-				$('body').css('margin-top', 0);
-				$('.detail-wrap').css('top', 0);
-				$('.newSb').remove();
-				window.resize_location_map();
-				if ($('.detail-header').length > 0) {
-					$('.detail-header').css('top', 0);
-					$('.detail-content').css('top', menu_detail_top + 'px');
-				}
-			});
-			$('.newSb__applink__btn').on('click', function() {
-				parent.download_app_for_ga();
-				smartbanner_click();
-			});
-			$(window).on('load', function() {
-				var getCookie = function(cname) {
-					var name = cname + '=';
-					var decodedCookie = decodeURIComponent(document.cookie);
-					var ca = decodedCookie.split(';');
-					for (var i = 0; i < ca.length; i++) {
-						var c = ca[i];
-						while (c.charAt(0) == ' ') {
-							c = c.substring(1);
-						}
-						if (c.indexOf(name) == 0) {
-							return c.substring(name.length, c.length);
-						}
-					}
-					return '';
-				};
-				if (getCookie('hide_app_down') == 'true') {
-					showSmartBanner();
-				}
-			});
+		} catch (e) {
+			if (window.bridgeGotTime) {
+				throw e;
+			 } else {
+				//page reload?
+             }
 		}
-	</script>
-	<!-- End Smart App BAnner (Adjust) -->
+		return true;
+	});
+	/////////////////////////////// 아이디 체크 /////////////////////////////// 
+
+	/////////////////////////////// 비밀번호 체크 ///////////////////////////////	
+	$("#pwd1").blur(function(){
+		var num = 2;
+		var grade = "";
+		var pwd;
+		var oMsg;
+		var oMsgC;
+
+		pwFlag = false;
+
+		if (num == 2) {
+			pwd =  $("#pwd1").val();
+			oMsg = document.getElementById("pwd1Msg");
+			oMsgC = document.getElementById("pwd1MsgCheck");
+		} else if (num == 3) {
+			pwd = $("#pwd2").val();
+			oMsg = document.getElementById("pwd2Msg");
+			oMsgC = document.getElementById("pwd2MsgCheck");
+		}		
+
+		var safe_level = chkPasswordNew2(pwd);
+	
+		if (pwd.length > 0)
+		{
+			if (num == 2)
+			{
+				if (safe_level == "level00") {				
+					grade = 1;
+				}
+				else if (safe_level == "level01") {
+					grade = 2;
+				}
+				else if (safe_level == "level11") {
+					grade = 11;
+					pwValidMsg = "안전한 정보 관리를 위해 개인정보 ID, 사업자번호, 생일, 전화번호 등의 개인정보가 포함되지 않은 비밀번호를 입력해 주세요.";
+				}
+				else if (safe_level == "level02") {	// 정상
+					grade = 3;
+					pwFlag = true;
+				}
+				else if (safe_level == "level03") {	// 정상
+					grade = 4;
+					pwFlag = true;
+				}
+			}
+		} else {
+			if (num == 2)
+			{
+				grade = 0;
+			}
+		}
+
+		pwChk(grade, num);
+
+		/*		
+		""		grade = 0;	띄어쓰기 없는 6~15자의 영문 대/소문자, 숫자 및 특수문자 조합으로 입력하셔야 합니다.
+		level00 grade = 1;	비밀번호 조합기준에 적합하지 않습니다.
+		level11 grade = 11;	회원 아이디가 포함된 비밀번호는 사용할 수 없습니다.
+		level01 grade = 2;	보안에 매우 취약하여 사용할 수 없습니다.
+		level02 grade = 3;	적정 수준의 안전한 비밀번호입니다.
+		level03 grade = 4;	매우 안전한 비밀번호 입니다.
+		*/
+	});  
+
+	$("#pwd2").blur(function(){
+		var pwd;
+		var oMsg;
+		var oMsgC;
+
+		pwd1 = $("#pwd1").val();
+		pwd2 = $("#pwd2").val();
+		oMsg = document.getElementById("pwd2Msg");
+		oMsgC = document.getElementById("pwd2MsgCheck");
+
+		if (pwd1 == "") {
+			oMsgC.className = "bg_area icon_bg chk pw2";
+			oMsg.style.display = "block";
+			oMsg.innerHTML = "필수 정보입니다.";
+			return false;
+		}
+		if (pwd1 != pwd2) {
+			oMsgC.className = "bg_area icon_bg chk pw2";
+			oMsg.style.display = "block";
+			oMsg.innerHTML = "비밀번호가 일치하지 않습니다.";
+			document.getElementById("pswd2").value = "";
+			return false;
+		} else {
+			oMsgC.className = "bg_area icon_bg chk pw2 submit";
+			oMsg.style.display = "none";
+			return true;
+		}
+
+		return true;
+	});  
+	/////////////////////////////// 비밀번호 체크 ///////////////////////////////
+		
+	/////////////////////////////// 이메일 체크 ///////////////////////////////
+	$("#email1").blur(function(){
+
+		var _char = "@";
+		var email1 = document.getElementById("email1").value;
+		var email2 = document.getElementById("email2").value;
+		var email = document.getElementById("email1").value + _char + document.getElementById("email2").value;
+		var oMsg = document.getElementById("emailMsg");
+
+		emailFlag = false;
+
+		if (email1 == "") {
+			oMsg.style.display = "block";
+			oMsg.innerHTML = "이메일 주소를 다시 확인해주세요.";
+			return false;
+		}
+
+		var isEmail = /^[a-z0-9_.-]*$/;
+		if (!isEmail.test(email1)) {
+			oMsg.style.display = "block";
+			oMsg.innerHTML = "이메일 주소를 다시 확인해주세요.";
+			return false;
+		}
+
+		if (email1 != "" && email2 != "") {			
+
+			var isEmail = /^[ㄱ-힣\w-\.\_]{1,}\@([\da-zA-Z-]{1,}\.){1,}[\da-zA-Z-]{2,3}$/;
+			var isHan = /[ㄱ-ㅎ가-힣]/g;
+			if (!isEmail.test(email) || isHan.test(email)) {
+				oMsg.style.display = "block";
+				oMsg.innerHTML = "이메일 주소를 다시 확인해주세요.";
+				return false;
+			}
+
+			// 이메일 길이 제한 : 50
+			if(email.length > 50){
+				oMsg.style.display = "block";
+				oMsg.innerHTML = "이메일 글자수가 도메인 포함하여 전체 50자 이내로 입력해주세요.";
+				return false;
+			}
+		
+			try {		
+				// 성공 Api : Registration/ExistsEmail?email=ebaykorea@ebay.com
+				var url = 'https://sslmember2.gmarket.co.kr/Registration/VerificationEmail';
+				var param = [{ name: "email", value: email }];			
+
+				$.ajax({
+					url: url,
+					data: param,
+					type: "GET",
+					contentType: "application/json;",
+					dataType: "json",
+					success: function (data) {			
+						if (data) {
+							oMsg.style.display = "block";
+							oMsg.innerHTML = "이미 사용중인 이메일입니다.";
+							$("#email1").val("");
+							$("#email2").val("");
+							return false;
+						} else {
+							//oMsg.style.display = "block";				
+							//oMsg.innerHTML = "사용가능한 이메일 입니다.";
+						}
+						emailFlag = true;
+						//return true;
+					},
+					error: function (error) {
+						emailFlag = false;
+						alert("Error");
+						return false;
+					}
+				});	
+			} catch (e) {
+				if (window.bridgeGotTime) {
+					throw e;
+				 } else {
+					//page reload?
+				 }
+			}		
+		}
+
+		if (true) {
+			oMsg.style.display = "none";
+			return true;
+		}
+
+		return true;
+	});  
+	
+	$("#email2").blur(function(){
+		var _char = "@";
+		var email2 = document.getElementById("email2").value;
+		var email = document.getElementById("email1").value + _char + document.getElementById("email2").value;
+		var oMsg = document.getElementById("emailMsg");
+		
+		emailFlag = false;
+
+		if (email2 == "") {
+			oMsg.style.display = "block";
+			oMsg.innerHTML = "이메일 주소를 다시 확인해주세요.";
+			return false;
+		}
+
+		if (email == "") {
+			oMsg.style.display = "none";
+			return true;
+		}
+
+		var isEmail = /^[ㄱ-힣\w-\.\_]{1,}\@([\da-zA-Z-]{1,}\.){1,}[\da-zA-Z-]{2,3}$/;
+		var isHan = /[ㄱ-ㅎ가-힣]/g;
+		if (!isEmail.test(email) || isHan.test(email)) {
+			oMsg.style.display = "block";
+			oMsg.innerHTML = "이메일 주소를 다시 확인해주세요.";
+			return false;
+		}
+
+		// 이메일 길이 제한 : 50
+			if(email.length > 50){
+				oMsg.style.display = "block";
+				oMsg.innerHTML = "이메일 글자수가 도메인 포함하여 전체 50자 이내로 입력해주세요.";
+				return false;
+			}
+
+		try {		
+			// 성공 Api : Registration/ExistsEmail?email=ebaykorea@ebay.com
+			var url = 'https://sslmember2.gmarket.co.kr/Registration/VerificationEmail';
+			var param = [{ name: "email", value: email }];			
+
+			$.ajax({
+				url: url,
+				data: param,
+				type: "GET",
+				contentType: "application/json;",
+				dataType: "json",
+				success: function (data) {			
+					if (data) {
+						oMsg.style.display = "block";
+						oMsg.innerHTML = "이미 사용중인 이메일입니다.";
+						$("#email1").val("");
+						$("#email2").val("");
+						return false;
+					} else {
+						//oMsg.style.display = "block";				
+						//oMsg.innerHTML = "사용가능한 이메일 입니다.";
+					}
+					emailFlag = true;
+					//return true;
+				},
+				error: function (error) {
+					emailFlag = false;
+					alert("Error");
+					return false;
+				}
+			});	
+		} catch (e) {
+			if (window.bridgeGotTime) {
+				throw e;
+			 } else {
+				//page reload?
+             }
+		}
+
+		if (true) {
+			oMsg.style.display = "none";
+			return true;
+		}		
+		
+		return true;
+	});
+
+	$("#email2").focus(function(){
+		if ($(this).val() == "직접입력") {
+			$('#email2').val("");
+			$('#email2').focus();
+		} else {
+			$('#email2').val($(this).val());
+		}
+	});
+	// 이메일 선택
+	$("#select_mail_server").click(function(){
+		ChangeMailServer($('#email2').val(), $("#mail_server").val());
+	});
+	/////////////////////////////// 이메일 체크 ///////////////////////////////
+
+	/////////////////////////////// 이름 체크 /////////////////////////////// 
+	$("#userName").blur(function(){
+		var name = document.getElementById("userName").value;
+		var oMsg = document.getElementById("userNameMsg");
+		var oMsgC = document.getElementById("userNameMsgCheck");
+		var bytes = getByteLength(name);
+
+		nameFlag = false;
+
+		if (name == "") {
+			oMsg.style.display = "block";
+			oMsg.className = "ability_chk";
+			oMsg.innerHTML = "필수 정보입니다.";
+			return false;
+		}
+
+		if (bytes < 2 || bytes > 30) {
+			oMsg.style.display = "block";
+			oMsg.className = "ability_chk";
+			oMsg.innerHTML = "이름은 최대 15자(30 Byte)이내로 한글/영문만 가능합니다.";
+			// document.getElementById("userName").value = "";
+			return false;
+		}
+				
+		var pattern = /[^ㄱ-힣0-9a-zA-Z\s]/;
+        if(pattern.test(name)) {
+			oMsg.style.display = "block";
+			oMsg.className = "ability_chk";
+			oMsg.innerHTML = "이름은 최대 15자(30 Byte)이내로 한글/영문만 가능합니다.";
+            // document.getElementById("userName").value = "";
+            return false;
+        }
+		
+		if (true) {
+			oMsg.style.display = "none";
+			nameFlag = true;
+			oMsgC.className = "bg_area icon_bg chk submit";
+			return true;
+		}
+
+		return true;
+	});
+
+	$("#userName").keyup(function(){
+		var name = document.getElementById("userName").value;
+		var oMsg = document.getElementById("userNameMsg");
+		var oMsgC = document.getElementById("userNameMsgCheck");
+		var bytes = getByteLength(name);
+
+		nameFlag = false;
+
+		if (bytes > 30) {
+			oMsg.style.display = "block";
+			oMsg.className = "ability_chk";
+			oMsg.innerHTML = "이름은 최대 15자(30 Byte)이내로 한글/영문만 가능합니다.";
+			document.getElementById("userName").value = StringCutByte(name, 30);
+			return false;
+		}
+
+		return true;
+	});
+
+	function StringCutByte(str, len){
+		var l = 0;
+		for (var i = 0; i < str.length; i++) {
+			l += (str.charCodeAt(i) > 128) ? 2 : 1;
+			if (l > len) return str.substring(0, i);
+		}
+		return str;
+	}
+	/////////////////////////////// 이름 체크 /////////////////////////////// 
+});
+
+
+// --------------------------------------------------
+// Events 
+// --------------------------------------------------
+function Events() { }
+
+Events.StopPostback = function (e) {
+	if (e.preventDefault) {
+		e.preventDefault();
+		return false;
+	}
+	else {
+		e.returnValue = false;
+		return false;
+	}
+}
+
+Events.PreventSpace = function (e) {
+	if (e.which && (e.which == 13 || e.which == 32)) {
+		e.preventDefault();
+	}
+}
+
+// 숫자만 입력받을 수 있도록 keypress 이벤트로 처리
+Events.CheckDigit = function (e) {
+	if (window.event) { // IE                              
+		keynum = e.keyCode;
+	} else if(keynum){ // Netscape/Firefox/Opera                   
+		keynum = e.which;
+	} 
+
+	if (keynum && (keynum > 47 && keynum < 58 || keynum == 8)) {
+
+	}
+	else {
+		e.preventDefault();
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function ChangeMailServer(value1, value2) {
+	if (value1 == "" || value2 == "직접입력") {
+		//$("#email2").prop('readonly', false);
+		$("#email2").prop('readonly', '');
+	}
+	else {
+		//$("#email2").prop('readonly', true);
+		$("#email2").prop('readonly', 'readonly');
+	}
+}
+
+function pwChk(grade, num){	
+	var pwd;
+	var oMsg;
+	var oMsgC;
+
+	if (num == 2) {
+		pwd =  $("#pwd1").val();
+		oMsg = document.getElementById("pwd1Msg");
+		oMsgC = document.getElementById("pwd1MsgCheck");
+	} else if (num == 3) {
+		pwd = $("#pwd2").val();
+		oMsg = document.getElementById("pwd2Msg");
+		oMsgC = document.getElementById("pwd2MsgCheck");
+	}
+
+	if (grade == 0) {				
+		oMsgC.className = "bg_area icon_bg chk pw";
+		oMsg.style.display = "block";
+		oMsg.className = "ability_chk";
+		oMsg.innerHTML = "띄어쓰기 없는 6~15자의 영문 대/소문자, 숫자 및 특수문자 조합으로 입력하셔야 합니다.";
+	}
+	else if (grade == 1) {
+		oMsgC.className = "bg_area icon_bg chk pw";
+		oMsg.style.display = "block";
+		oMsg.className = "ability_chk";
+		oMsg.innerHTML = "비밀번호 조합기준에 적합하지 않습니다.";	
+	}
+	else if (grade == 11) {
+		oMsgC.className = "bg_area icon_bg chk pw";
+		oMsg.style.display = "block";
+		oMsg.className = "ability_chk";
+		oMsg.innerHTML = "회원 아이디가 포함된 비밀번호는 사용할 수 없습니다.";
+	}
+	else if (grade == 2) {
+		oMsgC.className = "bg_area icon_bg chk pw";
+		oMsg.style.display = "block";
+		oMsg.className = "ability_chk";
+		oMsg.innerHTML = "보안에 매우 취약하여 사용할 수 없습니다.";	
+	}
+	else if (grade == 3) {
+		oMsgC.className = "bg_area icon_bg chk pw submit";
+		oMsg.style.display = "block";
+		oMsg.className = "ability_chk submit";
+		oMsg.innerHTML = "적정 수준의 안전한 비밀번호입니다.";	
+	}
+	else if (grade == 4) {
+		oMsgC.className = "bg_area icon_bg chk pw submit";
+		oMsg.style.display = "block";
+		oMsg.className = "ability_chk submit";
+		oMsg.innerHTML = "매우 안전한 비밀번호 입니다.";	
+	}	
+}
+
+function chkPasswordNew(pwd)
+{
+	var tmpStr	= null;
+	var pw		= pwd;
+	var EnNum_pattern = /[^a-zA-Z0-9!\"#$%&\'()*+,-./:;<>=?@[]\\^_`{|}~]/;
+
+	// 비밀번호는 6 ~ 15 자리만 허용
+	if (pw.length < 6 || pw.length > 15) {
+		alert("6글자 이상, 15글자 이하의 비밀번호를 입력해 주세요.");
+		$("#pwd1").val("");
+		$("#pwd1").focus();
+		return false;
+	}
+
+	//비밀번호는 영문자, 숫자, 특수문자로만 구성
+	if (EnNum_pattern.test(pw))
+	{
+		alert("안전한 정보 관리를 위해 띄어쓰기 없이 영문 대/소문자, 숫자, 특수문자 중 2가지 이상을 조합한 6~15자의 비밀번호를 입력해 주세요.");
+		$("#pwd1").val("");
+		$("#pwd1").focus();	
+		return false;
+	}
+
+	//비밀번호는 영문자, 숫자, 특수문자 혼용 (영문자, 숫자, 특수문자로만 된 패스워드 생성 금지)
+	if (!(passonlynum(pw) && passonlyEng(pw) && passonlyChar(pw)))
+	{
+		alert("안전한 정보 관리를 위해 띄어쓰기 없이 영문 대/소문자, 숫자, 특수문자 중 2가지 이상을 조합한 6~15자의 비밀번호를 입력해 주세요.");
+		$("#pwd1").val("");
+		$("#pwd1").focus();		
+		return false;
+	}
+
+	//영문자, 숫자, 특수문자만 사용
+	if (!onlyEngNew(pw))
+	{
+		alert("안전한 정보 관리를 위해 띄어쓰기 없이 영문 대/소문자, 숫자, 특수문자 중 2가지 이상을 조합한 6~15자의 비밀번호를 입력해 주세요.");
+		$("#pwd1").val("");
+		$("#pwd1").focus();		
+		return false;
+	}	
+
+	//ID 를 포함한 패스워드 생성 금지
+	tmpStr = $("#login_id").val(); 
+	if (tmpStr == pw || (tmpStr.length > 0 && pw.length >= tmpStr.length && pw.indexOf(tmpStr) >= 0))
+	{
+		alert("안전한 정보 관리를 위해 개인정보 ID, 사업자번호, 생일, 전화번호 등의 개인정보가 포함되지 않은 비밀번호를 입력해 주세요.");
+		$("#pwd1").val("");
+		$("#pwd1").focus();		
+		return false;
+	}
+	
+	//동일한 숫자(문자)로 이루어진 패스워드 생성 금지
+	for (var i=0; i<=pw.length-4; i++)
+	{
+		if (pw.charAt(i)==pw.charAt(i+1) && pw.charAt(i)==pw.charAt(i+2) && pw.charAt(i)==pw.charAt(i+3))
+		{
+			alert("4개 이상의 동일한 문자(숫자)가 포함된 비밀번호는 사용할 수 없습니다.");		
+			$("#pwd1").val("");
+			$("#pwd1").focus();		
+			return false;
+		}
+	}
+
+	//연속된 숫자로 이루어진 패스워드 생성 금지
+	strNum = "01234567890";
+	for (var i=0; i<=strNum.length-4; i++)
+	{
+		tmpStr=strNum.substring(i,i+4);
+		if (pw.indexOf(tmpStr)>=0)
+		{
+			alert("연속된 4자리의 숫자가 포함된 비밀번호는 사용할 수 없습니다.");					
+			$("#pwd1").val("");
+			$("#pwd1").focus();		
+			return false;
+		}
+	}
+
+	// 회원가입을 위한 패스워드 유효성 체크
+	var custNo = "";
+	var password = $("#pwd1").val();
+	var loginId = $("#login_id").val();
+	var custType = "PP";
+	var foreignYn = "N";
+	var hpNoLastNumber = $("#hp_no3").val();
+	var corpIdNo = "";
+	var chkPassword = CheckPasswordValidationForRegister(custNo, password, loginId, custType, foreignYn, hpNoLastNumber, corpIdNo);
+
+	if (chkPassword != 0) {
+		$("#pwd1").val("");
+		$("#pwd1").focus();
+		return false;
+	}
+
+	return true;
+}
+
+// 비밀번호 유효성 체크
+function chkPasswordNew2(pwd)
+{
+	var tmpStr	= null;
+	var EnNum_pattern = /[^a-zA-Z0-9!\"#$%&\'()*+,-./:;<>=?@[]\\^_`{|}~]/;
+	//비밀번호는 영문자, 숫자, 특수문자로만 구성, 6 ~ 15 자리만 허용
+	if (EnNum_pattern.test(pwd) || pwd.length < 6 || pwd.length > 15)
+	{
+		return "level00";
+	}
+	//동일한 숫자(문자)로 이루어진 패스워드 생성 금지
+	for (var i=0; i<=pwd.length-4; i++)
+	{
+		if (pwd.charAt(i)==pwd.charAt(i+1) && pwd.charAt(i)==pwd.charAt(i+2) && pwd.charAt(i)==pwd.charAt(i+3))
+		{
+			return "level00";
+		}
+	}
+
+	//연속된 숫자로 이루어진 패스워드 생성 금지
+	strNum = "01234567890";
+	for (var i=0; i<=strNum.length-4; i++)
+	{
+		tmpStr=strNum.substring(i,i+4);
+		if (pwd.indexOf(tmpStr)>=0)
+		{
+			return "level00";
+		}
+	}
+	//영문자, 숫자, 특수문자만 사용
+	if (pwd.length >= 6 && !onlyEngNew(pwd))
+	{
+		return "level01";
+	}
+	//반드시 영문자, 숫자, 특수문자 혼용 (영문자, 숫자, 특수문자로만 된 패스워드 생성 금지)
+	if (pwd.length >= 6 && !(passonlynum(pwd) && passonlyEng(pwd) && passonlyChar(pwd)))
+	{
+		return "level01";
+	}
+
+	//ID 를 포함한 패스워드 생성 금지
+	var tmpStr = document.getElementById("login_id").value;
+	if (tmpStr.length > 0 && pwd.length >= tmpStr.length) {
+		if (pwd.indexOf(tmpStr) >= 0) {
+			return "level11";
+		}
+	}
+
+	if (pwd.length >= 6 && pwd.length <= 11)
+	{
+		return "level02";
+	}
+		return "level03";
+}	
+
+//숫자로만 되어있는지 확인
+function passonlynum(inText){
+	var ret;
+	for (var i = 0; i < inText.length; i++) {
+		ret = inText.charCodeAt(i);
+		if (!((ret > 47) && (ret < 58))) {
+			return true;
+		}
+	}
+	return false;
+}
+
+//문자로만 되어 있는지 확인
+function passonlyEng(inText)
+{
+	var ret;
+	var j = 0;
+	var alpha_num_Str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	for (var i = 0; i < inText.length; i++) {
+		var substr = inText.substring(i,i+1);
+		if (alpha_num_Str.indexOf(substr) < 0) {
+			//영문자가 아닌값
+		}else{
+			j = j + 1;	//영문자
+		}
+	}
+	if (j == inText.length) {
+		return false;	//영문자만 있는경우
+	}else{
+		return true;	//영문자와 다른 문자가 있는경우
+	}
+}
+
+//특수문자로만 되어 있는지 확인
+function passonlyChar(inText)
+{
+	var ret;
+	var j = 0;
+	var char_num_Str = "!\"#$%&\'()*+,-./:;<>=?@[]\\^_`{|}~";
+	for (var i = 0; i < inText.length; i++) {
+		var substr = inText.substring(i,i+1);
+		if (char_num_Str.indexOf(substr) < 0) {
+			//특수문자가 아닌값
+		}else{
+			j = j + 1;	//특수문자
+		}
+	}
+	if (j == inText.length) {
+		return false;	//특수문자만 있는경우
+	}else{
+		return true;	//특수문자와 다른 문자가 있는경우
+	}
+}
+
+//영문, 숫자만 사용
+function onlyEng(inText) {
+var ret;
+	for (var i = 0; i < inText.length; i++) {
+	ret = inText.charCodeAt(i);
+		if ( i != 0 ) {
+			if ((ret > 122) || (ret < 48) || (ret > 57 && ret < 65) || (ret > 90 && ret < 97)) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+// 영문, 숫자, 특수문자만 사용
+function onlyEngNew(inText)
+{
+	var ret;
+	for (var i = 0; i < inText.length; i++) {
+		ret = inText.charCodeAt(i);
+		if ( i != 0 ) {
+			if ((ret < 33) || (ret > 126)) {
+				return false;
+			}
+		}
+	}
+	return true;
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/// 회원 가입 ///
+function Signup() {
+
+	if (!idFlag) {	
+		alert("아이디 입력이 잘못 되었습니다.");
+		return;
+	}
+
+	if (!pwFlag && pwValidMsg != "") {
+		alert(pwValidMsg);
+		$("#pwd1").val("");
+		$("#pwd1").focus();
+		return false;
+	}
+
+	if (!nameFlag) {	
+		alert("이름 입력이 잘못 되었습니다.");
+		return;
+	}
+
+	if (!emailFlag) {
+		alert("이메일 입력이 잘못 되었습니다.");
+		return;
+	}
+
+	// 인증 유무
+	if (!AuthCheck()) return;
+	// 아이디 체크
+	if (!IDCheck()) return;
+	// 비밀번호 체크
+	if (!PasswordCheck()) return;
+	// 이름 체크
+	if (!NameCheck()) return;
+	// 휴대폰 체크
+	if (!HpNoCheck()) return;
+
+	// 이메일
+	if (!EmailCheck()) return;
+
+	$('#form1').attr('action', 'AddMemberSimpleRegistrationPersonalBuyer').submit();
+
+	return;
+}
+
+function AuthCheck()
+{
+	if($("#CertType").val() == "" || $("#CertName").val() == "" ||	$("#BirthDate").val() == "")
+	{
+		alert("실명확인 후에 가입이 가능합니다.");
+		return false;
+	}
+
+	return true;
+}
+
+function IDCheck() {
+
+	if ($("#login_id").val() == "" ||  $.trim($("#login_id").val()) == 0) {
+		alert("회원아이디(ID)를 입력해 주세요.");
+//		$("#login_id").val("");
+		$("#login_id").focus();
+		return false;
+	}
+	
+	if(!IsValidID($("#login_id").val()))
+	{
+		alert("회원 아이디(ID)는 띄어쓰기 없이 6~10자리의 영문자와 숫자 조합만 가능합니다.");
+//		$("#login_id").val("");
+		$("#login_id").focus();
+		return false;
+	}	
+	return true;
+}
+
+function PasswordCheck() {
+
+	if ($("#pwd1").val() == "" || $.trim($("#pwd1").val()) == 0) {
+		alert("비밀번호를 입력해 주세요.");
+		$("#pwd1").val("");
+		$("#pwd1").focus();
+		return false;
+	}
+
+	if ($("#pwd2").val() == "" || $.trim($("#pwd2").val()) == 0) {
+		alert("비밀번호 확인을 위해서 한번 더 입력해 주세요.");
+		$("#pwd2").val("");
+		$("#pwd2").focus();
+		return false;
+	}
+
+	if ($("#pwd1").val() != $("#pwd2").val()) {
+		alert("비밀번호가 틀립니다.");
+		$("#pwd1").val("");
+		$("#pwd2").val("");
+		$("#pwd1").focus();
+		return false;
+	}
+	
+	if (!chkPasswordNew($("#pwd1").val())) {
+		return false;
+	}
+	return true;
+}
+
+function NameCheck() {
+
+	if ($("#userName").val() == "" ||  $.trim($("#userName").val()) == 0) {
+		alert("이름을 입력해 주세요.");
+//		$("#login_id").val("");
+		$("#userName").focus();
+		return false;
+	}
+	
+	if(IsValidName($("#userName").val()))
+	{
+		alert("이름은 최대 15자(30 Byte)이내로 한글/영문만 가능합니다.");
+//		$("#login_id").val("");
+		$("#userName").focus();
+		return false;
+	}	
+	return true;
+}
+
+function HpNoCheck()
+{
+	if ($("#hp_no2").val() == "") {
+		alert("휴대폰 번호를 입력해 주세요.");
+		$("#hp_no2").focus();
+		return false;
+	}
+
+	if ($("#hp_no3").val() == "") {
+		alert("휴대폰 번호를 입력해 주세요.");
+		$("#hp_no3").focus();
+		return false;
+	}
+
+	if ($("#hp_no1").val() == "") {
+		alert("휴대폰 번호를 입력해 주세요.");
+		return false;
+	}
+		
+	if(	passonlynum($("#hp_no2").val()) || passonlynum($("#hp_no3").val()) ) {
+		alert("휴대폰번호는 숫자로만 입력하세요.");
+		$("#hp_no2").focus();
+		return false;
+	}
+
+	//아이핀 인증 후 휴대폰 수동 입력 시
+	$("#MobilePhoneNum").val($("#hp_no1").val()+"-"+$("#hp_no2").val()+"-"+$("#hp_no3").val());
+
+	return true;
+}
+
+function EmailCheck() {
+
+	if ($("#email1").val().length < 2) {
+		alert("E-Mail 주소를 입력해 주세요.");
+		$("#email1").val("");
+		$("#email1").focus();
+		return false;
+	}
+
+	if ($("#email2").val().length < 2) {
+		alert("E-Mail 주소를 입력해 주세요.");
+		$("#email2").val("");
+		$("#email2").focus();
+		return false;
+	}
+
+	if ($("#email2").val().indexOf(".") < 0) {
+		alert("올바르지 않은 E-Mail 주소입니다. 다시 입력해 주세요.");
+		$("#email2").val("");
+		$("#email2").focus();
+		return false;
+	}
+
+	if ($("#email2").val() == "gmarket.co.kr") {
+		alert("등록이 불가능한 이메일 주소입니다. \ngmarket.co.kr 외에 다른 이메일 주소를 입력해주세요");
+		$("#email1").val("");
+		$("#email2").val("");
+		$("#email1").focus();
+		return false;
+	}
+
+	// 전체 이메일 주소!
+	var email = $("#email1").val() + "@" + $("#email2").val();
+
+	if (email == "help@gmarket.co.kr" || email == "gmarket@gmarket.co.kr" || email == "webmaster@gmarket.co.kr") {
+		alert("올바르지 않은 E-Mail 주소입니다. 다시 입력해 주세요.");
+		$("#email1").val("");
+		$("#email1").focus();
+		return false;
+	}
+
+	if (sTextByteLen(email) > 50) {
+		alert("이메일 주소가 너무 길어 입력이 되지 않습니다. 다른 이메일 주소를 선택하여 주십시오.");
+		return false;
+	}	
+	return true;
+}
+
+function RcvYNCheck() {
+
+	// 이메일 수신 여부
+	if ($("#isRcvMail").prop('checked') == true) {
+		$("#ERcvYn").val("Y");
+	}
+	else {
+		$("#ERcvYn").val("N");
+	}
+
+	if ($("#isRcvSMS").prop('checked') == true) {
+		$("#SmsRcvYn").val("Y");
+	}
+	else {	
+		$("#SmsRcvYn").val("N");
+	}
+	return true;
+}
+
+function IsValidID(value)
+{
+	if (sTextByteLen(value) < 6 || sTextByteLen(value) > 10)
+	{
+		return false;
+	}
+	else{
+		var regExp = /[^0-9A-Za-z]/;
+		return (!regExp.test( value ));
+	}
+}
+
+function IsValidName(value)
+{
+	if (getByteLength(value) < 2 || getByteLength(value) > 30)
+	{
+		return false;
+	}
+	else{
+		var regExp = /[^(ㄱ-힣0-9a-zA-Z\. )]/;
+		return (regExp.test( value ));
+	}
+}
+
+
+function sTextByteLen(sText) {
+	var sTextLen = 0;
+
+	for (var i = 0; i < sText.length; i++) {
+		if (sText.charCodeAt(i) > 128) {
+			sTextLen += 2;
+		}
+		else {
+			sTextLen += 1;
+		}
+	}
+	return sTextLen;
+}
+
+function getByteLength(strValue) {
+		var iLength = 0;
+		var chValue;
+
+		if (strValue == null)
+			return (0);
+
+		for (var i = 0; i < strValue.length; i++) {
+			chValue = escape(strValue.charAt(i));
+
+			if (chValue.length == 1)				// 영문(1), 숫자(1)
+				iLength++;
+			else if (chValue.indexOf("%u") != -1)	// 한글(2)
+				iLength += 2;
+			else if (chValue.indexOf("%") != -1)	// ASCII(1)
+				iLength += chValue.length / 3;
+		}
+		return (iLength);
+	}
+
+function getStringByteLength(pStr) {
+	var c;
+	var nLength = 0;
+	var sStr = new String(pStr);
+
+	for (i = 0; i < sStr.length; i++) {
+		c = sStr.charAt(i);
+		if (escape(c).length > 4)   // 한글
+			nLength += 2;
+		else
+			nLength++;
+	}
+	return nLength;
+}
+
+/* 모바일 체크(모바일 경우 실행 될 함수);
+function mobChk(fnc) {
+	var mobileKeyWords = new Array('iPhone', 'iPad', 'iPod', 'BlackBerry', 'Android', 'Windows CE', 'LG', 'MOT', 'SAMSUNG', 'SonyEricsson');
+	for (var word in mobileKeyWords) {
+		if (navigator.userAgent.match(mobileKeyWords[word]) != null) {
+			//alert("모바일");
+		}
+	}
+}*/
+</script>
+
+
+	<link rel="stylesheet" type="text/css" href="https://script.gmarket.co.kr/pc/css/ko/member_join.css?dummy=20170309" />
+</head>
+
+<body>
+    <div id="skip-navigation">
+        <strong class="for-a11y">스킵 네비게이션</strong>
+        <ul>
+            <li><a href="#skip-navigation-search">검색창 바로가기</a></li>
+            <li><a href="#skip-navigation-category-all">전체카테고리 바로가기</a></li>
+            <li><a href="#container">본문 바로가기</a></li>
+        </ul>
+    </div> 
+    <div id="header"></div>
+    <script>
+		DesktopLayout.render([
+			{
+			  name: "Header",
+			  params: {"type":"simple",
+					"user":{"name":"","type":"unknown","grade":"unknown"},
+					"isAdult":false},
+			  container: document.getElementById("header"),
+			}
+		  ]);
+    </script>
+	<div id="wrap">
+        <a name="top"></a>
+		<div id="contents">
+			
+
+
+<!-- container -->
+<div id="container">
+	<div class="join_wrap">
+		<div id="join_container">
+			<!-- join_header -->
+			<div class="join_header">
+				<h2 class="bg_area join_bg">구매 회원가입</h2>
+				<ol class="join_step">
+					<li class="bg_area join_bg step1">가입</li>
+					<li class="bg_area join_bg step2">약관동의</li>
+					<li class="bg_area join_bg step3 now"><span class="blind">현재페이지</span> 정보입력</li>
+					<li class="bg_area join_bg step4">가입완료</li>
+				</ol>
+			</div>
+			<!-- // join_header -->
+			<div class="join_content">
+				<div class="form">
+					<form id="form1" method="post" action="">
+						<fieldset>
+							<legend>구매 회원가입 정보입력</legend>
+							<input type="hidden" name="CertType" id="CertType" value="S">
+							<input type="hidden" name="FromWhere" id="FromWhere" value="G">
+
+							<input type="hidden" name="G9JoinYN" id="G9JoinYN" value="Y">
+							<input type="hidden" name="PersonalInfoThirdPartySupportAgrYN" id="PersonalInfoThirdPartySupportAgrYN" value="Y">
+							<input type="hidden" name="PersonalInfoCollectUseAgrYN" id="PersonalInfoCollectUseAgrYN" value="Y">
+							<input type="hidden" name="ERcvYN" id="ERcvYN" value="Y">
+							<input type="hidden" name="SMSRcvYN" id="SMSRcvYN" value="Y">
+							<input type="hidden" name="AccessReserveKey" id="AccessReserveKey" value="CEE154E0-E63C-4E51-9ECC-0C42F8D4DCE7">
+
+							<input type="hidden" name="MobilePhoneNum" id="MobilePhoneNum" value="">
+							<input type="hidden" name="hdnTargetUrl" id="hdnTargetUrl" value="http://myg.gmarket.co.kr/">
+
+							<!-- <ul class="humint">
+			<li class="icon_bg name">홍길동</li>
+			<li class="icon_bg phone">010-1234-5678</li> N : 아이핀인증시엔 감춤
+			<li class="icon_bg birthday">1984년 07월 21일</li>
+		</ul> -->
+							<p class="">회원정보를 입력해주세요. 모두 입력하셔야 가입이 가능합니다.</p><!-- WPR-973 -->
+							<ul class="form_list">
+								<!-- N : 유효성 체크 메세지 p.ability_chk는 처음에 존재하지 않다가 유효성 체크후에 추가가 되는 형식입니다.  -->
+								<!-- N : 입력 상태 아이콘 span.bg_area.icon_bg.chk 입력이 정상적인 경우 아이콘에 submit 클래스 추가 -->
+								<li>
+									<div class="guide_txt">
+										<label for="login_id">ID를 만들어주세요</label>
+										<p class="placeholder">띄어쓰기 없이 영/숫자 6-10자</p>
+									</div>
+									<input type="text" name="login_id" id="login_id" maxlength="10">
+									<!--  오류 메세지  -->
+									<!-- <p class="ability_chk">이미 사용중인 아이디입니다.</p> -->
+									<p id="idMsg" class="ability_chk submit" style="display:none">사용가능한 아이디 입니다.</p>
+									<!-- N : 유효성 체크 메세지는 처음에 존재하지 않다가 유효성 체크후에 추가가 되는 형식입니다.  -->
+									<!--  오류 메세지  -->
+									<span id="idMsgCheck" class="bg_area icon_bg chk ">아이디 입력 체크</span>
+									<!-- N: 입력이 정상적인 경우 아이콘에 submit 클래스 추가 -->
+								</li>
+								<li>
+									<div class="guide_txt">
+										<label for="pwd1">비밀번호 입력</label>
+										<p class="placeholder">6-15자의 영문 대소문자, 숫자 및 특수문자 조합</p>
+									</div>
+									<input type="password" name="pwd1" id="pwd1" maxlength="15">
+									<p id="pwd1Msg" class="ability_chk" style="display:none">비밀번호를 정확히 입력해주세요.</p>
+									<span id="pwd1MsgCheck" class="bg_area icon_bg chk pw">비밀번호 입력 체크</span>
+								</li>
+								<li>
+									<div class="guide_txt">
+										<label for="pwd2">위의 비밀번호를 다시 입력해주세요.</label>
+									</div>
+									<input type="password" name="pwd2" id="pwd2" maxlength="15">
+									<p id="pwd2Msg" class="ability_chk" style="display:none">비밀번호가 동일하지 않습니다.</p>
+									<span id="pwd2MsgCheck" class="bg_area icon_bg chk pw2 ">비밀번호 확인 입력 체크</span>
+								</li>
+
+								<!-- WPR-973 -->
+								<li>
+									<div class="guide_txt">
+										<label for="name" id="name">이름</label>
+									</div>
+									<input type="text" name="name" id="userName" maxlength="30" />
+									<p id="userNameMsg" class="ability_chk" style="display:none">이름은 최대 15자(30 Byte)이내로 한글/영문만 가능합니다.</p>
+									<span id="userNameMsgCheck" class="bg_area icon_bg chk">이름 입력 체크</span><!-- WPR-973_2015-06-10수정추가 --><!-- N: 입력이 정상적인 경우 아이콘에 submit 클래스 추가 -->
+								</li>
+								<!--  WPR-973_2015-05-06수정(생년월일 빼고, 하단에 14세 미만여부 내용으로 변경 요청)
+			<li>
+				<div class="guide_txt">
+					<label for="birthdate1">생년월일</label>
+					<p class="placeholder">YYYYMMDD로 입력</p>
+				</div>
+				<input type="text" name="birthdate1" id="birthdate1" style="width:50px;" maxlength="4" title="생년월일 년도">
+				<span class="md_txt">-</span>
+				<input type="text" name="birthdate2" id="birthdate2" class="txt_center" style="width:40px;" maxlength="2" title="생년월일 월">
+				<span class="md_txt">-</span>
+				<input type="text" name="birthdate3" id="birthdate3" class="txt_center" style="width:40px;" maxlength="2" title="생년월일 일">
+			</li> -->
+								<!-- 아이핀인증시엔 휴대폰 입력 노출안됨 -->
+								<li class="select_first">
+									<div class="guide_txt cover">
+										<label for="hp_no2">휴대폰번호입력</label>
+									</div>
+									<select name="hp_no1" id="hp_no1" class="left" title="휴대폰번호 첫자리 선택입력">
+										<option value="010">010</option>
+										<option value="011">011</option>
+										<option value="016">016</option>
+										<option value="017">017</option>
+										<option value="018">018</option>
+										<option value="019">019</option>
+									</select>
+									<input type="text" name="hp_no2" id="hp_no2" class="first_select" style="width:40px;" maxlength="4" title="휴대폰번호 가운데 자리">
+									<span class="md_txt">-</span>
+									<input type="text" name="hp_no3" id="hp_no3" style="width:257px;" maxlength="4" title="휴대폰번호 마지막 자리">
+									<p id="hpMsg" class="ability_chk" style="display:none">휴대폰번호를 정확히 입력해주세요.</p>
+									<!-- N : 유효성 체크 메세지는 처음에 존재하지 않다가 유효성 체크후에 추가가 되는 형식입니다.  -->
+									<span id="hpMsgCheck" class="bg_area icon_bg chk">체크</span>
+								</li>
+								<!-- // 아이핀인증시엔 휴대폰 입력 노출안됨 -->
+								<!-- //WPR-973 -->
+
+								<li class="select_last">
+									<div class="guide_txt">
+										<label for="email1">이메일</label>
+									</div>
+									<input type="text" name="email1" id="email1" style="width:210px;"><!-- 2014-10-23 -->
+									<span class="md_txt">@</span>
+									<input type="text" name="email2" id="email2" class="email" style="width:130px;" title="이메일 주소 뒷 자리">
+									<select name="mail_server" id="mail_server" class="right" title="이메일 주소 뒷 자리 선택입력">
+										<option value="">직접입력</option>
+										<option value="naver.com">naver.com</option>
+										<option value="daum.net">daum.net</option>
+										<option value="hotmail.com">hotmail.com</option>
+										<option value="nate.com">nate.com</option>
+										<option value="yahoo.co.kr">yahoo.co.kr</option>
+										<option value="paran.com">paran.com</option>
+										<option value="empas.com">empas.com</option>
+										<option value="dreamwiz.com">dreamwiz.com</option>
+										<option value="freechal.com">freechal.com</option>
+										<option value="lycos.co.kr">lycos.co.kr</option>
+										<option value="korea.com">korea.com</option>
+										<option value="gmail.com">gmail.com</option>
+										<option value="hanmir.com">hanmir.com</option>
+									</select>
+									<p id="emailMsg" class="ability_chk" style="display:none">메일주소를 정확히 입력해주세요.</p>
+								</li>
+								<!-- <li class="form_clear">
+				<strong class="form_title">쇼핑 메일 SMS 수신</strong>
+				<p class="form_cont">
+				<label for="email"><input type="checkbox" id="email" name="" class="chk">이메일 수신</label>
+				<label for="sms"><input type="checkbox" id="sms" name="" class="chk">SMS 수신</label>
+				</p>
+				<p class="add_text">
+					할인쿠폰, 특가상품 이벤트정보를 받아보세요!<br>(거래정보-결제 교환, 환불 등과 관련된 내용은 수신동의 여부와 관계없이 발송됩니다.)
+				</p>
+			</li> -->
+								<!-- WPR-973_2015-05-18삭제 -->
+								<!-- WPR-973_2015-05-06수정 -->
+								
+								<!--// WPR-973_2015-05-06수정 -->
+								<!--// WPR-973_2015-05-18삭제 -->
+							</ul>
+							<div class="btn_zone">
+								<a href="#" id="cancel" class="bg_area btn_bg l2"><span>처음으로</span></a>
+								<a href="javascript:Signup();" id="next" class="bg_area btn_bg l1 md"><span>확인</span></a>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+			<!-- // join_content -->
+		</div> 
+		<!--// join_container -->
+	</div>
+</div>
+<!-- //container -->
+
+		</div>
+	</div>
+    <!-- S:푸터:19.10.25 -->
+    <div id="footer"></div>
+    <script>
+		DesktopLayout.render([
+			{
+			  name: "Footer",
+			  params: {"type":"default"},
+			  container: document.getElementById("footer"),
+			},
+		  ]);
+    </script>
+    <!-- E:푸터:19.10.25 -->
+
+	<!-- Jira : BC9186-24 -->
+	
+
 </body>
+
 </html>

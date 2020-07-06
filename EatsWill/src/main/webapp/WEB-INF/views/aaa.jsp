@@ -9,12 +9,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+
+<script type="text/javascript" src="/eatswill/resources/assets/js/login.js"></script>
+
 </head>
 <body>
 
 ${test }<br/>
 ${id }<br/>
 ${pwd }<br/>
+
+<input type="button" value="클릭" onclick="sendIt();"/>
 
 </body>
 </html>

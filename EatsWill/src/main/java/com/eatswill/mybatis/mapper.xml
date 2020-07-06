@@ -8,4 +8,13 @@
 	select nvl(max(num),0) from test
 </select>
 
+<select id="selectCustom" parameterType="String" resultType="String">
+	select * from custom where USERID=#{id}
+</select>
+
+<insert id="insertCustom" parameterType="com.eatswill.dto.CustomDTO">
+	insert into custom (USERID,USERPW,USERNAME,USERTEL,USEREMAIL,USERPOINT,USERADDR) 
+	values (#{id},#{pwd},#{name},#{tel},#{email},1000,#{addr})
+</insert>
+
 </mapper>

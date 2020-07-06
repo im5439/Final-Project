@@ -11,6 +11,8 @@
 <title>eat's will</title>
 
 <link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
+<script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="/eatswill/resources/assets/js/login.js"></script>
 		
 </head>
 <body>
@@ -45,7 +47,7 @@
 				<div class="inner" style="place-content: center">
 					<section>
 						<h2>회원가입</h2>
-						<form method="post" action="insert.action" style="text-align: -webkit-center">
+						<form action="" method="post" name="myForm" style="text-align: -webkit-center">
 							<%-- <%@ include file="test.jsp" %> jsp 내용 이후가 작성이 안됨 --%>
 							<!-- <div class="field half first">
 								<input type="text" name="name" id="name" placeholder="Name" />
@@ -54,29 +56,30 @@
 								<input type="email" name="email" id="email" placeholder="Email" />
 							</div> -->
 							
-							<!-- 2020.07.06 filed margin 수정 -->
+							<!-- 2020.07.06 filed margin 수정, input[type="text"] height 수정, logincheck 속성 추가 -->
 							<div>
-								<div class="field half first">
-									<input type="text" name="id" id="id" placeholder="아이디" style="font-size: 80%"/>
+								<div class="field" style="width: 68%">
+									<input type="text" name="id" id="id" placeholder="아이디" style="font-size: 70%"/>
 								</div>
-								<div class="field half">
-									<input type="text" name="pwd" id="pwd" placeholder="패스워드" style="font-size: 80%"/>
+								<input type="button" value="중복확인" class="logincheck" id="logincheck" style="width: 30%"/>								
+								<div class="field">
+									<input type="text" name="pwd" id="pwd" placeholder="패스워드" style="font-size: 70%"/>
 								</div>
 								<div class="field">
-									<input type="text" name="name" id="name" placeholder="이름" style="font-size: 80%"/>
+									<input type="text" name="name" id="name" placeholder="이름" style="font-size: 70%"/>
 								</div>
 								<div class="field">
-									<input type="text" name="tel" id="tel" placeholder="전화번호" style="font-size: 80%"/>
+									<input type="text" name="tel" id="tel" placeholder="전화번호" style="font-size: 70%"/>
 								</div>
 								<div class="field">
-									<input type="text" name="address" id="address" placeholder="주소" style="font-size: 80%"/>
+									<input type="email" name="email" id="email" placeholder="이메일" style="font-size: 70%"/>
 								</div>
 								<div class="field">
-									<input type="email" name="email" id="email" placeholder="이메일" style="font-size: 80%"/>
+									<input type="text" name="addr" id="addr" placeholder="주소" style="font-size: 70%"/>
 								</div>
 							</div>
 							<ul class="actions" style="padding-top: 2em">
-								<li><input type="submit" value="Send" class="special" /></li>
+								<li><input type="button" value="완료" class="special" onclick="sendIt();"/></li>
 							</ul>
 						</form>
 					</section>
