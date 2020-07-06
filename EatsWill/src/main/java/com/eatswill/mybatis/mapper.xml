@@ -4,4 +4,8 @@
 
 <mapper namespace="mapper">
 
+<select id="test" resultType="int">
+	select nvl(max(num),0) from test
+</select>
+
 </mapper>
