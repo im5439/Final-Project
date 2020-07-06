@@ -27,7 +27,7 @@ public class EatsWillController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "home";
+		return "index";
 	}
 	
 }
