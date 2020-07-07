@@ -9,7 +9,14 @@
 </select>
 
 <select id="selectCustom" parameterType="String" resultType="String">
-	select * from custom where USERID=#{id}
+	select USERID id from custom where USERID=#{id}
+</select>
+
+<select id="checkIdPw" parameterType="hashMap" resultType="com.eatswill.dto.CustomDTO">
+	select 	USERID id, USERPW pwd, USERNAME name, USERTEL tel, 
+			USEREMAIL email, USERPOINT point, USERADDR addr 
+	from 	custom 
+	where 	USERID=#{id} and USERPW=#{pwd}
 </select>
 
 <insert id="insertCustom" parameterType="com.eatswill.dto.CustomDTO">

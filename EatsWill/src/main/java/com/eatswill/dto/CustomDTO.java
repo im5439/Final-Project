@@ -7,6 +7,7 @@ public class CustomDTO {
 	private String name;
 	private String tel;
 	private String email;
+	private int point;
 	private String addr;
 	private String addr2;
 	
@@ -40,6 +41,12 @@ public class CustomDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public int getPoint() {
+		return point;
+	}
+	public void setPoint(int point) {
+		this.point = point;
+	}
 	public String getAddr() {
 		return addr;
 	}
@@ -52,5 +59,4 @@ public class CustomDTO {
 	public void setAddr2(String addr2) {
 		this.addr2 = addr2;
 	}
-	
 }

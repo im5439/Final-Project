@@ -39,7 +39,7 @@
 						<div class="inner">
 
 							<!-- Logo -->
-								<a href="index.html" class="logo">
+								<a href="main.action" class="logo">
 									<span class="symbol" ><img src="/eatswill/resources/images/iconfeeldo.png" alt="" /></span><span class="title">잇츠윌 IT's Will</span>
 								</a>
 								
@@ -59,6 +59,15 @@
 					<nav id="menu">
 						<h2>Menu</h2>
 						<ul>
+							<c:choose>
+								<c:when test="${empty sessionScope.customInfo.id }">
+									<li><a href="<%=cp%>/itving/login.do">로그인</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="<%=cp%>/itving/myPage.do"><font color="blue">${sessionScope.customInfo.name }</font> 님 환영합니다.</a>		
+									<a href="javascript:logout();" data-nethru_clcode="A000012">로그아웃</a></li>
+								</c:otherwise>
+							</c:choose>
 							<li><a href="index.html">Home</a></li>
 							<li><a href="generic.html">내정보</a></li>
 							<li><a href="generic.html">주문내역</a></li>

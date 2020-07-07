@@ -20,7 +20,7 @@ function sendIt(){
 		return;
 	}
 	
-	if (f.id.value.length < 6 || f.id.value.length > 20) { 
+	if (f.USERID.value.length < 6 || f.id.value.length > 20) { 
 		alert("아이디는 영문 및 숫자 6~20자 입니다."); 
 		f.id.focus();
 		return;
@@ -140,6 +140,24 @@ $(function() {
                 alert("Error");
             }
         });
+	
+	});
+	
+});
+
+$(function() {
+		
+	$("#login").click(function(){
+	
+		var f = document.myForm;
+
+		if($("#id").val()==null || $("#id").val()=="") {
+			alert("아이디를 입력하세요");
+			return;
+		}
+        
+		f.action = "login_ok.action";
+		f.submit();
 	
 	});
 	

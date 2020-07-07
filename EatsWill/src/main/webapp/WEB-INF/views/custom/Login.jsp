@@ -22,7 +22,8 @@
 	<br/>
 	  <a href="" >로그인</a>  &nbsp;&nbsp;  <a href="">회원가입</a> <br/>
 	
-	  <input type="button" value="로그인" class="small"> &nbsp;&nbsp; <input type="button" value="회원가입" class="small">
+	  <input type="button" value="로그인" class="small" onclick="javascript:location.href='<%=cp %>/login.action';"> &nbsp;&nbsp; 
+	  <input type="button" value="회원가입" class="small" onclick="javascript:location.href='<%=cp %>/signup.action';">
 	
 	</div>
 	<!-- Header -->
@@ -30,7 +31,7 @@
 		<div class="inner" style="text-align: -webkit-center">
 
 			<!-- Logo -->
-			<a href="index.html" class="logo">
+			<a href="main.action" class="logo">
 				<span class="symbol" ><img src="/eatswill/resources/images/iconfeeldo.png" alt="" /></span><span class="title">잇츠윌 IT's Will</span>
 			</a>
 
@@ -70,7 +71,7 @@
 							</div>
 							
 							<ul class="actions" style="padding-top: 1em">
-								<li><input type="button" value="로그인" class="special" onclick="sendIt();"/></li>
+								<li><input type="button" value="로그인" class="special" id="login"/></li>
 							</ul>
 						</form>
 					</section>

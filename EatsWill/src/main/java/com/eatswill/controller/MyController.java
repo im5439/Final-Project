@@ -8,6 +8,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,6 +32,11 @@ public class MyController {
 		return "index";
 	}
 	
+	@RequestMapping(value = "/main.action", method = RequestMethod.GET)
+	public String main() {		
+		return "index";
+	}
+	
 	@RequestMapping(value = "/signup.action", method = RequestMethod.GET)
 	public String signup() {		
 		return "custom/Signup";
@@ -41,12 +47,27 @@ public class MyController {
 		return "custom/Login";
 	}
 	
+	@RequestMapping(value = "/login_ok.action", method = RequestMethod.POST)
+	public String login_ok(HttpServletRequest req, String id, String pwd) {	
+		
+		CustomDTO dto = dao.checkIdPw(id, pwd);
+		
+		if (dto == null) {
+			return "redirect:/login.action";
+		}
+		
+		HttpSession session = req.getSession(); 		// 세션 만들기
+		session.setAttribute("customInfo", dto); 		// 세션에 올리기
+		
+		return "redirect:/main.action";
+	}
+	
 	@RequestMapping(value = "/insert.action", method = RequestMethod.POST)
-	public String insert(HttpServletRequest req, CustomDTO dto) {	
+	public String insert(CustomDTO dto) {	
 		
 		dao.insertCustom(dto);
 		
-		return "redirect:/";
+		return "redirect:/main.action";
 	}
 	
 	// 시간되면 String 대신 MVC로 클래스 가져와서 되는지 확인

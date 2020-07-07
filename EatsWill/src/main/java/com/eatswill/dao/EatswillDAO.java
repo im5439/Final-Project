@@ -1,5 +1,7 @@
 package com.eatswill.dao;
 
+import java.util.HashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.eatswill.dto.CustomDTO;
@@ -51,6 +53,18 @@ private SqlSessionTemplate sessionTemplate;
 	public CustomDTO findIdPw(String id) {
 		
 		CustomDTO custom = sessionTemplate.selectOne("mapper.findIdPw", id);
+	
+		return custom;
+	}
+	
+	public CustomDTO checkIdPw(String id, String pwd) {
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+		params.put("id", id);
+		params.put("pwd", pwd);
+		
+		CustomDTO custom = sessionTemplate.selectOne("mapper.checkIdPw", params);
 	
 		return custom;
 	}
