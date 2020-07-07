@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CeoMapper">
+
+<insert id="insertData" parameterType="com.eatswill.dto.CeoDTO">
+
+	insert into ceo (ceoId,ceoPw,ceoName,ceoEmail) values (#{ceoId},#{ceoPw},#{ceoName},#{ceoEmail})
+
+</insert>
+
+<select id="getReadData" parameterType="String" resultType="com.eatswill.dto.CeoDTO">
+
+	select * from ceo where ceoId = #{ceoId}
+
+</select>
+
+</mapper>
