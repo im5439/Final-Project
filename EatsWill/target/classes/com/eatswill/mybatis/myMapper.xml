@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="myMapper">
+
+<!-- 해당 아이디의 주문 내역 출력 -->
+<select id="getBuyList" parameterType="String"  resultType="com.eatswill.dto.MyDTO">
+	select om.orderDate orderDate, om.orderCode orderCode, s.shopname shopName, om.oamount oAmount, data2.menuName, cc.codename orderStatus, s.shopImg shopImg
+	from ORDERMAIN om, shop s, COMMON_CODE cc, (select LISTAGG(m.menuname, ',') WITHIN GROUP (ORDER BY m.menuname) menuName from ORDERDETAIL ot, MENU m, shop s, (select ordercode from ORDERMAIN  where userId=#{userId}) data1 
+	where ot.ORDERCODE=data1.orderCode and ot.menuCode=m.menuCode) data2 
+	WHERE om.orderstatus=cc.code 
+</select>
+
+<!-- 리뷰 작성시 띄울 정보 -->
+<select id="getReadReviewData" parameterType="String"  resultType="com.eatswill.dto.MyDTO">
+	select  om.orderCode orderCode, om.shopCode shopCode,s.shopname shopName, data2.menuName, s.shopImg shopImg
+	from ORDERMAIN om, shop s,COMMON_CODE cc,(select LISTAGG(m.menuname, ',') WITHIN GROUP (ORDER BY m.menuname) menuName from ORDERDETAIL ot,MENU m,shop s,(select ordercode from ORDERMAIN  where ORDERCODE=#{orderCode}) data1
+	where ot.ORDERCODE=data1.orderCode and ot.menuCode=m.menuCode) data2
+	WHERE om.orderstatus=cc.code
+</select>
+
+<!-- 리뷰 num -->
+<select id="maxReNum" resultType="int">
+	select nvl(max(reNum),0) from review
+</select>
+
+<!-- 리뷰 insert -->
+<insert id="reviewInsert" parameterType="com.eatswill.dto.MyDTO">
+	insert into review(orderCode,pNum,reNum,userId,shopCode,reScore,reContent,reCreated,reImg)
+	values (#{orderCode},#{pNum},#{reNum},#{userId},#{shopCode},#{reScore},#{reContent},sysdate,#{reImg})
+</insert>
+</mapper>

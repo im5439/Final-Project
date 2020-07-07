@@ -116,7 +116,7 @@ String cp = request.getContextPath();
 								<li class="list-item list-item--member list-item--svip">
 								<a href="http://member2.gmarket.co.kr/MYInfo/memberinfo"
 									class="link__usermenu" data-montelena-acode="200003394"><span
-										class="text__username">김유저</span>님</a></li>
+										class="text__username">김유저</span>님</a></li> <!-- 세션에 있는 아이디값 -->
 								<li class="list-item"><a
 									href="https://signinssl.gmarket.co.kr/logout/logoutproc"
 									class="link__usermenu" data-montelena-acode="200003396">로그아웃</a></li>
@@ -184,14 +184,14 @@ String cp = request.getContextPath();
 										<td class="first_cell" rowspan="1">
 											<div class="td_detail">
 												${dto.orderDate }
-												[${dto.orderCode }]
+												<small>[${dto.orderCode}]</small>
 												<span class="btn_bg btn_w81_2"><a href="">재주문</a></span>
 											</div>
 										</td>
 										<td>
 											<div class="td_info">
 												<p>
-													<a href=""> <img src="/eatswill/resources/images/피자샵.png" width="70" height="70"></a>
+													<a href=""> <img src="/eatswill/resources/images/${dto.shopImg}" width="70" height="70"></a>
 												</p>
 												<ul>
 													<li class="seller_info"><em></em><a href="">${dto.shopName }</a></li>
@@ -207,7 +207,7 @@ String cp = request.getContextPath();
 												<span><b style="color: blue">${dto.orderStatus }</b></span>
 											</div>
 										</td>
-										<td><span class="btn_bg btn_w81_2"><a href="">리뷰쓰기</a></span></td>
+										<td><span class="btn_bg btn_w81_2"><a href="${reviewUrl }&orderCode=${dto.orderCode}">리뷰쓰기</a></span></td>
 									</tr>
 									</c:forEach>
 								</tbody>
