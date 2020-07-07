@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="menuListMapper">
+
+
+<!-- 전체 메뉴리스트  -->
+<select id="menuList" parameterType="hashMap" resultType="com.eatswill.dto.MenuListDTO">
+	select * from (
+	select rownum rnum, data.* from (
+	select menuImg,menuName,menuPrice,menuCode
+	from menu where shopCode=#{shopCode}) data)
+	order by rnum
+</select>
+
+<!-- 한가지 메뉴의 상세페이지  -->
+<select id="menuListOne" parameterType="hashMap" resultType="com.eatswill.dto.MenuListDTO">
+	select menuCode,menuName,menuPrice from menu where menuCode=#{menuCode}
+</select>
+
+<!-- 음식점 정보  -->
+<select id="shopInfo" parameterType="hashMap" resultType="com.eatswill.dto.MenuListDTO">
+select s.shoptel,s.shopname,s.ceoid,c.CEONAME,a.CODENAME timeName
+from shop s, ceo c, common_code a
+where s.CEOID=c.CEOID and s.timeCODE=a.CODE and s.CEOID=#{ceoId}
+</select>
+
+<!-- review maxNum  -->
+<select id="maxNum" resultType="int">
+	select nvl(max(renum),0) from review
+</select>
+
+<!-- 리뷰 리스트  -->
+<select id="reviewList" resultType="com.eatswill.dto.MenuListDTO">
+	select rpad(substr(userId,1,3),6,'*') userId, reScore ,to_char(reCreated,'yyyy-mm-dd hh:mm') reCreated,reContent from review
+</select>
+
+<!-- 리뷰 인서트  -->
+<insert id="insertReview" parameterType="com.eatswill.dto.MenuListDTO">
+	insert into review (orderCode,pnum,reNum,userId,shopCode,reScore,reContent,reCreated,reImg) 
+	values (#{orderCode},#{pnum},#{reNum},#{userId},#{shopCode},#{reScore},#{reContent},sysdate,#{reImg})
+</insert>
+
+
+
+
+</mapper>
