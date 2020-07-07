@@ -14,7 +14,11 @@
 
 <insert id="insertCustom" parameterType="com.eatswill.dto.CustomDTO">
 	insert into custom (USERID,USERPW,USERNAME,USERTEL,USEREMAIL,USERPOINT,USERADDR) 
-	values (#{id},#{pwd},#{name},#{tel},#{email},1000,#{addr})
+	values (#{id},#{pwd},#{name},#{tel},#{email},1000,(#{addr}||' '||#{addr2}))
 </insert>
+
+<select id="findIdPw" parameterType="String" resultType="com.eatswill.dto.CustomDTO">
+	select USERID id, USERPW pwd, USERNAME name from custom where USERID=#{id}
+</select>
 
 </mapper>

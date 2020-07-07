@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
 <script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
 <script type="text/javascript" src="/eatswill/resources/assets/js/login.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 		
 </head>
 <body>
@@ -43,7 +44,7 @@
 			
 			<br/>
 				
-			<footer id="footer" style="padding: 2em;width: 30%">
+			<footer id="footer" style="padding: 2em;width: 35%">
 				<div class="inner" style="place-content: center">
 					<section>
 						<h2>회원가입</h2>
@@ -58,12 +59,12 @@
 							
 							<!-- 2020.07.06 filed margin 수정, input[type="text"] height 수정, logincheck 속성 추가 -->
 							<div>
-								<div class="field" style="width: 68%">
+								<div class="field" style="width: 72%">
 									<input type="text" name="id" id="id" placeholder="아이디" style="font-size: 70%"/>
 								</div>
-								<input type="button" value="중복확인" class="logincheck" id="logincheck" style="width: 30%"/>								
+								<input type="button" value="중복확인" class="logincheck" id="idcheck" style="width: 25%"/>								
 								<div class="field">
-									<input type="text" name="pwd" id="pwd" placeholder="패스워드" style="font-size: 70%"/>
+									<input type="password" name="pwd" id="pwd" placeholder="패스워드" style="font-size: 70%"/>
 								</div>
 								<div class="field">
 									<input type="text" name="name" id="name" placeholder="이름" style="font-size: 70%"/>
@@ -74,8 +75,12 @@
 								<div class="field">
 									<input type="email" name="email" id="email" placeholder="이메일" style="font-size: 70%"/>
 								</div>
-								<div class="field">
+								<div class="field" style="width: 72%">
 									<input type="text" name="addr" id="addr" placeholder="주소" style="font-size: 70%"/>
+								</div>
+								<input type="button" value="주소검색" class="logincheck" id="addrcheck" onclick="execDaumPostcode();" style="width: 25%"/>
+								<div class="field">
+									<input type="text" name="addr2" id="addr2" placeholder="상세주소" style="font-size: 70%"/>
 								</div>
 							</div>
 							<ul class="actions" style="padding-top: 2em">

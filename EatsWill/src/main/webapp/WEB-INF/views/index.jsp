@@ -30,8 +30,8 @@
 					  <a href="" >로그인</a>  &nbsp;&nbsp;  
 					  <a href="">회원가입</a> <br/>
 					
-					  <input type="button" value="로그인" class="small"> &nbsp;&nbsp; 
-					  <input type="button" value="회원가입" class="small" onclick="javascript:location.href='<%=cp %>/choice.action';">
+					  <input type="button" value="로그인" class="small" onclick="javascript:location.href='<%=cp %>/login.action';"> &nbsp;&nbsp; 
+					  <input type="button" value="회원가입" class="small" onclick="javascript:location.href='<%=cp %>/signup.action';">
 					
 					</div>
 				<!-- Header -->
@@ -94,7 +94,7 @@
 									<a href="">
 										<h2>중식</h2>
 										<div class="content">
-											<p>짜장면 짬뽕 탕수육 </p>
+											<p>짜장면 짬뽕 탕수육</p>
 										</div>
 									</a>
 								</article>

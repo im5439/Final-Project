@@ -47,4 +47,11 @@ private SqlSessionTemplate sessionTemplate;
 		
 		return num;
 	}
+	
+	public CustomDTO findIdPw(String id) {
+		
+		CustomDTO custom = sessionTemplate.selectOne("mapper.findIdPw", id);
+	
+		return custom;
+	}
 }
