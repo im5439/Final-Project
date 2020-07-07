@@ -179,42 +179,37 @@ String cp = request.getContextPath();
 									</tr>
 								</tfoot>
 								<tbody id="orderList">
-
+										<c:forEach var="dto" items="${lists}">
 									<tr cno="3273614152" ctype="G" column="4" class="first">
 										<td class="first_cell" rowspan="1">
 											<div class="td_detail">
-												2020-07-01
-												[3273614152]
+												${dto.orderDate }
+												[${dto.orderCode }]
 												<span class="btn_bg btn_w81_2"><a href="">재주문</a></span>
 											</div>
 										</td>
 										<td>
 											<div class="td_info">
 												<p>
-													<a href=""> <img
-														src="/eatswill/resources/images/feeldo3.jpg" width="70" height="70"></a>
+													<a href=""> <img src="/eatswill/resources/images/피자샵.png" width="70" height="70"></a>
 												</p>
 												<ul>
-													<li class="seller_info"><em></em><a href="">신전떡볶이</a>
-
-													</li>
-													<li class="tit_info"><a
-														href="javascript:fnGoVipPage('1775279016')">치즈떡볶이</a></li>
-													<li class="cart">수량 : 1개 / 주문번호 : 3273614152</li>
-													<li class="option"><span class="btn_swhite"></span><span
-														class="optTxt">색상 : 2.바닐라 (0원)</span>
-													</li>
-													<li class="price"><strong>11,900</strong>원<span>(500원 할인)</span></li>
+													<li class="seller_info"><em></em><a href="">${dto.shopName }</a></li>
+													<li class="tit_info">${dto.menuName }</li>
+													
+													
+													<li class="price"><strong>${dto.oAmount }</strong>원</li>
 												</ul>
 											</div>
 										</td>
 										<td class="first_cell">
 											<div class="td_status">
-												<span><b style="color: blue">주문 완료</b></span>
+												<span><b style="color: blue">${dto.orderStatus }</b></span>
 											</div>
 										</td>
 										<td><span class="btn_bg btn_w81_2"><a href="">리뷰쓰기</a></span></td>
 									</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>

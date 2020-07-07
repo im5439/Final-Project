@@ -14,8 +14,9 @@ public class OrderMainDAO {
 		this.sessionTemplate = sessionTemplate;
 	}
 	
-	public List<OrderMainDTO> getList(int userId){
-		List<OrderMainDTO> lists = sessionTemplate.selectList("OrderMainMapper.getList",userId);
+	public List<OrderMainDTO> getList(String userId){
+		
+		List<OrderMainDTO> lists = sessionTemplate.selectList("orderMainMapper.getList", userId);
 		
 		return lists;
 	}

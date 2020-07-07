@@ -1,6 +1,8 @@
 package com.eatswill.dto;
 
 public class OrderMainDTO {
+	
+	// orderMain 컬럼
 	private String orderCode;
 	private String userId;
 	private int oAmount;
@@ -9,6 +11,23 @@ public class OrderMainDTO {
 	private String request;
 	private String orderStatus;
 	
+	// 그 외 필요한 데이터
+	private String shopName;
+	private String menuName;
+	
+	
+	public String getShopName() {
+		return shopName;
+	}
+	public void setShopName(String shopName) {
+		this.shopName = shopName;
+	}
+	public String getMenuName() {
+		return menuName;
+	}
+	public void setMenuName(String menuName) {
+		this.menuName = menuName;
+	}
 	public String getOrderCode() {
 		return orderCode;
 	}
