@@ -11,11 +11,12 @@
 <title>Insert title here</title>
 </head>
 <body>
+<c:forEach var="dto" items="${lists}">
 영업시간:${dto.timeName }
 매장전화번호: ${dto.shopTel }
 매장이름: ${dto.shopName }
 사장이름: ${dto.ceoName }
-
+</c:forEach>
 <table>
 <tr>
 	<td></td>
@@ -23,14 +24,6 @@
 	<td></td>
 	<td></td>
 </tr>
-
-<c:forEach var="dto" items="">
-
-
-
-
-</c:forEach>
-
 
 
 </table>

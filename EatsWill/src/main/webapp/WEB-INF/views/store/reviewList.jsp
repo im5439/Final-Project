@@ -15,6 +15,8 @@
 <table cellspacing="1" cellpadding="1" align="center" border="1" height="50" width="500">
 <tr align="center">
 	<td width="100">아아디</td>
+	<td width="100">메뉴명</td>
+	<td width="100">사진</td>
 	<td width="200">내용</td>
 	<td width="100">별점</td>
 	<td width="100">일시</td>
@@ -22,6 +24,8 @@
 <c:forEach var="dto" items="${lists }">
 <tr align="center">
 	<td>${dto.userId }</td>
+	<td>${dto.menuName }</td>
+	<td><img alt="" src="resources/img/${dto.reImg}" width="30px" height="30px" /></td>
 	<td>${dto.reContent }</td>
 	<td>${dto.reScore }</td>
 	<td>${dto.reCreated }</td>

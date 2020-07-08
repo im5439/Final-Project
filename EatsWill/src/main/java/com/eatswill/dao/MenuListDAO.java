@@ -31,10 +31,15 @@ public class MenuListDAO {
 	}
 
 	//음식점 정보
-	public MenuListDTO shopInfo (String ceoId) {
+	public List<MenuListDTO>  shopInfo (String ceoId,String shopCode) {
 
-		MenuListDTO dto = sessionTemplate.selectOne("menuListMapper.shopInfo",ceoId);
-		return dto;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("shopCode", shopCode);
+		map.put("ceoId", ceoId);
+
+		List<MenuListDTO> lists = sessionTemplate.selectList("menuListMapper.shopInfo",map);
+
+		return lists;
 	}
 
 
@@ -66,7 +71,7 @@ public class MenuListDAO {
 	//장바구니 인서트
 
 	public void insertCart(MenuListDTO dto) {
-		
+
 		System.out.println("DAO insert 들어옴 ");
 		sessionTemplate.insert("menuListMapper.insertCart",dto);
 
@@ -92,10 +97,10 @@ public class MenuListDAO {
 		System.out.println(lists.size());
 		return lists;
 	}
-	
+
 	//장바구니 셀렉트 검증
 	public List<MenuListDTO> selectCart(String userId,String menuCode) {
-		
+
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("userId", userId);
 		map.put("menuCode", menuCode);
@@ -104,8 +109,8 @@ public class MenuListDAO {
 		System.out.println("장바구니 셀렉트 검증 성공");
 		System.out.println(lists.size());
 		return lists;
-		
-		
+
+
 	}
 
 	//장바구니 삭제
@@ -115,16 +120,71 @@ public class MenuListDAO {
 		sessionTemplate.delete("menuListMapper.deleteCart",userId);
 	}
 
+	//장바구니 샵코드 데이터있는지 검증
 	public List<MenuListDTO> cartChkShop(String userId,String shopCode) {
-		
+
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("shopCode", shopCode);
 		map.put("userId", userId);
 
 		List<MenuListDTO> lists = sessionTemplate.selectList("menuListMapper.cartChkShop",map);
-		
+
 		return lists;
-		
+
 	}
+
+	//찜테이블 인서트
+
+	public void heartInsert(MenuListDTO dto) {
+
+		sessionTemplate.insert("menuListMapper.heartInsert",dto);
+	}
+
+	//찜테이블 셀렉트(검증)
+
+	public List<MenuListDTO> heartSelect(String userId,String shopCode) {
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("shopCode", shopCode);
+		map.put("userId", userId);
+
+		List<MenuListDTO> lists = sessionTemplate.selectList("menuListMapper.heartSelect",map);
+
+		return lists;
+
+	}
+
+	//찜테이블 딜리트
+
+	public void heartDelete(String userId,String shopCode) {
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("shopCode", shopCode);
+		map.put("userId", userId);
+
+		sessionTemplate.delete("menuListMapper.heartDelete",map);
+	}
+
+	
+	//음식점 전체 리스트
+	public List<MenuListDTO> shopList(){
+
+		List<MenuListDTO> shop_lists = 
+				sessionTemplate.selectList("menuListMapper.shopList");
+
+		return shop_lists;
+
+	}
+	
+	//한가지 음식점을 셀렉트
+	public MenuListDTO shopSelectOne(String shopcode){
+
+		MenuListDTO dto =
+				sessionTemplate.selectOne("menuListMapper.shopSelectOne");
+
+		return dto;
+	}
+	
+
 }
 

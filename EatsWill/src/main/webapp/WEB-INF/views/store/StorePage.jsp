@@ -70,7 +70,7 @@ String cp = request.getContextPath();
 	
 	function menuPage(){
 		
-		var url = "<%=cp%>/menu.action";
+		var url = "<%=cp%>/menu.action?shopCode=" + "${shopCode}";
 		
 		$.post(url,function(args){
 			$("#menuData").html(args);
@@ -94,7 +94,7 @@ String cp = request.getContextPath();
 	
 	function infoPage(){
 		
-		var url = "<%=cp%>/info.action";
+		var url = "<%=cp%>/info.action?shopCode=" +"${shopCode}" + "&ceoId=" + "${ceoId}";
 		
 		$.post(url,function(args){
 			$("#infoData").html(args);
@@ -112,8 +112,26 @@ String cp = request.getContextPath();
 
 </head>
 <body>
-
-<input type="button" onclick="javascript:location.href='<%=cp%>/write_review.action';" value="리뷰작성"/>
+<form action="">
+<table width="400px" style="border: solid;">
+<c:forEach var="dto" items="${lists}">
+	<tr>
+		<td>
+		<img src="resources/img/${dto.shopImg}" width="40px" height="40px"></td>
+		<td colspan="2">
+		음식점이름: ${dto.shopName}<br/>
+		사장님 이름: ${dto.ceoName}<br/>
+		평균별점: ${dto.reScore}
+		<c:if test="${chk=='in'}">
+		<img src="resources/img/fullheart.png" width="20px" height="20px" onclick="javascript:location.href='<%=cp%>/heart.action?shopCode=${dto.shopCode }&userId=${userId}&chk=${chk }&ceoId=${dto.ceoId }'">
+		</c:if>
+		<c:if test="${chk=='del'}">
+		<img  src="resources/img/emptyheart.png" width="20px" height="20px" onclick="javascript:location.href='<%=cp%>/heart.action?shopCode=${dto.shopCode }&userId=${userId }&chk=${chk}&ceoId=${dto.ceoId }'">
+		</c:if>
+		</td>
+	</tr>
+</c:forEach>
+</table>
 
 <div id="container">
 	<ul>
@@ -135,6 +153,8 @@ String cp = request.getContextPath();
 	</div>
 
 </div>
+<input type="hidden" name="shopCode" value="${dto.shopCode}">
+</form>
 
 </body>
 </html>

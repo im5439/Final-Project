@@ -2,6 +2,15 @@ package com.eatswill.dto;
 
 public class MenuListDTO {
 	
+	
+	private String chk;
+	
+	public String getChk() {
+		return chk;
+	}
+	public void setChk(String chk) {
+		this.chk = chk;
+	}
 	//∏≈¿Â
 	private String shopCode;
 	private String shopName;
@@ -47,7 +56,7 @@ public class MenuListDTO {
 	private int pNum;
 	private int reNum;
 	private String userId;
-	private int reScore;
+	private double reScore;
 	private String reContent;
 	private String reCreated;
 	private String reImg;
@@ -169,10 +178,10 @@ public class MenuListDTO {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public int getReScore() {
+	public double getReScore() {
 		return reScore;
 	}
-	public void setReScore(int reScore) {
+	public void setReScore(double reScore) {
 		this.reScore = reScore;
 	}
 	public String getReContent() {
