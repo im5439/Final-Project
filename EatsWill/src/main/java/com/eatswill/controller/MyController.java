@@ -1,5 +1,6 @@
 package com.eatswill.controller;
 
+import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.eatswill.dao.EatswillDAO;
 import com.eatswill.dto.CustomDTO;
@@ -29,30 +32,46 @@ public class MyController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {		
-		return "index";
+		return "shopping";
 	}
 	
 	@RequestMapping(value = "/main.action", method = RequestMethod.GET)
 	public String main() {		
-		return "index";
+		return "test";
 	}
 	
 	@RequestMapping(value = "/signup.action", method = RequestMethod.GET)
 	public String signup() {		
-		return "custom/Signup";
+		return "custom/signup";
 	}
 	
 	@RequestMapping(value = "/login.action", method = RequestMethod.GET)
-	public String login() {		
-		return "custom/Login";
+	public String login(HttpServletRequest req, String message) {	
+		
+		if(message!=null && !message.equals("")) {
+			Map<String, ?> reaMap = RequestContextUtils.getInputFlashMap(req);
+			if(reaMap!=null) {
+				message = (String)reaMap.get("message");
+			}
+			
+			req.setAttribute("message", message);
+		}
+		
+		return "custom/login";
 	}
 	
 	@RequestMapping(value = "/login_ok.action", method = RequestMethod.POST)
-	public String login_ok(HttpServletRequest req, String id, String pwd) {	
+	public String login_ok(HttpServletRequest req, RedirectAttributes rea, String id, String pwd) {	
 		
 		CustomDTO dto = dao.checkIdPw(id, pwd);
 		
 		if (dto == null) {
+			String message = "";
+			
+			// message = URLEncoder.encode("아이디 또는 패스워드를 정확히 입력하세요.", "UTF-8");
+			message = "아이디 또는 패스워드를 정확히 입력하세요.";
+			rea.addFlashAttribute("message", message);
+		
 			return "redirect:/login.action";
 		}
 		
@@ -87,7 +106,7 @@ public class MyController {
 	@RequestMapping(value = "/findidpw.action", method = RequestMethod.GET)
 	public String findidpw() {
 		
-		return "custom/FindIdPw";
+		return "custom/findIdPw";
 	}
 	
 	@RequestMapping(value = "/findidpw_ok.action", method = RequestMethod.POST)
