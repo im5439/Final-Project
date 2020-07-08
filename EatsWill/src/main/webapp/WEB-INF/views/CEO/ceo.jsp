@@ -188,8 +188,8 @@
 				<li class="n2"><a href="<%=cp %>/addStore.action" style="cursor: pointer">매장관리</a></li>
 				<li class="n3"><a href="<%=cp %>/addMenu.action" style="cursor: pointer">메뉴관리</a></li>
 				<li class="n6"><a href="<%=cp %>/sales.action" style="cursor: pointer">매출관리</a></li>
-				<li class="n4"><a href="#" style="cursor: pointer">영업일 관리</a></li>
-				<li class="n5"><a href="#" style="cursor: pointer">배달지역 관리</a></li>
+				<li class="n5"><a href="<%=cp %>/ceoReview.action" style="cursor: pointer">리뷰 관리</a></li>
+				<li class="n4"><a href="<%=cp %>/storeList.action" style="cursor: pointer">매장목록</a></li>
 			</ul>
 
 			<div class="mid clearfix">
