@@ -61,9 +61,9 @@ public class MyController {
 	}
 	
 	@RequestMapping(value = "/login_ok.action", method = RequestMethod.POST)
-	public String login_ok(HttpServletRequest req, RedirectAttributes rea, String id, String pwd) {	
+	public String login_ok(HttpServletRequest req, RedirectAttributes rea, String id, String pw) {	
 		
-		CustomDTO dto = dao.checkIdPw(id, pwd);
+		CustomDTO dto = dao.checkIdPw(id, pw);
 		
 		if (dto == null) {
 			String message = "";
@@ -103,20 +103,33 @@ public class MyController {
 		return "pass";
 	}
 	
-	@RequestMapping(value = "/findidpw.action", method = RequestMethod.GET)
-	public String findidpw() {
+	@RequestMapping(value = "/findidpw.action", method = RequestMethod.POST)
+	public String findidpw(HttpServletRequest req, String mode) {
+		
+		req.setAttribute("mode", mode);
 		
 		return "custom/findIdPw";
 	}
 	
 	@RequestMapping(value = "/findidpw_ok.action", method = RequestMethod.POST)
-	public String findidpw_ok(HttpServletRequest req, String id, String email) {	
+	public String findidpw_ok(HttpServletRequest req, CustomDTO dto) {	
 		
-		// String id = req.getParameter("id");
-		// String email = req.getParameter("email");
+		String subject = "";
+		String content = "";
 
-		CustomDTO dto = dao.findIdPw(id);
-
+		if(dto.getName()!=null && !dto.getName().equals("")) {
+			
+			dto = dao.tryId(dto.getName(), dto.getEmail());
+			subject = "회원님의 아이디";
+			content = dto.getName() + " 회원님의 아이디는 [" + dto.getId() + "] 입니다.";
+			
+		} else if(dto.getId()!=null && !dto.getId().equals("")) {
+			
+			dto = dao.tryPw(dto.getId(), dto.getEmail());
+			subject = "회원님의 비밀번호";
+			content = dto.getName() + " 회원님의 비밀번호는 [" + dto.getPw() + "] 입니다.";
+		}
+		
 		/*
 		if (dto == null || !dto.getEmail().equals(email)) {
 			req.setAttribute("message", "아이디 또는 이메일을 정확히 입력하세요.");
@@ -128,18 +141,19 @@ public class MyController {
 		*/
 		
 		// 아이디가 존재하지 않을 경우
+		/*
 		if (dto == null) {
-			// String message = "Error";
+			String message = "Error";
 			
 			return "redirect:/findidpw.action";
-			// return "redirect:/findidpw.action?message=" + message;
 		}
+		*/
 		
 		String senderName = "EatsWill";
 		String senderEmail = "EatsWill@eatswill.com";
-		String receiverEmail = email;
-		String subject = "회원님의 비밀번호";
-		String content = dto.getName() + " 회원님의 비밀번호는 [" + dto.getPwd() + "] 입니다.";
+		String receiverEmail = dto.getEmail();
+		// String subject = "회원님의 비밀번호";
+		// String content = dto.getName() + " 회원님의 비밀번호는 [" + dto.getPw() + "] 입니다.";
 
 		String host = "localhost";
 

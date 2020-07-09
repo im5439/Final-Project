@@ -3,7 +3,7 @@ package com.eatswill.dto;
 public class CustomDTO {
 
 	private String id;
-	private String pwd;
+	private String pw;
 	private String name;
 	private String tel;
 	private String email;
@@ -17,11 +17,11 @@ public class CustomDTO {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getPwd() {
-		return pwd;
+	public String getPw() {
+		return pw;
 	}
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
+	public void setPw(String pw) {
+		this.pw = pw;
 	}
 	public String getName() {
 		return name;

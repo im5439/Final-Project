@@ -50,19 +50,38 @@ private SqlSessionTemplate sessionTemplate;
 		return num;
 	}
 	
-	public CustomDTO findIdPw(String id) {
+	public CustomDTO tryId(String name, String email) {
 		
-		CustomDTO custom = sessionTemplate.selectOne("mapper.findIdPw", id);
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		
+		params.put("user", "USERNAME");
+		params.put("id", name);
+		params.put("email", email);
+		
+		CustomDTO custom = sessionTemplate.selectOne("mapper.tryIdPw", params);
 	
 		return custom;
 	}
 	
-	public CustomDTO checkIdPw(String id, String pwd) {
+	public CustomDTO tryPw(String id, String email) {
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		
+		params.put("user", "USERID");
+		params.put("id", id);
+		params.put("email", email);
+		
+		CustomDTO custom = sessionTemplate.selectOne("mapper.tryIdPw", params);
+	
+		return custom;
+	}
+	
+	public CustomDTO checkIdPw(String id, String pw) {
 		
 		HashMap<String, Object> params = new HashMap<String, Object>();
 
 		params.put("id", id);
-		params.put("pwd", pwd);
+		params.put("pw", pw);
 		
 		CustomDTO custom = sessionTemplate.selectOne("mapper.checkIdPw", params);
 	

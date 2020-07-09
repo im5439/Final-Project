@@ -13,19 +13,19 @@
 </select>
 
 <select id="checkIdPw" parameterType="hashMap" resultType="com.eatswill.dto.CustomDTO">
-	select 	USERID id, USERPW pwd, USERNAME name, USERTEL tel, 
+	select 	USERID id, USERPW pw, USERNAME name, USERTEL tel, 
 			USEREMAIL email, USERPOINT point, USERADDR addr 
 	from 	custom 
-	where 	USERID=#{id} and USERPW=#{pwd}
+	where 	USERID=#{id} and USERPW=#{pw}
 </select>
 
 <insert id="insertCustom" parameterType="com.eatswill.dto.CustomDTO">
 	insert into custom (USERID,USERPW,USERNAME,USERTEL,USEREMAIL,USERPOINT,USERADDR) 
-	values (#{id},#{pwd},#{name},#{tel},#{email},1000,(#{addr}||' '||#{addr2}))
+	values (#{id},#{pw},#{name},#{tel},#{email},1000,(#{addr}||' '||#{addr2}))
 </insert>
 
-<select id="findIdPw" parameterType="String" resultType="com.eatswill.dto.CustomDTO">
-	select USERID id, USERPW pwd, USERNAME name from custom where USERID=#{id}
+<select id="tryIdPw" parameterType="hashMap" resultType="com.eatswill.dto.CustomDTO">
+	select USERID id, USERPW pw, USERNAME name, USEREMAIL email from custom where ${user}=#{id} and USEREMAIL=#{email}
 </select>
 
 </mapper>

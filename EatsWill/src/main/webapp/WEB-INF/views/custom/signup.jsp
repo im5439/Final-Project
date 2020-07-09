@@ -384,7 +384,7 @@ ng\:form {
         		<div class="control-label">패스워드</div>
 
         		<div class="controls">
-            		<input type="password" name="pwd" id="pwd" style="display: inline;height: 34px"/>
+            		<input type="password" name="pw" id="pw" style="display: inline;height: 34px"/>
             		<span class="alert-text">특수문자를 포함한 영문과 숫자로 입력 필요. ex) !a123</span>
 				</div>
 			</div>

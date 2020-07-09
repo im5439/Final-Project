@@ -306,14 +306,14 @@ ng\:form {
 								src="image/btn-appdown.png" alt="앱 다운로드"></a>
 						</div>
 					</div> -->
-				<!-- ----------------------------------------------------------------------------------------- -->	
+				<!-- ----------------------------------------------------------------------------------------- -->					
 					<nav>
 						<ul>
 							<li><a href="#menu">Menu</a></li>
 						</ul>
 					</nav>
 						
-						<nav id="menu">
+					<nav id="menu">
 						<h2>Menu</h2>
 						<ul>
 							<c:choose>
@@ -321,21 +321,26 @@ ng\:form {
 									<li><a href="<%=cp%>/itving/login.do">로그인</a></li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="<%=cp%>/itving/myPage.do"><font color="blue">${sessionScope.customInfo.name }</font> 님 환영합니다.</a>		
+									<li><a href="<%=cp%>/itving/myPage.do"><font color="blue">${sessionScope.customInfo.name }</font> 님 환영합니다.</a>
+		                      		<p style="text-align: left">주소지 : ${sessionScope.customInfo.addr }<br/>
+		                      		전화번호 : ${sessionScope.customInfo.tel }</br>
+		                      		포인트 : ${sessionScope.customInfo.point }</p>
+											
 									<a href="javascript:logout();" data-nethru_clcode="A000012">로그아웃</a></li>
 								</c:otherwise>
 							</c:choose>
-							<li><a href="index.html">Home</a></li>
-							<li><a href="generic.html">내정보</a></li>
-							<li><a href="generic.html">주문내역</a></li>
-							<li><a href="generic.html">ㅇㅇ</a></li>
-							<li><a href="elements.html">ㅇㅇ</a></li>
+							<li><a href="<%=cp%>/main.action">Home</a></li>
+		                    <li><a href="generic.html">내정보수정</a></li>
+		                    <li><a href="generic.html">장바구니</a></li>
+		                    <li><a href="generic.html">주문내역</a></li>
+		                    <li><a href="elements.html">찜 목록</a></li>
 						</ul>
 					</nav>
 				<!-- ----------------------------------------------------------------------------------------- -->	
 					<div class="nav-top clearfix"
 						ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
 						<h1 class="logo pull-left" ng-click="click_home()">요기요</h1>
+						<!-- <a href="main.action"><img alt="delicious" src="/eatswill/resources/images/banner2.png"></a> -->
 						<div id="cart" class="pull-right">
 							<span class="gps-status ng-binding"
 								ng-show="check_show_location_button()"
@@ -378,7 +383,8 @@ ng\:form {
 					</div>
 				</div>
 
-				<div id="search" class="clearfix search search-show" style="background:url('/eatswill/resources/images/th.gif'); color: white;">
+				<div id="search" class="clearfix search search-show" style="background:url('/eatswill/resources/images/th.gif')">
+				<!-- <div id="search" class="clearfix search search-show" style="background:url('/eatswill/resources/images/banner2.png')"> -->
 					
 					<div class="input-group">
 						<span class="input-group-btn loc">

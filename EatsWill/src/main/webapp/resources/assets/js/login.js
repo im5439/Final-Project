@@ -85,6 +85,36 @@ function sendIt(){
 
 }
 
+function tryId_click() {
+
+	var f = document.myForm;
+	
+	var mode = document.createElement('input');
+	mode.setAttribute("type", "hidden");
+	mode.setAttribute("name", "mode");
+	mode.setAttribute("value", "id");
+	
+	f.appendChild(mode);
+        
+	f.action = "findidpw.action";
+	f.submit();
+}
+
+function tryPw_click() {
+
+	var f = document.myForm;
+	
+	var mode = document.createElement('input');
+	mode.setAttribute("type", "hidden");
+	mode.setAttribute("name", "mode");
+	mode.setAttribute("value", "pw");
+	
+	f.appendChild(mode);
+        
+	f.action = "findidpw.action";
+	f.submit();
+}
+
 $(function() {
 		
 	$("#findId").click(function(){
@@ -95,26 +125,6 @@ $(function() {
 		var specialCheck = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
 	
 		var f = document.myForm;
-		
-		if(!f.id.value){
-			alert("아이디를 입력하세요");
-			f.id.focus();
-			return;
-		}
-		
-		if (f.id.value.length < 6 || f.id.value.length > 20) { 
-			alert("아이디는 영문 및 숫자 6~20자 입니다."); 
-			f.id.focus();
-			return;
-		} else if (specialCheck.test(f.id.value)) { 
-			alert("아이디는 특수문자를 포함 할 수 없습니다.");
-			f.id.focus();
-			return;
-		} else if (!engCheck.test(f.id.value) || korCheck.test(f.id.value)) {
-			alert("아이디는 영문 및 숫자 입니다.");
-			f.id.focus();
-			return;
-		}
 		
 		if(!f.email.value){
 			alert("이메일을 입력하세요");
@@ -132,9 +142,6 @@ $(function() {
 		f.submit();
 	
 	});
-});
-
-$(function() {
 		
 	$("#idcheck").click(function(){
 
@@ -159,10 +166,6 @@ $(function() {
 	
 	});
 	
-});
-
-$(function() {
-		
 	$("#logon").click(function(){
 		
 		var f = document.myForm;
@@ -174,7 +177,6 @@ $(function() {
         
 		f.action = "login_ok.action";
 		f.submit();
-	
 	});
 	
 });
@@ -217,8 +219,6 @@ function execDaumPostcode() {
     	}
 	}).open();
 }
-
-
 
     function foldDaumPostcode() {
     	// 우편번호 찾기 찾기 화면을 넣을 element

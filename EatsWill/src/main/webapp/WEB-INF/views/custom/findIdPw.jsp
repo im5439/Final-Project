@@ -104,10 +104,20 @@ ng\:form {
 
 	$(function() {
 		
+		// 정보가 없을 경우 메세지 출력
 		if('${message }'!=null && '${message }'!="") {
 			alert('${message }');
 		}
-		
+	
+		// mode에 따라 선택한 화면에 밑줄(style=text-decoration: underline) 추가
+		if('${mode }'=="id") {
+			$(".tryId").css("text-decoration", "underline");
+			$(".tryId").css("color", "red");
+		} else {
+			$(".tryPwd").css("text-decoration", "underline");
+			$(".tryPwd").css("color", "red");
+		}
+	
 	});
 
 </script>
@@ -382,32 +392,45 @@ ng\:form {
 	
 	<div class="rd-wrapper contact-wrapper">
     	<form class="form-horizontal form-signin" method="POST" action="" name="myForm">
-      	<div class="registration-wrap" style="width: 600px"> 
-			<div class="control-group">
-        		<div class="control-label">아이디</div>
-
-        		<div class="controls">
-            		<input type="text" name="id" id="id" style="display: inline;height: 34px;width: 70%"/>
+	    	<label style="font-size: 16px;margin-top: 2em"><a href="#" class="tryId" style="color: #616161" onclick="tryId_click()";>아이디 찾기</a></label>&nbsp;/
+	    	<label style="font-size: 16px;margin-top: 2em"><a href="#" class="tryPwd" style="color: #616161" onclick="tryPw_click()">비밀번호 찾기</a></label>
+	      	<div class="registration-wrap" style="width: 600px"> 
+	      	
+	      		<c:choose>
+					<c:when test="${mode=='id' }">
+						<div class="control-group">
+			        		<div class="control-label">이름</div>
+			
+			        		<div class="controls">
+			            		<input type="text" name="name" id="name" style="display: inline;height: 34px;width: 70%"/>
+							</div>
+						</div>      	
+					</c:when>
+			      	<c:otherwise>
+						<div class="control-group">
+			        		<div class="control-label">아이디</div>
+			
+			        		<div class="controls">
+			            		<input type="text" name="id" id="id" style="display: inline;height: 34px;width: 70%"/>
+							</div>
+						</div>
+					</c:otherwise>
+				</c:choose>
+	
+				<div class="control-group">
+	        		<div class="control-label">이메일</div>
+	
+	        		<div class="controls">
+	            		<input type="text" name="email" id="email" style="display: inline;height: 34px;width: 70%"/>
+					</div>
 				</div>
 			</div>
-
-			<div class="control-group">
-        		<div class="control-label">패스워드</div>
-
-        		<div class="controls">
-            		<input type="password" name="pw" id="pw" style="display: inline;height: 34px;width: 70%"/>
-				</div>
-			</div>
-		</div>
-		
-		<label><a href="#" class="tryId" onclick="tryId_click();">아이디</a></label> / 
-		<label><a href="#" class="tryPw" onclick="tryPw_click();">비밀번호 찾기</a></label>
-
-      	<div class="btn-wrapper">
-        	<button type="button" id="logon" class="btn" style="color: #fff">로그인</button>
-      	</div>
-    </form>
-  </div>
+	
+	      	<div class="btn-wrapper">
+	        	<button type="button" id="findId" class="btn" style="color: #fff">확인</button>
+	      	</div>
+	    </form>
+	</div>
 
 	<div id="quick-btn" class="hide-btn">
 		<a ng-click="click_cart_button()" id="button-cart-btm" href=""
