@@ -72,5 +72,11 @@ public class MenuListController {
 		return "store/menuArticle";
 	}
 	
+	@RequestMapping(value = "/time", method = {RequestMethod.GET,RequestMethod.POST})
+	public String timeTest() {
+	
+		return "store/timeTest";
+	}
+	
 
 }

@@ -99,34 +99,49 @@ a.btn-layerClose:hover {
 
 </style>
 
+
 <script type="text/javascript">
 	
-	//ajax 공부 하기
+	
+	
+	//일반 팝업
+	$(document).on('click','#test',function(){
+		var data= $("#menuCode").val();
+		window.open('<%=cp%>/menuArticle.action?menuCode='+data,'test','width=400,height=400');
+		
+	});
+	
 
-	$('.btn-example').click(function(menuCode){
+	//ajax
+	$('.btn-example').click(function(){
         var $href = $(this).attr('href');
-        var menuCode = "userId="+"${dto.menuCode}";
+        var params = "menuCode="+$("#menuCode").val();
         
         $.ajax({
-        	type:"get",
-        	url:"<%=cp%>/menuArticle.action",
-        	data:param,
-        	success: function(){
-        		layer_popup($href);
-        	},
-        	error:function(e){
-				e.responseText();
-			}
-        });
+         	type:"post",
+         	url:"<%=cp%>/menuArticle.action",
+         	data:params,
+         	success: function(args){
+         		layer_popup($href); //팝업 띄우기
+         		$(".pop-container").html(args); // 팝업 내용 - menuArticle
+         		
+         	},
+         	error:function(e){
+    			e.responseText();
+    		}
+    		
+     	});
         
     });
 	
+	
+	//레이어 팝업
     function layer_popup(el){
 
         var $el = $(el);        //레이어의 id를 $el 변수에 저장
         var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
 
-        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn(); //레이어를 감지하면 dim-layer 클래스 이름을 가진 곳에 fadein
 
         var $elWidth = ~~($el.outerWidth()),
             $elHeight = ~~($el.outerHeight()),
@@ -139,14 +154,34 @@ a.btn-layerClose:hover {
                 marginTop: -$elHeight /2,
                 marginLeft: -$elWidth/2
             })
+            
+          
+            
         } else {
             $el.css({top: 0, left: 0});
         }
         
-        $('.ctxt mb20').html();
+       
 
         $el.find('a.btn-layerClose').click(function(){
             isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+           
+           <%--
+           	 확인 또는 취소되었을때 메세지 띄우기 테스트
+             $ajax({
+            	type:"POST",
+            	url:"<%=cp%>/time.action",
+            	timeout:2000,
+            	success: function(args){
+             		
+             		$("#timetest").html(args); // 팝업 내용 - menuArticle
+             		
+             },
+             	error:function(e){
+        			e.responseText();
+        	 }
+            	
+            }); --%>
             return false;
         });
 
@@ -154,7 +189,9 @@ a.btn-layerClose:hover {
             $('.dim-layer').fadeOut();
             return false;
         });
-
+        
+        //장바구니로 보내기 기능
+        
     }
 	
 </script>
@@ -163,37 +200,48 @@ a.btn-layerClose:hover {
 </head>
 <body>
 
+<input type="button" id="test" value="팝업 테스트"/>
 <!--  href="<%=cp%>/menuArticle.action?menuCode=${dto.menuCode}" -->
 
 <form action="" method="post">
 <c:forEach var="dto" items="${lists }">
 
 <br/>
-<a href="#layer2" class="btn-example">메뉴명:${dto.menuName }</a>
-<div class="dim-layer">
-    <div class="dimBg">1</div>
-    <div id="layer2" class="pop-layer">
-        <div class="pop-container">
-            <div class="pop-conts">
-                <!--content //-->
-                <p class="ctxt mb20">
-                
-				</p>
-				
-                <div class="btn-r">
-                    <a href="#" class="btn-layerClose">Close</a>
-                </div>
-                <!--// content-->
-            </div>
-        </div>
-    </div>
-</div>
+메뉴명:<a href="#layer2" class="btn-example">${dto.menuName }</a>
+
 
 	사진: ${dto.menuImg }
-	메뉴가격: ${dto.menuPrice }원
+	메뉴가격: ${dto.menuPrice }원 <br/><br/>	
 	
+	<div id="timetest"></div>
+
+<input type="hidden" id="menuCode" value="${dto.menuCode }"/>
 
 </c:forEach>
 </form>
+
+<div class="dim-layer">1
+	 <div class="dimBg">1</div>
+	    <div id="layer2" class="pop-layer">
+	        <div class="pop-container">
+	            <div class="pop-conts">
+	                <!--content //-->
+	                <p class="ctxt mb20">
+	                
+					</p>
+					
+	                
+	                <!--// content-->
+	            </div>
+	        </div>
+	        <div class="btn-r">
+	        	<a href="#" class="btn-layerClose">Close</a>
+	       </div>
+	 </div>
+</div>
+
+
+
+
 </body>
 </html>

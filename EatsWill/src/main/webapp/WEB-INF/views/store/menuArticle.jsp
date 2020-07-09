@@ -10,55 +10,75 @@
 	<title>BLUEB</title>
 </head>
 
-<body onload="init();">
+
 <script language="JavaScript">
 
 var menuPrice;
-var amount;
+var cQty;
+
+init(); //상훈씨 덕분~
 
 function init () {
-	menuPrice = document.form.menuPrice.value;
-	amount = document.form.amount.value;
-	document.form.sum.value = menuPrice;
-	change();
+   menuPrice = document.form.menuPrice.value;
+   cQty = document.form.cQty.value;
+   document.form.cAmount.value = menuPrice;
+   change();
 }
 
 function add () {
-	hm = document.form.amount;
-	sum = document.form.sum;
-	hm.value ++ ;
-
-	sum.value = parseInt(hm.value) * menuPrice;
+   hm = document.form.cQty;
+   cAmount = document.form.cAmount;
+   hm.value ++ ;
+   cAmount.value = parseInt(hm.value) * menuPrice;
 }
 
 function del () {
-	hm = document.form.amount;
-	sum = document.form.sum;
-		if (hm.value > 1) {
-			hm.value -- ;
-			sum.value = parseInt(hm.value) * menuPrice;
-		}
+   hm = document.form.cQty;
+   cAmount = document.form.cAmount;
+      if (hm.value > 1) {
+         hm.value -- ;
+         cAmount.value = parseInt(hm.value) * menuPrice;
+      }
 }
 
 function change () {
-	hm = document.form.amount;
-	sum = document.form.sum;
+   hm = document.form.cQty;
+   cAmount = document.form.cAmount;
 
-		if (hm.value < 0) {
-			hm.value = 0;
-		}
-	sum.value = parseInt(hm.value) * menuPrice;
+      if (hm.value < 0) {
+         hm.value = 0;
+      }
+      cAmount.value = parseInt(hm.value) * menuPrice;
 }  
+
+
 //-->
 </script>
+	
+</head>
+
+<body onload="init();">
+
+<p><b>메뉴상세페이지</b></p>
 메뉴명: ${dto.menuName }
-<form name="form" method="get">
-수량 : <input type=hidden name="menuPrice" value="${dto.menuPrice }">
+<form name="form" action="<%=cp %>/cartInsert.action" method="post">
+수량 : 
+<input type="hidden" name="menuPrice" value="${dto.menuPrice }">
 <input type="button" value=" - " onclick="del();">
-<input type="text" name="amount" value="1" size="3" onchange="change();">
+<input type="text" name="cQty" value="1" size="3" onchange="change();">
 <input type="button" value=" + " onclick="add();">
 <br/>
+금액 : <input type="text" name="cAmount" size="11" readonly="readonly" value="${dto.menuPrice }">원
+<input type="hidden" name="menuCode" value="${dto.menuCode }">
+<input type="hidden" name="menuName" value="${dto.menuName }">
+<input type="hidden" name="shopCode" value="${dto.shopCode }">
+<input type="submit" value="전송" onclick="return confirm('장바구니에 추가하시겠습니까?');">
 
-금액 : <input type="text" name="sum" size="11" readonly="readonly">원
+<br/><br/><br/>
+<br/><br/><br/>
+<br/><br/><br/>
+
+여기에 데이터 띄우자
 </form>
+
 </body>
