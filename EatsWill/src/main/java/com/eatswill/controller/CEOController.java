@@ -1,6 +1,7 @@
 package com.eatswill.controller;
 
 import java.io.File;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -113,22 +114,35 @@ public class CEOController {
 	@RequestMapping(value = "/addStore_ok.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String addStore_ok(HttpServletRequest request, HttpSession session, CeoDTO dto) {
 
-		System.out.println("addStore_ok");
 		CeoInfo info = (CeoInfo) session.getAttribute("ceoInfo");
 		String ceoId = info.getCeoId();
 		dto.setCeoId(ceoId);
 		dto.setShopAddr(dto.getShopAddr1().concat(dto.getShopAddr2()));
-		dto.setShopCode(dao.getMaxCode() + 1);
-		System.out.println(dao.getMaxCode() + 1);
-		System.out.println(dto.getShopAddr1());
-		System.out.println(dto.getUploadfile());
+		
+		//매장이미지사진파일 업로드
 		MultipartFile uploadfile = dto.getUploadfile();
 		String path = request.getSession().getServletContext().getRealPath("resources/img");
+		String newFileName = null;
+		File dir = new File(path);
+		if (!dir.exists())
+			dir.mkdirs();
 		if(uploadfile!=null) {
 			String shopImg = uploadfile.getOriginalFilename();
-			dto.setShopImg(shopImg);
+			
+			// 파일 확장자
+			String fileExt = shopImg.substring(shopImg.lastIndexOf("."));
+			if(fileExt == null || fileExt.equals(""))
+				return null;
+			
+			// 서버에 저장할 새로운 파일명을 만든다.
+			newFileName = String.format("%1$tY%1$tm%1$td%1$tH%1$tM%1$tS", 
+					         Calendar.getInstance());
+			newFileName += System.nanoTime();
+			newFileName += fileExt;
+			
+			dto.setShopImg(newFileName);
 			try {
-				File file = new File(path + shopImg);
+				File file = new File(path + newFileName);
 				uploadfile.transferTo(file);
 				dao.insertStore(dto);
 			} catch (Exception e) {
@@ -159,5 +173,10 @@ public class CEOController {
 		return "CEO/ceoReview";
 
 	}
+	
+	
+	
+	
+	
 
 }

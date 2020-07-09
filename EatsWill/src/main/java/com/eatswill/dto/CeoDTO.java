@@ -1,5 +1,7 @@
 package com.eatswill.dto;
 
+import java.util.Calendar;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class CeoDTO {
@@ -115,6 +117,7 @@ public class CeoDTO {
 	}
 	public void setUploadfile(MultipartFile uploadfile) {
 		this.uploadfile = uploadfile;
+		
 	}
 	
 	

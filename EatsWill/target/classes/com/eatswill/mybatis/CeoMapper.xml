@@ -22,7 +22,7 @@
 <!-- 사장님 매장추가 -->
 <insert id="insertStore" parameterType="com.eatswill.dto.CeoDTO">
 	insert into shop (shopCode, ceoId, shopName, category, shopAddr, shopTel, timeCode, shopImg, shopCreated, franchise)
-	values (#{shopCode}, #{ceoId}, #{shopName}, #{category}, #{shopAddr}, #{shopTel}, 1, #{shopImg}, sysdate, #{franchise})	
+	values (#{category}||'_'||no_seq_shopCode.nextval, #{ceoId}, #{shopName}, #{category}, #{shopAddr}, #{shopTel}, 1, #{shopImg}, sysdate, #{franchise})	
 </insert>
 
 <!-- 사장님 보유매장 -->

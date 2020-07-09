@@ -277,19 +277,18 @@ String cp = request.getContextPath();
 							<div>
 								<select class="inp-txt pwd" name="category">
 									<option value="">카테고리</option>
-									<option value="치킨">치킨</option>
-									<option value="피자/양식">피자/양식</option>
-									<option value="분식">분식</option>
-									<option value="한식">한식</option>
-									<option value="중식">중식</option>
-									<option value="일식">일식</option>
+									<option value="CK">치킨</option>
+									<option value="PY">피자/양식</option>
+									<option value="CH">분식</option>
+									<option value="KR">한식</option>
+									<option value="JP">중식</option>
+									<option value="BS">일식</option>
 								</select>
 							</div>
 							<br/>
 							
 							<div>
-								<input type="file" class="inp-txt pwd" id="ceoPw"
-									name="uploadfile" placeholder=" ">
+								<input type="file" class="inp-txt pwd" id="ceoPw" name="uploadfile" placeholder=" ">
 							</div>
 							<br/>
 							<div>
