@@ -32,22 +32,17 @@ private SqlSessionTemplate sessionTemplate;
 		return true;
 	}
 	
-	public int testA(){
+	public void updateCustom(CustomDTO dto){
 		
-		int num = 0;
-
-		num = sessionTemplate.selectOne("mapper.test");
+		sessionTemplate.update("mapper.updateCustom", dto);
 		
-		return num;
 	}
 	
-	public int testB(){
+	public CustomDTO renewSession(String id) {
 		
-		int num = 0;
-
-		num = sessionTemplate.selectOne("mapper.test");
+		CustomDTO custom = sessionTemplate.selectOne("mapper.renewSession", id);
 		
-		return num;
+		return custom;
 	}
 	
 	public CustomDTO tryId(String name, String email) {
@@ -86,5 +81,12 @@ private SqlSessionTemplate sessionTemplate;
 		CustomDTO custom = sessionTemplate.selectOne("mapper.checkIdPw", params);
 	
 		return custom;
+	}
+	
+	public String countCart(String id) {
+		
+		String cnt = sessionTemplate.selectOne("mapper.countCart", id);
+		
+		return cnt;
 	}
 }

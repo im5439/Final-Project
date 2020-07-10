@@ -1,3 +1,19 @@
+function test7() {
+	var param = "id=" + $("#sessionId").val();
+
+    $.ajax({
+        url: "test77.action",
+        type: "POST",            
+        data: param,
+        success: function(data){
+        	$("#test").text("주문표(" + data + ")");
+        },
+        error: function(){
+            alert("Error");
+        }
+    });
+}
+
 function isValidEmail(email) {
 	var format = /^((\w|[\-\.])+)@((\w|[\-\.])+)\.([A-Za-z]+)$/;
     if (email.search(format) != -1)
@@ -34,19 +50,19 @@ function sendIt(){
 		return;
 	}
 	
-	if(!f.pwd.value){
+	if(!f.pw.value){
 		alert("비밀번호를 입력하세요");
-		f.pwd.focus();
+		f.pw.focus();
 		return;
 	} 
 	
-	if (f.pwd.value.length < 4 || f.pwd.value.length > 20) { 
+	if (f.pw.value.length < 4 || f.pw.value.length > 20) { 
 		f.pwd.focus();
 		alert("비밀번호는 4~20자 입니다.");
 		return;
-	}  else if ((!engCheck.test(f.pwd.value) || !numCheck.test(f.pwd.value) || !specialCheck.test(f.pwd.value)) || korCheck.test(f.pwd.value)) {
+	}  else if ((!engCheck.test(f.pw.value) || !numCheck.test(f.pw.value) || !specialCheck.test(f.pw.value)) || korCheck.test(f.pw.value)) {
 		alert("비밀번호는 특수문자를 포함한 영문 및 숫자 입니다.");
-		f.pwd.focus();
+		f.pw.focus();
 		return;
 	}
 
@@ -115,9 +131,51 @@ function tryPw_click() {
 	f.submit();
 }
 
+function updateIt(){
+	
+	var f = document.myForm;
+
+	if(!f.name.value){
+		alert("이름을 입력하세요");
+		f.name.focus();
+		return;
+	}
+	
+	if(!f.tel.value){
+		alert("전화번호를 입력하세요");
+		f.tel.focus();
+		return;
+	}
+
+	if(!f.email.value){
+		alert("이메일을 입력하세요");
+		f.email.focus();
+		return;
+	}
+	
+	if(!isValidEmail(f.email.value)) {
+        alert("\n정상적인 E-Mail을 입력하세요. ");
+        f.email.focus();
+        return;
+	}
+	
+	if(!f.addr.value){
+		alert("주소를 입력하세요");
+		f.addr.focus();
+		return;
+	}
+
+	f.action = "update.action";
+	f.submit();
+}
+
 $(function() {
+
+	$("#test").show(function(){
+		test7();
+	});
 		
-	$("#findId").click(function(){
+	$("#findIdPw").click(function(){
 	
 		var korCheck = /[ㄱ-ㅎ]/;
 		var engCheck = /[a-z]/; 
@@ -142,7 +200,7 @@ $(function() {
 		f.submit();
 	
 	});
-		
+	
 	$("#idcheck").click(function(){
 
 		if($("#id").val()==null || $("#id").val()=="") {
@@ -151,20 +209,45 @@ $(function() {
 		}
 
 		var param = "id=" + $("#id").val();
-        
+            
         $.ajax({
-            url: "test.action",
-            type: "POST",
+            url: "test123.action",
+            type: "POST",            
             data: param,
             success: function(data){
-                alert(data);
+            	alert(data);
             },
             error: function(){
                 alert("Error");
             }
         });
-	
+        
 	});
+	
+	/*	
+	$("#idcheck").click(function(){
+
+		if($("#id").val()==null || $("#id").val()=="") {
+			alert("아이디를 입력하세요");
+			return;
+		}
+
+		var param = "id=" + $("#id").val();
+            
+        $.ajax({
+            url: "idcheck.action",
+            type: "POST",            
+            data: param,
+            success: function(data){
+            	alert(data=="fail" ? "이미 사용중인 아이디입니다." : "사용가능한 아이디입니다.");
+            },
+            error: function(){
+                alert("Error");
+            }
+        });
+        
+	});
+	*/
 	
 	$("#logon").click(function(){
 		

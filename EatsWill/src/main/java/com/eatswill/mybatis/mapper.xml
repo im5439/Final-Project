@@ -8,8 +8,16 @@
 	select nvl(max(num),0) from test
 </select>
 
+<select id="countCart" parameterType="String" resultType="String">
+	select count(*) from cart where USERID=#{id}
+</select>
+
 <select id="selectCustom" parameterType="String" resultType="String">
 	select USERID id from custom where USERID=#{id}
+</select>
+
+<select id="tryIdPw" parameterType="hashMap" resultType="com.eatswill.dto.CustomDTO">
+	select USERID id, USERPW pw, USERNAME name, USEREMAIL email from custom where ${user}=#{id} and USEREMAIL=#{email}
 </select>
 
 <select id="checkIdPw" parameterType="hashMap" resultType="com.eatswill.dto.CustomDTO">
@@ -24,8 +32,15 @@
 	values (#{id},#{pw},#{name},#{tel},#{email},1000,(#{addr}||' '||#{addr2}))
 </insert>
 
-<select id="tryIdPw" parameterType="hashMap" resultType="com.eatswill.dto.CustomDTO">
-	select USERID id, USERPW pw, USERNAME name, USEREMAIL email from custom where ${user}=#{id} and USEREMAIL=#{email}
+<update id="updateCustom" parameterType="com.eatswill.dto.CustomDTO">
+	update custom set USERNAME=#{name}, USERTEL=#{tel}, USEREMAIL=#{email}, USERADDR=#{addr} where USERID=#{id}
+</update>
+
+<select id="renewSession" parameterType="String" resultType="com.eatswill.dto.CustomDTO">
+	select 	USERID id, USERPW pw, USERNAME name, USERTEL tel, 
+			USEREMAIL email, USERPOINT point, USERADDR addr 
+	from 	custom 
+	where 	USERID=#{id}
 </select>
 
 </mapper>

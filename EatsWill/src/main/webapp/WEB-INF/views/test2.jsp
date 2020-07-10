@@ -4,7 +4,6 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
-	// ${pageContext.request.contextPath} : cp와 동일
 %>
 <html lang="ko" ng-controller="base_controller" class="ng-scope">
 <head>
@@ -54,9 +53,6 @@ ng\:form {
 	<link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
 	<link rel="stylesheet"
 	href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
-	
-	<script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
-	<script type="text/javascript" src="/eatswill/resources/assets/js/login.js"></script>
 	
 	
 	
@@ -319,24 +315,22 @@ ng\:form {
 						
 					<nav id="menu">
 						<h2>Menu</h2>
-						<input type="hidden" id="sessionId" value="${sessionScope.customInfo.id }"/>
 						<ul>
 							<c:choose>
 								<c:when test="${empty sessionScope.customInfo.id }">
-									<li><a href="${pageContext.request.contextPath}/login.action">로그인</a></li>
+									<li><a href="<%=cp%>/itving/login.do">로그인</a></li>
 								</c:when>
 								<c:otherwise>
 									<li><a href="<%=cp%>/itving/myPage.do"><font color="blue">${sessionScope.customInfo.name }</font> 님 환영합니다.</a>
-		                      		<p style="text-align: left">
-		                      			전화번호 : ${sessionScope.customInfo.tel }</br>
-		                      			포인트 : ${sessionScope.customInfo.point }
-		                      		</p>
+		                      		<p style="text-align: left">주소지 : ${sessionScope.customInfo.addr }<br/>
+		                      		전화번호 : ${sessionScope.customInfo.tel }</br>
+		                      		포인트 : ${sessionScope.customInfo.point }</p>
 											
 									<a href="javascript:logout();" data-nethru_clcode="A000012">로그아웃</a></li>
 								</c:otherwise>
 							</c:choose>
-							<li><a href="${pageContext.request.contextPath}/main.action">Home</a></li>
-		                    <li><a href="main.action">내정보수정</a></li>
+							<li><a href="<%=cp%>/main.action">Home</a></li>
+		                    <li><a href="generic.html">내정보수정</a></li>
 		                    <li><a href="generic.html">장바구니</a></li>
 		                    <li><a href="generic.html">주문내역</a></li>
 		                    <li><a href="elements.html">찜 목록</a></li>
@@ -379,20 +373,48 @@ ng\:form {
 							</c:choose>
 								
 							</button>
-							<!-- <button type="button"
+							<button type="button"
 								class="btn btn-warning hidden-xs ng-binding"
 								ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
-								ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;">주문표(0)</button> -->
-							<button type="button" class="btn btn-warning hidden-xs ng-binding" id="test" style="width: 150px"
-									onclick="javascript:location.href='<%=cp %>/logout.action';">주문표(0)</button>	
+								ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;">주문표(0)</button>
 						
 						
 						</div>
 					</div>
 				</div>
 
-				<%@ include file="/WEB-INF/views/store/layout.jsp" %>
-				
+				<div id="search" class="clearfix search search-show" style="background:url('/eatswill/resources/images/th.gif')">
+				<!-- <div id="search" class="clearfix search search-show" style="background:url('/eatswill/resources/images/banner2.png')"> -->
+					
+					<div class="input-group">
+						<span class="input-group-btn loc">
+							<button class="btn btn-default ico-loc" type="button"
+								ng-click="get_current_location()">&nbsp;</button>
+						</span>
+						<form action="." onsubmit="return false"
+							class="ng-pristine ng-valid-minlength ng-valid ng-valid-required">
+							<input type="search"
+								class="form-control ng-pristine ng-scope ng-valid-minlength ng-valid ng-valid-required ng-touched"
+								name="address_input" autocomplete="off" autocorrect="off"
+								autocapitalize="off" spellcheck="false"
+								placeholder="건물명, 도로명, 지번으로 검색하세요." ng-minlength="1"
+								ng-required="true"
+								ng-model="session_storage.location.address_input" bs-dropdown=""
+								ng-focus="show_location_search()" required="required">
+						</form>
+						<span id="button_search_address"
+							class="input-group-btn always-show-search-buttons">
+							<button
+								class="btn-search-location-cancel btn-search-location btn btn-default ng-hide"
+								type="button" ng-click="clear_search_location_input($event)"
+								ng-show="is_shown_location_search.v">
+								<span class="searchfield-cancel-button">&nbsp;</span>
+							</button>
+							<button class="btn btn-default ico-pick" type="button"
+								ng-click="select_location($event)">검색</button>
+						</span>
+					</div>
+				</div>
 			</div>
 		</div>
 		

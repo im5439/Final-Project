@@ -427,7 +427,7 @@ ng\:form {
 			</div>
 	
 	      	<div class="btn-wrapper">
-	        	<button type="button" id="findId" class="btn" style="color: #fff">확인</button>
+	        	<button type="button" id="findIdPw" class="btn" style="color: #fff">확인</button>
 	      	</div>
 	    </form>
 	</div>

@@ -14,9 +14,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
@@ -35,16 +37,66 @@ public class MyController {
 		return "shopping";
 	}
 	
+	// 메인 페이지
 	@RequestMapping(value = "/main.action", method = RequestMethod.GET)
 	public String main() {		
 		return "test";
 	}
 	
+	// 주문표 확인 기능
+	@RequestMapping(value = "/test77.action", method = RequestMethod.POST)
+	@ResponseBody
+	public String countCart(String id) {	
+		
+		String cnt = dao.countCart(id);
+		
+		return cnt;
+	}
+	
+	// 회원가입 페이지
 	@RequestMapping(value = "/signup.action", method = RequestMethod.GET)
 	public String signup() {		
 		return "custom/signup";
 	}
 	
+	// 아이디 중복 확인 기능
+	// 시간되면 String 대신 MVC로 클래스 가져와서 되는지 확인	
+	@RequestMapping(value = "/idcheck.action", method = RequestMethod.POST)
+	@ResponseBody
+	public String idcheck(String id) {	
+		
+		// 아이디 존재(거부)
+		if(!dao.selectCustom(id)) {
+			return "fail";
+		}
+		
+		// 아이디 없음(통과)
+		return "pass";
+	}
+	
+	@RequestMapping(value = "/test123.action", method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView test123(String id) {	
+		
+		ModelAndView mav = new ModelAndView();
+
+		CustomDTO dto = dao.renewSession(id);
+		
+		mav.addObject("dto", dto);
+
+		return mav;
+	}
+	
+	// 회원가입 데이터 DB에 입력
+	@RequestMapping(value = "/insert.action", method = RequestMethod.POST)
+	public String insert(CustomDTO dto) {	
+		
+		dao.insertCustom(dto);
+		
+		return "redirect:/main.action";
+	}
+	
+	// 로그인 페이지
 	@RequestMapping(value = "/login.action", method = RequestMethod.GET)
 	public String login(HttpServletRequest req, String message) {	
 		
@@ -60,6 +112,7 @@ public class MyController {
 		return "custom/login";
 	}
 	
+	// 로그인 확인 기능
 	@RequestMapping(value = "/login_ok.action", method = RequestMethod.POST)
 	public String login_ok(HttpServletRequest req, RedirectAttributes rea, String id, String pw) {	
 		
@@ -70,39 +123,19 @@ public class MyController {
 			
 			// message = URLEncoder.encode("아이디 또는 패스워드를 정확히 입력하세요.", "UTF-8");
 			message = "아이디 또는 패스워드를 정확히 입력하세요.";
-			rea.addFlashAttribute("message", message);
+			rea.addFlashAttribute("message", message);	// redirect에 post 방식으로 메소드 넘김
 		
 			return "redirect:/login.action";
 		}
 		
 		HttpSession session = req.getSession(); 		// 세션 만들기
 		session.setAttribute("customInfo", dto); 		// 세션에 올리기
+		session.setAttribute("cart", 0); 
 		
 		return "redirect:/main.action";
 	}
 	
-	@RequestMapping(value = "/insert.action", method = RequestMethod.POST)
-	public String insert(CustomDTO dto) {	
-		
-		dao.insertCustom(dto);
-		
-		return "redirect:/main.action";
-	}
-	
-	// 시간되면 String 대신 MVC로 클래스 가져와서 되는지 확인
-	@RequestMapping(value = "/test.action", method = {RequestMethod.GET, RequestMethod.POST})
-	@ResponseBody
-	public String test(String id) {	
-		
-		// 아이디 존재
-		if(!dao.selectCustom(id)) {
-			return "fail";
-		}
-		
-		// 아이디 없음(통과)
-		return "pass";
-	}
-	
+	// 아이디/비밀번호 찾기 페이지
 	@RequestMapping(value = "/findidpw.action", method = RequestMethod.POST)
 	public String findidpw(HttpServletRequest req, String mode) {
 		
@@ -111,6 +144,7 @@ public class MyController {
 		return "custom/findIdPw";
 	}
 	
+	// 아이디/비밀번호 데이터 확인 후 메일로 전송(서버 켜있어야함) - 시간되면 메일 api로 변경
 	@RequestMapping(value = "/findidpw_ok.action", method = RequestMethod.POST)
 	public String findidpw_ok(HttpServletRequest req, CustomDTO dto) {	
 		
@@ -129,16 +163,6 @@ public class MyController {
 			subject = "회원님의 비밀번호";
 			content = dto.getName() + " 회원님의 비밀번호는 [" + dto.getPw() + "] 입니다.";
 		}
-		
-		/*
-		if (dto == null || !dto.getEmail().equals(email)) {
-			req.setAttribute("message", "아이디 또는 이메일을 정확히 입력하세요.");
-			url = "/proj3/findPwd.jsp";
-			forward(req, resp, url);
-			return;
-
-		}
-		*/
 		
 		// 아이디가 존재하지 않을 경우
 		/*
@@ -172,7 +196,7 @@ public class MyController {
 			message.setContent(content, "text/plain;charset=UTF-8");
 
 			Transport tp = ssn.getTransport("smtp");
-			tp.connect(host, "", ""); // ip,id,pw
+			tp.connect(host, "", ""); 								// ip,id,pw
 			tp.sendMessage(message, message.getAllRecipients());
 			tp.close();
 
@@ -183,4 +207,24 @@ public class MyController {
 		return "redirect:/login.action";
 	}
 	
+	// 정보 수정 페이지
+	@RequestMapping(value = "/updateInfo.action", method = RequestMethod.GET)
+	public String updateInfo() {
+		
+		return "custom/updateInfo";
+	}
+
+	// 회원가입 데이터 DB에 입력
+	@RequestMapping(value = "/update.action", method = RequestMethod.POST)
+	public String update(HttpServletRequest req, CustomDTO dto) {	
+		
+		dao.updateCustom(dto);
+		
+		dto = dao.renewSession(dto.getId());
+		
+		HttpSession session = req.getSession(); 		// 세션 만들기
+		session.setAttribute("customInfo", dto); 		// 세션에 올리기
+		
+		return "redirect:/main.action";
+	}
 }
