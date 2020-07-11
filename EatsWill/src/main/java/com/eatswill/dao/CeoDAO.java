@@ -1,6 +1,8 @@
 package com.eatswill.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -46,23 +48,35 @@ public class CeoDAO {
 	}
 	
 	//사장님 해당 아이디의 보유 매장리스트출력 
-	public List<CeoDTO> getShopList(String ceoId){
+	public List<CeoDTO> getStoreList(String ceoId){
 		
-		List<CeoDTO> lists = sessionTemplate.selectList("CeoMapper.getShopList", ceoId);
+		List<CeoDTO> shopList = sessionTemplate.selectList("CeoMapper.getStore", ceoId);
 		
-		return lists;
+		return shopList;
 		
 	}
 	
 	//사장님 해당 아이디의 매장개수
-	public int getShopCount(String ceoId) {
+	public int getStoreCount(String ceoId) {
 		
-		int result = sessionTemplate.selectOne("CeoMapper.getShopCount", ceoId);
+		int result = sessionTemplate.selectOne("CeoMapper.getStoreCount", ceoId);
 		
 		return result;
 		
 	}
 	
+	//해당 매장의 리뷰가져오기
+	public List<CeoDTO> getStoreReview(String ceoId, String shopCode){
+		
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("shopCode", shopCode);
+		params.put("ceoId", ceoId);
+		
+		List<CeoDTO> reviewList = sessionTemplate.selectList("CeoMapper.getStoreReivew", params);
+		
+		return reviewList;
+		
+	}
 	
 	
 }

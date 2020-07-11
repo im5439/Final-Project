@@ -1,7 +1,10 @@
 package com.eatswill.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,12 +16,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.eatswill.dao.CeoDAO;
 import com.eatswill.dto.CeoDTO;
 import com.eatswill.dto.CeoInfo;
+
 
 @SessionAttributes("CeoInfo")
 @Controller("CEOController")
@@ -161,20 +166,42 @@ public class CEOController {
 
 		CeoInfo info = (CeoInfo) session.getAttribute("ceoInfo");
 		String ceoId = info.getCeoId();
-		System.out.println(ceoId);
-
-		List<CeoDTO> lists = dao.getShopList(ceoId);
-
-		int storeCount = dao.getShopCount(ceoId);
-
-		request.setAttribute("lists", lists);
+		
+		List<CeoDTO> shopList = dao.getStoreList(ceoId);
+		List<CeoDTO> reviewList = null;
+		
+		Iterator<CeoDTO> it = shopList.iterator();
+		while(it.hasNext()) {
+			CeoDTO dtoit = it.next();
+			String shopCode = dtoit.getShopCode();
+			reviewList = dao.getStoreReview(ceoId, shopCode);
+		}
+		int storeCount = dao.getStoreCount(ceoId);
+		
+		request.setAttribute("shopList", shopList);
+		request.setAttribute("reviewList", reviewList);
 		request.setAttribute("storeCount", storeCount);
 
 		return "CEO/ceoReview";
 
 	}
 	
-	
+	@RequestMapping(value = "/ceoStoreReview", method = RequestMethod.POST)
+	@ResponseBody 
+	public ArrayList<String> ajaxStoreRiview(HttpServletRequest request) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		String shopCode = request.getParameter("shopCode");
+		
+		map.put("result", "success");		
+		map.put("shopCode", shopCode);
+		
+		System.out.println(shopCode);
+		
+		request.setAttribute("map", map);
+		
+		return new ArrayList<String>();
+		
+	}
 	
 	
 	
