@@ -56,8 +56,8 @@ function change () {
 <form name="form" method="get">
 <c:forEach var="dto" items="${lists }">
 메뉴명: ${dto.menuName }<br/>
-수량 : <input type=hidden name="menuPrice" value="${dto.menuPrice }">
-<input type="button" value=" - " onclick="del();">
+수량 :<input type=hidden name="menuPrice" value="${dto.menuPrice }">
+ <br/><input type="button" value=" - " onclick="del();">
 <input type="text" name="amount" value="${dto.cQty }" size="3" onchange="change();">
 <input type="button" value=" + " onclick="add();">
 <br/>
