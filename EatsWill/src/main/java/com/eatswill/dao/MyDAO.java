@@ -62,6 +62,11 @@ public class MyDAO {
 		
 		return lists;
 	}
+	
+	// review delete
+	public void reviewDelete(int renum) {
+		sessionTemplate.delete("myMapper.reviewDelete", renum);
+	}
 
 	// 찜 매장 리스트
 	public List<MyDTO> getHeartList(String userId) {

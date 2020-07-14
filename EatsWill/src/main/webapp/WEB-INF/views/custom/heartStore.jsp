@@ -315,9 +315,9 @@ ng\:form {
                       
                      <li><a href="<%=cp%>/test.action">Home</a></li>
                      <li><a href="generic.html">내정보수정</a></li>
-                     <li><a href="generic.html">장바구니</a></li>
-                     <li><a href="generic.html">주문내역</a></li>
-                     <li><a href="elements.html">찜 목록</a></li>
+                     <li><a href="javascript:location.href='<%=cp%>/myReview.action'">내 글 보기</a></li>
+						<li><a href="javascript:location.href='<%=cp%>/myOrder.action'">주문내역</a></li>
+						<li><a href="javascript:location.href='<%=cp%>/heartStore.action'">찜 목록</a></li>
                   </ul>
                </nav>
             <!-- ----------------------------------------------------------------------------------------- -->   

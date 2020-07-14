@@ -499,7 +499,7 @@ function sendIt() {
                   
                      <div class="btn-type2">
                      <img id="send" src="http://image.gmarket.co.kr/challenge/webzine_img/img_110617/btn/register.gif" alt="등록" border="0" onclick="javascript:sendIt();"/>
-                     <img src="http://image.gmarket.co.kr/challenge/webzine_img/img_110617/btn/cancel.gif" alt="취소" border="0" onclick="javascript:location.href='<%=cp%>/myOrder.action';">
+                     <img src="http://image.gmarket.co.kr/challenge/webzine_img/img_110617/btn/cancel.gif" alt="취소" border="0" onclick="javascript:location.href='<%=cp%>/myReview.action';">
                      </div>
                   </div>
                </div>

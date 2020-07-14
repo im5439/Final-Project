@@ -132,12 +132,12 @@ public class MyController {
 		return "custom/myReview";
 	}
 	
-	// 지도
-		@RequestMapping(value = "/a.action", method = {RequestMethod.GET, RequestMethod.POST})
-		public String a(HttpServletRequest req) throws Exception {
-			
-			
-			
-			return "custom/locationWatchPosition";
-		}
+	// 리뷰 삭제하기
+	@RequestMapping(value = "/reviewDelete.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String reviewDelete(HttpServletRequest req) throws Exception {
+		int reNum = Integer.parseInt(req.getParameter("reNum"));
+		dao.reviewDelete(reNum);
+		return "redirect:/myReview.action";
+	}
+	
 }

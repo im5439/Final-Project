@@ -36,8 +36,6 @@ public class MyDTO {
 	private String ceoReContent;
 	
 	
-	
-	
 	//--------------getter/setter
 	public String getShopName() {
 		return shopName;
