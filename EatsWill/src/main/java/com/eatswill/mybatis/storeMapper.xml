@@ -28,6 +28,13 @@ from shop s, ceo c, common_code a, (select avg(reScore) reScore,shopCode from re
 where s.CEOID=c.CEOID and s.timeCODE=a.CODE and s.shopCode=r.shopCode and s.CEOID=#{ceoId} and s.shopCode=#{shopCode}
 </select>
 
+<!-- 리뷰가 없을시 음식점 정보  -->
+<select id="shopInfonotreview" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
+select s.shoptel,s.shopCode,s.shopname,s.shopImg,s.shopAddr,s.ceoid,c.CEONAME,a.CODENAME timeName
+from shop s, ceo c, common_code a
+where s.CEOID=c.CEOID and s.timeCODE=a.CODE and s.CEOID=#{ceoId} and s.shopCode=#{shopCode}
+</select>
+
 <!-- 음식점 메인정보  -->
 
 <!-- review maxNum  -->

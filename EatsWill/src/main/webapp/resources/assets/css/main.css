@@ -17,6 +17,7 @@
 		font: inherit;
 		vertical-align: baseline;
 		
+		
 	}
 
 	article, aside, details, figcaption, figure, , , hgroup, menu, nav, section {
@@ -48,6 +49,33 @@
 	body {
 		
 	}
+	
+	
+
+.navigationl {
+	background-color: #f000le;
+}
+
+@media (min-width: 768px)
+
+
+}
+.navigation .logor {
+    background-image: url(/eatswill/resources/img/eatswill.png) no-repeat;
+    background-size: 72px;
+    width: 72px;
+    height: 30px;
+    text-indent: -9999em;
+    overflow: hidden;
+    margin: 15px 10px;
+    cursor: pointer;
+}
+.pull-left {
+    float: left !important;
+}
+.pull-left {
+    float: left;
+}
 
 /* Box Model */
 
@@ -1646,10 +1674,10 @@
 		-moz-transition: border-bottom-color 0.2s ease, color 0.2s ease;
 		-webkit-transition: border-bottom-color 0.2s ease, color 0.2s ease;
 		-ms-transition: border-bottom-color 0.2s ease, color 0.2s ease;
-		transition: border-bottom-color 0.2s ease, color 0.2s ease;
+	
 		text-decoration:none !important;
-		color: #585858;
-		border-bottom: dotted 1px rgba(88, 88, 88, 0.5);
+		
+		
 	}
 
 		a:hover {

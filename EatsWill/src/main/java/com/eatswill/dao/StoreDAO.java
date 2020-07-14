@@ -41,6 +41,18 @@ public class StoreDAO {
 
 		return lists;
 	}
+	
+	//리뷰없는 음식점 정보
+	public List<StoreDTO>  shopInfonotreview (String ceoId,String shopCode) {
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("shopCode", shopCode);
+		map.put("ceoId", ceoId);
+
+		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.shopInfonotreview",map);
+
+		return lists;
+	}
 
 
 	//maxNum

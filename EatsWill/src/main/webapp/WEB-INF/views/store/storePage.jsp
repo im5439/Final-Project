@@ -296,14 +296,7 @@ ng\:form {
    
 </script>
 
-<!-- ------------------------------------------------------------------------------------------****** -->
 
-<!-- 찜 아작스  -->
-
-
-
-
-<!-- -----------------------------------------------------------------------------------------------  -->
 
 <noscript>
 	<img height="1" width="1" style="display: none"
@@ -385,121 +378,122 @@ ng\:form {
 		}
 	</script>
 
+	 <div yogiyo-header="">
+      <div id="header" class="header">
 
-	
-					
-			
-	
-	
+         <div role="navigation" class="nav-bar">
+            <div class="navigation ver-pc" ng-class="header_show()" style="background-color:orange;   "> <!--  색상수정예정예정 -->
+               <div class="app-down-banner clearfix ng-hide"
+                  ng-show="is_show_promotion_banner()">
+                  <div class="landing-banner">
+                     <div class="landing-header">
+                        
+                     </div>
+                     
+                  
+                  </div>
+               </div>
+            <!-- ----------------------------------------------------------------------------------------- -->   
+               
+               <nav>
+                  <ul>
+                     <li><a href="#menu">Menu</a></li>
+                  </ul>
+               </nav>
+                  
+               <nav id="menu">
+                  <h2>Menu</h2>
+                  <input type="hidden" id="sessionId" value="${sessionScope.customInfo.id }"/>
+                  <ul>
+                     <c:choose>
+                        <c:when test="${empty sessionScope.customInfo.id }">
+                           <li><a href="${pageContext.request.contextPath}/login.action">로그인</a></li>
+                        </c:when>
+                        <c:otherwise>
+                           <li><a href="<%=cp%>/itving/myPage.do"><font color="blue">${sessionScope.customInfo.name }</font> 님 환영합니다.</a>
+                                  <p style="text-align: left">
+                                     전화번호 : ${sessionScope.customInfo.tel }</br>
+                                     포인트 : ${sessionScope.customInfo.point }
+                                  </p>
+                                 
+                           <a href="javascript:logout();" data-nethru_clcode="A000012">로그아웃</a></li>
+                        </c:otherwise>
+                     </c:choose>
+                     <li><a href="${pageContext.request.contextPath}/main.action">Home</a></li>
+                          <li><a href="main.action">내정보수정</a></li>
+                          <li><a href="generic.html">장바구니</a></li>
+                          <li><a href="generic.html">주문내역</a></li>
+                          <li><a href="elements.html">찜 목록</a></li>
+                  </ul>
+               </nav>
+            <!-- ----------------------------------------------------------------------------------------- -->   
+               <div class="nav-top clearfix"
+                  ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
+                  <a href="<%=cp%>/" style="text-decoration: none;"><img alt="" src="/eatswill/resources/img/icon3.png" width="125px"
+                  height="40px" style=" margin: 20px 10px;" ></a>
+            <%--       <h1 class="logor pull-left" ng-click="<%=cp%>/main.action" ></h1>  --%><!-- 로고로고 -->
+                  <div id="cart" class="pull-right">
+                     <span class="gps-status ng-binding"
+                        ng-show="check_show_location_button()"
+                        ng-click="toggle_location_block()" ng-bind="current_location">서초동</span>
+                     <a class="visible-xs" ng-show="check_show_location_button()"
+                        ng-click="toggle_location_block()"> <span
+                        class="ico-set-pic"></span>
+                     </a> <a id="button-cart" href="" class="visible-xs ng-hide"
+                        ng-click="click_cart_button()"
+                        ng-show="check_show_cart_button()"> <span class="ico-cart"></span>
+                        <span class="badge ng-binding"
+                        ng-bind="global_cart.get_amount()">0</span>
+                     </a>
+                     <button type="button" class="btn btn-login ng-binding" 
+                        ng-click="login()"
+                        ng-bind-html="check_login() ? '로그아웃' : '로그인 <span>|</span> 회원가입'"
+                        ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next" style="font-size: 1.2em; background-color: red;">
+                     로그인 <span>|</span> 회원가입 
+                     </button>
+                     <button type="button"
+                        class="btn btn-warning hidden-xs ng-binding"
+                        ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
+                        ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;" style="font-size: 1.2em; background-color: red;">주문표(0)</button>
+                 
+                  </div>
+               </div>
+            </div>
 
-	<div yogiyo-header="">
-		<div id="header" class="header">
-
-			<div role="navigation" class="nav-bar">
-				<div class="navigation ver-pc" ng-class="header_show()"> <!--  색상수정예정예정 -->
-					<div class="app-down-banner clearfix ng-hide"
-						ng-show="is_show_promotion_banner()">
-						<div class="landing-banner">
-							<div class="landing-header">
-								<input type="checkbox" id="landing_close" name="landing_close"
-									ng-model="is_check_noshow"
-									class="ng-pristine ng-untouched ng-valid"> <label
-									for="landing_close"><span></span><img
-									src="image/img_day_close.png" alt=""></label> <a href=""
-									ng-click="hide_app_download_block()"
-									class="ygy-app-down-btn-close"><img
-									src="image/img_close.png" alt=""></a>
-							</div>
-							<img src="image/splash_banner_firstorder_5000.png" alt="">
-							<a href="" ng-click="download_app()" class="btn-ygy-app-down"><img
-								src="image/btn-appdown.png" alt="앱 다운로드"></a>
-						</div>
-					</div>
-				<!-- ----------------------------------------------------------------------------------------- -->	
-					<nav>
-							<ul>
-								<li><a href="#menu">Menu</a></li>
-							</ul>
-						</nav>
-						
-						<nav id="menu">
-						<h2>Menu</h2>
-						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li><a href="generic.html">내정보</a></li>
-							<li><a href="generic.html">주문내역</a></li>
-							<li><a href="generic.html">ㅇㅇ</a></li>
-							<li><a href="elements.html">ㅇㅇ</a></li>
-						</ul>
-					</nav>
-					
-				<!-- ----------------------------------------------------------------------------------------- -->	
-					<div class="nav-top clearfix"
-						ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
-						<h1 class="logo pull-left" ng-click="click_home()">요기요</h1>
-						<div id="cart" class="pull-right">
-							<span class="gps-status ng-binding"
-								ng-show="check_show_location_button()"
-								ng-click="toggle_location_block()" ng-bind="current_location">서초동</span>
-							<a class="visible-xs" ng-show="check_show_location_button()"
-								ng-click="toggle_location_block()"> <span
-								class="ico-set-pic"></span>
-							</a> <a id="button-cart" href="" class="visible-xs ng-hide"
-								ng-click="click_cart_button()"
-								ng-show="check_show_cart_button()"> <span class="ico-cart"></span>
-								<span class="badge ng-binding"
-								ng-bind="global_cart.get_amount()">0</span>
-							</a>
-							<button type="button" class="btn btn-login ng-binding"
-								ng-click="login()"
-								ng-bind-html="check_login() ? '로그아웃' : '로그인 <span>|</span> 회원가입'"
-								ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next">
-								로그인 <span>|</span> 회원가입
-							</button>
-							<button type="button"
-								class="btn btn-warning hidden-xs ng-binding"
-								ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
-								ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;">주문표(0)</button>
-						
-						
-						</div>
-					</div>
-				</div>
-
-				<div id="search" class="clearfix search search-show" style="background:url('/eatswill/resources/images/th.gif'); color: white;">
-					
-					<div class="input-group">
-						<span class="input-group-btn loc">
-							<button class="btn btn-default ico-loc" type="button"
-								ng-click="get_current_location()">&nbsp;</button>
-						</span>
-						<form action="." onsubmit="return false"
-							class="ng-pristine ng-valid-minlength ng-valid ng-valid-required">
-							<input type="search"
-								class="form-control ng-pristine ng-scope ng-valid-minlength ng-valid ng-valid-required ng-touched"
-								name="address_input" autocomplete="off" autocorrect="off"
-								autocapitalize="off" spellcheck="false"
-								placeholder="건물명, 도로명, 지번으로 검색하세요." ng-minlength="1"
-								ng-required="true"
-								ng-model="session_storage.location.address_input" bs-dropdown=""
-								ng-focus="show_location_search()" required="required">
-						</form>
-						<span id="button_search_address"
-							class="input-group-btn always-show-search-buttons">
-							<button
-								class="btn-search-location-cancel btn-search-location btn btn-default ng-hide"
-								type="button" ng-click="clear_search_location_input($event)"
-								ng-show="is_shown_location_search.v">
-								<span class="searchfield-cancel-button">&nbsp;</span>
-							</button>
-							<button class="btn btn-default ico-pick" type="button"
-								ng-click="select_location($event)">검색</button>
-						</span>
-					</div>
-				</div>
-			</div>
-		</div>
-		
+            <div id="search" class="clearfix search search-show" style="background:url('/eatswill/resources/images/th.gif'); color: white;">
+               
+               <div class="input-group">
+                  <span class="input-group-btn loc">
+                     <button class="btn btn-default ico-loc" type="button"
+                        ng-click="get_current_location()">&nbsp;</button>
+                  </span>
+                  <form action="." onsubmit="return false"
+                     class="ng-pristine ng-valid-minlength ng-valid ng-valid-required">
+                     <input type="search"
+                        class="form-control ng-pristine ng-scope ng-valid-minlength ng-valid ng-valid-required ng-touched"
+                        name="address_input" autocomplete="off" autocorrect="off"
+                        autocapitalize="off" spellcheck="false"
+                        placeholder="건물명, 도로명, 지번으로 검색하세요." ng-minlength="1"
+                        ng-required="true"
+                        ng-model="session_storage.location.address_input" bs-dropdown=""
+                        ng-focus="show_location_search()" required="required">
+                  </form>
+                  <span id="button_search_address"
+                     class="input-group-btn always-show-search-buttons">
+                     <button
+                        class="btn-search-location-cancel btn-search-location btn btn-default ng-hide"
+                        type="button" ng-click="clear_search_location_input($event)"
+                        ng-show="is_shown_location_search.v">
+                        <span class="searchfield-cancel-button">&nbsp;</span>
+                     </button>
+                     <button class="btn btn-default ico-pick" type="button"
+                        ng-click="select_location($event)" style="background-color: red;">검색</button>
+                  </span>
+               </div>
+            </div>
+         </div>
+      </div>
+      
 		
 			
 <!-- ========================================================================================검색 끛-->				
@@ -600,68 +594,47 @@ ng\:form {
 <div class="restaurant-detail row ng-scope">
 
   <div class="col-sm-8">
+  <!-- ------------------------------------------------------------------------------------------****** -->
+
+<!-- 찜 아작스  -->
+<script type="text/javascript">
+
+ $(function(){
+	
+	heartPage(); 
+		
+}); 
+ 
+ 
+
+function heartPage() {
+	
+	var url = "<%=cp%>/heart.action";
+	var params = "shopCode=" + $("#shopCode").val() 
+	+ "&ceoId=" + $("#ceoId").val()
+	+ "&userId=" + $("#userId").val()
++ "&chk=" + $("#chk").val();
+		
+
+	$.post(url,params,function(args){
+		$("#heart").html(args);
+	});
+	
+	$("#heart").show();
+	
+}
+
+</script>
+
+
+<!-- -----------------------------------------------------------------------------------------------  -->
        <!-- ---------------------------------------------------------------------------------------------------headline -->
  
-   <form action="">
-    <div class="restaurant-info">
-   
-    	 <c:forEach var="dto" items="${lists}">
-    
-      <div class="restaurant-title">
-        <span class="restaurant-name ng-binding" ng-bind="restaurant.name"> ${dto.shopName}</span>
-      </div>
-      <div class="restaurant-content">
-        <div ng-show="restaurant|restaurant_is_open" class="logo" ng-style="{'background-image':'url(' + get_logo_url(restaurant.logo_url) + '), url(\'image/default_restaurant_logo.png\')'}" 
-        style="background-image: url(resources/img/${dto.shopImg});"></div>
-       
-       
-       <!-- --------------------------------------------------------------------------------------------------- list -->
-        <ul class="list">
-          <li><span class="stars star-point ng-binding">
-        	<span class="full ng-scope" ng-repeat="i in restaurant.review_avg|number_to_array track by $index">★</span> <!-- 별점 -->
-         <span class="full ng-scope" ng-repeat="i in restaurant.review_avg|number_to_array track by $index">${dto.reScore}</span></li> <!-- 별점 점수 -->
-          <!--li>영업시간 : <span>{{restaurant.open_time_description}}</span></li-->
-          <li ng-show="show_discount_description()" class="discount-desc ng-hide">
-          
-          <span class="ng-binding">사장님 이름: ${dto.ceoName}</span></li>
-          
-          
-          
-          <li>찜<span class="ng-binding">
-          <c:if test="${chk=='in'}">
-      <img src="resources/img/fullheart.png" width="20px" height="20px" onclick="javascript:location.href='<%=cp%>/heart.action?shopCode=${dto.shopCode }&userId=${userId}&chk=${chk }&ceoId=${dto.ceoId }'">
-      </c:if>
-      <c:if test="${chk=='del'}">
-      <img  src="resources/img/emptyheart.png" width="20px" height="20px" onclick="javascript:location.href='<%=cp%>/heart.action?shopCode=${dto.shopCode }&userId=${userId }&chk=${chk}&ceoId=${dto.ceoId }'">
-      </c:if></span></li>
-          <!--li class="restaurant-address">위치 : <span>{{restaurant.address|trim_address|normalize_address}}</span></li-->
-
-          <li class="">결제
-           <span ng-show="check_enable_online_payment()" class="ico-payment-yogiyo yogiseo-payment ng-binding">바로결제</span>
-           
-           
-           
-           
-          </li>
-          <li class="delivery-time-tooltip" ng-show="restaurant.estimated_delivery_time">영업시간
-            <span class="ng-binding">00시~00시<button type="button" class="btn-tooltip" data-toggle="tooltip" data-html="true" id="delivery-time-tooltip" data-placement="bottom" title="" data-original-title="최근 주문의 배달시간을 분석한 정보 입니다. <br> 실제 배달시간과는 차이가 있을 수 있습니다.">&nbsp;</button></span>
-          </li>
-          
-          <li class="full-w" ng-show="is_yogiyo &amp;&amp; (delivery_discount_value() > 0 || additional_discount_value() > 0)">
-            <span class="coupon-base ng-binding" ng-show="delivery_discount_value() > 0">적립금 사용 가능</span>
-            <span class="coupon-base coupon-style1 ng-binding ng-hide" ng-show="additional_discount_value() > 0">추가할인 0%</span>
-          </li>
-          
-          
-          
-        </ul>
-        <input type="hidden">
-       
-        
-      </div>
-      <div class="clearfix"></div>
-          </c:forEach>
-    </div>
+   <span id="heart"></span>
+    <input type="hidden" value="${shopCode }" id="shopCode">
+           <input type="hidden" value="${ceoId }" id="ceoId">
+           <input type="hidden" value="${userId }" id="userId">
+           <input type="hidden" value="${chk }" id="chk">
 
     
      <!-- --------------------------------------------------------------------------------------------------- list -->
@@ -682,15 +655,15 @@ ng\:form {
       <a ng-click="toggle_tab(&quot;info&quot;)" data-toggle="tab" href="#f3" id="sendInfo">가게정보</a></li>
     </ul>
    <div id ="f1">
-      <span id="menuData" style="display: none;"></span><br/><br/><br/>
+      <span id="menuData" style="display: none;"></span>
    </div>
    
    <div id ="f2">
-      <span id="reviewData" style="display: none;"></span><br/><br/><br/>
+      <span id="reviewData" style="display: none;"></span>
    </div>
    
    <div id ="f3">
-      <span id="infoData" style="display: none;"></span> <br/><br/><br/>
+      <span id="infoData" style="display: none;"></span> 
    </div>
 
 </div>
@@ -796,7 +769,7 @@ ng\:form {
     </script>
         
         <form name="storeForm" method="post">
-        <c:forEach var="dto" items="${lists1 }" varStatus="status">
+        <c:forEach var="dto" items="${lists }" varStatus="status">
         
        <c:if test="dto==null">
         <div ng-show="cart.is_empty()" class="cart-empty">

@@ -82,13 +82,14 @@
 <br>
 
 </div>
-      </div>
 
-      <div class="info-item">
+
+
+ <div class="info-item">
         <div class="info-item-title info-icon1">업체정보</div>
-        <p><i>영업시간</i> <span class="tc ng-binding">${dto.timeName} </span></p>
+        <p><i>영업시간</i> <span class="tc ng-binding">00시 -00시 </span></p>
         <p ng-show="restaurant.phone.length > 0" class=""><i>전화번호</i> <span class="tc ng-binding">${dto.shopTel }</span></p>
-        <p ng-show="restaurant.address.length > 0" class=""><i>주소</i> <span class="tc ng-binding">${dto.shopAddr} </span></p>
+        <p ng-show="restaurant.address.length > 0" class=""><i>주소</i> <span class="tc ng-binding"> 주소 주소 </span></p>
         <p ng-show="restaurant.tags.length > 0 &amp;&amp; restaurant.tags.indexOf(&quot;CESCO&quot;) >= 0" class="ng-hide"><i>부가정보</i> <span class="cesco info-icon5 tc">세스코멤버스 사업장</span></p>
       </div>
 
@@ -113,6 +114,9 @@
       </div>
     </div>
 
+    
+
+     
 
 
 
