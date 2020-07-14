@@ -34,20 +34,20 @@ public class MyController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {		
-		return "test3";
+		return "shopping";
 	}
 	
 	// 메인 페이지
 	@RequestMapping(value = "/main.action", method = RequestMethod.GET)
 	public String main() {		
-		return "test";
+		return "main";
 	}
 	
 	// 주문표 확인 기능
-	@RequestMapping(value = "/test77.action", method = RequestMethod.POST)
+	@RequestMapping(value = "/cartList.action", method = RequestMethod.POST)
 	@ResponseBody
 	public String countCart(String id) {	
-		
+
 		String cnt = dao.countCart(id);
 		
 		return cnt;
@@ -72,19 +72,6 @@ public class MyController {
 		
 		// 아이디 없음(통과)
 		return "pass";
-	}
-	
-	@RequestMapping(value = "/test123.action", method = RequestMethod.POST)
-	@ResponseBody
-	public ModelAndView test123(String id) {	
-		
-		ModelAndView mav = new ModelAndView();
-
-		CustomDTO dto = dao.renewSession(id);
-		
-		mav.addObject("dto", dto);
-
-		return mav;
 	}
 	
 	// 회원가입 데이터 DB에 입력

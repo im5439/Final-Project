@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="myMapper">
+
+<!-- 해당 아이디의 주문 리스트 출력 -->
+<select id="getBuyList" parameterType="String" resultType="com.eatswill.dto.MyDTO">
+	SELECT om.orderdate, om.ordercode, s.shopname,s.shopCode shopCode, om.oamount, data1.menuname, cc.codename orderstatus, s.shopimg shopImg
+from ordermain om, shop s, COMMON_CODE cc,(select ot.ordercode, listagg(m.menuname,',') within group (order by m.menuname) menuname from ORDERDETAIL ot, menu m where ot.MENUCODE=m.MENUCODE group by ot.ordercode) data1
+where om.orderstatus=cc.code and om.userid=#{userid} and om.shopcode=s.shopcode and om.ordercode=data1.ordercode
+</select>
+
+<!-- 주문 취소버튼 클릭시 -->
+<update id="myOrderCancel" parameterType="String">
+	update orderMain set orderStatus=400 where orderCode=#{orderCode}
+</update>
+
+<!-- 리뷰 작성시 띄울 정보 -->
+<select id="getReadReviewData" parameterType="String"  resultType="com.eatswill.dto.MyDTO">
+	SELECT om.orderdate,om.ordercode,s.shopname, s.shopCode shopCode,om.oamount,data1.menuname,cc.codename orderstatus,s.shopimg shopImg
+	from ordermain om, shop s, COMMON_CODE cc,(select ot.ordercode, listagg(m.menuname,',') within group (order by m.menuname) menuname from ORDERDETAIL ot,menu m where ot.MENUCODE=m.MENUCODE group by ot.ordercode) data1
+	where om.orderstatus=cc.code and om.ordercode=#{orderCode} and om.shopcode=s.shopcode and om.ordercode=data1.ordercode
+	order by om.orderdate desc
+</select>
+
+<!-- 리뷰 num -->
+<select id="maxReNum" resultType="int">
+	select nvl(max(reNum),0) from review
+</select>
+
+<!-- 리뷰 insert -->
+<insert id="reviewInsert" parameterType="com.eatswill.dto.MyDTO">
+	insert into review(orderCode,ceoContent,reNum,userId,shopCode,reScore,reContent,reCreated,reImg)
+	values (#{orderCode},null,#{reNum},#{userId},#{shopCode},#{reScore},#{reContent},sysdate,#{reImg})
+</insert>
+
+<!-- 자신이 쓴 리뷰 개수 -->
+<select id="myReviewCnt" parameterType="String" resultType="int">
+	select count(*) reCnt from REVIEW where userId=#{userId}
+</select>
+
+<!-- 자신이 쓴 리뷰 리스트 -->
+<select id="getMyReviewList" parameterType="String" resultType="com.eatswill.dto.MyDTO">
+	SELECT s.shopname,r1.rescore,r1.rescore*20 reStar,r1.recreated,data1.menuname,r1.recontent,r1.reImg,r1.renum,r1.ceocontent,om.ORDERDATE
+from review r1,shop s,(select ot.ordercode, listagg(m.menuname,',') within group (order by m.menuname) menuname from ORDERDETAIL ot,menu m where ot.MENUCODE=m.MENUCODE group by ot.ordercode) data1,ordermain om
+where r1.userid=#{userId} and data1.orderCode=r1.orderCode and s.shopCode=r1.shopcode and data1.orderCode=om.ORDERCODE
+ORDER BY recreated desc
+</select>
+
+<!-- 해당 아이디의 찜 리스트 출력 -->
+<select id="getHeartList" parameterType="String" resultType="com.eatswill.dto.MyDTO">
+	SELECT s.shopImg shopImg, s.shopname shopName, data1.shopScore, data1.reCnt, data1.shopScore*20 shopStar
+	from shop s,heart h,(select SHOPCODE, round(AVG(rescore),1) shopScore, count(reNum) reCnt from review group by shopcode) data1
+	where s.shopcode=data1.shopCode and data1.shopCode=h.shopcode and h.userid=#{userid}
+</select>
+</mapper>

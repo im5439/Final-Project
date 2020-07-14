@@ -1,12 +1,12 @@
-function test7() {
+function cartList() {
 	var param = "id=" + $("#sessionId").val();
 
     $.ajax({
-        url: "test77.action",
+        url: "cartList.action",
         type: "POST",            
         data: param,
         success: function(data){
-        	$("#test").text("주문표(" + data + ")");
+        	$("#cartList").text("주문표(" + data + ")");
         },
         error: function(){
             alert("Error");
@@ -171,8 +171,8 @@ function updateIt(){
 
 $(function() {
 
-	$("#test").show(function(){
-		test7();
+	$("#cartList").show(function(){
+		cartList();
 	});
 		
 	$("#findIdPw").click(function(){
@@ -211,30 +211,6 @@ $(function() {
 		var param = "id=" + $("#id").val();
             
         $.ajax({
-            url: "test123.action",
-            type: "POST",            
-            data: param,
-            success: function(data){
-            	alert(data);
-            },
-            error: function(){
-                alert("Error");
-            }
-        });
-        
-	});
-	
-	/*	
-	$("#idcheck").click(function(){
-
-		if($("#id").val()==null || $("#id").val()=="") {
-			alert("아이디를 입력하세요");
-			return;
-		}
-
-		var param = "id=" + $("#id").val();
-            
-        $.ajax({
             url: "idcheck.action",
             type: "POST",            
             data: param,
@@ -247,7 +223,6 @@ $(function() {
         });
         
 	});
-	*/
 	
 	$("#logon").click(function(){
 		

@@ -31,7 +31,7 @@
 				<span class="searchfield-cancel-button">&nbsp;</span>
 			</button>
 			<button class="btn btn-default ico-pick" type="button"
-				ng-click="select_location($event)">검색</button>
+				ng-click="select_location($event)" style="background-color: red;">검색</button>
 		</span>
 	</div>
 </div>
