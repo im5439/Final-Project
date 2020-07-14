@@ -6,8 +6,10 @@
 	
 	<div class="input-group">
 		<span class="input-group-btn loc">
+			<!-- <button class="btn btn-default ico-loc" type="button"
+				ng-click="get_current_location()">&nbsp;</button> -->
 			<button class="btn btn-default ico-loc" type="button"
-				ng-click="get_current_location()">&nbsp;</button>
+				onclick="testyo();">&nbsp;</button>
 		</span>
 		<form action="." onsubmit="return false"
 			class="ng-pristine ng-valid-minlength ng-valid ng-valid-required">

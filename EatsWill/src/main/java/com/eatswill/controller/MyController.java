@@ -34,7 +34,7 @@ public class MyController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {		
-		return "shopping";
+		return "test3";
 	}
 	
 	// 메인 페이지
