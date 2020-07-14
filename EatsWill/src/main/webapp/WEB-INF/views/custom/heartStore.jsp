@@ -18,7 +18,12 @@ String cp = request.getContextPath();
 ng\:form {
    display: block;
 }
+
+.star-rating { width:80px; }
+.star-rating,.star-rating span { display:inline-block; height:13px; overflow:hidden; background:url(/eatswill/resources/images/star1.png)no-repeat; }
+.star-rating span{ background-position:left bottom; line-height:0; vertical-align:top; }
 </style>
+
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -55,7 +60,7 @@ ng\:form {
 <!-- ngIf: ! page.title -->
 <!-- ngIf: page.title -->
 <title ng-if="page.title" ng-bind="page.title + &quot; - 요기요&quot;"
-   class="ng-binding ng-scope">나의 주문 목록</title>
+   class="ng-binding ng-scope">나의 관심 매장</title>
 <!-- end ngIf: page.title -->
 <link rel="apple-touch-icon-precomposed"
    href="https://www.yogiyo.co.kr/mobile/image/app_128x128.png">
@@ -63,26 +68,13 @@ ng\:form {
    href="https://www.yogiyo.co.kr/mobile/image/app_144x144.png">
 <link rel="icon" type="image/png"
    href="https://www.yogiyo.co.kr/mobile/image/favicon.ico">
-   
-   
-      <!-- css---------------------------------------------------------- -->
-   
-   <link rel="stylesheet"
+<link rel="stylesheet"
    href="css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
-   <link rel="stylesheet" href="/eatswill/resources/assets/css/app.css"
+<link rel="stylesheet" href="/eatswill/resources/assets/css/app.css"
    type="text/css" />
-   
-   <link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
-   <link rel="stylesheet"
-   href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
-   
-      <!--------------------------------------------------------------------------------------- -->
-   
-   
-   
-   
    <link rel="shortcut icon"
    href="http://image.gmarket.co.kr/_Net/MyG/favicon/gmarket.ico">
+<link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
 
 
 <link rel="stylesheet" type="text/css"
@@ -115,6 +107,13 @@ ng\:form {
    src="http://script.gmarket.co.kr/fnp/desktop-layout.js"></script>
 <script type="text/javascript" src="/Scripts/ScriptEventErrorHandler.js"></script>
 
+
+
+
+   <link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
+   <link rel="stylesheet"
+   href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
+
 <script type="text/javascript"
    src="http://script.gmarket.co.kr/_Net/js/gmkt.js?dummy=2012091327262"></script>
 <script type="text/javascript"
@@ -135,7 +134,6 @@ ng\:form {
    src="http://script.gmarket.co.kr/_Net/js/MygSmileClubBanner.js"></script>
 <script type="text/javascript"
    src="http://script.gmarket.co.kr/_Net/js/MygSmileStamp.js"></script>
-   
 <!-- Start location.search generate Code for Naver 검색 유입 -->
 <script type="text/javascript">
    if (is_yogiyo) {
@@ -249,24 +247,6 @@ ng\:form {
    var dataLayer = [];
 </script>
 
-<script src="http://code.jquery.com/jquery-1.11.0.js"></script>
-
-<script>
-   function geo() {        
-        // Geolocation API에 액세스할 수 있는지를 확인
-        if (navigator.geolocation) {
-            //위치 정보를 얻기
-            navigator.geolocation.getCurrentPosition (function(pos) {
-                $('#latitude').html(pos.coords.latitude);     // 위도
-                $('#longitude').html(pos.coords.longitude); // 경도
-            });
-            alert("aaa");
-        } else {
-            alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
-        }
-    }
-</script>
-
 <script>
    /* eslint-disable */(function(w, d, s, l, i) {
       w[l] = w[l] || [];
@@ -315,7 +295,10 @@ ng\:form {
                   </div>
                </div>
             <!-- ----------------------------------------------------------------------------------------- -->   
-
+               
+               
+               
+               
                <nav>
                   <ul>
                      <li><a href="#menu">Menu</a></li>
@@ -376,11 +359,8 @@ ng\:form {
                
                <div class="input-group">
                   <span class="input-group-btn loc">
-                  <!-- 현재위치 찾기 -->
                      <button class="btn btn-default ico-loc" type="button"
-                       onclick="geo();">&nbsp;</button>
-                       
-
+                        ng-click="get_current_location()">&nbsp;</button>
                   </span>
                   <form action="." onsubmit="return false"
                      class="ng-pristine ng-valid-minlength ng-valid ng-valid-required">
@@ -408,9 +388,6 @@ ng\:form {
             </div>
          </div>
       </div>
-      
-      
-      
          
 
       <div id="quick-btn" class="hide-btn">
@@ -444,7 +421,7 @@ ng\:form {
                <li
                   ng-class="active_tab == &quot;review&quot; ? &quot;active&quot; : &quot;&quot;"
                   class="active"><a ng-click="toggle_tab(&quot;review&quot;)"
-                  data-toggle="tab">나의 주문목록<span class="ng-binding"></span></a></li>
+                  data-toggle="tab">나의 관심 매장<span class="ng-binding"></span></a></li>
             </ul>
 
             <div ng-show="active_tab == &quot;review&quot;" class="">
@@ -458,62 +435,41 @@ ng\:form {
                      on-finish-render="scrollCartArea()">
                      <div class="b_ta_info">
                   <table width="100%" border="1" class="b_table_grey">
-                     <thead>
-                        <tr style="text-align-last: center;">
-                           <th width="350" colspan="2" style="text-align: center;">상품정보</th>
-                           <th width="140">상태</th>
-                           <th width="108">확인/신청</th>
+                     <thead align="center">
+                        <tr align="center">
+                           <th colspan="2" align="center">매장 정보</th>
                         </tr>
                      </thead>
                      <c:forEach var="dto" items="${lists}">
                      <tbody id="orderList">
                         
+                           <tr>
+                              <td colspan="2" style="border: 1; padding: 0" ></td>
+                           </tr>
                            <tr cno="3273614152" ctype="G" column="4" class="first">
-                              <td class="first_cell" rowspan="1">
+                              <td class="first_cell" rowspan="1" style="vertical-align: middle">
                                  <div class="td_detail">
-                                 
-                                       <img
-                                          src="/eatswill/resources/images/${dto.shopImg}" width="90"
-                                          height="90">
+                                    <img
+                                       src="/eatswill/resources/images/${dto.shopImg}" width="80"
+                                       height="80">
                                  </div>
                               </td>
-                              <td style="width: 100;padding: 0;vertical-align: middle">
+                              <td style="text-align-last: left">
                                  <div class="td_info">
-                                    <p>                            
-                                       ${dto.orderDate } <small>[${dto.orderCode}]</small> 
-                                    </p>
-                                    <br>
-                                    <ul style="text-align-last: left">
+                                    
+                                    <ul>
                                        <li class="seller_info"><em></em><a href="">${dto.shopName }</a></li>
-                                       <li class="tit_info" style="color: orange">${dto.menuName }</li>
-                                       <li class="price"><strong>${dto.oAmount }</strong>원</li>
-                                       <li>위도:<span id="latitude"></span></li>
-								        <li>경도:<span id="longitude"></span></li>
+                                       <br>
+                                       <li class="tit_info" style="font-size: 12pt">
+                                       <span class="star-rating" style="text-align: left"><span style ="width:${dto.shopStar}%;text-align: left""></span></span>
+                                       ${dto.shopScore } (${dto.reCnt })</li>
                                     </ul>
                                  </div>
                               </td>
-                              <td class="first_cell">
-                                 <div class="td_status">
-                                 
-                                    <c:choose>
-                                       <c:when test="${dto.orderStatus == '주문취소' }"><span><b style="color: red">${dto.orderStatus }</b></span></c:when>
-                                       <c:otherwise><span><b style="color: blue">${dto.orderStatus }</b></span></c:otherwise>
-                                    </c:choose>
-                                 </div>
-                              </td>
-                              <td>
-                              <c:choose>
-                                       <c:when test="${dto.orderStatus == '주문완료' }"><span class="btn_bg btn_w81_2"><a
-                                    href="javascript:location.href='<%=cp%>/myOrderCancel.action?orderCode=${dto.orderCode}'">주문
-                                       취소</a></span></c:when>
-                                       <c:when test="${dto.orderStatus == '배달완료' }"><span class="btn_bg btn_w81_2"><a
-                                       href="${reviewUrl }orderCode=${dto.orderCode}">리뷰 쓰기</a></span></c:when>
-                                       <c:otherwise></c:otherwise>
-                                    </c:choose></td>
                            </tr>
                         
                      </tbody>
-                        </c:forEach>
+                     </c:forEach>
                   </table>
                </div>
                   </li>
@@ -528,11 +484,15 @@ ng\:form {
                   </li>
                </ul>
             </div>
-            <script src="/eatswill/resources/assets/js/jquery.min.js"></script>
+
+
+   <!-- Scripts -->
+         <script src="/eatswill/resources/assets/js/jquery.min.js"></script>
          <script src="/eatswill/resources/assets/js/skel.min.js"></script>
          <script src="/eatswill/resources/assets/js/util.js"></script>
          <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
          <script src="/eatswill/resources/assets/js/main.js"></script>
-            <input type="hidden" value="${sessionScope.custominfo.id }" name="sessionId">
+
+
 </body>
 </html>

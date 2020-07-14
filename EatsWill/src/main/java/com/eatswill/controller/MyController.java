@@ -27,20 +27,38 @@ public class MyController {
 	@Qualifier("myDAO")
 	MyDAO dao;
 	
-	// 나의 주문 목록
+	// 홈화면
+		@RequestMapping(value = "/eatsWill.action", method = {RequestMethod.GET, RequestMethod.POST})
+		public String eatsWill(HttpServletRequest req) throws Exception {
+			
+			return "home";
+		}
+	
+	// 나의 주문 목록 띄우기
 	@RequestMapping(value = "/myOrder.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String myOrder(HttpServletRequest req) throws Exception {
 		String cp = req.getContextPath();
 		
-		String userId = "user";
-		List<MyDTO> lists = dao.getBuyList(userId);
+		List<MyDTO> lists = dao.getBuyList("user");
 		String reviewUrl = cp + "/reviewCreated.action?";
+		String myOrderCancel = cp + "/myOrderCancel.action?";
 		
 		req.setAttribute("lists", lists);
 		req.setAttribute("reviewUrl", reviewUrl);
+		req.setAttribute("myOrderCancel", myOrderCancel);
 		
 		return "custom/myOrder";
 	}
+	
+	// 주문 취소하기
+	@RequestMapping(value = "/myOrderCancel.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String myOrderCancel(HttpServletRequest req) throws Exception {
+		String orderCode = req.getParameter("orderCode");
+		dao.myOrderCancel(orderCode);
+		
+		return "redirect:/myOrder.action";
+	}
+	
 	
 	// 리뷰 작성창 띄우기
 	@RequestMapping(value = "/reviewCreated.action", method = {RequestMethod.GET, RequestMethod.POST})
@@ -76,12 +94,50 @@ public class MyController {
 		
 		dto.setOrderCode(req.getParameter("orderCode"));
 		dto.setShopCode(req.getParameter("shopCode"));
-		dto.setpNum(0);
-		dto.setUserId("user"); // 나중에 세션에 값 받아오기
+		dto.setUserId("user"); // 세션
 		dto.setReNum(maxReNum + 1);
 		
 		dao.reviewInsert(dto);
 		
-		return "custom/myOrder"; // 나중에 redirect:/myReview.action로 수정.
+		return "redirect:/myReview.action";
 	}
+	
+	
+	// 찜한 매장 띄우기
+	@RequestMapping(value = "/heartStore.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String heartStore(HttpServletRequest req) throws Exception {
+		
+		// 세션
+		String userId = "user";
+		List<MyDTO> lists = dao.getHeartList(userId);
+		
+		req.setAttribute("lists", lists);
+		
+		return "custom/heartStore";
+	}
+	
+	// 나의 리뷰 띄우기
+	@RequestMapping(value = "/myReview.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String myReivew(HttpServletRequest req) throws Exception {
+		
+		// 세션
+		String userId = "user";
+		
+		int myReviewCnt = dao.getMyReviewCnt(userId);
+		List<MyDTO> lists = dao.getMyReviewList(userId);
+		
+		req.setAttribute("myReviewCnt", myReviewCnt);
+		req.setAttribute("lists", lists);
+		
+		return "custom/myReview";
+	}
+	
+	// 지도
+		@RequestMapping(value = "/a.action", method = {RequestMethod.GET, RequestMethod.POST})
+		public String a(HttpServletRequest req) throws Exception {
+			
+			
+			
+			return "custom/locationWatchPosition";
+		}
 }

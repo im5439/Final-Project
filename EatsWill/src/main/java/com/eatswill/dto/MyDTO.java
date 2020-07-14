@@ -15,7 +15,7 @@ public class MyDTO {
 	
 	
 	// Review Å×ÀÌºí ÄÃ·³
-	private int pNum; // »çÀåÀÌ ´ñ ÀÛ¼º½Ã ¿ø ´ñ±Û
+	private String ceoContent; // »çÀåÀÌ ´ñ ÀÛ¼º½Ã ¿ø ´ñ±Û
 	private int reNum; // ¸®ºä ¹øÈ£
 	private int reScore; // º°Á¡
 	private String reContent; // ¸®ºä ³»¿ë
@@ -23,13 +23,17 @@ public class MyDTO {
 	private String reImg; // ¸®ºä ÀÌ¹ÌÁö
 	
 	private MultipartFile uploadfile;
-
+	
 	
 	// ±× ¿Ü ÇÊ¿äÇÑ µ¥ÀÌÅÍ
 	private String shopName;
 	private String menuName;
 	private String shopImg;
-	
+	private double shopScore;
+	private int reCnt;
+	private int shopStar;
+	private int reStar;
+	private String ceoReContent;
 	
 	
 	
@@ -89,11 +93,11 @@ public class MyDTO {
 	public void setOrderStatus(String orderStatus) {
 		this.orderStatus = orderStatus;
 	}
-	public int getpNum() {
-		return pNum;
+	public String getCeoContent() {
+		return ceoContent;
 	}
-	public void setpNum(int pNum) {
-		this.pNum = pNum;
+	public void setCeoContent(String ceoContent) {
+		this.ceoContent = ceoContent;
 	}
 	public int getReNum() {
 		return reNum;
@@ -136,6 +140,36 @@ public class MyDTO {
 	}
 	public void setUploadfile(MultipartFile uploadfile) {
 		this.uploadfile = uploadfile;
+	}
+	public double getShopScore() {
+		return shopScore;
+	}
+	public void setShopScore(double shopScore) {
+		this.shopScore = shopScore;
+	}
+	public int getReCnt() {
+		return reCnt;
+	}
+	public void setReCnt(int reCnt) {
+		this.reCnt = reCnt;
+	}
+	public int getShopStar() {
+		return shopStar;
+	}
+	public void setShopStar(int shopStar) {
+		this.shopStar = shopStar;
+	}
+	public String getCeoReContent() {
+		return ceoReContent;
+	}
+	public void setCeoReContent(String ceoReContent) {
+		this.ceoReContent = ceoReContent;
+	}
+	public int getReStar() {
+		return reStar;
+	}
+	public void setReStar(int reStar) {
+		this.reStar = reStar;
 	}
 	
 	
