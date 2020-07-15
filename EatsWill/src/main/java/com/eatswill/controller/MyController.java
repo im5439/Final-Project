@@ -1,217 +1,155 @@
 package com.eatswill.controller;
 
-import java.util.Map;
-import java.util.Properties;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.List;
 
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 
-import com.eatswill.dao.EatswillDAO;
+import com.eatswill.dao.MyDAO;
 import com.eatswill.dto.CustomDTO;
+import com.eatswill.dto.MyDTO;
 
 @Controller
 public class MyController {
 	
+	// OrderMainDAO 가져옴
 	@Autowired
-	@Qualifier("eatswillDAO")
-	EatswillDAO dao;
+	@Qualifier("myDAO")
+	MyDAO dao;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home() {		
-		return "shopping";
-	}
-	
-	// 메인 페이지
-	@RequestMapping(value = "/main.action", method = RequestMethod.GET)
-	public String main() {		
-		return "main";
-	}
-	
-	// 주문표 확인 기능
-	@RequestMapping(value = "/cartList.action", method = RequestMethod.POST)
-	@ResponseBody
-	public String countCart(String id) {	
-
-		String cnt = dao.countCart(id);
-		
-		return cnt;
-	}
-	
-	// 회원가입 페이지
-	@RequestMapping(value = "/signup.action", method = RequestMethod.GET)
-	public String signup() {		
-		return "custom/signup";
-	}
-	
-	// 아이디 중복 확인 기능
-	// 시간되면 String 대신 MVC로 클래스 가져와서 되는지 확인	
-	@RequestMapping(value = "/idcheck.action", method = RequestMethod.POST)
-	@ResponseBody
-	public String idcheck(String id) {	
-		
-		// 아이디 존재(거부)
-		if(!dao.selectCustom(id)) {
-			return "fail";
+	// 홈화면
+		@RequestMapping(value = "/eatsWill.action", method = {RequestMethod.GET, RequestMethod.POST})
+		public String eatsWill(HttpServletRequest req) throws Exception {
+			
+			return "home";
 		}
+	
+	// 나의 주문 목록 띄우기
+	@RequestMapping(value = "/myOrder.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String myOrder(HttpServletRequest req) throws Exception {
+		String cp = req.getContextPath();
 		
-		// 아이디 없음(통과)
-		return "pass";
+		HttpSession session = req.getSession();
+	    CustomDTO cdto = (CustomDTO)session.getAttribute("customInfo");   
+		
+		List<MyDTO> lists = dao.getBuyList(cdto.getId());
+		String reviewUrl = cp + "/reviewCreated.action?";
+		String myOrderCancel = cp + "/myOrderCancel.action?";
+		
+		req.setAttribute("lists", lists);
+		req.setAttribute("reviewUrl", reviewUrl);
+		req.setAttribute("myOrderCancel", myOrderCancel);
+		
+		return "custom/myOrder";
 	}
 	
-	// 회원가입 데이터 DB에 입력
-	@RequestMapping(value = "/insert.action", method = RequestMethod.POST)
-	public String insert(CustomDTO dto) {	
+	// 주문 취소하기
+	@RequestMapping(value = "/myOrderCancel.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String myOrderCancel(HttpServletRequest req) throws Exception {
+		String orderCode = req.getParameter("orderCode");
+		dao.myOrderCancel(orderCode);
 		
-		dao.insertCustom(dto);
-		
-		return "redirect:/main.action";
+		return "redirect:/myOrder.action";
 	}
 	
-	// 로그인 페이지
-	@RequestMapping(value = "/login.action", method = RequestMethod.GET)
-	public String login(HttpServletRequest req, String message) {	
+	
+	// 리뷰 작성창 띄우기
+	@RequestMapping(value = "/reviewCreated.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String reviewCreated(HttpServletRequest req) throws Exception {
+		String orderCode = req.getParameter("orderCode");
 		
-		if(message!=null && !message.equals("")) {
-			Map<String, ?> reaMap = RequestContextUtils.getInputFlashMap(req);
-			if(reaMap!=null) {
-				message = (String)reaMap.get("message");
+		MyDTO dto = dao.getReadData(orderCode);
+		req.setAttribute("dto", dto);
+		
+		return "custom/reviewCreated";
+	}
+	
+	// 리뷰 등록시 실행
+	@RequestMapping(value = "/reviewCreated_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String reviewCreated_ok(HttpServletRequest req, MyDTO dto) throws Exception {
+		
+		HttpSession session = req.getSession();
+	    CustomDTO cdto = (CustomDTO)session.getAttribute("customInfo"); 
+		
+		MultipartFile uploadfile = dto.getUploadfile();
+		
+		//String path = req.getSession().getServletContext().getRealPath("resource/reImg");
+		if(uploadfile!=null) {
+			String reImg = uploadfile.getOriginalFilename();
+			dto.setReImg(reImg);
+			
+			try {
+				File file = new File("d:/reImg/" + reImg);
+				uploadfile.transferTo(file);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			
-			req.setAttribute("message", message);
 		}
 		
-		return "custom/login";
+		int maxReNum = dao.getMaxReNum();
+		
+		dto.setOrderCode(req.getParameter("orderCode"));
+		dto.setShopCode(req.getParameter("shopCode"));
+		dto.setUserId(cdto.getId()); // 세션
+		dto.setReNum(maxReNum + 1);
+		
+		dao.reviewInsert(dto);
+		
+		return "redirect:/myReview.action";
 	}
 	
-	// 로그인 확인 기능
-	@RequestMapping(value = "/login_ok.action", method = RequestMethod.POST)
-	public String login_ok(HttpServletRequest req, RedirectAttributes rea, String id, String pw) {	
+	
+	// 찜한 매장 띄우기
+	@RequestMapping(value = "/heartStore.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String heartStore(HttpServletRequest req) throws Exception {
 		
-		CustomDTO dto = dao.checkIdPw(id, pw);
+		HttpSession session = req.getSession();
+	    CustomDTO cdto = (CustomDTO)session.getAttribute("customInfo");   
 		
-		if (dto == null) {
-			String message = "";
-			
-			// message = URLEncoder.encode("아이디 또는 패스워드를 정확히 입력하세요.", "UTF-8");
-			message = "아이디 또는 패스워드를 정확히 입력하세요.";
-			rea.addFlashAttribute("message", message);	// redirect에 post 방식으로 메소드 넘김
+		// 세션
+		String userId = cdto.getId();
+		List<MyDTO> lists = dao.getHeartList(userId);
 		
-			return "redirect:/login.action";
-		}
+		req.setAttribute("lists", lists);
 		
-		HttpSession session = req.getSession(); 		// 세션 만들기
-		session.setAttribute("customInfo", dto); 		// 세션에 올리기
-		session.setAttribute("cart", 0); 
-		
-		return "redirect:/main.action";
+		return "custom/heartStore";
 	}
 	
-	// 아이디/비밀번호 찾기 페이지
-	@RequestMapping(value = "/findidpw.action", method = RequestMethod.POST)
-	public String findidpw(HttpServletRequest req, String mode) {
+	// 나의 리뷰 띄우기
+	@RequestMapping(value = "/myReview.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String myReivew(HttpServletRequest req) throws Exception {
 		
-		req.setAttribute("mode", mode);
+		HttpSession session = req.getSession();
+	    CustomDTO cdto = (CustomDTO)session.getAttribute("customInfo");   
 		
-		return "custom/findIdPw";
+		// 세션
+		String userId = cdto.getId();
+		
+		int myReviewCnt = dao.getMyReviewCnt(userId);
+		List<MyDTO> lists = dao.getMyReviewList(userId);
+		
+		req.setAttribute("myReviewCnt", myReviewCnt);
+		req.setAttribute("lists", lists);
+		
+		return "custom/myReview";
 	}
 	
-	// 아이디/비밀번호 데이터 확인 후 메일로 전송(서버 켜있어야함) - 시간되면 메일 api로 변경
-	@RequestMapping(value = "/findidpw_ok.action", method = RequestMethod.POST)
-	public String findidpw_ok(HttpServletRequest req, CustomDTO dto) {	
+	// 지도
+	@RequestMapping(value = "/a.action", method = {RequestMethod.GET, RequestMethod.POST})
+	public String a(HttpServletRequest req) throws Exception {
 		
-		String subject = "";
-		String content = "";
-
-		if(dto.getName()!=null && !dto.getName().equals("")) {
-			
-			dto = dao.tryId(dto.getName(), dto.getEmail());
-			subject = "회원님의 아이디";
-			content = dto.getName() + " 회원님의 아이디는 [" + dto.getId() + "] 입니다.";
-			
-		} else if(dto.getId()!=null && !dto.getId().equals("")) {
-			
-			dto = dao.tryPw(dto.getId(), dto.getEmail());
-			subject = "회원님의 비밀번호";
-			content = dto.getName() + " 회원님의 비밀번호는 [" + dto.getPw() + "] 입니다.";
-		}
-		
-		// 아이디가 존재하지 않을 경우
-		/*
-		if (dto == null) {
-			String message = "Error";
-			
-			return "redirect:/findidpw.action";
-		}
-		*/
-		
-		String senderName = "EatsWill";
-		String senderEmail = "EatsWill@eatswill.com";
-		String receiverEmail = dto.getEmail();
-		// String subject = "회원님의 비밀번호";
-		// String content = dto.getName() + " 회원님의 비밀번호는 [" + dto.getPw() + "] 입니다.";
-
-		String host = "localhost";
-
-		Properties prop = System.getProperties();
-		Session ssn = Session.getInstance(prop, null);
-
-		try {
-
-			MimeMessage message = new MimeMessage(ssn);
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(receiverEmail));
-
-			message.setFrom(new InternetAddress(senderEmail, senderName, "UTF-8"));
-
-			message.setSubject(subject, "UTF-8");
-
-			message.setContent(content, "text/plain;charset=UTF-8");
-
-			Transport tp = ssn.getTransport("smtp");
-			tp.connect(host, "", ""); 								// ip,id,pw
-			tp.sendMessage(message, message.getAllRecipients());
-			tp.close();
-
-		} catch (Exception e) {
-			System.out.print(e.toString());
-		}
-		
-		return "redirect:/login.action";
-	}
-	
-	// 정보 수정 페이지
-	@RequestMapping(value = "/updateInfo.action", method = RequestMethod.GET)
-	public String updateInfo() {
-		
-		return "custom/updateInfo";
-	}
-
-	// 회원가입 데이터 DB에 입력
-	@RequestMapping(value = "/update.action", method = RequestMethod.POST)
-	public String update(HttpServletRequest req, CustomDTO dto) {	
-		
-		dao.updateCustom(dto);
-		
-		dto = dao.renewSession(dto.getId());
-		
-		HttpSession session = req.getSession(); 		// 세션 만들기
-		session.setAttribute("customInfo", dto); 		// 세션에 올리기
-		
-		return "redirect:/main.action";
+		return "custom/locationWatchPosition";
 	}
 }

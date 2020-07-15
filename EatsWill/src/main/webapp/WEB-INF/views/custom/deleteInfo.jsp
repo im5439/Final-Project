@@ -4,6 +4,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
+	String message = (String)request.getAttribute("message");
 %>
 <html lang="ko" ng-controller="base_controller" class="ng-scope">
 <head>
@@ -96,6 +97,18 @@ ng\:form {
 		document
 				.write('<link rel="icon" type="image/png" href="https://www.yogiyo.co.kr/mobile/image/favicon.ico" />');
 	}
+</script>
+
+<script type="text/javascript">
+
+	$(function() {
+		
+		if('${message }'!=null && '${message }'!="") {
+			alert('${message }');
+		}
+		
+	});
+
 </script>
 
 <meta name="theme-color" content="#DC1400">
@@ -395,74 +408,33 @@ ng\:form {
 						
 						</div>
 					</div>
-				</div>				
+				</div>
 			</div>
 		</div>
 		
 		<div class="rd-wrapper contact-wrapper">
 	    	<form class="form-horizontal form-signin" method="POST" action="" name="myForm">
-	      	<div class="registration-wrap" style="width: 600px;margin-bottom: 0px"> 
-	      		<input type="hidden" name="id" value="${sessionScope.customInfo.id }"/>			
-				<div class="control-group">
-	        		<div class="control-label">이름</div>
-					
-	        		<div class="controls">
-	            		<input type="text" name="name" id="name" style="display: inline;height: 34px;width: 70%"
-	            		value="${sessionScope.customInfo.name }"/>
+	    		<div style="text-align: center">
+		    		<label style="font-size: 16px;margin-top: 2em">회원 탈퇴</label>
+		    	</div>
+	    	
+		      	<div class="registration-wrap" style="width: 600px"> 
+					<input type="hidden" name="id" id="id" value="${sessionScope.customInfo.id }"/>	
+					<div class="control-group">
+		        		<div class="control-label">패스워드</div>
+		
+		        		<div class="controls">
+		            		<input type="password" name="pw" id="pw" style="display: inline;height: 34px;width: 70%"/>
+						</div>
 					</div>
 				</div>
-				
-				<div class="control-group">
-	        		<div class="control-label">전화번호</div>
-	
-	        		<div class="controls">
-	            		<input type="text" name="tel" id="tel" style="display: inline;height: 34px;width: 70%"
-	            		value="${sessionScope.customInfo.tel }"/>
-	            		<span class="alert-text"></span>
-					</div>
-				</div>
-				
-				<div class="control-group">
-	        		<div class="control-label">이메일</div>
-	
-	        		<div class="controls">
-	            		<input type="text" name="email" id="email" style="display: inline;height: 34px;width: 70%"
-	            		value="${sessionScope.customInfo.email }"/>
-					</div>
-				</div>
-				
-				<div class="control-group">
-	        		<div class="control-label">주소</div>
-	
-	        		<div class="controls">
-	            		<input type="text" name="addr" id="addr" style="display: inline;height: 34px;width: 70%"
-	            		value="${sessionScope.customInfo.addr }"/>
-	            		<input type="button" value="주소검색" id="addrcheck" onclick="sample3_execDaumPostcode();"/>
-					</div>
-				</div>
-				
-				<div class="control-group">
-	        		<div class="control-label">상세주소</div>
-	
-	        		<div class="controls">
-	            		<input type="text" name="addr2" id="addr2" style="display: inline;height: 34px;width: 70%"/>
-					</div>
-				</div>
-	
-				<div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:10px 0;position:relative"></div>
-
-			</div>
-	
-			<div style="text-align: center">
-				<a href="<%=cp %>/deleteInfo.action" style="padding-left: 34em">탈퇴하시겠습니까?</a>
-			</div>
-	
-	      	<div class="btn-wrapper">
-	        	<button type="button" class="btn" style="color: #fff" onclick="updateIt();">정보수정</button>
-	      	</div>
+		
+		      	<div class="btn-wrapper">
+		        	<button type="button" id="pwcheck" class="btn" style="color: #fff">회원탈퇴</button>
+		      	</div>
 	    </form>
 	  </div>
-			
+		
 
 		<div id="quick-btn" class="hide-btn">
 			<a ng-click="click_cart_button()" id="button-cart-btm" href=""

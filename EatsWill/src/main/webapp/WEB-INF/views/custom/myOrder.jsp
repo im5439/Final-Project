@@ -75,6 +75,7 @@ ng\:form {
    <link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
    <link rel="stylesheet"
    href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
+   <script type="text/javascript" src="/eatswill/resources/assets/js/cart.js"></script>
    
       <!--------------------------------------------------------------------------------------- -->
    
@@ -341,11 +342,11 @@ ng\:form {
 								<a href="javascript:logout();" data-nethru_clcode="A000012">로그아웃</a></li>
 							</c:otherwise>
 						</c:choose>
-						<li><a href="<%=cp%>/test.action">Home</a></li>
 						<li><a href="<%=cp%>/updateInfo.action">내정보수정</a></li>
 						<li><a href="generic.html">장바구니</a></li>
 						<li><a href="<%=cp%>/myOrder.action">주문내역</a></li>
 						<li><a href="<%=cp%>/heartStore.action">찜 목록</a></li>
+						<li><a href="<%=cp%>/myReview.action">마이 리뷰</a></li>
 					</ul>
 				</nav>
             <!-- ----------------------------------------------------------------------------------------- -->   

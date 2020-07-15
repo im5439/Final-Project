@@ -202,7 +202,7 @@ $(function() {
 	});
 	
 	$("#idcheck").click(function(){
-
+	
 		if($("#id").val()==null || $("#id").val()=="") {
 			alert("아이디를 입력하세요");
 			return;
@@ -216,6 +216,37 @@ $(function() {
             data: param,
             success: function(data){
             	alert(data=="fail" ? "이미 사용중인 아이디입니다." : "사용가능한 아이디입니다.");
+            },
+            error: function(){
+                alert("Error");
+            }
+        });
+        
+	});
+	
+	$("#pwcheck").click(function(){
+	
+		var f = document.myForm;
+	
+		if($("#pw").val()==null || $("#pw").val()=="") {
+			alert("패스워드를 입력하세요");
+			return;
+		}
+
+		var param = "id=" + $("#id").val();
+		param += "&pw=" + $("#pw").val();
+            
+        $.ajax({
+            url: "pwcheck.action",
+            type: "POST",            
+            data: param,
+            success: function(data){
+            	if(data=="fail") {
+            		alert("비밀번호가 일치하지 않습니다.");
+            	} else {
+            		f.action = "delete.action";
+					f.submit();
+            	}
             },
             error: function(){
                 alert("Error");

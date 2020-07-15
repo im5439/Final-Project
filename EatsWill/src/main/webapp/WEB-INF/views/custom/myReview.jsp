@@ -54,6 +54,7 @@ ng\:form {
    <link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
    <link rel="stylesheet"
    href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
+   <script type="text/javascript" src="/eatswill/resources/assets/js/cart.js"></script>
 
 
 <meta name="theme-color" content="#DC1400">
@@ -245,26 +246,37 @@ ng\:form {
                
                
                <nav>
-                  <ul>
-                     <li><a href="#menu">Menu</a></li>
-                  </ul>
-               </nav>
-                  
-               <nav id="menu">
-                  <h2>Menu</h2>
-                  <br/>
-                  <ul>
-                     <p> 내 아이디 : ㅇㅇㅇ  <br/>
-                      내 주소지 : ㅇㅇㅇㅇ <br/>
-                      내 전화번호 : ㅇㅇㅇㅇ</p> <br/>
-                      
-                     <li><a href="<%=cp%>/test.action">Home</a></li>
-                     <li><a href="generic.html">내정보수정</a></li>
-                     <li><a href="generic.html">장바구니</a></li>
-                     <li><a href="generic.html">주문내역</a></li>
-                     <li><a href="elements.html">찜 목록</a></li>
-                  </ul>
-               </nav>
+						<ul>
+							<li><a href="#menu">Menu</a></li>
+						</ul>
+					</nav>
+						
+					<nav id="menu">
+						<h2>Menu</h2>
+						<br/>
+						<input type="hidden" id="sessionId" value="${sessionScope.customInfo.id }"/>
+						<ul>
+							<c:choose>
+								<c:when test="${empty sessionScope.customInfo.id }">
+									<li><a href="${pageContext.request.contextPath}/login.action">로그인</a></li>
+								</c:when>
+								<c:otherwise>
+									<li><font color="#F2849E">${sessionScope.customInfo.name }</font> 님 환영합니다.
+		                      		<p style="text-align: left">
+		                      			전화번호 : ${sessionScope.customInfo.tel }</br>
+		                      			포인트 : ${sessionScope.customInfo.point }
+		                      		</p>
+											
+									<a href="javascript:logout();" data-nethru_clcode="A000012">로그아웃</a></li>
+								</c:otherwise>
+							</c:choose>
+							<li><a href="<%=cp%>/updateInfo.action">내정보수정</a></li>
+							<li><a href="generic.html">장바구니</a></li>
+							<li><a href="<%=cp%>/myOrder.action">주문내역</a></li>
+							<li><a href="<%=cp%>/heartStore.action">찜 목록</a></li>
+							<li><a href="<%=cp%>/myReview.action">마이 리뷰</a></li>
+						</ul>
+					</nav>
             <!-- ----------------------------------------------------------------------------------------- -->   
                <div class="nav-top clearfix"
                   ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
@@ -284,17 +296,31 @@ ng\:form {
                         <span class="badge ng-binding"
                         ng-bind="global_cart.get_amount()">0</span>
                      </a>
-                     <button type="button" class="btn btn-login ng-binding" 
-                        ng-click="login()"
-                        ng-bind-html="check_login() ? '로그아웃' : '로그인 <span>|</span> 회원가입'"
-                        ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next" style="font-size: 1.2em; background-color: red;">
-                     로그인 <span>|</span> 회원가입 
-                     </button>
-                     <button type="button"
-                        class="btn btn-warning hidden-xs ng-binding"
-                        ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
-                        ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;" style="font-size: 1.2em; background-color: red;">주문표(0)</button>
-                  
+                     <%-- <button type="button" class="btn btn-login ng-binding" 
+							ng-click="login()"
+							ng-bind-html="check_login() ? '로그아웃' : '로그인 <span>|</span> 회원가입'"
+							ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next"> --%>
+						
+						<c:choose>
+							<c:when test="${empty sessionScope.customInfo.id }">
+								<button type="button" class="btn btn-login ng-binding" style="width: 95px"
+								onclick="javascript:location.href='<%=cp %>/login.action';">로그인</button>
+								<button type="button" class="btn btn-login ng-binding" style="width: 95px"
+								onclick="javascript:location.href='<%=cp %>/signup.action';">회원가입</button>
+							</c:when>
+							<c:otherwise>
+								<button type="button" class="btn btn-login ng-binding" style="width: 150px"
+								onclick="javascript:location.href='<%=cp %>/logout.action';">로그아웃</button>
+							</c:otherwise>
+						</c:choose>
+
+						<!-- <button type="button"
+							class="btn btn-warning hidden-xs ng-binding"
+							ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
+							ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;" style="font-size: 1.2em;background-color: red;">주문표(0)</button> -->
+						<button type="button" class="btn btn-warning hidden-xs ng-binding" id="cartList" style="width: 150px;font-size: 1.2em;background-color: red"
+								onclick="javascript:location.href='<%=cp %>/logout.action';">주문표(0)</button>	
+                 
                   
                   </div>
                </div>

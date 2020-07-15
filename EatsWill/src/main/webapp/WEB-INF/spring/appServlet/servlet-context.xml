@@ -30,7 +30,7 @@
  	-->
  	
  	<!-- 코딩 -->
-	<beans:bean id="eatswillDAO" class="com.eatswill.dao.EatswillDAO">
+	<beans:bean id="customDAO" class="com.eatswill.dao.CustomDAO">
 		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
 	</beans:bean>
 	

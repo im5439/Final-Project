@@ -355,7 +355,7 @@ ng\:form {
 									<li><a href="${pageContext.request.contextPath}/login.action">로그인</a></li>
 								</c:when>
 								<c:otherwise>
-									<li><font color="blue">${sessionScope.customInfo.name }</font> 님 환영합니다.
+									<li><font color="#F2849E">${sessionScope.customInfo.name }</font> 님 환영합니다.
 		                      		<p style="text-align: left">
 		                      			전화번호 : ${sessionScope.customInfo.tel }</br>
 		                      			포인트 : ${sessionScope.customInfo.point }
@@ -364,11 +364,11 @@ ng\:form {
 									<a href="javascript:logout();" data-nethru_clcode="A000012">로그아웃</a></li>
 								</c:otherwise>
 							</c:choose>
-							<li><a href="<%=cp%>/test.action">Home</a></li>
 							<li><a href="<%=cp%>/updateInfo.action">내정보수정</a></li>
 							<li><a href="generic.html">장바구니</a></li>
 							<li><a href="<%=cp%>/myOrder.action">주문내역</a></li>
 							<li><a href="<%=cp%>/heartStore.action">찜 목록</a></li>
+							<li><a href="<%=cp%>/myReview.action">마이 리뷰</a></li>
 						</ul>
 					</nav>
 				<!-- ----------------------------------------------------------------------------------------- -->	
@@ -792,9 +792,6 @@ ng\:form {
 			<script src="/eatswill/resources/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/eatswill/resources/assets/js/main.js"></script>
-	
-</body>
-</html>eatswill/resources/assets/js/main.js"></script>
 	
 </body>
 </html>
