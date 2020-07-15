@@ -41,7 +41,7 @@ public class StoreDAO {
 
 		return lists;
 	}
-	
+
 	//리뷰없는 음식점 정보
 	public List<StoreDTO>  shopInfonotreview (String ceoId,String shopCode) {
 
@@ -111,21 +111,6 @@ public class StoreDAO {
 		sessionTemplate.update("storeMapper.updateCart",dto);
 	}
 
-	//장바구니 리스트 출력
-
-	public List<StoreDTO> selectList(String userId) {
-
-		System.out.println("장바구니 셀렉트 디에이오 들어옴");
-
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("userId", userId);
-
-		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.selectList", map);
-		System.out.println("장바구니 셀렉트 리스트 성공");
-		System.out.println(lists.size());
-		return lists;
-	}
-
 	//장바구니 셀렉트 검증
 	public List<StoreDTO> selectCart(String userId,String menuCode) {
 
@@ -141,11 +126,35 @@ public class StoreDAO {
 
 	}
 
+	//장바구니 셀렉트
+	public List<StoreDTO> selectCartAll(String userId) {
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("userId", userId);
+
+		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.selectCartAll", map);
+		System.out.println("장바구니 셀렉트 성공");
+		return lists;
+
+	}
+
 	//장바구니 삭제
 
 	public void deleteCart(String userId) {
 
 		sessionTemplate.delete("storeMapper.deleteCart",userId);
+	}
+
+	//장바구니 하나씩 삭제
+
+	public void deleteCartOne(String userId,String menuCode) {
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("menuCode", menuCode);
+		map.put("userId", userId);
+
+		sessionTemplate.delete("storeMapper.deleteCartOne",map);
+
 	}
 
 	//장바구니 샵코드 데이터있는지 검증

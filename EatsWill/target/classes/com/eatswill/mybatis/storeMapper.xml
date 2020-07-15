@@ -25,17 +25,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="shopInfo" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
 select s.shoptel,s.shopCode,s.shopname,s.shopImg,s.shopAddr,s.ceoid,c.CEONAME,a.CODENAME timeName, r.reScore
 from shop s, ceo c, common_code a, (select avg(reScore) reScore,shopCode from review group by shopCode) r
-where s.CEOID=c.CEOID and s.timeCODE=a.CODE and s.shopCode=r.shopCode and s.CEOID=#{ceoId} and s.shopCode=#{shopCode}
+where s.CEOID=c.CEOID and s.timeCODE=a.CODE and s.shopCode=r.shopCode(+) and s.CEOID=#{ceoId} and s.shopCode=#{shopCode}
 </select>
-
-<!-- 리뷰가 없을시 음식점 정보  -->
-<select id="shopInfonotreview" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
-select s.shoptel,s.shopCode,s.shopname,s.shopImg,s.shopAddr,s.ceoid,c.CEONAME,a.CODENAME timeName
-from shop s, ceo c, common_code a
-where s.CEOID=c.CEOID and s.timeCODE=a.CODE and s.CEOID=#{ceoId} and s.shopCode=#{shopCode}
-</select>
-
-<!-- 음식점 메인정보  -->
 
 <!-- review maxNum  -->
 <select id="maxNum" resultType="int">
@@ -62,7 +53,7 @@ where s.CEOID=c.CEOID and s.timeCODE=a.CODE and s.CEOID=#{ceoId} and s.shopCode=
 	insert into report values (#{userId},#{reNum})
 </insert>
 
-<!-- 신고 리뷰 딜리트(신고 3번이상이면 게시물 자동삭제)  -->
+<!-- 신고,리뷰 테이블 딜리트(신고 3번이상이면 게시물 자동삭제)  -->
 <delete id="deleteReview">
 	delete review where renum = (select renum from report group by renum having count(*)>=3)
 </delete>
@@ -81,18 +72,18 @@ where s.CEOID=c.CEOID and s.timeCODE=a.CODE and s.CEOID=#{ceoId} and s.shopCode=
 	update cart set cQty=cQty+#{cQty},cAmount=cAmount+#{cAmount} 
 	where userId=#{userId} and menuCode=#{menuCode}
 </update>
-<!-- 장바구니 리스트  -->
-<select id="selectList" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
-	select c.menuCode,c.cAmount,c.cQty,c.userId,m.menuName,m.menuPrice
-	from cart c, menu m
-	where c.menuCode=m.menuCode and c.userId=#{userId}
-</select>
-
 <!-- 장바구니 셀렉트 검증 -->
 <select id="selectCart" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
 	select c.menuCode,c.cAmount,c.cQty,c.userId,m.menuName,m.menuPrice
 	from cart c, menu m
 	where c.menuCode=m.menuCode and c.userId=#{userId} and c.menuCode=#{menuCode}
+</select>
+
+<!-- 장바구니 셀렉트  -->
+<select id="selectCartAll" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
+	select c.menuCode,c.cAmount,c.cQty,c.userId,m.menuName,m.menuPrice
+	from cart c, menu m
+	where c.menuCode=m.menuCode and c.userId=#{userId}
 </select>
 
 <!-- 장바구니 변경 (다른 음식점 추가시)  -->
@@ -103,6 +94,11 @@ where s.CEOID=c.CEOID and s.timeCODE=a.CODE and s.CEOID=#{ceoId} and s.shopCode=
 <!-- 장바구니 delete  -->
 <delete id="deleteCart">
 	delete from cart where userId=#{userId}
+</delete>
+
+<!-- 장바구니 하나씩 delete  -->
+<delete id="deleteCartOne" parameterType="hashMap">
+	delete from cart where menuCode=#{menuCode} and userId=#{userId}
 </delete>
 
 <!-- 찜 테이블 셀렉트  -->
@@ -137,21 +133,21 @@ where s.CEOID=c.CEOID and s.timeCODE=a.CODE and s.CEOID=#{ceoId} and s.shopCode=
 <select id="orderByRe" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
 	select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,
 	to_char(s.shopcreated,'YYYY-MM-DD') shopcreated from shop s,(select nvl(count(*),0) reCount,shopCode from review group by shopCode) r
-	where s.shopCode=r.shopCode order by r.reCount desc
+	where s.shopCode=r.shopCode(+) order by r.reCount
 </select>
 
 <!-- 음식점 리스트 (주문순 정렬)  -->
 <select id="orderByO" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
 	select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,
 	to_char(s.shopcreated,'YYYY-MM-DD') shopcreated from shop s,(select nvl(count(*),0) orderCount,shopCode from ordermain group by shopCode) o
-	where s.shopCode=o.shopCode order by o.orderCount desc
+	where s.shopCode=o.shopCode order by o.orderCount,s.shopName desc
 </select>
 
 <!-- 음식점 리스트 (별점순 정렬)  -->
 <select id="orderByRes" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
 	select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,
 	to_char(s.shopcreated,'YYYY-MM-DD') shopcreated,res.rescore from shop s,(select avg(reScore) reScore,shopCode from review group by shopCode)  res
-	where s.shopCode=res.shopCode order by res.rescore desc
+	where s.shopCode=res.shopCode(+) order by res.rescore
 </select>
 
 </mapper>

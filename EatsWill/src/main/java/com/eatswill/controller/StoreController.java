@@ -26,6 +26,8 @@ public class StoreController {
 	//메뉴리스트
 	@RequestMapping(value = "/menu", method = {RequestMethod.GET,RequestMethod.POST})
 	public String menu(HttpServletRequest request,String shopCode,String userId,String ceoId) throws Exception{
+		
+		System.out.println("menu 들어옴");
 
 		List<StoreDTO> lists = dao.menuList(shopCode);
 
@@ -42,34 +44,28 @@ public class StoreController {
 	//매장정보
 	@RequestMapping(value = "/info", method = {RequestMethod.GET,RequestMethod.POST})
 	public String shopInfo(HttpServletRequest request,String shopCode,String ceoId) throws Exception{
+		
+		System.out.println("shopInfo 들어옴");
 
 		System.out.println("info shopCode: " + shopCode);
-
-		if(dao.shopInfo(ceoId, shopCode).isEmpty()) {
+	
 			List<StoreDTO> lists = 
-					dao.shopInfonotreview(ceoId, shopCode);
+					dao.shopInfo(ceoId, shopCode);
 			request.setAttribute("lists", lists);
 
-			return "store/storeInfo";
-		}
-		List<StoreDTO> lists = 
-				dao.shopInfo(ceoId, shopCode);
-		request.setAttribute("lists", lists);
-
-		return "store/storeInfo";
+			return "store/storeInfo";	
 	}
 	
 	//storePage
 	@RequestMapping(value = "/page", method = {RequestMethod.GET,RequestMethod.POST})
 	public String page(HttpServletRequest request,String shopCode,String ceoId) {
 
-		String userId = "suzi";
+		System.out.println("page 들어옴");
+		
+		String userId = "hye";
 
 		System.out.println("info shopCode=>" + shopCode);
 
-		List<StoreDTO> lists = dao.selectList(userId);
-
-		request.setAttribute("lists", lists);
 		request.setAttribute("shopCode", shopCode);
 		request.setAttribute("ceoId", ceoId);
 		request.setAttribute("userId", userId);
@@ -81,6 +77,8 @@ public class StoreController {
 	//리뷰
 	@RequestMapping(value = "/review", method = {RequestMethod.POST,RequestMethod.GET})
 	public String review(HttpServletRequest request, String shopCode, StoreDTO dto,String userId) {
+		
+		System.out.println("review 들어옴");
 
 		List<StoreDTO> lists = dao.reviewList(shopCode, dto.getCount()+1);
 		System.out.println("review renum" + (dto.getCount()+1));
@@ -89,11 +87,7 @@ public class StoreController {
 		request.setAttribute("lists", lists);
 		request.setAttribute("shopCode", shopCode);
 		request.setAttribute("userId", userId);
-		
-		//신고 3번일시 리뷰,신고 테이블 자동삭제
-		dao.deleteReview();
-		dao.deleteReport(); 
-
+	
 		return "store/reviewList";
 	}
 	
@@ -105,6 +99,7 @@ public class StoreController {
 		System.out.println("report 들어옴");
 		System.out.println("report Id: " + userId);
 		System.out.println("report reNum: " + reNum);
+		System.out.println("shopCode: " + shopCode);
 
 		dto.setReNum(Integer.parseInt(reNum));
 		dto.setUserId(userId);
@@ -112,13 +107,27 @@ public class StoreController {
 		dao.insertReport(dto);
 
 		request.setAttribute("dto", dto);
+		
+		//신고 카운트가 3번이됐다면 삭제
+		dao.deleteReview();
+		dao.deleteReport(); 
+		
+		//후 조회
+		List<StoreDTO> lists = dao.reviewList(shopCode, dto.getCount()+1);
+		System.out.println("review renum" + (dto.getCount()+1));
+		System.out.println("userId=" + userId);
+		System.out.println("shopCode: " + shopCode);
+		
+		request.setAttribute("lists", lists);
 
-		return "redirect:/page.action?menuCode=" + menuCode + "&userId=" + userId +"&shopCode=" + shopCode + "&ceoId=" + ceoId;
+		return "store/reviewList";
 	}
 	
 	//메뉴 상세페이지(모달창)
 	@RequestMapping(value = "/menuArticle", method = {RequestMethod.POST,RequestMethod.GET})
 	public String menuArticle(HttpServletRequest request,String menuCode,String userId,String ceoId) {
+		
+		System.out.println("menuArticle 들어옴");
 
 		StoreDTO dto = dao.menuListOne(menuCode);
 
@@ -189,7 +198,58 @@ public class StoreController {
 		return "redirect:/page.action?menuCode=" + menuCode + "&userId=" + userId +"&shopCode=" + shopCode + "&ceoId=" + ceoId;
 
 	}
+	
+	//장바구니 select 후 delete 후 select
+		@RequestMapping(value = "/selectCartAll", method = {RequestMethod.POST,RequestMethod.GET})
+		public String selectCartAll(HttpServletRequest request, StoreDTO dto,String userId,String ceoId,String menuCode,String shopCode) {
+			
+			System.out.println("selectCartAll 들어옴");
+			System.out.println("userId: " + userId);
+		
+			
+			List<StoreDTO> lists = dao.selectCartAll(userId);
+			
+			int listsu = lists.size(); //매장의 메뉴 갯수
+			
+			int[] priceAmountArr = new int[listsu] ; //메뉴들의 수로 배열 선언
+			int priceAmount=0; //주문하는 메뉴들의 총 금액 초기화
+			
+			for(int i=0;i<listsu;i++) {
+				
+				System.out.println(lists.get(i).getcAmount());
+				priceAmountArr[i] = lists.get(i).getcAmount();
+				priceAmount += priceAmountArr[i]; // 주문할 금액들의 합
+				System.out.println(priceAmount);
+			}
+			
+			System.out.println("lists1의 레코드 개수는: " + listsu);
 
+			request.setAttribute("listsu", listsu);
+			request.setAttribute("priceAmount", priceAmount);
+			
+			
+			request.setAttribute("lists", lists);
+		
+			
+			return "store/cart";
+		}
+		
+		//장바구니 delete
+		@RequestMapping(value = "/deleteCart", method = {RequestMethod.POST,RequestMethod.GET})
+		public String deleteCart(HttpServletRequest request, StoreDTO dto,String userId,String ceoId,String menuCode,String shopCode) {
+			
+			System.out.println("deleteCart 들어옴");
+			System.out.println("userId: " + userId);
+			System.out.println("menuCode: " + menuCode);
+		
+			dao.deleteCartOne(userId, menuCode);
+			
+			List<StoreDTO> lists = dao.selectCartAll(userId);
+			request.setAttribute("lists", lists);
+			
+			return "store/cart";
+		}
+	
 	//찜테이블 물리적(insert,delete)
 	@RequestMapping(value = "/heartInDel", method = {RequestMethod.POST,RequestMethod.GET})
 	public String heartInDel(HttpServletRequest request, StoreDTO dto,String chk,String shopCode,String ceoId,String userId) {
@@ -197,9 +257,7 @@ public class StoreController {
 		System.out.println("heart Indel 들어옴");
 
 		System.out.println(chk);
-		
-		//review테이블에 데이터가 없을시
-		if(dao.shopInfo(ceoId, shopCode).isEmpty()) {
+	
 
 			//chk in/del 검증
 			//찜테이블에 인서트가 되어있으면
@@ -207,7 +265,7 @@ public class StoreController {
 				
 				dao.heartDelete(userId, shopCode);
 				
-				List<StoreDTO> lists = dao.shopInfonotreview(ceoId, shopCode);
+				List<StoreDTO> lists = dao.shopInfo(ceoId, shopCode);
 				request.setAttribute("userId", userId);
 				request.setAttribute("lists", lists);
 				
@@ -220,7 +278,7 @@ public class StoreController {
 			}
 			
 			//찜테이블에 데이터가 없을시(찜을 안눌렀을시)
-			List<StoreDTO> lists = dao.shopInfonotreview(ceoId, shopCode);
+			List<StoreDTO> lists = dao.shopInfo(ceoId, shopCode);
 
 			request.setAttribute("userId", userId);
 			request.setAttribute("lists", lists);
@@ -235,39 +293,7 @@ public class StoreController {
 
 			request.setAttribute("chk", chk);
 			return "store/heart";
-		}
-		
-		//review테이블에 데이터가 있을시 (dao.shopInfo) 사용
-		if(chk.equals("in") || chk=="in") {
-
-			dao.heartDelete(userId, shopCode);
-
-			List<StoreDTO> lists = dao.shopInfo(ceoId, shopCode);
-			request.setAttribute("userId", userId);
-			request.setAttribute("lists", lists);
-
-			chk = "del";
-
-			request.setAttribute("chk", chk);
-
-			return "store/heart";
-		}
-
-		List<StoreDTO> lists = dao.shopInfo(ceoId, shopCode);
-
-		request.setAttribute("userId", userId);
-		request.setAttribute("lists", lists);
-
-		chk = "in";
-
-
-		dto.setShopCode(shopCode);
-		dto.setUserId(userId);
-
-		dao.heartInsert(dto);
-
-		request.setAttribute("chk", chk);
-		return "store/heart";
+	
 	}
 	
 	//찜테이블 검증
@@ -275,48 +301,40 @@ public class StoreController {
 	public String heart(HttpServletRequest request, StoreDTO dto,String chk,String shopCode,String ceoId,String userId) {
 
 		System.out.println("heart검증 들어옴");
+		System.out.println("1");
 		
-		//review테이블에 데이터가 없을시 (dao.shopInfonotreview) 사용
-		if(dao.shopInfo(ceoId, shopCode).isEmpty()) {
+		System.out.println(shopCode);
+		System.out.println(ceoId);
+		
+	
 
-			List<StoreDTO> lists = dao.shopInfonotreview(ceoId, shopCode);
+			List<StoreDTO> lists = dao.shopInfo(ceoId, shopCode);
 			request.setAttribute("userId", userId);
 			request.setAttribute("lists", lists);
+
 			
 			//heart테이블에 데이터가 있을시
 			if(!dao.heartSelect(userId, shopCode).isEmpty()) {
+				System.out.println("3");
 				chk = "in";
 			
 			}else {
 				//없을시
+				System.out.println("4");
 				chk = "del";
 			}
+			System.out.println("5");
 
 			request.setAttribute("chk", chk);
 			return "store/heart";
-
-		}
-
-		//review테이블에 데이터가 있을시 (dao.shopInfo) 사용
-		List<StoreDTO> lists = dao.shopInfo(ceoId, shopCode);
-		request.setAttribute("userId", userId);
-		request.setAttribute("lists", lists);
-
-		if(!dao.heartSelect(userId, shopCode).isEmpty()) {
-			chk = "in";
-
-		}else {
-			chk = "del";
-		}
-
-		request.setAttribute("chk", chk);
-		return "store/heart";
 
 	}
 
 	//음식점 리스트 출력
 	@RequestMapping(value="/storeList.action", method = {RequestMethod.GET,RequestMethod.POST})
 	public String list(HttpServletRequest request,StoreDTO dto) throws Exception{
+		
+		System.out.println("storeList 들어옴");
 
 		String cp = request.getContextPath();
 

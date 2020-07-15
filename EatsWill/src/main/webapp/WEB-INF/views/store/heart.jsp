@@ -54,8 +54,8 @@ $(document).ready(function(){
       </div>
       <div class="restaurant-content">
         <div ng-show="restaurant|restaurant_is_open" class="logo" ng-style="{'background-image':'url(' + get_logo_url(restaurant.logo_url) + '), url(\'image/default_restaurant_logo.png\')'}" 
-        style="background-image: url(resources/img/${dto.shopImg});"></div>
-       
+        style="background-image: url(resources/img/${dto.shopImg});">
+        </div>
        
        <!-- --------------------------------------------------------------------------------------------------- list -->
         <ul class="list">
@@ -66,8 +66,6 @@ $(document).ready(function(){
           <li ng-show="show_discount_description()" class="discount-desc ng-hide">
           
           <span class="ng-binding">사장님 이름: ${dto.ceoName}</span></li>
-          
-          
           
           <li>찜<span id="heartImg">
           <c:if test="${chk=='in'}" >
@@ -84,7 +82,7 @@ $(document).ready(function(){
            <input type="hidden" value="${dto.shopCode }" id="shopCode">
            <input type="hidden" value="${dto.ceoId }" id="ceoId">
            <input type="hidden" value="${userId }" id="userId">
-           <input type="text" value="${chk }" id="chk">
+           <input type="hidden" value="${chk }" id="chk">
            
           </li>
           <li class="delivery-time-tooltip" ng-show="restaurant.estimated_delivery_time">영업시간

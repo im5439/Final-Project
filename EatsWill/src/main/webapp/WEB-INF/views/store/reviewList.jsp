@@ -62,7 +62,45 @@
 </head>
 <body>
 
-<c:forEach var="dto" items="${lists }">
+<!-- 신고 아작스  -->
+
+<script type="text/javascript">
+
+
+	function reportIt(pIndx) {
+		
+		var btnIdx = pIndx;                      
+		
+		var params = "reNum=" + $("#reNum" + btnIdx).val() 
+		+ "&userId=" + $("#userId").val()
+		+ "&count=" + $("#count").val()
+		+ "&shopCode=" + $("#shopCode").val()
+		+ "&ceoId=" + $("#ceoId").val();
+	
+		$.ajax({
+			
+			type:"POST",
+			url:"<%=cp%>/report.action",
+			data:params,
+			success:function(args){
+				
+				$("#reviewData").html(args);
+			
+			},
+			error:function(e){
+				alert(e.responseText);
+			}
+		});
+		
+				
+			}
+
+
+</script>
+
+<!-- ----------------------------------------------------------------------------  -->
+<form action="" method="post" name="reviewForm">
+<c:forEach var="dto" items="${lists }" varStatus="status">
 
 
 <!-- -----------------------------------li 시작 -->
@@ -72,9 +110,14 @@
            
             <span ng-show="review.phone" class="review-id ng-binding">user 아이디 ${dto.reUserId }</span>
             <span ng-bind="review.time|since" class="review-time ng-binding"> 작성날짜 ${dto.reCreated } </span>
-          	
-     
-            <a href="<%=cp%>/report.action?reNum=${dto.reNum}&userId=${userId}&shopCode=${dto.shopCode}&count=${dto.count}">신고(${dto.count })</a>
+     		<input type="button" id="report" value="신고(${dto.count })" onclick="reportIt(${status.index});" >
+            
+            <input type="hidden" id="reNum${status.index}" value="${dto.reNum}" name="reNum">
+            <input type="hidden" id="userId" value="${userId}">
+            <input type="hidden" id="shopCode" value="${dto.shopCode}">
+            <input type="hidden" id="count" value="${dto.count}">
+            <input type="hidden" id="ceoId" value="${dto.ceoId}">
+            
           </div>
           <div>
           
@@ -150,6 +193,8 @@
 
 
 </c:forEach>
+
+</form>
 
 <script src="/eatswill/resources/assets/js/jquery.min.js"></script>
 			<script src="/eatswill/resources/assets/js/skel.min.js"></script>
