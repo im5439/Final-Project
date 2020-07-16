@@ -6,9 +6,15 @@
 
 <!-- 해당 아이디의 주문 리스트 출력 -->
 <select id="getBuyList" parameterType="String" resultType="com.eatswill.dto.MyDTO">
-	SELECT om.orderdate, om.ordercode, s.shopname,s.shopCode shopCode, om.oamount, data1.menuname, cc.codename orderstatus, s.shopimg shopImg
-from ordermain om, shop s, COMMON_CODE cc,(select ot.ordercode, listagg(m.menuname,',') within group (order by m.menuname) menuname from ORDERDETAIL ot, menu m where ot.MENUCODE=m.MENUCODE group by ot.ordercode) data1
-where om.orderstatus=cc.code and om.userid=#{userid} and om.shopcode=s.shopcode and om.ordercode=data1.ordercode
+	SELECT om.orderdate, om.ordercode, s.shopname,s.shopCode shopCode, om.oamount, data1.menuname, cc.codename orderstatus, s.shopimg shopImg, data2.cnt cnt
+	from ordermain om, shop s, COMMON_CODE cc,(select ot.ordercode, listagg(m.menuname,',') within group (order by m.menuname) menuname from ORDERDETAIL ot, menu m where ot.MENUCODE=m.MENUCODE group by ot.ordercode) data1,
+	(select a.ordercode, count(b.ordercode) cnt from ORDERMAIN a left outer join REVIEW b on a.ORDERCODE=b.ORDERCODE group by a.ordercode) data2
+	where om.orderstatus=cc.code and om.userid=#{userId} and om.shopcode=s.shopcode and om.ordercode=data1.ordercode and om.ordercode = data2.ordercode
+	order by orderdate desc
+</select>
+
+<select id="getReadCheckReview" parameterType="hashMap" resultType="com.eatswill.dto.MyDTO">
+   select ORDERCODE,RECONTENT,USERID from review where userId=#{userId} and ORDERCODE=#{orderCode}
 </select>
 
 <!-- 주문 취소버튼 클릭시 -->

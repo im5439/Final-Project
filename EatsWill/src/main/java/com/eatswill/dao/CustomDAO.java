@@ -51,7 +51,7 @@ private SqlSessionTemplate sessionTemplate;
 		params.put("id", id);
 		params.put("pw", pw);
 		
-		CustomDTO custom = sessionTemplate.selectOne("customMapper.checkPw", params);
+		CustomDTO custom = sessionTemplate.selectOne("customMapper.checkIdPw", params);
 		
 		// 아이디 패스워드가 일치하지않으면 false 출력
 		if(custom==null) {

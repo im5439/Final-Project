@@ -54,6 +54,7 @@ ng\:form {
    <link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
    <link rel="stylesheet"
    href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
+   <script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
    <script type="text/javascript" src="/eatswill/resources/assets/js/cart.js"></script>
 
 

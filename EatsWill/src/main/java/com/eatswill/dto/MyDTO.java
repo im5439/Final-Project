@@ -34,7 +34,7 @@ public class MyDTO {
 	private int shopStar;
 	private int reStar;
 	private String ceoReContent;
-	
+	private int cnt;
 	
 	
 	
@@ -170,6 +170,12 @@ public class MyDTO {
 	}
 	public void setReStar(int reStar) {
 		this.reStar = reStar;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}
 	
 	

@@ -57,6 +57,7 @@ ng\:form {
 	
 	<script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
 	<script type="text/javascript" src="/eatswill/resources/assets/js/login.js"></script>	
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	
 	
 <script>
@@ -402,7 +403,17 @@ ng\:form {
 		<div class="rd-wrapper contact-wrapper">
 	    	<form class="form-horizontal form-signin" method="POST" action="" name="myForm">
 	      	<div class="registration-wrap" style="width: 600px;margin-bottom: 0px"> 
-	      		<input type="hidden" name="id" value="${sessionScope.customInfo.id }"/>			
+	      	
+	      		<input type="hidden" name="id" value="${sessionScope.customInfo.id }"/>	
+	      		
+	      		<div class="control-group">
+	        		<div class="control-label">패스워드</div>
+	
+	        		<div class="controls">
+	            		<input type="password" name="pw" id="pw" style="display: inline;height: 34px;width: 70%"/>
+					</div>
+				</div>
+	      				
 				<div class="control-group">
 	        		<div class="control-label">이름</div>
 					
@@ -435,8 +446,8 @@ ng\:form {
 	        		<div class="control-label">주소</div>
 	
 	        		<div class="controls">
-	            		<input type="text" name="addr" id="addr" style="display: inline;height: 34px;width: 70%"
-	            		value="${sessionScope.customInfo.addr }"/>
+	            		<input type="text" name="addr1" id="addr1" style="display: inline;height: 34px;width: 70%"
+	            		value="${sessionScope.customInfo.addr1 }"/>
 	            		<input type="button" value="주소검색" id="addrcheck" onclick="sample3_execDaumPostcode();"/>
 					</div>
 				</div>
@@ -445,7 +456,8 @@ ng\:form {
 	        		<div class="control-label">상세주소</div>
 	
 	        		<div class="controls">
-	            		<input type="text" name="addr2" id="addr2" style="display: inline;height: 34px;width: 70%"/>
+	            		<input type="text" name="addr2" id="addr2" style="display: inline;height: 34px;width: 70%"
+	            		value="${sessionScope.customInfo.addr2 }"/>
 					</div>
 				</div>
 	

@@ -22,34 +22,27 @@
 
 <select id="checkIdPw" parameterType="hashMap" resultType="com.eatswill.dto.CustomDTO">
 	select 	USERID id, USERPW pw, USERNAME name, USERTEL tel, 
-			USEREMAIL email, USERPOINT point, USERADDR addr 
+			USEREMAIL email, USERPOINT point, USERADDR1 addr1, USERADDR2 addr2  
 	from 	custom 
 	where 	USERID=#{id} and USERPW=#{pw}
 </select>
 
 <insert id="insertCustom" parameterType="com.eatswill.dto.CustomDTO">
-	insert into custom (USERID,USERPW,USERNAME,USERTEL,USEREMAIL,USERPOINT,USERADDR) 
-	values (#{id},#{pw},#{name},#{tel},#{email},1000,(#{addr}||' '||#{addr2}))
+	insert into custom (USERID,USERPW,USERNAME,USERTEL,USEREMAIL,USERPOINT,USERADDR1,USERADDR2) 
+	values (#{id},#{pw},#{name},#{tel},#{email},1000,#{addr1},#{addr2})
 </insert>
 
 <update id="updateCustom" parameterType="com.eatswill.dto.CustomDTO">
-	update custom set USERNAME=#{name}, USERTEL=#{tel}, USEREMAIL=#{email}, USERADDR=#{addr} where USERID=#{id}
+	update custom set USERPW=#{pw}, USERNAME=#{name}, USERTEL=#{tel}, USEREMAIL=#{email}, USERADDR1=#{addr1}, USERADDR2=#{addr2} where USERID=#{id}
 </update>
 
 <delete id="deleteCustom" parameterType="String">
 	delete custom where USERID=#{id}
 </delete>
 
-<select id="checkPw" parameterType="hashMap" resultType="com.eatswill.dto.CustomDTO">
-	select 	USERID id, USERPW pw, USERNAME name, USERTEL tel, 
-			USEREMAIL email, USERPOINT point, USERADDR addr 
-	from 	custom 
-	where 	USERID=#{id} and USERPW=#{pw}
-</select>
-
 <select id="renewSession" parameterType="String" resultType="com.eatswill.dto.CustomDTO">
 	select 	USERID id, USERPW pw, USERNAME name, USERTEL tel, 
-			USEREMAIL email, USERPOINT point, USERADDR addr 
+			USEREMAIL email, USERPOINT point, USERADDR1 addr1, USERADDR2 addr2 
 	from 	custom 
 	where 	USERID=#{id}
 </select>

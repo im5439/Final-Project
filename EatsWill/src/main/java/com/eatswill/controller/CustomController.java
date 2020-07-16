@@ -30,9 +30,10 @@ public class CustomController {
 	@Qualifier("customDAO")
 	CustomDAO dao;
 	
+	// 테스트용
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {		
-		return "shopping";
+		return "test3";
 	}
 	
 	// 메인 페이지
@@ -58,7 +59,6 @@ public class CustomController {
 	}
 	
 	// 아이디 중복 확인 기능
-	// 시간되면 String 대신 MVC로 클래스 가져와서 되는지 확인	
 	@RequestMapping(value = "/idcheck.action", method = RequestMethod.POST)
 	@ResponseBody
 	public String idcheck(String id) {	

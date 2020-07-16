@@ -8,7 +8,7 @@ public class CustomDTO {
 	private String tel;
 	private String email;
 	private int point;
-	private String addr;
+	private String addr1;
 	private String addr2;
 	
 	public String getId() {
@@ -47,11 +47,11 @@ public class CustomDTO {
 	public void setPoint(int point) {
 		this.point = point;
 	}
-	public String getAddr() {
-		return addr;
+	public String getAddr1() {
+		return addr1;
 	}
-	public void setAddr(String addr) {
-		this.addr = addr;
+	public void setAddr1(String addr1) {
+		this.addr1 = addr1;
 	}
 	public String getAddr2() {
 		return addr2;

@@ -75,6 +75,7 @@ ng\:form {
    <link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
    <link rel="stylesheet"
    href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
+   <script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
    <script type="text/javascript" src="/eatswill/resources/assets/js/cart.js"></script>
    
       <!--------------------------------------------------------------------------------------- -->
@@ -253,22 +254,6 @@ ng\:form {
 <script src="http://code.jquery.com/jquery-1.11.0.js"></script>
 
 <script>
-   function geo() {        
-        // Geolocation API에 액세스할 수 있는지를 확인
-        if (navigator.geolocation) {
-            //위치 정보를 얻기
-            navigator.geolocation.getCurrentPosition (function(pos) {
-                $('#latitude').html(pos.coords.latitude);     // 위도
-                $('#longitude').html(pos.coords.longitude); // 경도
-            });
-            alert("aaa");
-        } else {
-            alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
-        }
-    }
-</script>
-
-<script>
    /* eslint-disable */(function(w, d, s, l, i) {
       w[l] = w[l] || [];
       w[l].push({
@@ -333,7 +318,7 @@ ng\:form {
 								<li><a href="${pageContext.request.contextPath}/login.action">로그인</a></li>
 							</c:when>
 							<c:otherwise>
-								<li><font color="blue">${sessionScope.customInfo.name }</font> 님 환영합니다.
+								<li><font color="#F2849E">${sessionScope.customInfo.name }</font> 님 환영합니다.
 	                      		<p style="text-align: left">
 	                      			전화번호 : ${sessionScope.customInfo.tel }</br>
 	                      			포인트 : ${sessionScope.customInfo.point }
@@ -512,8 +497,6 @@ ng\:form {
                                        <li class="seller_info"><em></em><a href="">${dto.shopName }</a></li>
                                        <li class="tit_info" style="color: orange">${dto.menuName }</li>
                                        <li class="price"><strong>${dto.oAmount }</strong>원</li>
-                                       <li>위도:<span id="latitude"></span></li>
-								        <li>경도:<span id="longitude"></span></li>
                                     </ul>
                                  </div>
                               </td>
@@ -528,13 +511,25 @@ ng\:form {
                               </td>
                               <td>
                               <c:choose>
-                                       <c:when test="${dto.orderStatus == '주문완료' }"><span class="btn_bg btn_w81_2"><a
-                                    href="javascript:location.href='<%=cp%>/myOrderCancel.action?orderCode=${dto.orderCode}'">주문
-                                       취소</a></span></c:when>
-                                       <c:when test="${dto.orderStatus == '배달완료' }"><span class="btn_bg btn_w81_2"><a
-                                       href="${reviewUrl }orderCode=${dto.orderCode}">리뷰 쓰기</a></span></c:when>
-                                       <c:otherwise></c:otherwise>
-                                    </c:choose></td>
+	                              <c:when test="${dto.orderStatus == '주문완료' }">
+	                              	<span class="btn_bg btn_w81_2">
+	                              		<a href="javascript:location.href='<%=cp%>/myOrderCancel.action?orderCode=${dto.orderCode}'">주문취소</a>
+	                              	</span>
+	                              </c:when>
+	                              
+	                              <c:when test="${dto.orderStatus == '배달완료' }">
+	                              	<span class="btn_bg btn_w81_2">
+	                              		<c:if test="${dto.cnt == 0 }">
+	                              			<a href="${reviewUrl }orderCode=${dto.orderCode}">리뷰 쓰기</a>
+	                              		</c:if>
+	                              		
+	                              		<c:if test="${dto.cnt != 0 }">
+	                              			<a href="javascript:location.href='<%=cp%>/myReview.action'">리뷰 보기</a>
+	                              		</c:if>
+	                              </span>
+	                             </c:when>
+	                             <c:otherwise></c:otherwise>
+                              </c:choose></td>
                            </tr>
                         
                      </tbody>

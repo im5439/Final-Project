@@ -451,7 +451,7 @@ ng\:form {
 	        		<div class="control-label">주소</div>
 	
 	        		<div class="controls">
-	            		<input type="text" name="addr" id="addr" style="display: inline;height: 34px"/>
+	            		<input type="text" name="addr1" id="addr1" style="display: inline;height: 34px"/>
 	            		<input type="button" value="주소검색" id="addrcheck" onclick="sample3_execDaumPostcode();"/>
 					</div>
 				</div>

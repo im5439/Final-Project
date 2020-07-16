@@ -57,7 +57,7 @@ function sendIt(){
 	} 
 	
 	if (f.pw.value.length < 4 || f.pw.value.length > 20) { 
-		f.pwd.focus();
+		f.pw.focus();
 		alert("비밀번호는 4~20자 입니다.");
 		return;
 	}  else if ((!engCheck.test(f.pw.value) || !numCheck.test(f.pw.value) || !specialCheck.test(f.pw.value)) || korCheck.test(f.pw.value)) {
@@ -90,9 +90,9 @@ function sendIt(){
         return;
 	}
 	
-	if(!f.addr.value){
+	if(!f.addr1.value){
 		alert("주소를 입력하세요");
-		f.addr.focus();
+		f.addr1.focus();
 		return;
 	}
 
@@ -134,6 +134,29 @@ function tryPw_click() {
 function updateIt(){
 	
 	var f = document.myForm;
+	
+	var korCheck = /[ㄱ-ㅎ]/;
+	var engCheck = /[a-z]/; 
+	var numCheck = /[0-9]/; 
+	var specialCheck = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+
+	var f = document.myForm;
+	
+	if(!f.pw.value){
+		alert("비밀번호를 입력하세요");
+		f.pw.focus();
+		return;
+	} 
+	
+	if (f.pw.value.length < 4 || f.pw.value.length > 20) { 
+		f.pw.focus();
+		alert("비밀번호는 4~20자 입니다.");
+		return;
+	}  else if ((!engCheck.test(f.pw.value) || !numCheck.test(f.pw.value) || !specialCheck.test(f.pw.value)) || korCheck.test(f.pw.value)) {
+		alert("비밀번호는 특수문자를 포함한 영문 및 숫자 입니다.");
+		f.pw.focus();
+		return;
+	}
 
 	if(!f.name.value){
 		alert("이름을 입력하세요");
@@ -159,9 +182,9 @@ function updateIt(){
         return;
 	}
 	
-	if(!f.addr.value){
+	if(!f.addr1.value){
 		alert("주소를 입력하세요");
-		f.addr.focus();
+		f.addr1.focus();
 		return;
 	}
 
@@ -272,7 +295,7 @@ $(function() {
 
 function execDaumPostcode() {
 
-	document.getElementById('addr').value = "";
+	document.getElementById('addr1').value = "";
 	
 	new daum.Postcode({
 		oncomplete: function(data) {
@@ -303,7 +326,7 @@ function execDaumPostcode() {
  
 			// 우편번호와 주소 정보를 해당 필드에 넣는다.
 			// document.getElementById('zip').value = data.zonecode; //5자리 새우편번호 사용
-			document.getElementById('addr').value = fullRoadAddr;
+			document.getElementById('addr1').value = fullRoadAddr;
 			document.getElementById('addr2').focus();
     	}
 	}).open();
@@ -320,7 +343,7 @@ function execDaumPostcode() {
     function sample3_execDaumPostcode() {
     	// 우편번호 찾기 찾기 화면을 넣을 element
     	var element_wrap = document.getElementById('wrap');
-    	document.getElementById('addr').value = "";
+    	document.getElementById('addr1').value = "";
     	document.getElementById('addr2').value = "";
     	
     	// 이미 켜져있으면 화면 닫음
@@ -372,7 +395,7 @@ function execDaumPostcode() {
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 // document.getElementById('sample3_postcode').value = data.zonecode;			// 우편번호
-                document.getElementById("addr").value = addr;
+                document.getElementById("addr1").value = addr;
                 // 커서를 상세주소 필드로 이동한다.
                 document.getElementById("addr2").focus();
 
