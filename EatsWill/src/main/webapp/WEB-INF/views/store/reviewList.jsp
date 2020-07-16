@@ -62,24 +62,62 @@
 </head>
 <body>
 
-<c:forEach var="dto" items="${lists }">
-<c:if test="${dto.reNum == dto.pNum }">
-<div ng-show="active_tab == &quot;review&quot;" class="">
-   
+<!-- 신고 아작스  -->
 
-      <ul id="review" class="list-group review-list">
-        <li class="list-group-item ng-hide" ng-show="restaurant.reviews.length < 1">
-          <p class="review-empty clearfix ng-binding">주문후 첫번째 리뷰를 남겨보세요.</p>
-        </li>
+<script type="text/javascript">
+
+
+	function reportIt(pIndx) {
+		
+		var btnIdx = pIndx;                      
+		
+		var params = "reNum=" + $("#reNum" + btnIdx).val() 
+		+ "&userId=" + $("#userId").val()
+		+ "&count=" + $("#count").val()
+		+ "&shopCode=" + $("#shopCode").val()
+		+ "&ceoId=" + $("#ceoId").val();
+	
+		$.ajax({
+			
+			type:"POST",
+			url:"<%=cp%>/report.action",
+			data:params,
+			success:function(args){
+				
+				$("#reviewData").html(args);
+			
+			},
+			error:function(e){
+				alert(e.responseText);
+			}
+		});
+		
+				
+			}
+
+
+</script>
+<form action="" method="post" name="reviewForm">
+<c:forEach var="dto" items="${lists }" varStatus="status">
+
 
 <!-- -----------------------------------li 시작 -->
        <li class="list-group-item star-point ng-scope" ng-repeat="review in restaurant.reviews" on-finish-render="scrollCartArea()">
+      
           <div>
            
-            <span ng-show="review.phone" class="review-id ng-binding">user 아이디 ${dto.userId }</span>
+            <span ng-show="review.phone" class="review-id ng-binding"> ${dto.reUserId } 님 </span>
             <span ng-bind="review.time|since" class="review-time ng-binding"> 작성날짜 ${dto.reCreated } </span>
-          
-            <a href="" class="btn-report" ng-click="report_reply(review.id, 'user', review)">신고</a>
+       
+          	신고 (${dto.count })
+            <img alt="" src="/eatswill/resources/img/siren.png" style="height: 1.5em; width: 1.5em;" id="report"  onclick="reportIt(${status.index});" >
+            
+             <input type="hidden" id="reNum${status.index}" value="${dto.reNum}" name="reNum">
+            <input type="hidden" id="userId" value="${userId}">
+            <input type="hidden" id="shopCode" value="${dto.shopCode}">
+            <input type="hidden" id="count" value="${dto.count}">
+            <input type="hidden" id="ceoId" value="${dto.ceoId}">
+            
           </div>
           <div>
           
@@ -113,7 +151,8 @@
                 
               </td>
             </tr>
-          </tbody></table>
+          </tbody>
+         </table>
 
           <div class="order-items default ng-binding" ng-click="show_review_menu($event)">
             	${dto.menuName }
@@ -121,46 +160,42 @@
 
           <p ng-show="review.comment" ng-bind-html="review.comment|strip_html" class="ng-binding">${dto.reContent }</p>
 
-        
-        </li>
-        
-        
-        
-  <!-- -----------------------------------li 끝-->
-        
-      </ul>
-       
-    </div>
-    
-    </c:if>
-    
-     
-        <c:if test="${dto.reNum != dto.pNum }">
-        <li>
-        <div>
-           
-            <span ng-show="review.phone" class="review-id ng-binding">&nbsp;&nbsp;&nbsp;ㄴ사장님 댓글&nbsp;${dto.userId }</span>
+  
+        <c:if test="${dto.ceoContent != null }">
+      
+        <div style="background-color: #FDF5E6;">
+            <span ng-show="review.phone" class="review-id ng-binding">
+            <img alt="" src="/eatswill/resources/img/dat.png" style="height: 2.5em; width: 2.5em;">&nbsp;사장님 &nbsp;${dto.userId } 님</span>
             <span ng-bind="review.time|since" class="review-time ng-binding"> 작성날짜 ${dto.reCreated } </span>
             
-            <p ng-show="review.comment" ng-bind-html="review.comment|strip_html" class="ng-binding">${dto.reContent }</p>
-          
-            
+            <p ng-show="review.comment" ng-bind-html="review.comment|strip_html" class="ng-binding">&nbsp;${dto.ceoContent }</p>
+            <span></span>
           </div>
         
-        </li>
+    
         </c:if>
+        
+        
+        </li>
+
+        
+       
+        
+   </c:forEach>    
+   
+   </form>
+        
+  <!-- -----------------------------------li 끝-->
+
+  
+    
+     
 
 
 
 
 
-</c:forEach>
 
-<script src="/eatswill/resources/assets/js/jquery.min.js"></script>
-			<script src="/eatswill/resources/assets/js/skel.min.js"></script>
-			<script src="/eatswill/resources/assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="/eatswill/resources/assets/js/main.js"></script>
 
 </body>
 </html>

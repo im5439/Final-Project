@@ -82,13 +82,14 @@
 <br>
 
 </div>
-      </div>
 
-      <div class="info-item">
+
+
+ <div class="info-item">
         <div class="info-item-title info-icon1">업체정보</div>
-        <p><i>영업시간</i> <span class="tc ng-binding">${dto.timeName} </span></p>
+        <p><i>영업시간</i> <span class="tc ng-binding">${dto.timeName } </span></p>
         <p ng-show="restaurant.phone.length > 0" class=""><i>전화번호</i> <span class="tc ng-binding">${dto.shopTel }</span></p>
-        <p ng-show="restaurant.address.length > 0" class=""><i>주소</i> <span class="tc ng-binding">${dto.shopAddr} </span></p>
+        <p ng-show="restaurant.address.length > 0" class=""><i>주소</i> <span class="tc ng-binding"> ${dto.shopAddr } </span></p>
         <p ng-show="restaurant.tags.length > 0 &amp;&amp; restaurant.tags.indexOf(&quot;CESCO&quot;) >= 0" class="ng-hide"><i>부가정보</i> <span class="cesco info-icon5 tc">세스코멤버스 사업장</span></p>
       </div>
 
@@ -96,7 +97,7 @@
         <div class="info-item-title info-icon3">사업자정보</div>
         <p><i>상호명</i> <span ng-bind="restaurant_info.crmdata.company_name || restaurant.name" class="tc ng-binding">매장이름: ${dto.shopName }</span></p>
         <p><i>사장님 성함</i> <span ng-bind="restaurant_info.crmdata.company_name || restaurant.name" class="tc ng-binding">사장이름: ${dto.ceoName }</span></p>
-        <p><i>사업자등록번호</i> <span ng-bind="restaurant_info.crmdata.company_number" class="tc ng-binding">614-72-00072</span></p>
+        <p><i>사업자등록번호</i> <span ng-bind="restaurant_info.crmdata.company_number" class="tc ng-binding">${dto.shopTel}</span></p>
       </div>
 
       
@@ -114,20 +115,8 @@
     </div>
 
 
-
-
-
-
-
-
 </c:forEach>
 
-
-<script src="/eatswill/resources/assets/js/jquery.min.js"></script>
-			<script src="/eatswill/resources/assets/js/skel.min.js"></script>
-			<script src="/eatswill/resources/assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="/eatswill/resources/assets/js/main.js"></script>
 
 
 </body>

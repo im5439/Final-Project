@@ -4,6 +4,8 @@ public class StoreDTO {
 	
 	
 	private String chk;
+	private String reUserId;
+
 	
 	public String getChk() {
 		return chk;
@@ -53,14 +55,22 @@ public class StoreDTO {
 	}
 	//리뷰
 	private String orderCode;
-	private int pNum;
+
 	private int reNum;
 	private String userId;
 	private double reScore;
 	private String reContent;
 	private String reCreated;
 	private String reImg;
+	private int count;
+	private String ceoContent;
 	
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	//장바구니
 	private int cAmount;
 
@@ -160,12 +170,7 @@ public class StoreDTO {
 	public void setOrderCode(String orderCode) {
 		this.orderCode = orderCode;
 	}
-	public int getpNum() {
-		return pNum;
-	}
-	public void setpNum(int pNum) {
-		this.pNum = pNum;
-	}
+	
 	public int getReNum() {
 		return reNum;
 	}
@@ -201,6 +206,18 @@ public class StoreDTO {
 	}
 	public void setReImg(String reImg) {
 		this.reImg = reImg;
+	}
+	public String getReUserId() {
+		return reUserId;
+	}
+	public void setReUserId(String reUserId) {
+		this.reUserId = reUserId;
+	}
+	public String getCeoContent() {
+		return ceoContent;
+	}
+	public void setCeoContent(String ceoContent) {
+		this.ceoContent = ceoContent;
 	}
 
 	
