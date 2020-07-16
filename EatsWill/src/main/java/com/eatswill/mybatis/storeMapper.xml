@@ -39,7 +39,7 @@ where s.CEOID=c.CEOID and s.timeCODE=a.CODE and s.shopCode=r.shopCode(+) and s.C
 	r.reCreated,r.reContent ,r.reImg,r.shopCode,m.menuName,r.reNum,r.ceoContent,
 	(select count(*) from report re where re.reNum=r.reNum) count
 	from review r, orderdetail o,menu m
-	where r.orderCode=o.orderCode and o.menuCode=m.menuCode and r.shopCode=#{shopCode} order by r.reNum
+	where r.orderCode=o.orderCode and o.menuCode=m.menuCode and m.shopCode=r.shopCode and r.shopCode=#{shopCode} order by r.reNum
 </select>
 
 <!-- 리뷰 인서트  -->
@@ -83,7 +83,7 @@ where s.CEOID=c.CEOID and s.timeCODE=a.CODE and s.shopCode=r.shopCode(+) and s.C
 <select id="selectCartAll" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
 	select c.menuCode,c.cAmount,c.cQty,c.userId,m.menuName,m.menuPrice
 	from cart c, menu m
-	where c.menuCode=m.menuCode and c.userId=#{userId}
+	where c.menuCode=m.menuCode and c.userId=#{userId} order by c.menuCode asc
 </select>
 
 <!-- 장바구니 변경 (다른 음식점 추가시)  -->

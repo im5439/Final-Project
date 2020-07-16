@@ -86,7 +86,7 @@ $(document).ready(function(){
            
           </li>
           <li class="delivery-time-tooltip" ng-show="restaurant.estimated_delivery_time">영업시간
-            <span class="ng-binding">00시~00시<button type="button" class="btn-tooltip" data-toggle="tooltip" data-html="true" id="delivery-time-tooltip" data-placement="bottom" title="" data-original-title="최근 주문의 배달시간을 분석한 정보 입니다. <br> 실제 배달시간과는 차이가 있을 수 있습니다.">&nbsp;</button></span>
+            <span class="ng-binding">${dto.timeName }<button type="button" class="btn-tooltip" data-toggle="tooltip" data-html="true" id="delivery-time-tooltip" data-placement="bottom" title="" data-original-title="최근 주문의 배달시간을 분석한 정보 입니다. <br> 실제 배달시간과는 차이가 있을 수 있습니다.">&nbsp;</button></span>
           </li>
           
           <li class="full-w" ng-show="is_yogiyo &amp;&amp; (delivery_discount_value() > 0 || additional_discount_value() > 0)">

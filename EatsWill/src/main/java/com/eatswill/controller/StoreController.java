@@ -62,7 +62,7 @@ public class StoreController {
 
 		System.out.println("page 들어옴");
 		
-		String userId = "hye";
+		String userId = "user";
 
 		System.out.println("info shopCode=>" + shopCode);
 
@@ -222,7 +222,7 @@ public class StoreController {
 				System.out.println(priceAmount);
 			}
 			
-			System.out.println("lists1의 레코드 개수는: " + listsu);
+			System.out.println("lists의 레코드 개수는: " + listsu);
 
 			request.setAttribute("listsu", listsu);
 			request.setAttribute("priceAmount", priceAmount);

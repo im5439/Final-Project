@@ -750,8 +750,6 @@ function deletePage() {
   
 </div><!-- 절대 건들 ㄴ <div class="restaurant-detail row ng-scope"> -->
 
-
-   
      <!--  ====================================================================하단바 시작 내용 수정 가능 -->
      <div class="footer" >
 		<div class="footer-menu">
