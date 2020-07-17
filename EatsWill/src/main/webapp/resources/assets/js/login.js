@@ -197,9 +197,60 @@ $(function() {
 	$("#cartList").show(function(){
 		cartList();
 	});
+	
+	$("#kakao-login-btn").show(function(){
+		
+		// 사용할 앱의 JavaScript 키를 설정해 주세요.
+		Kakao.init('da5ed75e6d7f9bcac9abaeae41fd1108');
+	   
+	   	// 카카오 로그인 버튼을 생성합니다.
+	   	Kakao.Auth.createLoginButton({
+	    	container: '#kakao-login-btn',
+	    	success: function(authObj) {
+	    		// 로그인 창을 매번 새로 띄웁니다.
+	     		Kakao.Auth.loginForm({
+	     			success: function(authObj) {
+				     	// 로그인 성공시, API를 호출합니다.
+				     	Kakao.API.request({
+				      		url: '/v2/user/me',
+				      		success: function(res) {
+				      			kakaoLogin(JSON.stringify(res.kakao_account.profile.nickname), JSON.stringify(res.kakao_account.email));
+				      		},
+				      		fail: function(error) {
+				       			alert(JSON.stringify(error));
+				      		}
+						});
+					},
+					fail: function(erro) {
+        				alert(JSON.stringify(erro));
+       				}			
+				});
+	    	},
+		    fail: function(err) {
+		    	alert(JSON.stringify(err));
+		    }
+		});
+	});
+	
+	var kakaoLogin = function(nickName, email) {
+	
+		nickName = nickName.replace("\"", "");
+		nickName = nickName.replace("\"", "");
+		
+		email = email.replace("\"", "");
+		email = email.replace("\"", "");
+		
+		var f = document.myForm;
+		
+		$("#kakaoSession").val(nickName);
+		$("#kakaoSession2").val(email);
+		
+		f.action = "kakaoLogin_ok.action";
+		f.submit();
+	}
 		
 	$("#findIdPw").click(function(){
-	
+
 		var korCheck = /[ㄱ-ㅎ]/;
 		var engCheck = /[a-z]/; 
 		var numCheck = /[0-9]/; 

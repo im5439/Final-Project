@@ -22,26 +22,30 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.eatswill.controller" />
-	
-	<!-- 
-	<beans:bean id="" class="com.eatswill.dao.">
-		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
-	</beans:bean>
- 	-->
  	
  	<!-- 코딩 -->
 	<beans:bean id="customDAO" class="com.eatswill.dao.CustomDAO">
 		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
 	</beans:bean>
-	
-	<!-- S-DAO -->
-	<beans:bean id="myDAO" class="com.eatswill.dao.MyDAO">
-		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
-	</beans:bean>
 
- 	<!-- E-DAO -->
- 	
+ 	<!-- E-DAO --> 	
  	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></beans:bean>
+ 	
+ 	<!-- 메일 api -->
+ 	<beans:bean id="mailSender" class = "org.springframework.mail.javamail.JavaMailSenderImpl">
+      <beans:property name="host" value="smtp.gmail.com" />
+      <beans:property name="port" value="465" />
+      <beans:property name="username" value="shoon0615@gmail.com" />
+      <beans:property name="password" value="s1632000" />
+      <beans:property name="javaMailProperties">
+         <beans:props>
+               <beans:prop key="mail.transport.protocol">smtp</beans:prop>
+               <beans:prop key="mail.smtp.auth">true</beans:prop>
+               <beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+               <beans:prop key="mail.debug">true</beans:prop>
+         </beans:props>
+      </beans:property> 
+   </beans:bean>
 	
 	<beans:bean id="sessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<beans:constructor-arg ref="sessionFactory"/>

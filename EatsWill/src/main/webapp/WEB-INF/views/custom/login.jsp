@@ -58,6 +58,7 @@ ng\:form {
 	
 	<script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
 	<script type="text/javascript" src="/eatswill/resources/assets/js/login.js"></script>	
+	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 	
 	
 <script>
@@ -295,7 +296,6 @@ ng\:form {
 		}
 	</script>
 	
-	
 					
 			
 	
@@ -437,8 +437,14 @@ ng\:form {
 				<label><a href="#" class="tryPw" onclick="tryPw_click();">비밀번호 찾기</a></label>
 			</div>
 	
-	      	<div class="btn-wrapper">
+	      	<div class="btn-wrapper" style="margin-bottom: 20px">
 	        	<button type="button" id="logon" class="btn" style="color: #fff">로그인</button>
+	      	</div>
+	      	
+	      	<div style="text-align: center;margin-bottom: 20px">
+	      		<a id="kakao-login-btn"></a>
+	      		<input type="hidden" id="kakaoSession" name="kakaoSession"></div>
+	      		<input type="hidden" id="kakaoSession2" name="kakaoSession2"></div>
 	      	</div>
 	    </form>
 	  </div>

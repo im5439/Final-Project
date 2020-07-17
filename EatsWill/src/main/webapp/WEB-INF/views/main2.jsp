@@ -3,8 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-	String cp = request.getContextPath();
-	// ${pageContext.request.contextPath} : cp와 동일
+String cp = request.getContextPath();
 %>
 <html lang="ko" ng-controller="base_controller" class="ng-scope">
 <head>
@@ -50,14 +49,13 @@ ng\:form {
 
 
 
-	
+
 	<link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
 	<link rel="stylesheet"
 	href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
 	
 	<script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
-	<script type="text/javascript" src="/eatswill/resources/assets/js/login.js"></script>
-	
+	<script type="text/javascript" src="/eatswill/resources/assets/js/login.js"></script>	
 	
 	
 <script>
@@ -265,7 +263,8 @@ ng\:form {
 						d="M7.5 7.03L0.47 0L0 0.48L7 7.5L0 14.53L0.47 15L7.5 7.98L14.5 15L15 14.53L7.98 7.5L15 0.48L14.5 0L7.5 7.03Z"></path></svg>
 			</button>
 		</div>
-		<!-- <img class="newSb__logo" src="image/ico-5000-coupon.png" alt="banner image"> -->
+		<img class="newSb__logo" src="image/ico-5000-coupon.png"
+			alt="banner image">
 		<div class="newSb__meta">
 			<header class="newSb__header">
 				요기요 첫 주문이라면<br>앱에서 누구나 5천원 즉시할인
@@ -291,8 +290,8 @@ ng\:form {
 		<div id="header" class="header">
 
 			<div role="navigation" class="nav-bar">
-				<div class="navigation ver-pc" ng-class="header_show()"> <!--  색상수정예정예정 -->
-					<!-- <div class="app-down-banner clearfix ng-hide"
+				<div class="navigation ver-pc" ng-class="header_show()" style="background-color:orange;	"> <!--  색상수정예정예정 -->
+					<div class="app-down-banner clearfix ng-hide"
 						ng-show="is_show_promotion_banner()">
 						<div class="landing-banner">
 							<div class="landing-header">
@@ -309,8 +308,12 @@ ng\:form {
 							<a href="" ng-click="download_app()" class="btn-ygy-app-down"><img
 								src="image/btn-appdown.png" alt="앱 다운로드"></a>
 						</div>
-					</div> -->
-				<!-- ----------------------------------------------------------------------------------------- -->					
+					</div>
+				<!-- ----------------------------------------------------------------------------------------- -->	
+					
+					
+					
+					
 					<nav>
 						<ul>
 							<li><a href="#menu">Menu</a></li>
@@ -319,6 +322,7 @@ ng\:form {
 						
 					<nav id="menu">
 						<h2>Menu</h2>
+						<br/>
 						<input type="hidden" id="sessionId" value="${sessionScope.customInfo.id }"/>
 						<ul>
 							<c:choose>
@@ -326,27 +330,29 @@ ng\:form {
 									<li><a href="${pageContext.request.contextPath}/login.action">로그인</a></li>
 								</c:when>
 								<c:otherwise>
-									<li><a href="<%=cp%>/itving/myPage.do"><font color="blue">${sessionScope.customInfo.name }</font> 님 환영합니다.</a>
+									<li><font color="#F2849E">${sessionScope.customInfo.name }</font> 님 환영합니다.
 		                      		<p style="text-align: left">
 		                      			전화번호 : ${sessionScope.customInfo.tel }</br>
 		                      			포인트 : ${sessionScope.customInfo.point }
 		                      		</p>
 											
-									<a href="javascript:logout();" data-nethru_clcode="A000012">로그아웃</a></li>
+									<a href="<%=cp %>/logout.action" data-nethru_clcode="A000012">로그아웃</a></li>
 								</c:otherwise>
 							</c:choose>
-							<li><a href="${pageContext.request.contextPath}/main.action">Home</a></li>
-		                    <li><a href="main.action">내정보수정</a></li>
-		                    <li><a href="generic.html">장바구니</a></li>
-		                    <li><a href="generic.html">주문내역</a></li>
-		                    <li><a href="elements.html">찜 목록</a></li>
+							<li><a href="<%=cp%>/updateInfo.action">내정보수정</a></li>
+							<li><a href="generic.html">장바구니</a></li>
+							<li><a href="<%=cp%>/myOrder.action">주문내역</a></li>
+							<li><a href="<%=cp%>/heartStore.action">찜 목록</a></li>
+							<li><a href="<%=cp%>/myReview.action">마이 리뷰</a></li>
 						</ul>
 					</nav>
 				<!-- ----------------------------------------------------------------------------------------- -->	
 					<div class="nav-top clearfix"
 						ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
-						<h1 class="logo pull-left" ng-click="click_home()">요기요</h1>
-						<!-- <a href="main.action"><img alt="delicious" src="/eatswill/resources/images/banner2.png"></a> -->
+						<a href="<%=cp%>/main.action" style="text-decoration: none;">
+							<img alt="" src="/eatswill/resources/img/icon3.png" width="125px" height="40px" style=" margin: 20px 10px;" >
+						</a>
+				<%-- 		<h1 class="logor pull-left" ng-click="<%=cp%>/main.action" ></h1>  --%><!-- 로고로고 -->
 						<div id="cart" class="pull-right">
 							<span class="gps-status ng-binding"
 								ng-show="check_show_location_button()"
@@ -364,7 +370,7 @@ ng\:form {
 								ng-click="login()"
 								ng-bind-html="check_login() ? '로그아웃' : '로그인 <span>|</span> 회원가입'"
 								ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next"> --%>
-								
+							
 							<c:choose>
 								<c:when test="${empty sessionScope.customInfo.id }">
 									<button type="button" class="btn btn-login ng-binding" style="width: 95px"
@@ -377,15 +383,13 @@ ng\:form {
 									onclick="javascript:location.href='<%=cp %>/logout.action';">로그아웃</button>
 								</c:otherwise>
 							</c:choose>
-								
-							</button>
+
 							<!-- <button type="button"
 								class="btn btn-warning hidden-xs ng-binding"
 								ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
-								ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;">주문표(0)</button> -->
-							<button type="button" class="btn btn-warning hidden-xs ng-binding" id="test" style="width: 150px"
+								ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;" style="font-size: 1.2em;background-color: red;">주문표(0)</button> -->
+							<button type="button" class="btn btn-warning hidden-xs ng-binding" id="cartList" style="width: 150px;font-size: 1.2em;background-color: red"
 									onclick="javascript:location.href='<%=cp %>/logout.action';">주문표(0)</button>	
-						
 						
 						</div>
 					</div>
@@ -396,8 +400,6 @@ ng\:form {
 			</div>
 		</div>
 		
-		
-			
 
 		<div id="quick-btn" class="hide-btn">
 			<a ng-click="click_cart_button()" id="button-cart-btm" href=""
@@ -438,108 +440,86 @@ ng\:form {
   </div>
 </div-->
 	</div>
-	<div class="category-list" ng-hide="$location.path() != &quot;/&quot;">
+	<div class="category-list" ng-hide="$location.path() != &quot;/&quot;" > <!-- 카테고리뒷부분 수정 가능 -->
 		<div class="row">
 			<!-- ngRepeat: banner in banner_list -->
 			<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-				<a href="" class="thumbnail" ng-click="select_home_category('all')"><div
+				<a href="<%=cp %>/storeList.action" class="thumbnail" ng-click="select_home_category('all')"><div
 						class="category-title">전체보기</div>
-					<img src="https://www.yogiyo.co.kr/mobile/image/category-01.png"></a>
+					<img src="/eatswill/resources/img/eatswill3.png"></a>
 			</div>
-			<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-				<a href="" class="thumbnail"
-					ng-click="select_home_category('1인분주문')"><div
-						class="category-title">1인분 주문</div>
-					<img src="https://www.yogiyo.co.kr/mobile/image/category-onedish.png"></a>
-			</div>
+			
 			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail"
+				<a href="<%=cp %>/storeList.action" class="thumbnail"
 					ng-click="select_home_category('프랜차이즈')"><div
 						class="category-title">프랜차이즈</div>
 					<img src="https://www.yogiyo.co.kr/mobile/image/category-10.png"></a>
 			</div>
 			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail" ng-click="select_home_category('치킨')"><div
+				<a href="<%=cp %>/storeList.action"class="thumbnail" ng-click="select_home_category('치킨')"><div
 						class="category-title">치킨</div>
 					<img src="https://www.yogiyo.co.kr/mobile/image/category-02.png"></a>
 			</div>
 			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail" ng-click="select_home_category('피자양식')"><div
+				<a href="<%=cp %>/storeList.action"class="thumbnail" ng-click="select_home_category('피자양식')"><div
 						class="category-title">피자/양식</div>
 					<img src="https://www.yogiyo.co.kr/mobile/image/category-03.png"></a>
 			</div>
 			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail" ng-click="select_home_category('중식')"><div
+				<a href="<%=cp %>/storeList.action" class="thumbnail" ng-click="select_home_category('중식')"><div
 						class="category-title">중국집</div>
 					<img src="https://www.yogiyo.co.kr/mobile/image/category-04.png"></a>
 			</div>
 			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail" ng-click="select_home_category('한식')"><div
+				<a href="<%=cp %>/storeList.action" class="thumbnail" ng-click="select_home_category('한식')"><div
 						class="category-title">한식</div>
 					<img src="https://www.yogiyo.co.kr/mobile/image/category-05.png"></a>
 			</div>
 			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail"
+				<a href="<%=cp %>/storeList.action" class="thumbnail"
 					ng-click="select_home_category('일식돈까스')"><div
 						class="category-title">일식/돈까스</div>
 					<img src="https://www.yogiyo.co.kr/mobile/image/category-06.png"></a>
 			</div>
+			
 			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail" ng-click="select_home_category('족발보쌈')"><div
-						class="category-title">족발/보쌈</div>
-					<img src="https://www.yogiyo.co.kr/mobile/image/category-07.png"></a>
-			</div>
-			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail" ng-click="select_home_category('야식')"><div
-						class="category-title">야식</div>
-					<img src="https://www.yogiyo.co.kr/mobile/image/category-08.png"></a>
-			</div>
-			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail" ng-click="select_home_category('분식')"><div
+				<a href="<%=cp %>/storeList.action" class="thumbnail" ng-click="select_home_category('분식')"><div
 						class="category-title">분식</div>
 					<img src="https://www.yogiyo.co.kr/mobile/image/category-09.png"></a>
 			</div>
-			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail"
-					ng-click="select_home_category('카페디저트')"><div
-						class="category-title">카페/디저트</div>
-					<img src="https://www.yogiyo.co.kr/mobile/image/category-11.png"></a>
-			</div>
-			<div class="col-xs-6 col-sm-4 col-md-3">
-				<a href="" class="thumbnail" ng-click="select_home_category('편의점')"><div
-						class="category-title">편의점/마트</div>
-					<img src="https://www.yogiyo.co.kr/mobile/image/category-convenience-store.png"></a>
-			</div>
-		</div>
-	</div>
-	<div class="footer"
-		ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next">
-		<div class="footer-menu">
+			
 			
 		</div>
+	</div>
+	  <div class="footer" >
+		<div class="footer-menu">
+		
+		</div>
+		
+		<!-- =========================================================================================== 하단끝 -->
+		
 		<div class="company-wrap">
 			<div class="company-logo">
-				<a href="" ng-click="click_home()">요기요</a>
+				
 			</div>
 			<div class="company-info">
+				<p>
+					<strong>(유) 윗츠윌 코리아 </strong>
+				</p>
 				
-				<div class="footer-terms ng-hide" ng-show="is_mobile_device">
-					<a href="#/policy/">이용약관</a><span class="bar">|</span><a
-						href="#/privacy/"><strong>개인정보처리방침</strong></a><span class="bar">|</span><a
-						href="#/point_policy/">회원등급정책</a><span class="bar">|</span><a
-						href="http://www.ftc.go.kr/bizCommPop.do?wrkr_no=2118868802"
-						rel="noopener noreferrer" target="_blank">사업자정보확인</a>
-				</div>
 			</div>
 		</div>
+		
+		<!-- ========================================================================= 하단 부분 -->
+		
 		<div class="service-info">
 			<div class="bpg">
-				<a href="#/trust/"><span class="img"></span><span class="text">요기요<br>안심센터
+				<a href="#/trust/"><span class="img"></span><span class="text">잇츠윌<br>안심센터
 				</span></a>
 			</div>
 			<div class="cleanreview">
 				<a href="#/cleanreview/"><span class="img"></span><span
-					class="text">요기요 100%<br>클린리뷰
+					class="text">잇츠윌 100%<br>클린리뷰
 				</span></a>
 			</div>
 			<div class="csc">
@@ -547,10 +527,10 @@ ng\:form {
 			</div>
 		</div>
 		<div class="guide">
-			<p>(유)딜리버리히어로 코리아는 통신판매중개자이며 통신판매의 당사자가 아닙니다. 따라서 상품/ 거래정보 및 거래와
-				관련하여 요기요에 등록된 판매자의 고의 또는 과실로 소비자에게 발생하는 손해에 대해 (유)딜리버리히어로 코리아는 책임을
+			<p>(유) 잇츠윌 코리아는 통신판매중개자이며 통신판매의 당사자가 아닙니다. 따라서 상품/ 거래정보 및 거래와
+				관련하여 잇츠윌에 등록된 판매자의 고의 또는 과실로 소비자에게 발생하는 손해에 대해 (유)잇츠윌 코리아는 책임을
 				지지 않습니다. 상품 및 거래에 관하여 보다 정확한 정보는 해당 판매자에게 직접 확인하여 주시기 바랍니다.
-				Copyright YOGIYO. All Rights Reserved.</p>
+				Copyright EATSWILL. All Rights Reserved.</p>
 		</div>
 	</div>
 	<script type="text/javascript">
@@ -564,8 +544,8 @@ ng\:form {
 							+ '</s' + 'cript>');
 		}
 	</script>
-	<!-- <script type="text/javascript"
-		src="js/jquery-2.1.3.min.js?v=254ddffd1cab420620ca23002fe458eea88e05db"></script> -->
+	<script type="text/javascript"
+		src="js/jquery-2.1.3.min.js?v=254ddffd1cab420620ca23002fe458eea88e05db"></script>
 	<script src="//nsp.pay.naver.com/sdk/js/naverpay.min.js"></script>
 	<script type="text/javascript"
 		src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"
@@ -594,8 +574,8 @@ ng\:form {
 			}
 		}
 	</script>
-	<!-- <script src="js/require.js?v=254ddffd1cab420620ca23002fe458eea88e05db"></script> -->
-	<!-- <script src="js/app.js?v=254ddffd1cab420620ca23002fe458eea88e05db"></script> -->
+	<script src="js/require.js?v=254ddffd1cab420620ca23002fe458eea88e05db"></script>
+	<script src="js/app.js?v=254ddffd1cab420620ca23002fe458eea88e05db"></script>
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5QSVWW0EUN3p9RoHwOJdsSovksfPkqg0"
 		type="text/javascript"></script>

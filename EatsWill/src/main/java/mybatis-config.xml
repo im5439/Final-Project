@@ -28,7 +28,6 @@
 
 <mappers>
 	<mapper resource="com/eatswill/mybatis/customMapper.xml"/>
-	<mapper resource="com/eatswill/mybatis/myMapper.xml"/>
 </mappers>
 
 </configuration>
