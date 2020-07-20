@@ -170,25 +170,59 @@ public class CEOController {
 	//매장추가 END=============================================================================================================================
 
 	
+	//매장리스트 모드 (주문확인,메뉴관리,리뷰관리)
+		@RequestMapping(value = "/storeList.action", method = { RequestMethod.POST, RequestMethod.GET })
+		public String storeList(HttpServletRequest request, HttpSession session, CeoDTO dto) {
+			
+			String mode = request.getParameter("mode");
+			System.out.println(mode);
+			if(mode.equals("addMenu")) {
+				
+				CeoInfo info = (CeoInfo) session.getAttribute("ceoInfo");
+				String ceoId = info.getCeoId();
+				
+				List<CeoDTO> shopList = dao.getStoreList(ceoId);
+				
+				request.setAttribute("mode", mode);
+				request.setAttribute("shopList", shopList);
+				
+				return "CEO/storeList";
+				
+			} else if(mode.equals("orderChk")) {
+				
+				CeoInfo info = (CeoInfo) session.getAttribute("ceoInfo");
+				String ceoId = info.getCeoId();
+				
+				List<CeoDTO> shopList = dao.getStoreList(ceoId);
+				
+				request.setAttribute("mode", mode);
+				request.setAttribute("shopList", shopList);
+				
+				return "CEO/storeList";
+				
+			} else if(mode.equals("ceoReview")) {
+				
+				CeoInfo info = (CeoInfo) session.getAttribute("ceoInfo");
+				String ceoId = info.getCeoId();
+
+				List<CeoDTO> shopList = dao.getStoreList(ceoId);
+
+				int storeCount = dao.getStoreCount(ceoId);
+				
+				request.setAttribute("mode", mode);
+				request.setAttribute("shopList", shopList);
+				request.setAttribute("storeCount", storeCount);
+
+				return "CEO/storeList";
+				
+			}
+			
+			return "CEO/ceo";
+			
+		}
+	
+	
 	//리뷰관리 START=============================================================================================================================
-	// 리뷰관리 페이지
-	@RequestMapping(value = "/ceoReview.action", method = { RequestMethod.GET, RequestMethod.POST })
-	public String ceoReview(HttpServletRequest request, HttpSession session, CeoDTO dto) {
-
-		CeoInfo info = (CeoInfo) session.getAttribute("ceoInfo");
-		String ceoId = info.getCeoId();
-
-		List<CeoDTO> shopList = dao.getStoreList(ceoId);
-
-		int storeCount = dao.getStoreCount(ceoId);
-
-		request.setAttribute("shopList", shopList);
-		request.setAttribute("storeCount", storeCount);
-
-		return "CEO/ceoReview";
-
-	}
-
 	//리뷰페이지 ajax
 	@RequestMapping(value = "/ceoReviewArticle.action", produces = "application/String;charset=utf8", method = RequestMethod.POST)
 	public String ajaxStoreRiview(HttpServletRequest request, HttpSession session) {
@@ -302,21 +336,6 @@ public class CEOController {
 	
 	
 	//주문확인 START=============================================================================================================================
-	// 주문확인 페이지 매장리스트
-	@RequestMapping(value = "/orderChk.action", method = { RequestMethod.POST, RequestMethod.GET })
-	public String orderChk(HttpServletRequest request, HttpSession session) {
-
-		CeoInfo info = (CeoInfo) session.getAttribute("ceoInfo");
-		String ceoId = info.getCeoId();
-		
-		List<CeoDTO> shopList = dao.getStoreList(ceoId);
-		
-		request.setAttribute("shopList", shopList);
-		
-		return "CEO/orderChk";
-
-	}
-	
 	//한 매장 주문확인 페이지
 	@RequestMapping(value = "/storeOrderChk.action", method = { RequestMethod.POST, RequestMethod.GET })
 	public String storeOderChk(HttpServletRequest request, HttpSession session) {
@@ -386,38 +405,6 @@ public class CEOController {
 	
 	
 	//메뉴추가 START=============================================================================================================================
-	//매장리스트
-	@RequestMapping(value = "/storeList.action", method = { RequestMethod.POST, RequestMethod.GET })
-	public String storeList(HttpServletRequest request, HttpSession session, CeoDTO dto) {
-		
-		CeoInfo info = (CeoInfo) session.getAttribute("ceoInfo");
-		String ceoId = info.getCeoId();
-		
-		List<CeoDTO> shopList = dao.getStoreList(ceoId);
-		
-		request.setAttribute("shopList", shopList);
-		
-		return "CEO/storeList";
-		
-	}
-
-	// 메뉴추가 페이지
-	@RequestMapping(value = "/addMenu.action", method = { RequestMethod.POST, RequestMethod.GET })
-	public String addMenu(HttpServletRequest request) {
-
-		String shopCode = request.getParameter("shopCode");
-		String shopName = request.getParameter("shopName");
-		
-		List<CeoDTO> menu = dao.getStoreMenu(shopCode);
-		
-		request.setAttribute("menu", menu);
-		request.setAttribute("shopCode", shopCode);
-		request.setAttribute("shopName", shopName);
-		
-		return "CEO/addMenu";
-
-	}
-	
 	// 메뉴추가 페이지ajax
 		@RequestMapping(value = "/menuItem.action", method = { RequestMethod.POST, RequestMethod.GET })
 		public String menuItem(HttpServletRequest request, HttpSession session, CeoDTO dto) {
