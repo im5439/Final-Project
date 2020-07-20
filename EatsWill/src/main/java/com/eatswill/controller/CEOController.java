@@ -169,8 +169,7 @@ public class CEOController {
 	}
 	//매장추가 END=============================================================================================================================
 
-	
-	//매장리스트 모드 (주문확인,메뉴관리,리뷰관리)
+	//매장리스트 mode (주문확인,메뉴관리,리뷰관리)
 		@RequestMapping(value = "/storeList.action", method = { RequestMethod.POST, RequestMethod.GET })
 		public String storeList(HttpServletRequest request, HttpSession session, CeoDTO dto) {
 			
@@ -220,7 +219,6 @@ public class CEOController {
 			return "CEO/ceo";
 			
 		}
-	
 	
 	//리뷰관리 START=============================================================================================================================
 	//리뷰페이지 ajax
@@ -405,6 +403,24 @@ public class CEOController {
 	
 	
 	//메뉴추가 START=============================================================================================================================
+
+	// 메뉴추가 페이지
+	@RequestMapping(value = "/addMenu.action", method = { RequestMethod.POST, RequestMethod.GET })
+	public String addMenu(HttpServletRequest request) {
+
+		String shopCode = request.getParameter("shopCode");
+		String shopName = request.getParameter("shopName");
+		
+		List<CeoDTO> menu = dao.getStoreMenu(shopCode);
+		
+		request.setAttribute("menu", menu);
+		request.setAttribute("shopCode", shopCode);
+		request.setAttribute("shopName", shopName);
+		
+		return "CEO/addMenu";
+
+	}
+	
 	// 메뉴추가 페이지ajax
 		@RequestMapping(value = "/menuItem.action", method = { RequestMethod.POST, RequestMethod.GET })
 		public String menuItem(HttpServletRequest request, HttpSession session, CeoDTO dto) {
