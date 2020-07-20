@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -39,6 +40,9 @@
 <link rel="stylesheet" type="text/css"
 	href="https://owner.yogiyo.co.kr/media/owners/css/owners_new.css?v=3c43aea">
 
+<!-- 리뷰  -->
+<link rel="stylesheet" href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
+
 
 <script type="text/javascript"
 	src="https://owner.yogiyo.co.kr/media/owners/js/jquery-1.9.1.min.js"></script>
@@ -49,57 +53,25 @@
 <script type="text/javascript"
 	src="https://owner.yogiyo.co.kr/media/owners/js/google_analytics.js"></script>
 
-
 <script type="text/javascript">
     
-    	function sendIt(){
+    	function login(){
     		
     		var f = document.myForm;
     		
-    		/*
-    		if(!f.shopName.value){
-				alert("매장명을 입력하십시오");
+    		if(!f.ceoId.value){
+				alert("아이디를 입력하세요");
 				f.focus();
 				return;
 			}
 
-			if(!f.shopTel.value){
-				alert("매장전화번호를 입력하십시오");
+			if(!f.ceoPw.value){
+				alert("비밀번호를 입력하세요");
 				f.focus();
 				return;
 			}
 			
-			if(!f.shopAddr1.value){
-				alert("매장주소를 입력하십시오");
-				f.focus();
-				return;
-			}
-			
-			if(!f.shopAddr2.value){
-				alert("매장상세주소를 입력하십시오");
-				f.focus();
-				return;
-			}
-			
-			if(!f.category.value){
-				alert("카테고리를 선택하십시오");
-				f.focus();
-				return;
-			}
-			
-			if(!f.shopImg.value){
-				alert("매장이미지를 선택해하십시오");
-				f.focus();
-				return;
-			}
-
-			if(!f.franchise.value){
-				alert("프랜차이즈 유무를 선택하십시오");
-				f.focus();
-				return;
-			}
-			*/
-			f.action = "<%=cp%>/addStore_ok.action";
+			f.action = "<%=cp%>/CEO.action";
 			f.submit();
     		
     	}
@@ -113,19 +85,78 @@
     		
     	}
     	
-</script>
+    </script>
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" /> 
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+  <script type="text/javascript">
+  $(function(){
+	  /* 
+	  var btnIdx;
+	  
+	  $("#btn-modal").click(function(){
+		  $("#ceoContent").focus();
+		  btnIdx = $(this).attr('index');
+		  console.log("index : " + btnIdx);
+		  
+	  });
+	   */
+	  // # :id   /   . :class
+		$(window).load(function(){
+			//var btnIdx = $(this).attr('index');
+			//console.log("index : " + btnIdx);
+			
+	        var params = "shopCode=" + $("#shopCode").val();
+	        
+	        console.log(params);
+	        
+	        $.ajax({
+	            type:"post",
+	            url:"<%=cp%>/ceoReviewArticle.action",
+	            async: false,
+	            data:params,
+	            success: function(args){
+	            	/* alert("저장되었습니다."); */ 
+	            	console.log(args);
+	            	
+	            	$("#ceoReviewArticle").html(args);
+	            	
+		            
+	            },
+	            error:function(request, error){
+	            	alert("실패하였습니다.");
+	            	console.log(request.status);
+	            	console.log(request.responseText);
+	            	console.log(error);
+	          }
+	          
+	        });
+		});
+	    
+  });
+
+  
+  </script>
 
 </head>
 <body>
 
 	<jsp:include page="ceoIncludeTop.jsp" flush="false"/>
+	
+	<input type="hidden" value="${shopCode}" id="shopCode">
 
-	<div class="own-container" style="padding-bottom: 300;">
+	<div class="own-container">
 		<div class="own-main">
 		<%-- 
-			<ul class="nav clearfix">
+			<ul class="nav clearfix" style="width: 861;">
 				<li class="n1"><a href="<%=cp %>/orderChk.action" style="cursor: pointer">주문확인</a></li>
 				<li class="n2"><a href="<%=cp %>/addStore.action" style="cursor: pointer">매장관리</a></li>
 				<li class="n3"><a href="<%=cp %>/storeList.action" style="cursor: pointer">메뉴관리</a></li>
@@ -133,180 +164,57 @@
 				<li class="n6"><a href="<%=cp %>/sales.action" style="cursor: pointer">매출관리</a></li>
 				<li class="n4"><a href="<%=cp %>/storeList.action" style="cursor: pointer">매장목록</a></li>
 			</ul>
- --%>
-			<div class="mid clearfix" >
-				<div id="carousel-img" class="own-slide carousel slide"
-					data-ride="carousel">
-					<ol class="carousel-indicators">
-						<li data-target="#carousel-img" data-slide-to="0" class="active"></li>
-						<li data-target="#carousel-img" data-slide-to="1"></li>
-						<li data-target="#carousel-img" data-slide-to="2"></li>
-						<li data-target="#carousel-img" data-slide-to="3"></li>
-						<li data-target="#carousel-img" data-slide-to="4"></li>
-					</ol>
+		 --%>	
+					<div style="padding: 0;">
+						<div ng-show="active_tab == &quot;review&quot;" class="">
 
-				</div>
-
-				<div class="own-login" style="float: none; width: auto; padding-left: 100; padding-right: 100; padding-top: 30;">
-
-					<div class="status-logout">
-						<form method="POST" action="" name="myForm" enctype="multipart/form-data">
-							<div style="display: none">
-								<input type="hidden" name="csrfmiddlewaretoken"
-									value="DCGEbT42tnubIG598OST9DRvHdTwj1Y8">
-							</div>
-							<input type="hidden" name="next_url" id="next_url"
-								value="/owner/">
-
-							<div>
-								<input type="text" class="inp-txt" name="shopName"
-									placeholder=" 매장명">
-							</div>
-							<br/>
-							<div>
-								<input type="text" class="inp-txt" name="shopTel"
-									placeholder=" 매장전화번호">
-							</div>
-							<br/>
-							<div>
-								<!-- <input type="text" id="sample2_postcode" placeholder="우편번호"> -->
-								<input type="text" class="inp-txt" id="sample2_address" name="shopAddr1" placeholder="주소" style="width: 80%" readonly="readonly">
-								<input type="button" onclick="sample2_execDaumPostcode()" value="주소 찾기">
-								<input type="text" class="inp-txt" id="sample2_detailAddress" name="shopAddr2" placeholder="상세주소">
-								<!-- <input type="text" class="inp-txt" id="sample2_extraAddress" placeholder="참고항목"> -->
-								
-								<!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
-								<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
-									<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
-								</div>
-							</div>
-							<br/>
-							<div>
-								<select class="inp-txt pwd" name="category">
-									<option value="">카테고리</option>
-									<option value="CK">치킨</option>
-									<option value="PY">피자/양식</option>
-									<option value="CH">분식</option>
-									<option value="KR">한식</option>
-									<option value="JP">중식</option>
-									<option value="BS">일식</option>
-								</select>
-							</div>
-							<br/>
-							
-							<div>
-								<input type="file" class="inp-txt pwd" name="uploadfile" placeholder=" ">
-							</div>
-							<br/>
-							<div>
-								<select class="inp-txt pwd" name="franchise">
-									<option value="">프랜차이즈유무</option>
-									<option value="y">YES</option>
-									<option value="n">NO</option>
-								</select>
-							</div>
-							<br/>
-							<div>
-								<button type="submit" class="btn-own-login" onclick="sendIt();">매장등록</button>
-							</div>
-						</form>
+					      <div class="star-point-wrap" >
+					        <div class="inner" >
+					          <div class="restaurant-star-point" >
+					            <strong class="ng-binding">
+					              ${avgReScore }
+					            </strong>
+					            <c:if test="${avgReScore == null }">
+					            별점없음
+					            </c:if>
+					            <c:if test="${avgReScore != null }">
+					            <span class="star-point"><!-- 별점 -->
+					            <c:forEach begin="0" end="${avgReScore2 - 1 }">
+					              <span class="full ng-scope" ng-repeat="i in review_info.average|number_to_array track by $index">★</span>
+					            </c:forEach>
+					            <c:if test="${avgReScore2 < 5 }">
+					            <c:forEach begin="0" end="${4 - avgReScore2 }">
+					              <span class="empty ng-scope" ng-repeat="i in (5.9 - (review_info.average|number:1))|number_to_array track by $index">★</span>
+					            </c:forEach>
+					            </c:if>
+					            </span>
+					            </c:if>
+					            
+					          </div>
+					          <div style="width: 1000;">
+					             매장명 : ${dto.shopName }<br/>
+					             매장주소 : ${dto.shopAddr }
+					          </div>
+					        </div>
+					      </div>
+					      <div class="review-count">
+					        <div>
+					          리뷰 <strong class="ng-binding">${reviewCount }</strong>개
+					
+					        </div>
+					      </div>
+					 
+					 <!-- ceoReviewArticle.jsp 불러옴 -->
+					<span id="ceoReviewArticle"></span>
+			
+	     				</div> 	
+					   </div>
 					</div>
-
-				</div>
-			</div>
-
+			
 		</div>
-	</div>
-<!-- 주소API --------------------------------------------------------------------------------------------------- -->
-<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script>
-    // 우편번호 찾기 화면을 넣을 element
-    var element_layer = document.getElementById('layer');
+		
 
-    function closeDaumPostcode() {
-        // iframe을 넣은 element를 안보이게 한다.
-        element_layer.style.display = 'none';
-    }
-
-    function sample2_execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var addr = ''; // 주소 변수
-                var extraAddr = ''; // 참고항목 변수
-
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    addr = data.jibunAddress;
-                }
-
-                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                if(data.userSelectedType === 'R'){
-                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                        extraAddr += data.bname;
-                    }
-                    // 건물명이 있고, 공동주택일 경우 추가한다.
-                    if(data.buildingName !== '' && data.apartment === 'Y'){
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                    }
-                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                    if(extraAddr !== ''){
-                        extraAddr = ' (' + extraAddr + ')';
-                    }
-                    // 조합된 참고항목을 해당 필드에 넣는다.
-                    // document.getElementById("sample2_extraAddress").value = extraAddr;
-                
-                } else {
-                   // document.getElementById("sample2_extraAddress").value = '';
-                }
-
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                //document.getElementById('sample2_postcode').value = data.zonecode;
-                document.getElementById("sample2_address").value = addr;
-                // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("sample2_detailAddress").focus();
-
-                // iframe을 넣은 element를 안보이게 한다.
-                // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
-                element_layer.style.display = 'none';
-            },
-            width : '100%',
-            height : '100%',
-            maxSuggestItems : 5
-        }).embed(element_layer);
-
-        // iframe을 넣은 element를 보이게 한다.
-        element_layer.style.display = 'block';
-
-        // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
-        initLayerPosition();
-    }
-
-    // 브라우저의 크기 변경에 따라 레이어를 가운데로 이동시키고자 하실때에는
-    // resize이벤트나, orientationchange이벤트를 이용하여 값이 변경될때마다 아래 함수를 실행 시켜 주시거나,
-    // 직접 element_layer의 top,left값을 수정해 주시면 됩니다.
-    function initLayerPosition(){
-        var width = 300; //우편번호서비스가 들어갈 element의 width
-        var height = 400; //우편번호서비스가 들어갈 element의 height
-        var borderWidth = 5; //샘플에서 사용하는 border의 두께
-
-        // 위에서 선언한 값들을 실제 element에 넣는다.
-        element_layer.style.width = width + 'px';
-        element_layer.style.height = height + 'px';
-        element_layer.style.border = borderWidth + 'px solid';
-        // 실행되는 순간의 화면 너비와 높이 값을 가져와서 중앙에 뜰 수 있도록 위치를 계산한다.
-        element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
-        element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
-    }
-</script>
-<!-- 주소API --------------------------------------------------------------------------------------------------- -->
+ 
 	<div class="modal fade popup-notice" id="modal-notice">
 		<a href="#" onclick="redirectLogin('/owner/vat/')" class="btn1">부가세
 			신고 자료 조회하기</a> <a href="#" data-dismiss="modal" id="no-show-modal"
@@ -316,8 +224,8 @@
 
 
 	<jsp:include page="ceoIncludeBottom.jsp" flush="false"/>
-	
-	
+
+
 	<script type="text/javascript">
     $(document).ready(function() {
         var regexS = "[\\?&]login=([^&#]*)";
@@ -328,12 +236,6 @@
         }
     });
 </script>
-
-
-	<script type="text/javascript"
-		src="https://owner.yogiyo.co.kr/media/owners/js/jquery.cookie.js"></script>
-
-	<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","queueTime":0,"licenseKey":"060998d475","agent":"","transactionName":"NgQDY0YEWhICVEFQWg9OJ0JaBkAIDFkaXVoWAA9DGgpDDwZFRhdDCAQWRBoNWwwGDVxXUQQZ","applicationID":"2104228","errorBeacon":"bam.nr-data.net","applicationTime":105}</script>
 
 
 </body>

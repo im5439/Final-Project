@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-	String cp = request.getContextPath();
+String cp = request.getContextPath();
 %>
 <html lang="ko" slick-uniqueid="3">
 <head>
@@ -49,7 +49,6 @@
 <script type="text/javascript"
 	src="https://owner.yogiyo.co.kr/media/owners/js/google_analytics.js"></script>
 
-
 <script type="text/javascript">
     
     	function sendIt(){
@@ -74,32 +73,8 @@
 				f.focus();
 				return;
 			}
-			
-			if(!f.shopAddr2.value){
-				alert("매장상세주소를 입력하십시오");
-				f.focus();
-				return;
-			}
-			
-			if(!f.category.value){
-				alert("카테고리를 선택하십시오");
-				f.focus();
-				return;
-			}
-			
-			if(!f.shopImg.value){
-				alert("매장이미지를 선택해하십시오");
-				f.focus();
-				return;
-			}
-
-			if(!f.franchise.value){
-				alert("프랜차이즈 유무를 선택하십시오");
-				f.focus();
-				return;
-			}
-			*/
-			f.action = "<%=cp%>/addStore_ok.action";
+    		*/
+			f.action = "<%=cp%>/addMenu_ok.action";
 			f.submit();
     		
     	}
@@ -148,70 +123,16 @@
 				</div>
 
 				<div class="own-login" style="float: none; width: auto; padding-left: 100; padding-right: 100; padding-top: 30;">
+				<c:forEach var="dto" items="${shopList }">
+				<li><a href="<%=cp%>/addMenu.action?shopCode=${dto.shopCode }&shopName=${dto.shopName }">매장명 : ${dto.shopName } 매장주소 : ${dto.shopAddr } 매장등록일 : ${dto.shopCreated }</a></li>
+				</c:forEach>
 
-					<div class="status-logout">
-						<form method="POST" action="" name="myForm" enctype="multipart/form-data">
-							<div style="display: none">
-								<input type="hidden" name="csrfmiddlewaretoken"
-									value="DCGEbT42tnubIG598OST9DRvHdTwj1Y8">
-							</div>
-							<input type="hidden" name="next_url" id="next_url"
-								value="/owner/">
-
-							<div>
-								<input type="text" class="inp-txt" name="shopName"
-									placeholder=" 매장명">
-							</div>
-							<br/>
-							<div>
-								<input type="text" class="inp-txt" name="shopTel"
-									placeholder=" 매장전화번호">
-							</div>
-							<br/>
-							<div>
-								<!-- <input type="text" id="sample2_postcode" placeholder="우편번호"> -->
-								<input type="text" class="inp-txt" id="sample2_address" name="shopAddr1" placeholder="주소" style="width: 80%" readonly="readonly">
-								<input type="button" onclick="sample2_execDaumPostcode()" value="주소 찾기">
-								<input type="text" class="inp-txt" id="sample2_detailAddress" name="shopAddr2" placeholder="상세주소">
-								<!-- <input type="text" class="inp-txt" id="sample2_extraAddress" placeholder="참고항목"> -->
-								
-								<!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
-								<div id="layer" style="display:none;position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;">
-									<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
-								</div>
-							</div>
-							<br/>
-							<div>
-								<select class="inp-txt pwd" name="category">
-									<option value="">카테고리</option>
-									<option value="CK">치킨</option>
-									<option value="PY">피자/양식</option>
-									<option value="CH">분식</option>
-									<option value="KR">한식</option>
-									<option value="JP">중식</option>
-									<option value="BS">일식</option>
-								</select>
-							</div>
-							<br/>
-							
-							<div>
-								<input type="file" class="inp-txt pwd" name="uploadfile" placeholder=" ">
-							</div>
-							<br/>
-							<div>
-								<select class="inp-txt pwd" name="franchise">
-									<option value="">프랜차이즈유무</option>
-									<option value="y">YES</option>
-									<option value="n">NO</option>
-								</select>
-							</div>
-							<br/>
-							<div>
-								<button type="submit" class="btn-own-login" onclick="sendIt();">매장등록</button>
-							</div>
-						</form>
-					</div>
-
+				<c:if test="${mode == 'orderChk' }">
+				<c:forEach var="dto" items="${shopList }">
+				<li><a href="<%=cp%>/storeOrderChk.action?shopCode=${dto.shopCode }&shopName=${dto.shopName }">매장명 : ${dto.shopName } 매장주소 : ${dto.shopAddr } 매장등록일 : ${dto.shopCreated }</a></li>
+				</c:forEach>
+				</c:if>				
+				
 				</div>
 			</div>
 
@@ -315,9 +236,9 @@
 	</div>
 
 
+
 	<jsp:include page="ceoIncludeBottom.jsp" flush="false"/>
-	
-	
+
 	<script type="text/javascript">
     $(document).ready(function() {
         var regexS = "[\\?&]login=([^&#]*)";

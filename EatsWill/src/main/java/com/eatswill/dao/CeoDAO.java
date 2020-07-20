@@ -7,6 +7,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.eatswill.dto.CeoDTO;
+import com.eatswill.dto.OrderDTO;
 
 public class CeoDAO {
 
@@ -30,14 +31,6 @@ public class CeoDAO {
 		
 		return dto;
 		
-	}
-	
-	//가게코드 maxCode 가져오기
-	public int getMaxCode() {
-		
-		int result = sessionTemplate.selectOne("CeoMapper.getMaxCode");
-		
-		return result;
 	}
 	
 	//매장추가
@@ -78,5 +71,85 @@ public class CeoDAO {
 		
 	}
 	
+	//해당 매장의 리뷰 개수
+	public int getReviewCount(String shopCode) {
+		
+		int result = sessionTemplate.selectOne("CeoMapper.getReviewCount", shopCode);
+		
+		return result;
+		
+	}
+	
+	//해당 매장 리뷰 평균
+	public double getAvgReScore(String shopCode) {
+		
+		double result = sessionTemplate.selectOne("CeoMapper.getAvgReScore", shopCode);
+		
+		return result;
+		
+	}
+	
+	//매장 정보 불러오기
+	public CeoDTO getStoreName(String shopCode) {
+		
+		CeoDTO dto = sessionTemplate.selectOne("CeoMapper.getStoreName", shopCode);
+		
+		return dto;
+	}
+	
+	//사장님 답글 추가(업데이트)
+	public void ceoReviewAdd(CeoDTO dto) {
+		
+		sessionTemplate.update("CeoMapper.ceoReviewAdd", dto);
+		
+	}
+
+	//사장님 답글 삭제(업데이트)
+	public void ceoReviewDel(String renum) {
+		
+		sessionTemplate.update("CeoMapper.ceoReviewDel", renum);
+		
+	}
+	
+	//메뉴추가
+	public void insertMenu(CeoDTO dto) {
+		
+		sessionTemplate.insert("CeoMapper.insertMenu", dto);
+		
+	}
+	
+	//매장 메뉴 불러오기
+	public List<CeoDTO> getStoreMenu(String shopCode) {
+		
+		List<CeoDTO> lists = sessionTemplate.selectList("CeoMapper.getStoreMenu", shopCode); 
+		
+		return lists;
+		
+	}
+	
+	//매장 주문확인
+	public List<CeoDTO> getOrderChk(String shopCode){
+		
+		List<CeoDTO> lists = sessionTemplate.selectList("CeoMapper.getOrderChk", shopCode);
+		
+		return lists;
+		
+	}
+	
+	//주문상태 업데이트
+	public void orderUpdate(String orderCode) {
+		
+		sessionTemplate.update("CeoMapper.orderUpdate", orderCode);
+		
+	}
+	
+	//주문 메뉴 detail
+	public List<OrderDTO> getOrderDetail(String orderCode){
+		
+		List<OrderDTO> lists = sessionTemplate.selectList("CeoMapper.getOrderDetail", orderCode);
+		
+		return lists;
+		
+	}
 	
 }

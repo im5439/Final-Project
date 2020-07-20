@@ -42,6 +42,7 @@
 <!-- 리뷰  -->
 <link rel="stylesheet" href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
 
+
 <script type="text/javascript"
 	src="https://owner.yogiyo.co.kr/media/owners/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript"
@@ -50,79 +51,6 @@
 	src="https://owner.yogiyo.co.kr/media/owners/js/jquery.validate.min.js"></script>
 <script type="text/javascript"
 	src="https://owner.yogiyo.co.kr/media/owners/js/google_analytics.js"></script>
-<!-- Google GA -->
-<script type="text/javascript">
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-47867637-1', {'cookieDomain': 'yogiyo.co.kr'});
-        
-        ga('send', 'pageview');
-        
-
-        function redirectLogin(next_url) {
-            
-            alert('로그인 후 이용하실 수 있습니다.');
-            window.location.href = '/owner/login/?next_url=' + next_url;
-            
-        }
-        $(document).ready(function() {
-            // sms
-            var phone = {};
-
-            function inputChange(evt) {
-                var elem = evt.target;
-                var name = elem.name;
-                if(elem.type == 'text') {
-                    phone[name] = !(elem.value.length < elem.maxLength);
-                }
-                if (elem.name == 'num2') {
-                    phone[name] = !(elem.value.length < elem.maxLength-1);
-                }
-                $('#sendbtn').attr('disabled', !(phone.num1 && phone.num2 && phone.num3));
-            }
-
-            $('.sms input[type="text"]').on('keypress keyup', function(evt) {
-                if (evt.type == 'keypress' && !/^\d*$/.test(evt.key)){
-                    evt.preventDefault();
-                    return;
-                }
-                inputChange(evt);
-            });
-
-            $('#sendbtn').click(function() {
-                if (!$('#chk').prop('checked')) {
-                    alert('SMS 발송을 위한 휴대폰번호 수집에 동의해주세요.');
-                    return;
-                }
-
-                var num1 = $('#owner-sms-num1').val();
-                var num2 = $('#owner-sms-num2').val();
-                var num3 = $('#owner-sms-num3').val();
-
-                if (!/010|011|016|017|019/.test(num1) || !/\d{3,4}/.test(num2) || !/\d{4}/.test(num3)) {
-                    alert('입력하신 전화번호를 다시 한번 확인해주시기 바랍니다.');
-                    return;
-                }
-
-                var phone = num1 + num2 + num3;
-                $.ajax({
-                    method: 'post',
-                    url: '/owner/ajax/send-sms-owner-app-download/',
-                    data: {'phone': phone}
-                }).done(function (callback) {
-                    if (callback.success) {
-                        alert('전송되었습니다.');
-                    } else {
-                        alert(callback.error_message);
-                    }
-                }).fail(function () {
-                    alert('요청에 실패했습니다. 다시 한번 시도해 주시기 바랍니다.');
-                });
-            });
-        });
-    </script>
 
 <script type="text/javascript">
     
@@ -158,233 +86,53 @@
     	
     </script>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" /> 
+
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
   <script>
-$( "#accordion" ).accordion({
-	collapsible: true,
-	animate:200,
-	active: false
-});
   
   $(function(){
-		//# :id ,   . :class
-		$(".review").click(function(){
-			
-	        var params = "shopCode="+$(this).next().val();//다음 데이터는 &를 붙여준다
-	        
-	        $.ajax({
-	            type:"post",
-	            url:"<%=cp%>/ceoStoreReview",
-	            data:params,
-	            dataType: "json",
-	            success: function(data){
-	            	alert("저장되었습니다.");
-	            	console.log(data);
-	            	$(function(){
-	            	    });
-	            },
-	            error:function(request, error){
-	            	//alert("실패하였습니다.");
-	            	console.log(request.status);
-	            	console.log(request.responseText);
-	            	console.log(error);
-	          }
-	          
-	        });
-		});
+	  
+	    
+	    
   });
-
-		
-
 
   </script>
 
 </head>
 <body>
 
-	<div id="nav" class="own-header">
-		<div class="clearfix">
-			<h1>
-				<a href="<%=cp%>/CEO.action/">사장님 사이트</a>
-			</h1>
-			<ul class="nav">
-				<li class="n1 "><a nohref=""
-					onclick="javascript:alert('로그인 후 이용하실 수 있습니다.'); window.location.href='/owner/login/?next_url=/owner/orders/'"
-					style="cursor: pointer">내 업소 관리</a></li>
-				<li class="n2 "><a href="/owner/benefit/restaurant/">사장님 혜택</a></li>
-				<li class="n3 "><a href="/owner/join/intro/">입점 안내</a></li>
-			</ul>
-
-			<ul class="ext">
-				<li class="outlink"><a href="https://boss.yogiyo.co.kr/" target="_blank">매출관리</a></li>
-			</ul>
-		</div>
-	</div>
-
-
+	<jsp:include page="ceoIncludeTop.jsp" flush="false"/>
 
 	<div class="own-container">
 		<div class="own-main">
+		<%-- 
 			<ul class="nav clearfix" style="width: 861;">
 				<li class="n1"><a href="<%=cp %>/orderChk.action" style="cursor: pointer">주문확인</a></li>
 				<li class="n2"><a href="<%=cp %>/addStore.action" style="cursor: pointer">매장관리</a></li>
-				<li class="n3"><a href="<%=cp %>/addMenu.action" style="cursor: pointer">메뉴관리</a></li>
-				<li class="n6"><a href="<%=cp %>/sales.action" style="cursor: pointer">매출관리</a></li>
+				<li class="n3"><a href="<%=cp %>/storeList.action" style="cursor: pointer">메뉴관리</a></li>
 				<li class="n5"><a href="<%=cp %>/ceoReview.action" style="cursor: pointer">리뷰 관리</a></li>
+				<li class="n6"><a href="<%=cp %>/sales.action" style="cursor: pointer">매출관리</a></li>
 				<li class="n4"><a href="<%=cp %>/storeList.action" style="cursor: pointer">매장목록</a></li>
 			</ul>
-
-			<div id="accordion">
-				<c:forEach var="dto" items="${shopList }" varStatus="status">
-					<input type="button" value=" 매장명 : ${dto.shopName }     |     매장주소 : ${dto.shopAddr }     |     매장등록일 : ${dto.shopCreated }" class="review">
-					<input type="hidden" value="${dto.shopCode }" id="shopCode${status.index}">
-					<div>
-						<div ng-show="active_tab == &quot;review&quot;" class="">
-					      <div class="star-point-wrap">
-					        <div class="inner">
-					          <div class="restaurant-star-point">
-					            <strong class="ng-binding">
-					              4.6
-					            </strong>
-					            <span class="star-point">
-					              <!-- ngRepeat: i in review_info.average|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review_info.average|number_to_array track by $index">★</span><!-- end ngRepeat: i in review_info.average|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review_info.average|number_to_array track by $index">★</span><!-- end ngRepeat: i in review_info.average|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review_info.average|number_to_array track by $index">★</span><!-- end ngRepeat: i in review_info.average|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review_info.average|number_to_array track by $index">★</span><!-- end ngRepeat: i in review_info.average|number_to_array track by $index --><!-- ngRepeat: i in (5.9 - (review_info.average|number:1))|number_to_array track by $index --><span class="empty ng-scope" ng-repeat="i in (5.9 - (review_info.average|number:1))|number_to_array track by $index">★</span><!-- end ngRepeat: i in (5.9 - (review_info.average|number:1))|number_to_array track by $index -->
-					            </span>
-					          </div>
-					          <ul class="star-point-list">
-					            <li>
-					              <span class="category-tit">맛</span>
-					              <span class="star-point">
-					                <!-- ngRepeat: i in review_info.average_taste|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review_info.average_taste|number_to_array track by $index">★</span><!-- end ngRepeat: i in review_info.average_taste|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review_info.average_taste|number_to_array track by $index">★</span><!-- end ngRepeat: i in review_info.average_taste|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review_info.average_taste|number_to_array track by $index">★</span><!-- end ngRepeat: i in review_info.average_taste|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review_info.average_taste|number_to_array track by $index">★</span><!-- end ngRepeat: i in review_info.average_taste|number_to_array track by $index --><!-- ngRepeat: i in (5.9 - (review_info.average_taste|number:1))|number_to_array track by $index --><span class="empty ng-scope" ng-repeat="i in (5.9 - (review_info.average_taste|number:1))|number_to_array track by $index">★</span><!-- end ngRepeat: i in (5.9 - (review_info.average_taste|number:1))|number_to_array track by $index -->
-					                <span class="points ng-binding">4.5</span>
-					              </span>
-					            </li>
-					            <li>
-					              <span class="category-tit">양</span>
-					              <span class="star-point">
-					                <!-- ngRepeat: i in review_info.average_quantity|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review_info.average_quantity|number_to_array track by $index">★</span><!-- end ngRepeat: i in review_info.average_quantity|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review_info.average_quantity|number_to_array track by $index">★</span><!-- end ngRepeat: i in review_info.average_quantity|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review_info.average_quantity|number_to_array track by $index">★</span><!-- end ngRepeat: i in review_info.average_quantity|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review_info.average_quantity|number_to_array track by $index">★</span><!-- end ngRepeat: i in review_info.average_quantity|number_to_array track by $index --><!-- ngRepeat: i in (5.9 - (review_info.average_quantity|number:1))|number_to_array track by $index --><span class="empty ng-scope" ng-repeat="i in (5.9 - (review_info.average_quantity|number:1))|number_to_array track by $index">★</span><!-- end ngRepeat: i in (5.9 - (review_info.average_quantity|number:1))|number_to_array track by $index -->
-					                <span class="points ng-binding">4.6</span>
-					              </span>
-					            </li>
-					            <li>
-					              <span class="category-tit">배달</span>
-					              <span class="star-point">
-					                <!-- ngRepeat: i in review_info.average_delivery|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review_info.average_delivery|number_to_array track by $index">★</span><!-- end ngRepeat: i in review_info.average_delivery|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review_info.average_delivery|number_to_array track by $index">★</span><!-- end ngRepeat: i in review_info.average_delivery|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review_info.average_delivery|number_to_array track by $index">★</span><!-- end ngRepeat: i in review_info.average_delivery|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review_info.average_delivery|number_to_array track by $index">★</span><!-- end ngRepeat: i in review_info.average_delivery|number_to_array track by $index --><!-- ngRepeat: i in (5.9 - (review_info.average_delivery|number:1))|number_to_array track by $index --><span class="empty ng-scope" ng-repeat="i in (5.9 - (review_info.average_delivery|number:1))|number_to_array track by $index">★</span><!-- end ngRepeat: i in (5.9 - (review_info.average_delivery|number:1))|number_to_array track by $index -->
-					                <span class="points ng-binding">4.5</span>
-					              </span>
-					              <span class="btn-tooltip" id="review-tooltip"></span>
-					            </li>
-					          </ul>
-					        </div>
-					      </div>
-					
-					      <div class="review-count">
-					        <div>
-					          리뷰 <strong class="ng-binding">3566</strong>개·사장님댓글 <strong class="ng-binding">3550</strong>개
-					
-					          <div class="opt-btn">
-					            <span>
-					            사진리뷰만
-					            </span>
-					            <div class="switch">
-					              <input id="cmn-toggle" class="cmn-toggle cmn-toggle-round ng-untouched ng-valid ng-dirty ng-valid-parse" type="checkbox" ng-model="only_photo_review" ng-change="toggleReviewType()">
-					              <label for="cmn-toggle"></label>
-					            </div>
-					          </div>
-					        </div>
-					      </div>
-					      <ul id="review" class="list-group review-list">
-					        <li class="list-group-item ng-hide" ng-show="restaurant.reviews.length < 1">
-					          <p class="review-empty clearfix ng-binding">주문후 첫번째 리뷰를 남겨보세요.</p>
-					        </li>
-					
-						<c:forEach var="redto" items="${reviewList }">
-					        <!-- ngRepeat: review in restaurant.reviews -->
-					        <!-- end ngRepeat: review in restaurant.reviews -->
-					        <li class="list-group-item star-point ng-scope" ng-repeat="review in restaurant.reviews" on-finish-render="scrollCartArea()">
-					          <div>
-					            <span ng-show="review.phone" class="review-id ng-binding">   ${redto.userId }</span>
-					            <span ng-bind="review.time|since" class="review-time ng-binding">어제</span>
-					            <a href="" class="btn-report" ng-click="report_reply(review.id, 'user', review)">신고</a>
-					          </div>
-					          <div>
-					            <div class="star-point">
-					              <span class="total">
-					                <!-- ngRepeat: i in review.rating|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review.rating|number_to_array track by $index">★</span><!-- end ngRepeat: i in review.rating|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review.rating|number_to_array track by $index">★</span><!-- end ngRepeat: i in review.rating|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review.rating|number_to_array track by $index">★</span><!-- end ngRepeat: i in review.rating|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review.rating|number_to_array track by $index">★</span><!-- end ngRepeat: i in review.rating|number_to_array track by $index --><span class="full ng-scope" ng-repeat="i in review.rating|number_to_array track by $index">★</span><!-- end ngRepeat: i in review.rating|number_to_array track by $index --><!-- ngRepeat: i in (5.9 - (review.rating|number:1))|number_to_array track by $index -->
-					              </span>
-					              <span class="category" ng-show="review.rating_taste > 0 || review.rating_quantity > 0 || review.rating_delivery > 0">
-					                <span class="category-tit" ng-show="review.rating_taste > 0">맛</span>
-					                <span class="full" ng-show="review.rating_taste > 0">★</span>
-					                <span class="points ng-binding" ng-show="review.rating_taste > 0">${redto.reScore }</span>
-					                <!-- <span class="category-tit" ng-show="review.rating_quantity > 0">양</span>
-					                <span class="full" ng-show="review.rating_quantity > 0">★</span>
-					                <span class="points ng-binding" ng-show="review.rating_quantity > 0">5</span>
-					                <span class="category-tit" ng-show="review.rating_delivery > 0">배달</span>
-					                <span class="full" ng-show="review.rating_delivery > 0">★</span>
-					                <span class="points ng-binding" ng-show="review.rating_delivery > 0">5</span> -->
-					              </span>
-					            </div>
-					          </div>
-					
-					          <!-- one image layout -->
-					          <!-- ngIf: review.review_images.length == 1 -->
-					          <!-- two image layout -->
-					          <!-- ngIf: review.review_images.length == 2 -->
-					          <table class="info-images half ng-scope" ng-if="review.review_images.length == 2" style="width: 627.778px;">
-					            <tbody><tr>
-					              <td>
-					                <!-- ngRepeat: img in review.review_images -->
-					                <div class="info ng-scope" ng-repeat="img in review.review_images" style="width: 312px; height: 312px; margin-right: 1px;">
-					                  <img ng-src="https://rev-static.yogiyo.co.kr/c335cb124013b2742bb8c01c943947ff_tn.jpg" ng-click="restaurant_image_view($event)" data-index="0" data-url="https://rev-static.yogiyo.co.kr/c335cb124013b2742bb8c01c943947ff.jpg" ng-error-and-load="error_load_image($event)" class="ng-isolate-scope" src="https://rev-static.yogiyo.co.kr/c335cb124013b2742bb8c01c943947ff_tn.jpg" style="visibility: visible; width: 312px; height: 448.988px; left: 0px; top: -68.5px;">
-					                </div><!-- end ngRepeat: img in review.review_images --><div class="info ng-scope" ng-repeat="img in review.review_images" style="width: 312px; height: 312px; margin-left: 1px;">
-					                  <img ng-src="https://rev-static.yogiyo.co.kr/573ede571656003a43db2a310712c3a1_tn.jpg" ng-click="restaurant_image_view($event)" data-index="1" data-url="https://rev-static.yogiyo.co.kr/573ede571656003a43db2a310712c3a1.jpg" ng-error-and-load="error_load_image($event)" class="ng-isolate-scope" src="https://rev-static.yogiyo.co.kr/573ede571656003a43db2a310712c3a1_tn.jpg" style="visibility: visible; width: 415.837px; height: 312px; left: -52px; top: 0px;">
-					                </div><!-- end ngRepeat: img in review.review_images -->
-					              </td>
-					            </tr>
-					          </tbody></table><!-- end ngIf: review.review_images.length == 2 -->
-					          <!-- three image layout -->
-					          <!-- ngIf: review.review_images.length == 3 -->
-					
-					          <div class="order-items default ng-binding" ng-click="show_review_menu($event)">
-					            구이삼겹 1인¸/1
-					          </div>
-					
-					          <p ng-show="review.comment" ng-bind-html="review.comment|strip_html" class="ng-binding">${redto.reContent }</p>
-					
-					          <!-- ngIf: !!review.owner_reply --><div class="review-answer ng-scope" ng-if="!!review.owner_reply">
-					            <div>
-					              <span class="owner-review-id">사장님</span>
-					              <span ng-bind="review.owner_reply.created_at|since" class="review-time ng-binding">어제</span>
-					              <a href="" class="btn-report" ng-click="report_reply(review.owner_reply.id, 'owner', review)">신고</a>
-					            </div>
-					
-					            <p ng-bind-html="review.owner_reply.comment|strip_html" class="ng-binding">
-					            손님 첫주문이시군요! 반갑습니다!!
-								이렇게 좋은 모습으로 만나 뵙게 되어 정말 다행입니다!!
-								찌개도 오랜시간 정성으로 끓여 내어 고기가 부들부들 ~ 꽤 괜찮죠?!
-								다음엔 저희 가성비 사이드, 김치찌개 추가 !!! 추천 드립니다~!!ㅋㅋ
-								감사합니다.
-								</p>
-					          </div><!-- end ngIf: !!review.owner_reply -->
-					        </li><!-- end ngRepeat: review in restaurant.reviews -->
-					        <!-- end ngRepeat: review in restaurant.reviews -->
-					   </c:forEach>
-					
-					        <li class="list-group-item btn-more" ng-show="check_more_review()">
-					          <a ng-click="get_next_reviews()"><span>더 보기<i class="arr-down"></i></span></a>
-					        </li>
-					      </ul>
-					   </div>
-					</div>
-					
-				</c:forEach>
-			</div>
+		 --%>	
+			<c:forEach var="dto" items="${shopList }" varStatus="status">
+			
+				<li><a href="<%=cp%>/storeReview.action?shopCode=${dto.shopCode}">매장명 : ${dto.shopName } 매장주소 : ${dto.shopAddr } 매장등록일 : ${dto.shopCreated }</a></li>
+			
+			</c:forEach>
 
 		</div>
+		
 	</div>
-
+ 
 	<div class="modal fade popup-notice" id="modal-notice">
 		<a href="#" onclick="redirectLogin('/owner/vat/')" class="btn1">부가세
 			신고 자료 조회하기</a> <a href="#" data-dismiss="modal" id="no-show-modal"
@@ -393,48 +141,8 @@ $( "#accordion" ).accordion({
 	</div>
 
 
+	<jsp:include page="ceoIncludeBottom.jsp" flush="false"/>
 
-	<div class="footer">
-		<div class="service-info">
-			<div class="bpg">
-				<a href="https://www.yogiyo.co.kr/mobile/#/trust/"><span
-					class="img"></span><span class="text">요기요<br>안심센터
-				</span></a>
-			</div>
-			<div class="cleanreview">
-				<a href="https://www.yogiyo.co.kr/mobile/#/cleanreview/"><span
-					class="img"></span><span class="text">요기요 100%<br>클린리뷰
-				</span></a>
-			</div>
-			<div class="csc">
-				<em>고객만족센터</em> <strong>1661-5270</strong> <span>24시간, 연중무휴</span>
-			</div>
-		</div>
-		<div class="guide">
-			<p>유한책임회사 딜리버리히어로코리아는 통신판매중개자이며 통신판매의 당사자가 아닙니다. 따라서 상품/거래정보 및
-				거래와 관련하여 요기요에 등록된 판매자의 고의 또는 과실로 소비자에게 발생하는 손해에 대해 유한책임회사
-				딜리버리히어로코리아는 책임을 지지 않습니다. 상품 및 거래에 관하여 보다 정확한 정보는 해당 판매자에게 직접 확인하여
-				주시기 바랍니다. Copyright YOGIYO. All Rights Reserved.</p>
-		</div>
-	</div>
-
-
-	<div class="modal fade popup-pwd-notice modal1" id="modal-pwd-notice">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal"
-				aria-hidden="true">×</button>
-			<h3 id="myModalLabel">비밀번호 변경 안내</h3>
-		</div>
-		<div class="modal-body">
-			고객님의 소중한 정보를 보호하기 위해 <strong>3개월 주기로 비밀번호 변경</strong>을 안내해 드리고 있습니다.<br>
-			불편하시더라도 주기적으로 비밀번호를 변경하여 사용해 주시길 부탁드립니다.
-		</div>
-		<div class="pop-btns">
-			<a href="#" data-dismiss="modal" class="btn btn1">다음에 변경하기</a> <a
-				href="#" onclick="redirectLogin('/owner/password_change/')"
-				data-dismiss="modal" class="btn btn2">비밀번호 변경하기</a>
-		</div>
-	</div>
 
 	<script type="text/javascript">
     $(document).ready(function() {
@@ -450,83 +158,6 @@ $( "#accordion" ).accordion({
 
 	<script type="text/javascript"
 		src="https://owner.yogiyo.co.kr/media/owners/js/jquery.cookie.js"></script>
-	<script type="text/javascript">
-    $(document).ready(function() {
-        var remId = $.cookie("rem_me");
-
-        var username = $("#username");
-        var saveId = $("#save_id");
-        var password = $("#password");
-        username.val(remId);
-        if (remId != undefined && remId != null && remId != '') {
-            saveId.prop("checked", "checked");
-            password.focus();
-        } else {
-            username.focus();
-        }
-        saveId.click(function() {
-            if($(this).prop('checked')) {
-                $.cookie("rem_me", $('#username').val(), { expires:365, path: '/' });
-            } else {
-                $.cookie('rem_me', '', { expires: -1, path: '/' });
-            }
-        });
-
-        function getCookieValueByRegEx(a) {
-            var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
-            return b ? b.pop() : '';
-        }
-
-        var now = Date.now();
-
-        var start_time = new Date("2020/01/01 00:00:00");
-        var end_time = new Date("2020/01/28 23:59:59");
-        var start_time_pwd= new Date("2019/03/25 00:00:00");
-        var end_time_pwd = new Date("2019/04/07 23:59:59");
-
-        if (start_time <= now && now <= end_time && !getCookieValueByRegEx('popup_shown')) {
-            $('#modal-notice').modal('show');
-        }
-
-        $("#no-show-modal").click(function(){
-            $('#modal-notice').modal('hide');
-            $.cookie('popup_shown', 'hidden', {expires: 1});
-        });
-
-        $('.form-signin').on('submit', function(evt){
-            $(this).find('input').each(function(idx, elem){
-                $(elem).val( $(elem).val().trim() );
-            });
-        });
-
-        if (now <= end_time_pwd && !getCookieValueByRegEx('popup_shown')) {
-            $('#modal-pwd').modal('show');
-            if ($('.popup-pwd-notice').css('display') === 'block') {
-                $('.popup-pwd-notice').modal('hide');
-            }
-        }
-        $("#no-show-modal-pwd").click(function(){
-            $('#modal-pwd').modal('hide');
-            $.cookie('popup_shown', 'hidden', {expires: 13});
-        });
-        $("#modal-pwd .btn1").click(function(){
-            $.cookie('popup_shown', 'hidden', {expires: 13});
-        });
-    });
-
-    $('.carousel-control').hide();
-    $('.own-slide').hover(
-      function() {
-        $('.carousel-control').fadeIn();
-      }, function() {
-        $('.carousel-control').fadeOut();
-      }
-    );
-
-    $('.popup-pwd-notice').addClass('modal1');
-    </script>
-
-	<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","queueTime":0,"licenseKey":"060998d475","agent":"","transactionName":"NgQDY0YEWhICVEFQWg9OJ0JaBkAIDFkaXVoWAA9DGgpDDwZFRhdDCAQWRBoNWwwGDVxXUQQZ","applicationID":"2104228","errorBeacon":"bam.nr-data.net","applicationTime":105}</script>
 
 
 </body>
