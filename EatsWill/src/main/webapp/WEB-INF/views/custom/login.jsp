@@ -437,8 +437,8 @@ ng\:form {
 				<label><a href="#" class="tryPw" onclick="tryPw_click();">비밀번호 찾기</a></label>
 			</div>
 	
-	      	<div class="btn-wrapper" style="margin-bottom: 20px">
-	        	<button type="button" id="logon" class="btn" style="color: #fff">로그인</button>
+	      	<div class="btn-wrapper" style="margin-bottom: 20px;">
+	        	<button type="button" id="logon" class="btn" style="color: #fff;width: 222px;font-size: 16px;">로그인</button>
 	      	</div>
 	      	
 	      	<div style="text-align: center;margin-bottom: 20px">

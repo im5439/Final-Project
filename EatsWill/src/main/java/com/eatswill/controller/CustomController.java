@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,6 +37,9 @@ public class CustomController {
 	@Qualifier("customDAO")
 	CustomDAO dao;
 	
+	@Autowired 
+	private JavaMailSenderImpl mailSender;
+	
 	// 테스트용
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {		
@@ -44,7 +48,17 @@ public class CustomController {
 
 	// 메인 페이지
 	@RequestMapping(value = "/main.action", method = RequestMethod.GET)
-	public String main() {
+	public String main(HttpServletRequest req, String message) {
+		
+		if (message != null && !message.equals("")) {
+			Map<String, ?> reaMap = RequestContextUtils.getInputFlashMap(req);
+			if (reaMap != null) {
+				message = (String) reaMap.get("message");
+			}
+
+			req.setAttribute("message", message);
+		}
+		
 		return "main";
 	}
 
@@ -174,8 +188,8 @@ public class CustomController {
 
 		return "custom/findIdPw";
 	}
-	/*
-	// 아이디/비밀번호 데이터 확인 후 메일로 전송(서버 켜있어야함) - 시간되면 메일 api로 변경
+	
+	// 아이디/비밀번호 데이터 확인 후 메일로 전송
 	@RequestMapping(value = "/findidpw_ok.action", method = RequestMethod.POST)
 	public String findidpw_ok(HttpServletRequest req, CustomDTO dto, RedirectAttributes rea) {
 
@@ -188,7 +202,7 @@ public class CustomController {
 			dto = dao.tryId(dto.getName(), dto.getEmail());
 			
 			if (dto == null) { 
-				message = "이름을 정확히 입력하세요.";
+				message = "이름 또는 이메일을 정확히 입력하세요.";
 				rea.addFlashAttribute("mode", "id");
 				rea.addFlashAttribute("message", message); 
 				return "redirect:/findidpw.action"; 
@@ -202,7 +216,7 @@ public class CustomController {
 			dto = dao.tryPw(dto.getId(), dto.getEmail());
 			
 			if (dto == null) { 
-				message = "아이디를 정확히 입력하세요.";
+				message = "아이디 또는 이메일을 정확히 입력하세요.";
 				rea.addFlashAttribute("mode", "pw");
 				rea.addFlashAttribute("message", message);
 				return "redirect:/findidpw.action"; 
@@ -215,53 +229,17 @@ public class CustomController {
 		String senderName = "EatsWill";
 		String senderEmail = "EatsWill@eatswill.com";
 		String receiverEmail = dto.getEmail();
-		// String subject = "회원님의 비밀번호";
-		// String content = dto.getName() + " 회원님의 비밀번호는 [" + dto.getPw() + "] 입니다.";
-
-		String host = "localhost";
-
-		Properties prop = System.getProperties();
-
-		Session ssn = Session.getInstance(prop, null);
-
-		try {
-
-			MimeMessage send_message = new MimeMessage(ssn);
-			send_message.addRecipient(Message.RecipientType.TO, new InternetAddress(receiverEmail));
-
-			send_message.setFrom(new InternetAddress(senderEmail, senderName, "UTF-8"));
-
-			send_message.setSubject(subject, "UTF-8");
-
-			send_message.setContent(content, "text/plain;charset=UTF-8");
-
-			Transport tp = ssn.getTransport("smtp");
-			tp.connect(host, "", ""); // ip,id,pw
-			tp.sendMessage(send_message, send_message.getAllRecipients());
-			tp.close();
-
-		} catch (Exception e) {
-			System.out.print(e.toString());
-		}
-
-		return "redirect:/login.action";
-	}
-	*/
-	
-	// 아이디/비밀번호 데이터 확인 후 메일로 전송(서버 켜있어야함) - 시간되면 메일 api로 변경
-	@RequestMapping(value = "/findidpw_ok.action", method = RequestMethod.POST)
-	public String findidpw_ok(HttpServletRequest req, CustomDTO dto) {
 		
 		Properties props = new Properties();
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "465");
+		props.put("mail.smtp.host", mailSender.getHost());
+		props.put("mail.smtp.port", mailSender.getPort());
 		
 		Authenticator auth = new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("shoon0615@gmail.com", "s1632000");
+				return new PasswordAuthentication(mailSender.getUsername(), mailSender.getPassword());
 			}
 		};
 		
@@ -269,16 +247,35 @@ public class CustomController {
 
 		try {
 			Message msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress("admin@example.com", "Example.com Admin"));
-			msg.addRecipient(Message.RecipientType.TO, new InternetAddress("dlacndghks12@gmail.com", "Mr. Users"));
-			msg.setSubject("Your Example.com account has been activated");
-			msg.setText("This is a test");
+			msg.setFrom(new InternetAddress(senderEmail, senderName, "UTF-8"));
+			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(receiverEmail, "Mr. Users"));
+			msg.setSubject(subject);
+			msg.setText(content);
 			Transport.send(msg);
+
 		} catch (Exception e) {
 			System.out.println("I am here??? ");
 	   		e.printStackTrace();
 		} 
 		return "redirect:/login.action";
+	}
+	
+	// 정보 수정 페이지
+	@RequestMapping(value = "/updateInfo.action", method = RequestMethod.GET)
+	public String updateInfo(HttpServletRequest req, RedirectAttributes rea) {
+		
+		String message = "";
+		
+		HttpSession session = req.getSession();
+		CustomDTO dto = (CustomDTO)session.getAttribute("customInfo");	
+		
+		if (dto.getId() == dto.getName() || dto.getId().equals(dto.getName())) { 
+			message = "카카오계정은 이용할수없는 기능입니다.";
+			rea.addFlashAttribute("message", message); 
+			return "redirect:/main.action"; 
+		}
+		
+		return "custom/updateInfo";
 	}
 	
 	// 회원가입 데이터 DB에 입력

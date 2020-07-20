@@ -2421,8 +2421,10 @@
 			-ms-transition: -ms-transform 0.5s ease, opacity 0.5s ease;
 			transition: transform 0.5s ease, opacity 0.5s ease;
 			position: relative;
-			width: calc(22.33333% - 2.5em);
-			margin: 2.5em 0 0 2.5em;
+			/* width: calc(22.33333% - 2.5em); */
+			width: 25%;
+			/* margin: 2.5em 0 0 2.5em; */
+			padding:  0 10px 10px 10px;
 		}
 
 			.tiles article > .image {
@@ -2431,7 +2433,7 @@
 				-ms-transition: -ms-transform 0.5s ease;
 				transition: transform 0.5s ease;
 				position: relative;
-				display: block;
+				/* display: block; */
 				width: 100%;
 				border-radius: 4px;
 				overflow: hidden;
@@ -2451,7 +2453,7 @@
 					-webkit-transition: background-color 0.5s ease, opacity 0.5s ease;
 					-ms-transition: background-color 0.5s ease, opacity 0.5s ease;
 					transition: background-color 0.5s ease, opacity 0.5s ease;
-					content: '';
+					/* content: ''; */
 					display: block;
 					position: absolute;
 					top: 0;
@@ -2735,7 +2737,7 @@
 						height: 3em;
 						line-height: 3em;
 						padding: 0 1.5em;
-						background-color: rgba(255, 255, 255, 0.5);
+						/* background-color: rgba(255, 255, 255, 0.5); */
 						border-radius: 4px;
 						border: 0;
 						font-size: 0.8em;
@@ -2748,7 +2750,7 @@
 						-webkit-tap-highlight-color: transparent;
 						width: 4em;
 						text-indent: 4em;
-						font-size: 1em;
+						font-size: 1.2em;
 						overflow: hidden;
 						padding: 0;
 						white-space: nowrap;
@@ -2762,7 +2764,7 @@
 							content: '';
 							display: block;
 							position: absolute;
-							top: 0;
+							top: -6px;
 							left: 0;
 							width: 100%;
 							height: 100%;
@@ -2881,7 +2883,7 @@
 			-webkit-tap-highlight-color: transparent;
 			display: block;
 			position: absolute;
-			top: 2em;
+			top: 1em;
 			left: -6em;
 			width: 6em;
 			text-indent: 6em;

@@ -54,9 +54,9 @@ ng\:form {
    <link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
    <link rel="stylesheet"
    href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
-   <script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
-   <script type="text/javascript" src="/eatswill/resources/assets/js/cart.js"></script>
-
+	<script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
+	<script type="text/javascript" src="/eatswill/resources/assets/js/cart.js"></script>
+	
 
 <meta name="theme-color" content="#DC1400">
 <meta property="og:title" content="잇츠윌-누구보다빠르게 남들과는 다르게">
@@ -247,42 +247,44 @@ ng\:form {
                
                
                <nav>
-						<ul>
-							<li><a href="#menu">Menu</a></li>
-						</ul>
-					</nav>
-						
-					<nav id="menu">
-						<h2>Menu</h2>
-						<br/>
-						<input type="hidden" id="sessionId" value="${sessionScope.customInfo.id }"/>
-						<ul>
-							<c:choose>
-								<c:when test="${empty sessionScope.customInfo.id }">
-									<li><a href="${pageContext.request.contextPath}/login.action">로그인</a></li>
-								</c:when>
-								<c:otherwise>
-									<li><font color="#F2849E">${sessionScope.customInfo.name }</font> 님 환영합니다.
-		                      		<p style="text-align: left">
-		                      			전화번호 : ${sessionScope.customInfo.tel }</br>
-		                      			포인트 : ${sessionScope.customInfo.point }
-		                      		</p>
-											
-									<a href="javascript:logout();" data-nethru_clcode="A000012">로그아웃</a></li>
-								</c:otherwise>
-							</c:choose>
-							<li><a href="<%=cp%>/updateInfo.action">내정보수정</a></li>
-							<li><a href="generic.html">장바구니</a></li>
-							<li><a href="<%=cp%>/myOrder.action">주문내역</a></li>
-							<li><a href="<%=cp%>/heartStore.action">찜 목록</a></li>
-							<li><a href="<%=cp%>/myReview.action">마이 리뷰</a></li>
-						</ul>
-					</nav>
+                  <ul>
+                     <li><a href="#menu">Menu</a></li>
+                  </ul>
+               </nav>
+                  
+               <nav id="menu">
+                  <h2>Menu</h2>
+                  <br/>
+                  <input type="hidden" id="sessionId" value="${sessionScope.customInfo.id }"/>
+                  <ul>
+                     <c:choose>
+							<c:when test="${empty sessionScope.customInfo.id }">
+								<li><a href="${pageContext.request.contextPath}/login.action">로그인</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><font color="#F2849E">${sessionScope.customInfo.name }</font> 님 환영합니다.
+	                      		<p style="text-align: left">
+	                      			전화번호 : ${sessionScope.customInfo.tel }</br>
+	                      			포인트 : ${sessionScope.customInfo.point }
+	                      		</p>
+										
+								<a href="javascript:logout();" data-nethru_clcode="A000012">로그아웃</a></li>
+							</c:otherwise>
+						</c:choose>
+                      
+                     <li><a href="<%=cp%>/updateInfo.action">내정보수정</a></li>
+                     <li><a href="generic.html">장바구니</a></li>
+                     <li><a href="<%=cp%>/myOrder.action">주문내역</a></li>
+                     <li><a href="<%=cp%>/heartStore.action">찜 목록</a></li>
+                     <li><a href="<%=cp%>/myReview.action">마이 리뷰</a></li>
+                  </ul>
+               </nav>
             <!-- ----------------------------------------------------------------------------------------- -->   
                <div class="nav-top clearfix"
                   ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
+                 <a href="<%=cp%>/main.action" style="text-decoration: none;">
                   <img alt="" src="/eatswill/resources/img/icon3.png" width="125px"
-                  height="40px" style=" margin: 20px 10px;" >
+                  height="40px" style=" margin: 20px 10px;" ></a>
             <%--       <h1 class="logor pull-left" ng-click="<%=cp%>/main.action" ></h1>  --%><!-- 로고로고 -->
                   <div id="cart" class="pull-right">
                      <span class="gps-status ng-binding"
@@ -298,30 +300,30 @@ ng\:form {
                         ng-bind="global_cart.get_amount()">0</span>
                      </a>
                      <%-- <button type="button" class="btn btn-login ng-binding" 
-							ng-click="login()"
-							ng-bind-html="check_login() ? '로그아웃' : '로그인 <span>|</span> 회원가입'"
-							ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next"> --%>
-						
-						<c:choose>
-							<c:when test="${empty sessionScope.customInfo.id }">
-								<button type="button" class="btn btn-login ng-binding" style="width: 95px"
-								onclick="javascript:location.href='<%=cp %>/login.action';">로그인</button>
-								<button type="button" class="btn btn-login ng-binding" style="width: 95px"
-								onclick="javascript:location.href='<%=cp %>/signup.action';">회원가입</button>
-							</c:when>
-							<c:otherwise>
-								<button type="button" class="btn btn-login ng-binding" style="width: 150px"
-								onclick="javascript:location.href='<%=cp %>/logout.action';">로그아웃</button>
-							</c:otherwise>
-						</c:choose>
+								ng-click="login()"
+								ng-bind-html="check_login() ? '로그아웃' : '로그인 <span>|</span> 회원가입'"
+								ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next"> --%>
+							
+					<c:choose>
+						<c:when test="${empty sessionScope.customInfo.id }">
+							<button type="button" class="btn btn-login ng-binding" style="width: 95px"
+							onclick="javascript:location.href='<%=cp %>/login.action';">로그인</button>
+							<button type="button" class="btn btn-login ng-binding" style="width: 95px"
+							onclick="javascript:location.href='<%=cp %>/signup.action';">회원가입</button>
+						</c:when>
+						<c:otherwise>
+							<button type="button" class="btn btn-login ng-binding" style="width: 150px"
+							onclick="javascript:location.href='<%=cp %>/logout.action';">로그아웃</button>
+						</c:otherwise>
+					</c:choose>
 
-						<!-- <button type="button"
-							class="btn btn-warning hidden-xs ng-binding"
-							ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
-							ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;" style="font-size: 1.2em;background-color: red;">주문표(0)</button> -->
-						<button type="button" class="btn btn-warning hidden-xs ng-binding" id="cartList" style="width: 150px;font-size: 1.2em;background-color: red"
-								onclick="javascript:location.href='<%=cp %>/logout.action';">주문표(0)</button>	
-                 
+					<!-- <button type="button"
+						class="btn btn-warning hidden-xs ng-binding"
+						ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
+						ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;" style="font-size: 1.2em;background-color: red;">주문표(0)</button> -->
+					<button type="button" class="btn btn-warning hidden-xs ng-binding" id="cartList" style="width: 150px;font-size: 1.2em;background-color: red"
+							onclick="javascript:location.href='<%=cp %>/logout.action';">주문표(0)</button>
+                  
                   
                   </div>
                </div>
@@ -410,7 +412,7 @@ ng\:form {
                      
                         <div style="text-align: left;">
                            <small>${dto.orderDate }</small><br> <span ng-show="review.phone"
-                              class="review-id ng-binding">${dto.shopName } > </span> <a href=""
+                              class="review-id ng-binding">${dto.shopName } > </span> <a href="<%=cp %>/reviewDelete.action?reNum=${dto.reNum}"
                               class="btn-report" >삭제</a>
                         </div>
    
@@ -418,9 +420,9 @@ ng\:form {
                         <div class="order-items default ng-binding"
                            ng-click="show_review_menu($event)" style="text-align: left;">${dto.menuName}
                            </div>
-                           <!-- 사진 있다면 사진 출력 -->
-                        <img src="/eatswill/resources/images/logo.png" align="center" width="300" height="300"></a>
-                           <a href="/eatswill/resources/images/logo.png"></a>
+                           
+                        <img src="http://192.168.16.16:8080/reImg/${dto.reImg }" align="center" width="300" height="300">
+                           
                         <p ng-show="review.comment"
                            ng-bind-html="review.comment|strip_html" class="ng-binding" style="text-align: left;">${dto.reContent }</p> 
                      
