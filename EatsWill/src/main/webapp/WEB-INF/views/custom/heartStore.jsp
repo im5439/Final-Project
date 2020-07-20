@@ -23,6 +23,7 @@ ng\:form {
 .star-rating,.star-rating span { display:inline-block; height:13px; overflow:hidden; background:url(/eatswill/resources/images/star1.png)no-repeat; }
 .star-rating span{ background-position:left bottom; line-height:0; vertical-align:top; }
 </style>
+
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -49,15 +50,6 @@ ng\:form {
    async=""></script>
 <script async="" src="//connect.facebook.net/en_US/fbevents.js"></script>
 
-
-
-   <link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
-   <link rel="stylesheet"
-   href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
-	<script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
-	<script type="text/javascript" src="/eatswill/resources/assets/js/cart.js"></script>
-	
-
 <meta name="theme-color" content="#DC1400">
 <meta property="og:title" content="잇츠윌-누구보다빠르게 남들과는 다르게">
 <meta property="og:url" content="http://www.yogiyo.co.kr/">
@@ -68,9 +60,8 @@ ng\:form {
 <!-- ngIf: ! page.title -->
 <!-- ngIf: page.title -->
 <title ng-if="page.title" ng-bind="page.title + &quot; - 요기요&quot;"
-   class="ng-binding ng-scope">마이리뷰</title>
+   class="ng-binding ng-scope">나의 관심 매장</title>
 <!-- end ngIf: page.title -->
-<link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
 <link rel="apple-touch-icon-precomposed"
    href="https://www.yogiyo.co.kr/mobile/image/app_128x128.png">
 <link rel="apple-touch-icon-precomposed" sizes="144x144"
@@ -81,6 +72,69 @@ ng\:form {
    href="css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
 <link rel="stylesheet" href="/eatswill/resources/assets/css/app.css"
    type="text/css" />
+   <link rel="shortcut icon"
+   href="http://image.gmarket.co.kr/_Net/MyG/favicon/gmarket.ico">
+<link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
+
+
+<link rel="stylesheet" type="text/css"
+   href="http://script.gmarket.co.kr/pc/css/common/kr/ui/desktop_layout.css">
+<link rel="stylesheet" type="text/css"
+   href="http://script.gmarket.co.kr/pc/css/ko/myg.css">
+<link rel="stylesheet" type="text/css"
+   href="http://script.gmarket.co.kr/pc/css/ko/myg_net.css">
+
+<script async="" src="//script.gmarket.co.kr/js/header/statsna.js"></script>
+<script async=""
+   src="//montelena.gmarket.co.kr/montelena.js?path=http://192.168.16.23:8080/eatswill/myOrder.action"></script>
+<script async=""
+   src="//script.gmarket.co.kr/mobile/js/common/kr/util/viewability.js"></script>
+<script async="" src="//script.gmarket.co.kr/js/header/statsna.js"></script>
+<script async=""
+   src="//montelena.gmarket.co.kr/montelena.js?path=http://myg.gmarket.co.kr/"></script>
+<script type="text/javascript"
+   src="http://www.gmarket.co.kr/challenge/neo_include/favicon_net.js"></script>
+<script type="text/javascript"
+   src="http://script.gmarket.co.kr/_Net/js/json2.js"></script>
+<script type="text/javascript"
+   src="http://script.gmarket.co.kr/_Net/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript"
+   src="http://script.gmarket.co.kr/_Net/js/jquery-ui-1.8.17.min.js"></script>
+<script type="text/javascript"
+   src="http://script.gmarket.co.kr/_Net/js/jquery.popupwindow.js"></script>
+<script type="text/javascript" src="/Scripts/Common.js"></script>
+<script type="text/javascript"
+   src="http://script.gmarket.co.kr/fnp/desktop-layout.js"></script>
+<script type="text/javascript" src="/Scripts/ScriptEventErrorHandler.js"></script>
+
+
+
+
+   <link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
+   <link rel="stylesheet"
+   href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
+   <script type="text/javascript" src="/eatswill/resources/assets/js/cart.js"></script>
+
+<script type="text/javascript"
+   src="http://script.gmarket.co.kr/_Net/js/gmkt.js?dummy=2012091327262"></script>
+<script type="text/javascript"
+   src="http://script.gmarket.co.kr/_Net/js/dimmed.js"></script>
+<script type="text/javascript"
+   src="http://myg.gmarket.co.kr/Scripts/MyGMenu.js?dummy=201702141631"></script>
+<script type="text/javascript" defer="defer"
+   src="http://script.gmarket.co.kr/_Net/js/impression.js"></script>
+<script type="text/javascript"
+   src="http://script.gmarket.co.kr/_Net/js/CommonHeader.js"></script>
+<script type="text/javascript"
+   src="/Scripts/ContractCommon.js?ver=20200319"></script>
+<script type="text/javascript"
+   src="/Scripts/Home/Default.js?ver=201811271415"></script>
+<script type="text/javascript" src="/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script type="text/javascript" src="/Scripts/modal.js"></script>
+<script type="text/javascript"
+   src="http://script.gmarket.co.kr/_Net/js/MygSmileClubBanner.js"></script>
+<script type="text/javascript"
+   src="http://script.gmarket.co.kr/_Net/js/MygSmileStamp.js"></script>
 <!-- Start location.search generate Code for Naver 검색 유입 -->
 <script type="text/javascript">
    if (is_yogiyo) {
@@ -247,17 +301,17 @@ ng\:form {
                
                
                <nav>
-                  <ul>
-                     <li><a href="#menu">Menu</a></li>
-                  </ul>
-               </nav>
-                  
-               <nav id="menu">
-                  <h2>Menu</h2>
-                  <br/>
-                  <input type="hidden" id="sessionId" value="${sessionScope.customInfo.id }"/>
-                  <ul>
-                     <c:choose>
+					<ul>
+						<li><a href="#menu">Menu</a></li>
+					</ul>
+				</nav>
+					
+				<nav id="menu">
+					<h2>Menu</h2>
+					<br/>
+					<input type="hidden" id="sessionId" value="${sessionScope.customInfo.id }"/>
+					<ul>
+						<c:choose>
 							<c:when test="${empty sessionScope.customInfo.id }">
 								<li><a href="${pageContext.request.contextPath}/login.action">로그인</a></li>
 							</c:when>
@@ -271,20 +325,18 @@ ng\:form {
 								<a href="javascript:logout();" data-nethru_clcode="A000012">로그아웃</a></li>
 							</c:otherwise>
 						</c:choose>
-                      
-                     <li><a href="<%=cp%>/updateInfo.action">내정보수정</a></li>
-                     <li><a href="generic.html">장바구니</a></li>
-                     <li><a href="<%=cp%>/myOrder.action">주문내역</a></li>
-                     <li><a href="<%=cp%>/heartStore.action">찜 목록</a></li>
-                     <li><a href="<%=cp%>/myReview.action">마이 리뷰</a></li>
-                  </ul>
-               </nav>
+						<li><a href="<%=cp%>/updateInfo.action">내정보수정</a></li>
+						<li><a href="generic.html">장바구니</a></li>
+						<li><a href="<%=cp%>/myOrder.action">주문내역</a></li>
+						<li><a href="<%=cp%>/heartStore.action">찜 목록</a></li>
+						<li><a href="<%=cp%>/myReview.action">마이 리뷰</a></li>
+					</ul>
+				</nav>
             <!-- ----------------------------------------------------------------------------------------- -->   
                <div class="nav-top clearfix"
                   ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
-                 <a href="<%=cp%>/main.action" style="text-decoration: none;">
                   <img alt="" src="/eatswill/resources/img/icon3.png" width="125px"
-                  height="40px" style=" margin: 20px 10px;" ></a>
+                  height="40px" style=" margin: 20px 10px;" >
             <%--       <h1 class="logor pull-left" ng-click="<%=cp%>/main.action" ></h1>  --%><!-- 로고로고 -->
                   <div id="cart" class="pull-right">
                      <span class="gps-status ng-binding"
@@ -299,7 +351,7 @@ ng\:form {
                         <span class="badge ng-binding"
                         ng-bind="global_cart.get_amount()">0</span>
                      </a>
-                     <%-- <button type="button" class="btn btn-login ng-binding" 
+                    <%-- <button type="button" class="btn btn-login ng-binding" 
 								ng-click="login()"
 								ng-bind-html="check_login() ? '로그아웃' : '로그인 <span>|</span> 회원가입'"
 								ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next"> --%>
@@ -322,9 +374,8 @@ ng\:form {
 						ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
 						ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;" style="font-size: 1.2em;background-color: red;">주문표(0)</button> -->
 					<button type="button" class="btn btn-warning hidden-xs ng-binding" id="cartList" style="width: 150px;font-size: 1.2em;background-color: red"
-							onclick="javascript:location.href='<%=cp %>/logout.action';">주문표(0)</button>
-                  
-                  
+							onclick="javascript:location.href='<%=cp %>/logout.action';">주문표(0)</button>	
+   
                   </div>
                </div>
             </div>
@@ -362,8 +413,6 @@ ng\:form {
             </div>
          </div>
       </div>
-      
-      
          
 
       <div id="quick-btn" class="hide-btn">
@@ -397,50 +446,59 @@ ng\:form {
                <li
                   ng-class="active_tab == &quot;review&quot; ? &quot;active&quot; : &quot;&quot;"
                   class="active"><a ng-click="toggle_tab(&quot;review&quot;)"
-                  data-toggle="tab">나의 리뷰(${myReviewCnt}) <span class="ng-binding"></span></a></li>
+                  data-toggle="tab">나의 관심 매장<span class="ng-binding"></span></a></li>
             </ul>
 
-            <div ng-show="active_tab == &quot;review&quot;" align="left">
+            <div ng-show="active_tab == &quot;review&quot;" class="">
 
                <ul id="review" class="list-group review-list">
 
                   <!-- ngRepeat: review in restaurant.reviews -->
-                  <c:forEach var="dto" items="${lists}">
+                  
                   <li class="list-group-item star-point ng-scope"
                      ng-repeat="review in restaurant.reviews"
-                     on-finish-render="scrollCartArea()" style="text-align: left;">
-                     
-                        <div style="text-align: left;">
-                           <small>${dto.orderDate }</small><br> <span ng-show="review.phone"
-                              class="review-id ng-binding">${dto.shopName } > </span> <a href="<%=cp %>/reviewDelete.action?reNum=${dto.reNum}"
-                              class="btn-report" >삭제</a>
-                        </div>
-   
-                        <span ng-bind="review.time|since" class="review-time ng-binding" style="text-align: left"><span class="star-rating" style="text-align: left"><span style ="width:${dto.reStar}%; text-align: left"></span></span>(${dto.reScore})</span>
-                        <div class="order-items default ng-binding"
-                           ng-click="show_review_menu($event)" style="text-align: left;">${dto.menuName}
-                           </div>
-                           
-                        <img src="http://192.168.16.16:8080/reImg/${dto.reImg }" align="center" width="300" height="300">
-                           
-                        <p ng-show="review.comment"
-                           ng-bind-html="review.comment|strip_html" class="ng-binding" style="text-align: left;">${dto.reContent }</p> 
-                     
-                     <c:if test="${dto.ceoContent != null }">
-                        <!-- ngIf: !!review.owner_reply --> <!-- 사장님 시작 -->
-                        <div class="review-answer ng-scope" ng-if="!!review.owner_reply" style="text-align: left;">
+                     on-finish-render="scrollCartArea()">
+                     <div class="b_ta_info">
+                  <table width="100%" border="1" class="b_table_grey">
+                     <thead align="center">
+                        <tr align="center">
+                           <th colspan="2" align="center">매장 정보</th>
+                        </tr>
+                     </thead>
+                     <c:forEach var="dto" items="${lists}">
+                     <tbody id="orderList">
                         
-                           <div style="text-align: left;">
-                              <span class="owner-review-id">사장님</span>
-                           </div>
-   
-                           <p ng-bind-html="review.owner_reply.comment|strip_html"
-                              class="ng-binding" style="text-align: left;">${dto.ceoContent }</p>
-                              
-                        </div> <!-- 사장님 끝 -->
-                     </c:if>
+                           <tr>
+                              <td colspan="2" style="border: 1; padding: 0" ></td>
+                           </tr>
+                           <tr cno="3273614152" ctype="G" column="4" class="first">
+                              <td class="first_cell" rowspan="1" style="vertical-align: middle">
+                                 <div class="td_detail">
+                                    <img
+                                       src="/eatswill/resources/images/${dto.shopImg}" width="80"
+                                       height="80">
+                                 </div>
+                              </td>
+                              <td style="text-align-last: left">
+                                 <div class="td_info">
+                                    
+                                    <ul>
+                                       <li class="seller_info"><em></em><a href="">${dto.shopName }</a></li>
+                                       <br>
+                                       <li class="tit_info" style="font-size: 12pt">
+                                       <span class="star-rating" style="text-align: left"><span style ="width:${dto.shopStar}%;text-align: left""></span></span>
+                                       ${dto.shopScore } (${dto.reCnt })</li>
+                                    </ul>
+                                 </div>
+                              </td>
+                           </tr>
+                        
+                     </tbody>
+                     </c:forEach>
+                  </table>
+               </div>
                   </li>
-                  </c:forEach>
+               
                   <!-- end ngRepeat: review in restaurant.reviews -->
 
 
@@ -451,12 +509,15 @@ ng\:form {
                   </li>
                </ul>
             </div>
-            
-                  <script src="/eatswill/resources/assets/js/jquery.min.js"></script>
+
+
+   <!-- Scripts -->
+         <script src="/eatswill/resources/assets/js/jquery.min.js"></script>
          <script src="/eatswill/resources/assets/js/skel.min.js"></script>
          <script src="/eatswill/resources/assets/js/util.js"></script>
          <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
          <script src="/eatswill/resources/assets/js/main.js"></script>
-            
+
+
 </body>
 </html>

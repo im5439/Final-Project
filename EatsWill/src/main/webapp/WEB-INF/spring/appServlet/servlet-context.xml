@@ -27,6 +27,19 @@
 	<beans:bean id="storeDAO" class="com.eatswill.dao.StoreDAO">
 		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
 	</beans:bean>
+	<beans:bean id="customDAO" class="com.eatswill.dao.CustomDAO">
+		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
+	</beans:bean>
+	<!-- E-DAO --> 	
+ 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></beans:bean>
+ 	
+ 	<!-- 메일 api -->
+ 	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+      <beans:property name="host" value="smtp.gmail.com"/>
+      <beans:property name="port" value="465"/>
+      <beans:property name="username" value="shoon0615@gmail.com"/>
+      <beans:property name="password" value="s1632000"/>
+   </beans:bean>
 	
 	<beans:bean id="sessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<beans:constructor-arg ref="sessionFactory"/>
@@ -45,7 +58,8 @@
 		<beans:property name="password" value="a123"/>
 	</beans:bean>
 	
-
+<resources mapping="/resources/**" location="/resources/" />
+    <resources mapping="/reImg/**" location="d:/reImg" />
 	
 	
 	

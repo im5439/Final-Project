@@ -58,7 +58,6 @@ ng\:form {
 	
 	<script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
 	<script type="text/javascript" src="/eatswill/resources/assets/js/login.js"></script>	
-	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 	
 	
 <script>
@@ -296,6 +295,7 @@ ng\:form {
 		}
 	</script>
 	
+	
 					
 			
 	
@@ -408,44 +408,30 @@ ng\:form {
 						
 						</div>
 					</div>
-				</div>				
+				</div>
 			</div>
 		</div>
 		
 		<div class="rd-wrapper contact-wrapper">
 	    	<form class="form-horizontal form-signin" method="POST" action="" name="myForm">
-	      	<div class="registration-wrap" style="width: 600px"> 
-				<div class="control-group">
-	        		<div class="control-label">아이디</div>
-	
-	        		<div class="controls">
-	            		<input type="text" name="id" id="id" style="display: inline;height: 34px;width: 70%"/>
+	    		<div style="text-align: center">
+		    		<label style="font-size: 16px;margin-top: 2em">회원 탈퇴</label>
+		    	</div>
+	    	
+		      	<div class="registration-wrap" style="width: 600px"> 
+					<input type="hidden" name="id" id="id" value="${sessionScope.customInfo.id }"/>	
+					<div class="control-group">
+		        		<div class="control-label">패스워드</div>
+		
+		        		<div class="controls">
+		            		<input type="password" name="pw" id="pw" style="display: inline;height: 34px;width: 70%"/>
+						</div>
 					</div>
 				</div>
-	
-				<div class="control-group">
-	        		<div class="control-label">패스워드</div>
-	
-	        		<div class="controls">
-	            		<input type="password" name="pw" id="pw" style="display: inline;height: 34px;width: 70%"/>
-					</div>
-				</div>
-			</div>
-			
-			<div style="text-align: center">
-				<label><a href="#" class="tryId" onclick="tryId_click();">아이디</a></label> / 
-				<label><a href="#" class="tryPw" onclick="tryPw_click();">비밀번호 찾기</a></label>
-			</div>
-	
-	      	<div class="btn-wrapper" style="margin-bottom: 20px;">
-	        	<button type="button" id="logon" class="btn" style="color: #fff;width: 222px;font-size: 16px;">로그인</button>
-	      	</div>
-	      	
-	      	<div style="text-align: center;margin-bottom: 20px">
-	      		<a id="kakao-login-btn"></a>
-	      		<input type="hidden" id="kakaoSession" name="kakaoSession"></div>
-	      		<input type="hidden" id="kakaoSession2" name="kakaoSession2"></div>
-	      	</div>
+		
+		      	<div class="btn-wrapper">
+		        	<button type="button" id="pwcheck" class="btn" style="color: #fff">회원탈퇴</button>
+		      	</div>
 	    </form>
 	  </div>
 		
@@ -774,6 +760,6 @@ ng\:form {
 			<script src="/eatswill/resources/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/eatswill/resources/assets/js/main.js"></script>
-	
+
 </body>
 </html>

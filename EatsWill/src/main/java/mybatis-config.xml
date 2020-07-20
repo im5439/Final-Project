@@ -28,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <!-- spring에서는 위치 mapper만 있어도됨.  -->
 <mappers>
 	<mapper resource="com/eatswill/mybatis/storeMapper.xml"/>
+	<mapper resource="com/eatswill/mybatis/customMapper.xml"/>
 </mappers>
 
 </configuration>

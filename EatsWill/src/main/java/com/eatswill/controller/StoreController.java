@@ -3,7 +3,7 @@ package com.eatswill.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.eatswill.dao.StoreDAO;
+import com.eatswill.dto.CustomDTO;
 import com.eatswill.dto.StoreDTO;
 
 
@@ -61,13 +62,14 @@ public class StoreController {
 		System.out.println("page µé¾î¿È");
 		
 		//userId sessionÃ³¸®
-		String userId = "user";
+		HttpSession session = request.getSession();
+		CustomDTO dto = (CustomDTO)session.getAttribute("customInfo");
 
 		System.out.println("shopCode=>" + shopCode);
 
 		request.setAttribute("shopCode", shopCode);
 		request.setAttribute("ceoId", ceoId);
-		request.setAttribute("userId", userId);
+		request.setAttribute("userId", dto.getId());
 		return "store/storePage";
 
 	}

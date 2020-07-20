@@ -63,6 +63,7 @@
 						.on('blur focus', function() {
 							$this.val($.trim($this.val()));
 						})
+						/*
 						.on('input blur focus --init', function() {
 
 							$wrapper
@@ -73,6 +74,7 @@
 								.css('height', $this.prop('scrollHeight') + 'px');
 
 						})
+						*/
 						.on('keyup', function(event) {
 
 							if (event.keyCode == 9)

@@ -1,7 +1,30 @@
 @charset "utf-8";
 
 /* typography */
-
+@font-face{
+	font-family:'Noto Sans Korean';font-style:normal;font-weight:400;
+	src:url(//script.ebay.co.kr/fonts/NotoSansKR-DemiLight-Hestia.eot),
+		url(//script.ebay.co.kr/fonts/NotoSansKR-DemiLight-Hestia.eot?#iefix) format('embedded-opentype');
+	src:local('Noto Sans DemiLight'),local('NotoSans-DemiLight'),
+		url(//script.ebay.co.kr/fonts/NotoSansKR-DemiLight-Hestia.woff) format('woff'),
+		url(//script.ebay.co.kr/fonts/NotoSansKR-DemiLight-Hestia.otf) format('opentype');
+}
+@font-face{
+	font-family:'Noto Sans Korean';font-style:normal;font-weight:bold;
+	src:url(//script.ebay.co.kr/fonts/NotoSansKR-Medium-Hestia.eot),
+		url(//script.ebay.co.kr/fonts/NotoSansKR-Medium-Hestia.eot?#iefix) format('embedded-opentype');
+	src:local('Noto Sans Medium'),local('NotoSans-Medium'),
+		url(//script.ebay.co.kr/fonts/NotoSansKR-Medium-Hestia.woff) format('woff'),
+		url(//script.ebay.co.kr/fonts/NotoSansKR-Medium-Hestia.otf) format('opentype');
+}
+@font-face{
+	font-family:'Noto Sans Korean';font-style:normal;font-weight:800;
+	src:url(//script.ebay.co.kr/fonts/NotoSansKR-Bold-Hestia.eot),
+		url(//script.ebay.co.kr/fonts/NotoSansKR-Bold-Hestia.eot?#iefix) format('embedded-opentype');
+	src:local('Noto Sans Bold'),local('NotoSans-Bold'),
+		url(//script.ebay.co.kr/fonts/NotoSansKR-Bold-Hestia.woff) format('woff'),
+		url(//script.ebay.co.kr/fonts/NotoSansKR-Bold-Hestia.otf) format('opentype');
+}
 
 /* Basic Style */
 .float_left{float:left !important}
@@ -32,7 +55,7 @@ input{line-height:100% !important}
 /* common_layout&main */
 /* reset */
 html,body{height:100%;font-size:12px;}
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,output,ruby,section,summary,time,mark,audio,video,input{margin:0;padding:0}
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video,input{margin:0;padding:0}
 body,table,input,textarea,select,button,th,td,input,select,textarea,th,td,p,dl,dt,dd,li,pre{color:#676767;font-family:dotum,"돋움",-apple-system,BlinkMacSystemFont,sans-serif;}
 h1,h2,h3,h4,h5,h6{font-size:100%}
 fieldset,img{border:0}
@@ -143,7 +166,7 @@ body.box__content-fixed{overflow:hidden;}
 #navbar .tools a.myg{background-position:-180px -120px}
 #navbar .tools a.cart{position:relative;width:57px;background-position:-240px -120px;overflow: visible}
 #navbar .tools a.cart .count{position:absolute;left:52%;top:5px;padding-left:4px;height:14px;background:url(//pics.gmarket.co.kr/pc/ko/common/common.png) no-repeat -940px -180px;text-indent:0}
-#navbar .tools a.cart .count>span{display:block;padding-right:4px;height:14px;background:url(//pics.gmarket.co.kr/pc/ko/common/common.png) no-repeat 100% -180px;color:#fff;font-size:11px;font-weight:bold}
+#navbar .tools a.cart .count>span{display:block;padding-right:4px;height:14px;background:url(//pics.gmarket.co.kr/pc/ko/common/common.png) no-repeat 100% -180px;color:#fff;font-family:tahoma;font-size:11px;font-weight:bold}
 .wrap{position:relative;margin:0 auto;width:980px;*zoom:1}
 .wrap:after{content:"";display:block;clear:both}
 
