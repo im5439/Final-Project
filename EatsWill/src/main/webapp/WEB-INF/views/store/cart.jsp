@@ -59,6 +59,25 @@
 	href="https://www.yogiyo.co.kr/mobile/image/favicon.ico">
 
 <title>Insert title here</title>
+
+<style type="text/css">
+
+
+input[type=button]{
+
+	background-color: orange;
+	border: none;
+	color: white;
+	height: 30px;
+	width: 40px;
+	align-content: center;
+	font-size: 15pt;
+	border-radius: 7px;
+
+}
+
+</style>
+
 </head>
 <body>
     <script type="text/javascript">
@@ -157,48 +176,56 @@
  
         <form name="storeForm" method="post">
         <c:forEach var="dto" items="${lists }" varStatus="status">
-        
-       <c:if test="dto==null">
-        <div ng-show="cart.is_empty()" class="cart-empty">
-            주문표에 담긴 메뉴가 없습니다.
-        </div>
-        </c:if>
+ 
         <div align="center"  style="">
         <br/>
-       <h1 style="font-size: 13pt; color: red; font-weight: bold; "> 메뉴명 : ${dto.menuName }</h1>
-       <input type="text" id="cartMenuCode${status.index}" value="${dto.menuCode }" name="menuCode">
-        <img src="resources/img/delete.png" width="20px" height="20px" 
-        id="deleteImg" onclick="deleteIt(${status.index});"> 
-       <br/>    
-       <input type=hidden name="menuPrice" value="${dto.menuPrice }"  id="menuPrice${status.index}">
-       <table>
-      
-       <tr align="center" >
-       <td colspan="2" align="center" width="122" height="48" >
+       <table border="0" width="280">
+       <tr valign="middle">
+       <td colspan="3" >
+        <b>${dto.menuName } </b>
        
-        
-       수량   &nbsp;<input type="button" name="del" value=" - " onclick="storechange(${status.index},1);" >
+       <!-- 사이드메뉴 출력  -->
+        <c:forEach var="dto1" items="${lists1 }">
+         <c:if test="${lists1!=null && dto.menuCode==dto1.menuCode}" >
+      ${dto1.menuName }
+        </c:if>
+        </c:forEach>
+     
        </td>
-       
-       <td >
+       <td align="right">
+        <img src="resources/img/delete.png" width="20px" height="20px" 
+        id="deleteImg" onclick="deleteIt(${status.index});"> </td>
+        </tr>
+         
+        <tr align="center" >
+       <td>수량 </td>
+       <td  align="center" width="80" height="48">
+       <input type="button" name="del" value=" - " onclick="storechange(${status.index},1);" >
+       </td>
+       <td>
        <input style="text-align: center;" type="text"  id="amount${status.index}"  name="amount" value="${dto.cQty }" size="3" readonly="readonly" >
        </td>
-       <td colspan="2" align="center" width="122" height="48">
+       <td align="center" width="80" height="48">
        <input type="button" name="add" value=" + " onclick="storechange(${status.index},2);">
        </td>
        </tr>
-       </table>
-       <br/>
-       <table>
+       
        <tr align="center" >
-       		<td >    		
-       		금액 : <input type="text" id="cAmount${status.index}" name="cAmount" value="${dto.cAmount } " size="11" readonly="readonly" >원<br/>   		
+       		<td >
+       		금액
        		</td>
+       		<td colspan="2">
+       		<input type="text" id="cAmount${status.index}" name="cAmount" value="${dto.cAmount } " size="11" readonly="readonly" style="text-align: right;"/>
+       		</td>
+       		<td>원</td>
+    
        </tr>
        </table>
+       
         <hr>
         </div>
-        
+        <input type="hidden" id="cartMenuCode${status.index}" value="${dto.menuCode }" name="menuCode">
+        <input type=hidden name="menuPrice" value="${dto.menuPrice }"  id="menuPrice${status.index}">
         <input type="hidden" name="menuName" value="${dto.menuName }">
        
         </c:forEach>
@@ -208,19 +235,8 @@
 
         <div class="clearfix">
           <span class="list-group-item clearfix text-right ng-binding" ng-show="cart.get_delivery_fee(restaurant) > 0">
-           총금액 : <input type="text"  id="priceAmount" value="${priceAmount }" size="11" readonly="readonly" > <span ng-show="restaurant.free_delivery_threshold > 0" class="ng-binding ng-hide"> (0원 이상 주문시 배달무료)</span>
-          </span>
-          <span class="list-group-item minimum-order-price ng-hide" ng-show="!cart.is_empty() &amp;&amp; (restaurant.min_order_amount > cart.get_total() || (cart.has_discounted_item() &amp;&amp; restaurant.discounts.additional.delivery.discount_mov > restaurant.min_order_amount))">
-            <p class="discount-color ng-binding ng-hide" ng-show="cart.has_discounted_item() &amp;&amp; restaurant.discounts.additional.delivery.discount_mov > restaurant.min_order_amount">
-              0원 이상 주문 시  할인
-            </p>
-            <p ng-show="restaurant.min_order_amount > cart.get_total()" class="ng-binding">
-              최소주문금액
-            </p>
-          </span>
-          <span class="list-group-item cart-total-order-price ng-binding ng-hide" ng-show="! cart.is_empty() &amp;&amp; cart.get_total() > 0">
-            합계 : <input type="text" name="totAmount" value="-" size="11" readonly="readonly" 원><br/>
-          </span>
+           총금액 : <input type="text"  id="priceAmount" value="${priceAmount }" size="11" readonly="readonly" > 
+    
         </div>
 
         </form>
@@ -237,11 +253,6 @@
 </ng-include>
   </div>
  
- <script src="/eatswill/resources/assets/js/jquery.min.js"></script>
-			<script src="/eatswill/resources/assets/js/skel.min.js"></script>
-			<script src="/eatswill/resources/assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="/eatswill/resources/assets/js/main.js"></script>
  
   
  </body>

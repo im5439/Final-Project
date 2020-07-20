@@ -729,6 +729,7 @@ function deletePage() {
 	var params = "shopCode=" + $("#shopCode").val() 
 	+ "&ceoId=" + $("#ceoId").val()
 	+ "&userId=" + $("#userId").val();
+	 
 	
 	$.post(url,params,function(args){
 		$("#cartHere").html(args);

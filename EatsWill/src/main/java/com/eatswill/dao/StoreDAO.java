@@ -17,15 +17,18 @@ public class StoreDAO {
 
 	}
 
-	//메뉴 전체출력
+	//메인메뉴 전체출력
 	public List<StoreDTO> menuList(String shopCode) {
 
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("shopCode", shopCode);
+		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.menuList",shopCode);
 
-		System.out.println(shopCode);
+		return lists;
+	}
 
-		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.menuList",map);
+	//사이드메뉴 전체출력
+	public List<StoreDTO> sideMenuList(String shopCode) {
+
+		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.sideMenuList",shopCode);
 
 		return lists;
 	}
@@ -42,34 +45,11 @@ public class StoreDAO {
 		return lists;
 	}
 
-	//리뷰없는 음식점 정보
-	public List<StoreDTO>  shopInfonotreview (String ceoId,String shopCode) {
-
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("shopCode", shopCode);
-		map.put("ceoId", ceoId);
-
-		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.shopInfonotreview",map);
-
-		return lists;
-	}
-
-
-	//maxNum
-	public int getMaxNum(){
-		int maxNum = 0;
-		maxNum = sessionTemplate.selectOne("storeMapper.maxNum");
-		return maxNum;
-
-	}
 
 	//리뷰 리스트
-	public List<StoreDTO> reviewList(String shopCode,int reNum) {
-
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("shopCode", shopCode);
-		map.put("reNum", reNum);
-		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.reviewList",map);
+	public List<StoreDTO> reviewList(String shopCode) {
+		
+		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.reviewList",shopCode);
 		return lists;
 	}
 
@@ -90,23 +70,20 @@ public class StoreDAO {
 
 	}
 
-	//한가지메뉴 상세페이지
+	//한가지메뉴 상세페이지(모달)
 	public StoreDTO menuListOne(String menuCode) {
 		StoreDTO dto = sessionTemplate.selectOne("storeMapper.menuListOne", menuCode);
 		return dto;
 	}
 
 	//장바구니 인서트
-
 	public void insertCart(StoreDTO dto) {
 
-		System.out.println("DAO insert 들어옴 ");
 		sessionTemplate.insert("storeMapper.insertCart",dto);
 
 	}
 
 	//장바구니 업데이트
-
 	public void updateCart(StoreDTO dto) {
 		sessionTemplate.update("storeMapper.updateCart",dto);
 	}
@@ -119,34 +96,54 @@ public class StoreDAO {
 		map.put("menuCode", menuCode);
 
 		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.selectCart", map);
-		System.out.println("장바구니 셀렉트 검증 성공");
-		System.out.println(lists.size());
+
 		return lists;
 
 
 	}
-
-	//장바구니 셀렉트
-	public List<StoreDTO> selectCartAll(String userId) {
+	//장바구니 셀렉트 사이드메뉴 검증
+	public List<StoreDTO> chkCartSide(String userId,String menuCode, String sideMenuCode) {
 
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("userId", userId);
+		map.put("menuCode", menuCode);
+		map.put("sideMenuCode", sideMenuCode);
 
-		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.selectCartAll", map);
-		System.out.println("장바구니 셀렉트 성공");
+		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.chkCartSide", map);
+
+		return lists;
+	}	
+
+	//장바구니 셀렉트(전부)
+	public List<StoreDTO> selectCartAll(String userId) {
+
+		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.selectCartAll", userId);
+		return lists;
+
+	}
+	//장바구니 셀렉트(메인)
+	public List<StoreDTO> selectCartMain(String userId) {
+
+
+		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.selectCartMain", userId);
+		return lists;
+
+	}
+	//장바구니 셀렉트(사이드)
+	public List<StoreDTO> selectCartSide(String userId) {
+
+		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.selectCartSide", userId);
 		return lists;
 
 	}
 
 	//장바구니 삭제
-
 	public void deleteCart(String userId) {
 
 		sessionTemplate.delete("storeMapper.deleteCart",userId);
 	}
 
 	//장바구니 하나씩 삭제
-
 	public void deleteCartOne(String userId,String menuCode) {
 
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -213,20 +210,9 @@ public class StoreDAO {
 
 	}
 
-	//한가지 음식점을 셀렉트
-	public StoreDTO shopSelectOne(String shopcode){
-
-		StoreDTO dto =
-				sessionTemplate.selectOne("storeMapper.shopSelectOne");
-
-		return dto;
-	}
-
 	//음식점 리스트 리뷰순 정렬
 
 	public List<StoreDTO> orderByRe(){
-
-		System.out.println("리뷰순 정렬 dao 들어옴");
 
 		List<StoreDTO> lists = 
 				sessionTemplate.selectList("storeMapper.orderByRe");
@@ -239,8 +225,6 @@ public class StoreDAO {
 
 	public List<StoreDTO> orderByO(){
 
-		System.out.println("주문순 정렬 dao 들어옴");
-
 		List<StoreDTO> lists = 
 				sessionTemplate.selectList("storeMapper.orderByO");
 
@@ -251,8 +235,6 @@ public class StoreDAO {
 	//음식점 리스트 별점순 정렬
 
 	public List<StoreDTO> orderByRes(){
-
-		System.out.println("별점순 정렬 dao 들어옴");
 
 		List<StoreDTO> lists = 
 				sessionTemplate.selectList("storeMapper.orderByRes");

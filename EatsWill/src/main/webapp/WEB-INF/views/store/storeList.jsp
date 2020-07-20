@@ -482,8 +482,7 @@ ng\:form {
                      onchange="window.open(value,'_self')"
                      onclick="select_order_for_ga()">
                      <option value="storeList.action" >기본 정렬순</option>
-                     <option value="orderByRes.action"
-                     <c:if test= "value=='orderByRes.action'"> selected </c:if>>별점순</option>
+                     <option value="orderByRes.action">별점순</option>
                      <option 
                      value="orderByRe.action">리뷰 많은순</option>
                      <option value="orderByO.action">주문수</option>

@@ -35,7 +35,7 @@ input[type=button]{
 }
 
 
-#camount{
+#camount,#addAmount,#Amount{
 
 	border: none;
 	height: 30px;
@@ -57,64 +57,115 @@ input[type=button]{
 
 }
 
-
-
-
 </style>
+
+<script language="JavaScript">
+
+var menuPrice = document.form.menuPrice; //메뉴가격
+var cQty = document.form.cQty; //수량
+var cAmount = document.form.cAmount; //수량에 의한 금액(수량 * 메뉴가격)
+var addAmount = document.form.addAmount; //추가 금액
+
+var Amount = document.form.Amount;//총금액
+
+
+change();
+addall();
+
+function add () {
+	
+	cQty.value ++ ;
+	cAmount.value = parseInt(cQty.value) * menuPrice.value;
+	addall();
+}
+
+function del () {
+
+		if (cQty.value > 1) {
+			cQty.value -- ;
+			cAmount.value = parseInt(cQty.value) * menuPrice.value;
+		}
+		
+		addall();
+}
+
+function change () {
+
+		if (cQty.value < 0) {
+			cQty.value = 0;
+		}
+		cAmount.value = parseInt(cQty.value) * menuPrice.value;
+		Amount.value = Number(cAmount.value);
+}  
+
+//구매수량 가격 + 추가금액
+function addall(){
+	
+	Amount.value = Number(cAmount.value) + Number(addAmount.value); 
+	
+}
+
+//사이드메뉴 금액
+function menuAdd(){
+	
+	//var Idx = index;
+	
+	var chk_leng = form.chkbox.length;
+	var sum = 0;
+	
+	for(i=0;i<chk_leng;i++){
+		
+		if(form.chkbox[i].checked==true){
+			sum += Number(form.chkbox[i].value);
+		}
+		
+	}
+	
+	addAmount.value = Number(sum);
+	addall();
+	//addmenu(form.addAmount.value);
+	
+}
+
+//내가 체크한 데이터 넘기기
+function sendIt() {
+	
+	var f = document.form;
+
+	var sideMenuCode = '';
+	var sideMenuName = '';
+	var sideMenuPrice = '';
+	
+	var count = f.chkbox.length;
+	for(var i=0;i<count;i++){
+		if(f.chkbox[i].checked){
+			
+			//체크한 데이터들의 끝에,를 붙여서 변수에 담음
+			sideMenuCode +=  f.sideMenuCode[i].value + ',';
+			sideMenuName +=   f.sideMenuName[i].value + ',';
+			sideMenuPrice +=  f.sideMenuPrice[i].value + ',';
+		}
+	}
+	f.action = "<%=cp %>/cartInsert.action?sideMenuCode=" + sideMenuCode +"&sideMenuName=" + sideMenuName +"&sideMenuPrice=" + sideMenuPrice;
+
+	f.submit();		
+	
+}
+
+
+
+//-->
+</script>
 	
 	
 </head>
 
 <body onload="init();">
-<script language="JavaScript">
-
-var menuPrice;
-var cQty;
-
-
-init();
-
-function init () {
-	menuPrice = document.form.menuPrice.value;
-	cQty = document.form.cQty.value;
-	document.form.cAmount.value = menuPrice;
-	change();
-}
-
-function add () {
-	hm = document.form.cQty;
-	cAmount = document.form.cAmount;
-	hm.value ++ ;
-
-	cAmount.value = parseInt(hm.value) * menuPrice;
-}
-
-function del () {
-	hm = document.form.cQty;
-	cAmount = document.form.cAmount;
-		if (hm.value > 1) {
-			hm.value -- ;
-			cAmount.value = parseInt(hm.value) * menuPrice;
-		}
-}
-
-function change () {
-	hm = document.form.cQty;
-	cAmount = document.form.cAmount;
-
-		if (hm.value < 0) {
-			hm.value = 0;
-		}
-		cAmount.value = parseInt(hm.value) * menuPrice;
-}  
-
-
-//-->
-</script>
 
 
 
-<form name="form" action="<%=cp %>/cartInsert.action" method="post">
+
+<form name="form" action="" method="post">
 
 <!-- 자리 확인하고 border 0으로 주기 -->
 <table border="1" width="585px">
@@ -127,15 +178,26 @@ function change () {
 </tr>
 
 
-<!-- forEach문 이용해서 돌리기 추가 메뉴개수까지-->
-<c:forEach begin="1" step="1" end="8">
+<c:forEach var="dto" items="${lists }">
 <tr>
-	<td>추가메뉴</td>
-	<td align="center">가격</td>
-	<td align="center">선택</td>
+	<td align="center" >
+	<input type="hidden" name="sideMenuCode" value="${dto.menuCode }"> ${dto.menuName }
+	<input type="hidden" name="sideMenuName" value="${dto.menuName }">
+	<input type="hidden" name="sideMenuPrice" value="${dto.menuPrice }"/>
+	<td align="center">${dto.menuPrice }</td>
+	<td align="center"><input type="checkbox" name="chkbox" style="height: 16px; -webkit-appearance: checkbox; opacity: 1;" value="${dto.menuPrice }"
+	onclick="menuAdd();" ></td>
 </tr>
-</c:forEach>
 
+</c:forEach>
+<tr>
+	<td width="100px">추가금액</td>
+	
+	<td colspan="2" align="center" width="100px">
+	<input readonly="readonly" name="addAmount" value="0" id="addAmount"/>
+	원</td>
+	
+</tr>
 
 <tr height="60px">
 	
@@ -147,14 +209,21 @@ function change () {
 	</td>
 	
 	<td colspan="2" align="right">
-	금액 : <input id="camount" name="cAmount" size="11" readonly="readonly" /><b style="font-size: 12pt;">원</b>
+	금액 : <input id="camount" name="cAmount" size="10" readonly="readonly" />원
 	<br/>
 	</td>
 </tr>
 
+<tr height="60px">
 
+	<td colspan="3" align="right">
+	  총 금액 : <input id="Amount" name="Amount" size="11" readonly="readonly" /><b style="font-size: 12pt;">원</b>
+	<br/>
+	</td>
+</tr>
 </table>
-<input type="submit" value="주문표에 담기" id="insertCart" onclick="return confirm('장바구니에 추가하시겠습니까?');">
+
+<input type="button" value="주문표에 담기" id="insertCart" onclick="sendIt();">
 <input type="hidden" name="menuPrice" value="${dto.menuPrice }"/>
 <input type="hidden" name="menuCode" value="${dto.menuCode }">
 <input type="hidden" name="menuName" value="${dto.menuName }">
