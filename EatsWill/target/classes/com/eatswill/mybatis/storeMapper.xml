@@ -7,8 +7,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="storeMapper">
 
 
-<!-- 전체 메뉴리스트  -->
-<select id="menuList" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
+<!-- 전체 메인 메뉴리스트  -->
+<select id="menuList" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
 	select * from (
 	select rownum rnum, data.* from (
 	select menuCode,menuImg,menuName,menuPrice
@@ -16,18 +16,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	order by rnum
 </select>
 
-<!-- 한가지 메뉴의 상세페이지  -->
-<select id="menuListOne" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
-	select menuCode,menuName,menuPrice,shopCode from menu where menuCode=#{menuCode}
-</select>
-
 <!-- 사이드 메뉴리스트  -->
-<select id="sideMenuList" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
+<select id="sideMenuList" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
 	select * from (
 	select rownum rnum, data.* from (
 	select menuCode,menuImg,menuName,menuPrice
 	from menu where shopCode=#{shopCode} and part='1') data)
 	order by rnum
+</select>
+
+<!-- 한가지 메뉴의 상세페이지  -->
+<select id="menuListOne" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
+	select menuCode,menuName,menuPrice,shopCode from menu where menuCode=#{menuCode}
 </select>
 
 <!-- 음식점 정보  -->
@@ -37,25 +37,14 @@ from shop s, ceo c, common_code a, (select avg(reScore) reScore,shopCode from re
 where s.CEOID=c.CEOID and s.timeCODE=a.CODE and s.shopCode=r.shopCode(+) and s.CEOID=#{ceoId} and s.shopCode=#{shopCode}
 </select>
 
-<!-- review maxNum  -->
-<select id="maxNum" resultType="int">
-	select nvl(max(renum),0) from review
-</select>
-
 <!-- 리뷰 리스트  -->
-<select id="reviewList" resultType="com.eatswill.dto.StoreDTO" parameterType="hashMap">
+<select id="reviewList" resultType="com.eatswill.dto.StoreDTO" parameterType="String">
 	select rpad(substr(r.userId,1,3),6,'*') reUserId, r.userId,r.reScore,to_char(reCreated,'yyyy-mm-dd hh:mm'),
 	r.reCreated,r.reContent ,r.reImg,r.shopCode,m.menuName,r.reNum,r.ceoContent,
 	(select count(*) from report re where re.reNum=r.reNum) count
 	from review r, orderdetail o,menu m
 	where r.orderCode=o.orderCode and o.menuCode=m.menuCode and m.shopCode=r.shopCode and r.shopCode=#{shopCode} order by r.reNum
 </select>
-
-<!-- 리뷰 인서트  -->
-<insert id="insertReview" parameterType="com.eatswill.dto.StoreDTO">
-	insert into review (orderCode,pnum,reNum,userId,shopCode,reScore,reContent,reCreated,reImg) 
-	values (#{orderCode},#{pnum},#{reNum},#{userId},#{shopCode},#{reScore},#{reContent},sysdate,#{reImg})
-</insert>
 
 <!-- 신고 인서트  -->
 <insert id="insertReport" parameterType="com.eatswill.dto.StoreDTO">
@@ -72,27 +61,51 @@ where s.CEOID=c.CEOID and s.timeCODE=a.CODE and s.shopCode=r.shopCode(+) and s.C
 
 <!-- 장바구니 인서트  -->
 <insert id="insertCart" parameterType="com.eatswill.dto.StoreDTO">
-	insert into cart (userId,menuCode,cQty,cAmount,shopCode) values
-	(#{userId},#{menuCode},#{cQty},#{cAmount},#{shopCode})
+	insert into cart (userId,menuCode,sideMenuCode,cQty,cAmount,shopCode) values
+	(#{userId},#{menuCode},#{sideMenuCode},#{cQty},#{cAmount},#{shopCode})
 </insert>
 
 <!-- 장바구니 업데이트(같은메뉴코드일시 수량과 가격만 변경)  -->
 <update id="updateCart" parameterType="com.eatswill.dto.StoreDTO">
 	update cart set cQty=cQty+#{cQty},cAmount=cAmount+#{cAmount} 
-	where userId=#{userId} and menuCode=#{menuCode}
+	where userId=#{userId} and menuCode=#{menuCode} and sideMenuCode=#{sideMenuCode}
 </update>
 <!-- 장바구니 셀렉트 검증 -->
 <select id="selectCart" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
-	select c.menuCode,c.cAmount,c.cQty,c.userId,m.menuName,m.menuPrice
+	select c.menuCode,c.sideMenuCode,c.cAmount,c.cQty,c.userId,m.menuName,m.menuPrice
 	from cart c, menu m
-	where c.menuCode=m.menuCode and c.userId=#{userId} and c.menuCode=#{menuCode}
+	where c.menuCode=m.menuCode and c.userId=#{userId} and c.menuCode=#{menuCode} 
 </select>
 
+<!-- 장바구니 셀렉트 사이드 메뉴 검증 -->
+<select id="chkCartSide" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
+	select c.menuCode,c.sideMenuCode,c.cAmount,c.cQty,c.userId,m.menuName,m.menuPrice
+	from cart c, menu m
+	where c.menuCode=m.menuCode and c.userId=#{userId} and c.menuCode=#{menuCode}  and c.sideMenuCode=#{sideMenuCode} 
+</select>
+
+
 <!-- 장바구니 셀렉트  -->
-<select id="selectCartAll" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
+<select id="selectCartAll" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
 	select c.menuCode,c.cAmount,c.cQty,c.userId,m.menuName,m.menuPrice
 	from cart c, menu m
-	where c.menuCode=m.menuCode and c.userId=#{userId} order by c.menuCode asc
+	where c.menuCode=m.menuCode and c.userId=#{userId}
+</select>
+<select id="selectCartMain" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
+	select c.menuCode,c.cAmount,c.cQty,c.userId,m.menuName,m.menuPrice
+	from cart c, menu m
+	where c.menuCode=m.menuCode and c.menuCode=c.sideMenuCode  and c.userId=#{userId}
+</select>
+
+<select id="selectCartSide" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
+	select c.menuCode, c.sideMenuCode,c.cAmount,c.cQty,c.userId,m.menuName,m.menuPrice
+	from cart c, menu m
+	where c.sideMenuCode=m.menuCode and c.menuCode != c.sideMenuCode  and c.userId=#{userId}
+	
+</select>
+
+<select id="selectMenuPrice" resultType="com.eatswill.dto.StoreDTO">
+	select sum(cAmount) sideSum  from cart where menuCode != sideMenuCode and userId=#{userId} GROUP by menuCode
 </select>
 
 <!-- 장바구니 변경 (다른 음식점 추가시)  -->
@@ -101,7 +114,7 @@ where s.CEOID=c.CEOID and s.timeCODE=a.CODE and s.shopCode=r.shopCode(+) and s.C
 	select shopCode from cart where shopCode=#{shopCode} and userId=#{userId}
 </select>
 <!-- 장바구니 delete  -->
-<delete id="deleteCart">
+<delete id="deleteCart" parameterType="String">
 	delete from cart where userId=#{userId}
 </delete>
 
@@ -124,19 +137,36 @@ where s.CEOID=c.CEOID and s.timeCODE=a.CODE and s.shopCode=r.shopCode(+) and s.C
 	delete from heart where userId=#{userId} and shopCode=#{shopCode}
 </delete>
 
-<!-- 한개의 음식점 셀렉트  -->
-<select id="shopSelectOne"  parameterType="int" resultType="com.eatswill.dto.StoreDTO">
-	select shopname,shopcode,ceoid,category,shoptel,shopimg,franchise,shopcreated,shopaddr,timecode
-	 from shop where shopcode=${shopCode}
-</select>
-
-<!-- 전체 음식점 리스트(기본정렬)   -->
+<!-- 전체 음식점 리스트(기본정렬) -->
 <select id="shopList" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
 	select shopname,shopcode,ceoid,category,shoptel,shopimg,franchise,shopaddr,timecode,
 	to_char(shopcreated,'YYYY-MM-DD') shopcreated 
 	from shop 
 	order by shopname desc
 </select>
+
+<!-- 검색된거나 카테고리로 구분된  shop의 수 00000000000000000000000000-->
+<select id="shopCount" parameterType="hashMap" resultType="int">
+	select nvl(count(*),0) from shop where category Like '%' || #{category} || '%'
+</select>
+
+<!-- 검색된거나 카테고리로 구분된  shop의 수 00000000000000000000000000-->
+<select id="shopCountall"  resultType="int">
+	select nvl(count(*),0) from shop
+</select>
+
+<!-- 음식점 리스트 페이징 0000000000000000000000000000000000-->
+<select id="shopPaging" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
+	select * from (
+	select rownum rnum, data.* from (
+	select shopname,shopcode,ceoid,category,shoptel,shopimg,franchise,shopaddr,timecode,
+	to_char(shopcreated,'YYYY-MM-DD') shopcreated 
+	from shop) data)
+	<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+	]]>
+</select>
+
 
 <!-- 음식점 리스트 (리뷰순 정렬)  -->
 <select id="orderByRe" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">

@@ -47,7 +47,7 @@ ng\:form {
 <script async="" src="//www.google-analytics.com/analytics.js"></script>
 <script async="" src="//connect.facebook.net/en_US/fbevents.js"></script>
 
-
+<script type="text/javascript" src="<%=cp%>/resources/data/js/jquery-3.1.1.js"></script>
 
 
    <link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
@@ -57,7 +57,7 @@ ng\:form {
    
    
 <script>
-   var is_yogiyo = window.location.hostname.indexOf('yogiyo.co.kr') >= 0;
+  /*  var is_yogiyo = window.location.hostname.indexOf('yogiyo.co.kr') >= 0;
    var is_11st = window.location.hostname.indexOf('yogiyo.m.11st.co.kr') >= 0;
    if (is_11st) {
       document
@@ -92,8 +92,62 @@ ng\:form {
             .write('<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://www.yogiyo.co.kr/mobile/image/app_144x144.png">');
       document
             .write('<link rel="icon" type="image/png" href="https://www.yogiyo.co.kr/mobile/image/favicon.ico" />');
-   }
+   } */
 </script>
+
+<script type="text/javascript">
+
+	$(function(){
+		
+		nextIt(1); //처음에 보이는 페이지 1
+			
+	}); 
+
+	//카테검색
+  	function select_category(cate){
+  		
+  		alert("select_category 성공");
+	  
+	  	var f = document.form;
+	
+	  	f.action="<%=cp %>/stores.action?category=" + cate;
+	  	f.submit();
+	  
+  	}
+	
+	function addPage(){
+		
+		
+		
+		index = Number(document.getElementById("nextNum").value) + 1;
+		//document.getElementsById("#nextNum").value = idx;
+		//var index = index + 1;
+		document.getElementById("nextNum").value = Number(index);
+		
+		nextIt(index);
+		
+	}
+  	
+  
+  	//더보기
+	function nextIt(index) {
+		
+		var params ="pageNum="+index;
+		var url="<%=cp%>/stores.action";
+		
+		
+		$.post(url,params,function(args){
+			$("#storeList").append(args);
+		});
+		
+		$("#storeList").show();
+			
+	}
+	
+</script>
+
+
+
 <meta name="theme-color" content="#DC1400">
 <meta property="og:title" content="lets eats will !">
 <meta property="og:url" content="http://www.yogiyo.co.kr/">
@@ -121,7 +175,7 @@ ng\:form {
 <!--Start Facebook  Pixel  Code -->
 <script>
    /* eslint-disable */
-   !function(f, b, e, v, n, t, s) {
+   /* !function(f, b, e, v, n, t, s) {
       if (f.fbq)
          return;
       n = f.fbq = function() {
@@ -140,7 +194,7 @@ ng\:form {
       s = b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t, s)
    }(window, document, 'script', '//connect.facebook.net/en_US/fbevents.js');
-   fbq('init', '1041485915908980');/* eslint-enable */
+   fbq('init', '1041485915908980'); *//* eslint-enable */
 </script>
 <noscript>
    <img height="1" width="1" style="display: none"
@@ -149,7 +203,7 @@ ng\:form {
 <!--End Facebook  Pixel  Code -->
 <!-- Google Analytics -->
 <script>
-   /* eslint-disable */(function(i, s, o, g, r, a, m) {
+   /* eslint-disable *//* (function(i, s, o, g, r, a, m) {
       i['GoogleAnalyticsObject'] = r;
       i[r] = i[r] || function() {
          (i[r].q = i[r].q || []).push(arguments)
@@ -161,7 +215,7 @@ ng\:form {
    })(window, document, 'script', '//www.google-analytics.com/analytics.js',
          'ga');
    ga('create', 'UA-42635603-1', 'auto');
-   ga('require', 'ec');/* eslint-enable */
+   ga('require', 'ec'); *//* eslint-enable */
 </script>
 <!-- // -->
 <!-- End Google Analytics -->
@@ -174,7 +228,7 @@ ng\:form {
       height="0" width="0" style="display: none; visibility: hidden"></iframe>
 </noscript>
 <script>
-   /* eslint-disable */(function(w, d, s, l, i) {
+   /* eslint-disable *//* (function(w, d, s, l, i) {
       w[l] = w[l] || [];
       w[l].push({
          'gtm.start' : new Date().getTime(),
@@ -186,7 +240,7 @@ ng\:form {
       j.async = true;
       j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl;
       f.parentNode.insertBefore(j, f);
-   })(window, document, 'script', 'dataLayer', 'GTM-NSQ8BP');/* eslint-enable */
+   })(window, document, 'script', 'dataLayer', 'GTM-NSQ8BP'); *//* eslint-enable */
 </script>
 <!-- End Google Tag Manager -->
 <script type="text/javascript" charset="UTF-8"
@@ -216,16 +270,11 @@ ng\:form {
          <a class="newSb__applink__btn">열기</a>
       </div>
    </div>
-   <script type="text/javascript">
-      if (is_11st) {
-         HeaderExtra.init();
-      }
-   </script>
+
    
    
                
-         
-   
+
    
 
    <div yogiyo-header="">
@@ -384,70 +433,61 @@ ng\:form {
   </button>
   
   <!-- ------------------------------------------------------------------------------------------------- 리스트 상단 카테고리 -->
-  
+
+
+
+  <form action="" name="form" method="post">
   <div id="category" class="category-menu clearfix collapse in" aria-expanded="true">
     <ul>
-
        <li class="hidden-xs menu-search"><a
                               class="btn btn-default ico-search1"
                               ng-click="toggle_category_block()">검색</a></li>
                            <!--pc button-->
-
+							
      
         <!--카테고리시작 -->
-                           <li ng-repeat="ct in session_storage.categories" class=""
-                              ng-hide="! ct.enabled &amp;&amp; ct.optional"
-                              ontouchend="(function(){})()"
-                              ng-click="select_category(ct, city, zipcode, $event)"><i
-                              class="category-icon ico-ct01"></i><span ng-bind="ct.title"
-                              class="category-name ng-binding">전체보기</span></li>
-                           <li ng-repeat="ct in session_storage.categories" class=""
-                              ng-hide="! ct.enabled &amp;&amp; ct.optional"
-                              ontouchend="(function(){})()"
-                              ng-click="select_category(ct, city, zipcode, $event)"><i
-                              class="category-icon ico-ct02"></i><span ng-bind="ct.title"
+                           <li 
+                             onclick="select_category('')"><i
+                              class="category-icon ico-ct01"></i>
+                              <span class="category-name ng-binding">전체보기</span></li>
+                              
+                           <li 
+                              onclick="select_category('KR')"><i
+                              class="category-icon ico-ct02"></i><span 
                               class="category-name ng-binding">한식</span></li>
-                           <li ng-repeat="ct in session_storage.categories" class=""
-                              ng-hide="! ct.enabled &amp;&amp; ct.optional"
-                              ontouchend="(function(){})()"
-                              ng-click="select_category(ct, city, zipcode, $event)"><i
+                              
+                           <li
+                              onclick="select_category('CH')"><i
                               class="category-icon ico-ct03"></i><span ng-bind="ct.title"
                               class="category-name ng-binding">중식</span></li>
 
-                           <li ng-repeat="ct in session_storage.categories" class=""
-                              ng-hide="! ct.enabled &amp;&amp; ct.optional"
-                              ontouchend="(function(){})()"
-                              ng-click="select_category(ct, city, zipcode, $event)"><i
+                           <li 
+                              onclick="select_category('CK')"><i
                               class="category-icon ico-ct04"></i><span ng-bind="ct.title"
                               class="category-name ng-binding">치킨</span></li>
-                           <li ng-repeat="ct in session_storage.categories" class=""
-                              ng-hide="! ct.enabled &amp;&amp; ct.optional"
-                              ontouchend="(function(){})()"
-                              ng-click="select_category(ct, city, zipcode, $event)"><i
+                              
+                           <li 
+                              onclick="select_category('PY')"><i
                               class="category-icon ico-ct05"></i><span ng-bind="ct.title"
                               class="category-name ng-binding">피자/양식</span></li>
-                           <li ng-repeat="ct in session_storage.categories" class=""
-                              ng-hide="! ct.enabled &amp;&amp; ct.optional"
-                              ontouchend="(function(){})()"
-                              ng-click="select_category(ct, city, zipcode, $event)"><i
+                              
+                           <li 
+                              onclick="select_category('BS')"><i
                               class="category-icon ico-ct06"></i><span ng-bind="ct.title"
                               class="category-name ng-binding">분식</span></li>
-                           <li ng-repeat="ct in session_storage.categories" class=""
-                              ng-hide="! ct.enabled &amp;&amp; ct.optional"
-                              ontouchend="(function(){})()"
-                              ng-click="select_category(ct, city, zipcode, $event)"><i
+                              
+                           <li 
+                             onclick="select_category('JP')"><i
                               class="category-icon ico-ct07"></i><span ng-bind="ct.title"
                               class="category-name ng-binding">일식</span></li>
-                           <li ng-repeat="ct in session_storage.categories" class=""
-                              ng-hide="! ct.enabled &amp;&amp; ct.optional"
-                              ontouchend="(function(){})()"
-                              ng-click="select_category(ct, city, zipcode, $event)"><i
+                              
+                           <li 
+                              onclick="select_category('PR')"><i
                               class="category-icon ico-ct08"></i><span ng-bind="ct.title"
                               class="category-name ng-binding">프렌차이즈</span></li>
-
+                              
                            <li class="main-search hide">
-                              <form action="." onsubmit="return false"
-                                 class="ng-pristine ng-valid">
+                              
                                  <div class="input-group">
                                     <input type="search" name="category_keyword"
                                        class="form-control ng-pristine ng-untouched ng-valid"
@@ -463,10 +503,10 @@ ng\:form {
                                           id="category_search_button" ng-click="search_restaurant()">&nbsp;</button>
                                     </span>
                                  </div>
-                              </form>
                            </li>
                         </ul>
                      </div>
+                    </form>
                   </div>
 
                </div>
@@ -494,7 +534,8 @@ ng\:form {
          </div>
 
 <!-- ====================================================================================================================  리스트 시작 -->
-  <!-- ngRepeat: (key, list) in section_list --><div ng-repeat="(key, list) in section_list" class="ng-scope">
+  <!-- ngRepeat: (key, list) in section_list -->
+  <div ng-repeat="(key, list) in section_list" class="ng-scope">
     <div ng-show="list.length > 0" class="">
       <!-- 음식점 리스트 타이틀  -->
       <div ng-if="key === 'superlist'" class="ranking-guide ng-scope">
@@ -503,93 +544,32 @@ ng\:form {
       </div>
       
   <!--  리스트 목록 시작  -->    
-      
-     
-      <div class="restaurant-list">
-      
-      <br/>
-        <!-- 음식점 리스트 시작-->
-               <c:forEach var="dto" items="${lists}">
-                     <div class="col-sm-6 contract" ng-repeat="restaurant in list">
-                        <div class="item clearfix"
-                           ng-click="select_restaurant(restaurant, $index)"
-                           style="cursor: pointer;">
-                           <table>
-                              <tbody>
-
-                                 <tr>
-                                    <td>
-                                       <!-- 이미지 storeimg 적용해야됨 -->
-
-                                       <div ng-show="restaurant|restaurant_is_available"
-                                          class="logo"
-                                          ng-style="{'background-image':'url(' + get_logo_url(restaurant.logo_url) + '), url(\'image/default_restaurant_logo.png\')'}"
-                                          style="background-image: url(), url();"></div>
-
-                                       <div ng-show="! (restaurant|restaurant_is_available)"
-                                          class="logo not-available ng-binding ng-hide">
-                                          현재 잇츠윌<br>서비스가<br>제공되지<br>않습니다.
-                                       </div>
-                                    </td>
-                                    <td>
-
-                                       <div class="restaurants-info">
-
-                                          <div class="restaurant-name ng-binding"
-                                             ng-bind="storename" id="storename" title="">
-                                             <a href="${articleUrl}?shopCode=${dto.shopCode}&ceoId=${dto.ceoId}">
-                                                ${dto.shopName }</a>
-                                          </div>
-                                          <div class="stars">
-                                             <span> <span class="ico-star1 ng-binding"
-                                                ng-show="별점">★ 4.6</span>
-                                             </span> <span class="review_num ng-binding" ng-show="리뷰갯수">
-                                                리뷰 갯 </span> <span class="review_num ng-binding"
-                                                ng-show="사장님 답글"> 사장님댓글 갯 </span> <span
-                                                class="review_num ng-binding" ng-show="storecreated"
-                                                id="shopcreated"> 오픈일 ${dto.shopCreated } </span> <span
-                                                ng-show="restaurant.review_count < 1" class="ng-hide">
-                                                첫번째 리뷰를 남겨주세요! </span>
-                                          </div>
-                                          <ul>
-                                             <li class="payment-methods ng-binding yogiseo-payment"
-                                                ng-class="is_online_payment(restaurant) ? 'yogiseo-payment' : ''">잇츠윌결제</li>
-                                             <li class="min-price ng-binding">~이상배달</li>
-                                             <li class="full-w"
-                                                ng-show="is_yogiyo &amp;&amp; (delivery_discount_value(restaurant) > 0 || additional_discount_value(restaurant) > 0 || restaurant.tags.length > 0 &amp;&amp; restaurant.tags.indexOf('CESCO') >= 0)">
-                                                <span class="coupon-base ng-binding"
-                                                ng-show="delivery_discount_value(restaurant) > 0">배달
-                                                   할인 얼마</span> <span
-                                                class="coupon-base coupon-style1 ng-binding ng-hide"
-                                                ng-show="additional_discount_value(restaurant) > 0">추가할인
-                                                   0%</span> <span
-                                                ng-show="restaurant.tags.length > 0 &amp;&amp; restaurant.tags.indexOf(&quot;CESCO&quot;) >= 0"
-                                                class="ico-cesco ng-hide">cesco</span>
-                                             </li>
-                                             <li class="delivery-time ng-binding" ng-show="timeCode">
-
-                                             </li>
-                                          </ul>
-
-                                       </div>
-                                    </td>
-                                 </tr>
-                              </tbody>
-                           </table>
-                        </div>
-                     </div>
-                     <!-- end ngRepeat: restaurant in list -->
-                  </c:forEach>
-                  
   
-  
-  
-   
+    <div class="ng-scope">
+
+		<div class="restaurant-list">
+				<span id="storeList"></span>
+
+				<table width="1020" height="100" border="0">
+				<tr align="center">
+				<td><input type="button" value="더보기 ▼"  onclick="addPage();" style="width: 1020; height: 100; border: 0; font-size: 17pt;"  />
+				<input type="hidden" value="1" id="nextNum"/></td>
+				</tr>
+				</table>
+		</div>
+	
+	</div>
+	
+
         </div><!-- end ngRepeat: restaurant in list -->
+        
+   
               
       </div>
     </div>
   </div>
+  
+ 
     
      <!--  ====================================================================하단바 시작 내용 수정 가능 -->
      <div class="footer" >
@@ -686,14 +666,14 @@ ng\:form {
 		/**/
 		window.isMobile = function() {
 			var check = false;/* eslint-disable */
-			(function(a) {
+			/* (function(a) {
 				if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i
 						.test(a)
 						|| /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i
 								.test(a.substr(0, 4)))
 					check = true;
 			})(navigator.userAgent || navigator.vendor || window.opera);
-			return check;/* eslint-enable */
+			return check; *//* eslint-enable */
 		};
 	</script>
 	<!-- Naver Analytics -->

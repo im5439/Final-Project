@@ -31,7 +31,7 @@
 <script async="" src="//www.googletagmanager.com/gtm.js?id=GTM-NSQ8BP"></script>
 <script async="" src="//www.google-analytics.com/analytics.js"></script>
 <script async="" src="//connect.facebook.net/en_US/fbevents.js"></script>
-
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 
 

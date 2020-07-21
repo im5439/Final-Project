@@ -1,5 +1,6 @@
 ﻿package com.eatswill.util;
 
+
 public class MyUtil {
 	
 	//전체 페이지수 구하기

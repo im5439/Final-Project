@@ -3,27 +3,18 @@ package com.eatswill.dto;
 public class StoreDTO {
 	
 	
-	private String chk;
-	private String reUserId;
-
+	private String chk; //찜테이블 체크검증
+	private String reUserId; //review rpad userId
 	
-	public String getChk() {
-		return chk;
-	}
-	public void setChk(String chk) {
-		this.chk = chk;
-	}
+	private String userId; //고객아이디
+	private int cAmount; //총액
+	private int cQty; //수량
+	
 	//매장
 	private String shopCode;
 	private String shopName;
 	private String ceoId;
 	private String ceoName;
-	public String getCeoName() {
-		return ceoName;
-	}
-	public void setCeoName(String ceoName) {
-		this.ceoName = ceoName;
-	}
 	private String category;
 	private String shopAddr;
 	private String shopTel;
@@ -31,7 +22,42 @@ public class StoreDTO {
 	private String shopImg;
 	private String shopCreated;
 	private String franchise;
-	private String timeName;
+	private String timeName; //영업시간
+	
+	//메뉴
+	private String menuCode;
+	private String menuName;
+	private int menuPrice;
+	private String menuImg;
+	
+	private String sideMenuCode; //장바구니 사이드메뉴코드
+	private int sideSum;
+	
+	
+	//리뷰
+	private String orderCode;
+	private int reNum;
+	private double reScore;
+	private String reContent;
+	private String reCreated;
+	private String reImg;
+	private int count;
+	private String ceoContent;
+	
+	public String getChk() {
+		return chk;
+	}
+	public void setChk(String chk) {
+		this.chk = chk;
+	}
+
+	public String getCeoName() {
+		return ceoName;
+	}
+	public void setCeoName(String ceoName) {
+		this.ceoName = ceoName;
+	}
+	
 	
 	public String getTimeName() {
 		return timeName;
@@ -39,12 +65,6 @@ public class StoreDTO {
 	public void setTimeName(String timeName) {
 		this.timeName = timeName;
 	}
-	//메뉴
-	private String menuCode;
-	private String menuName;
-	private int menuPrice;
-	private String menuImg;
-	private int cQty;
 	
 
 	public int getcQty() {
@@ -53,17 +73,6 @@ public class StoreDTO {
 	public void setcQty(int cQty) {
 		this.cQty = cQty;
 	}
-	//리뷰
-	private String orderCode;
-
-	private int reNum;
-	private String userId;
-	private double reScore;
-	private String reContent;
-	private String reCreated;
-	private String reImg;
-	private int count;
-	private String ceoContent;
 	
 	public int getCount() {
 		return count;
@@ -71,8 +80,6 @@ public class StoreDTO {
 	public void setCount(int count) {
 		this.count = count;
 	}
-	//장바구니
-	private int cAmount;
 
 	public int getcAmount() {
 		return cAmount;
@@ -219,10 +226,18 @@ public class StoreDTO {
 	public void setCeoContent(String ceoContent) {
 		this.ceoContent = ceoContent;
 	}
-
-	
-	
-	
+	public String getSideMenuCode() {
+		return sideMenuCode;
+	}
+	public void setSideMenuCode(String sideMenuCode) {
+		this.sideMenuCode = sideMenuCode;
+	}
+	public int getSideSum() {
+		return sideSum;
+	}
+	public void setSideSum(int sideSum) {
+		this.sideSum = sideSum;
+	}
 	
 
 }

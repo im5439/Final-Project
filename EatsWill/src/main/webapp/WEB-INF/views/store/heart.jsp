@@ -19,6 +19,8 @@ $(document).ready(function(){
 	
 	$("#heartImg").click(function(){
 		
+		
+		//document.infoForm.submit();
 		var params = "shopCode=" + $("#shopCode").val() 
 				+ "&ceoId=" + $("#ceoId").val()
 				+ "&userId=" + $("#userId").val()
@@ -38,13 +40,14 @@ $(document).ready(function(){
 				alert(e.responseText);
 			}
 		});
+		
 	});
 });
 
 </script>
 
 
-<form action="" method="post" name="infoForm">
+<form action="<%=cp%>/heartInDel.action" method="post" name="infoForm">
     <div class="restaurant-info">
    
     	 <c:forEach var="dto" items="${lists}">
@@ -79,10 +82,10 @@ $(document).ready(function(){
           <li class="">결제
            <span ng-show="check_enable_online_payment()" class="ico-payment-yogiyo yogiseo-payment ng-binding">바로결제</span>
            
-           <input type="hidden" value="${dto.shopCode }" id="shopCode">
-           <input type="hidden" value="${dto.ceoId }" id="ceoId">
-           <input type="hidden" value="${userId }" id="userId">
-           <input type="hidden" value="${chk }" id="chk">
+           <input type="hidden" value="${dto.shopCode }" id="shopCode" name="shopCode">
+           <input type="hidden" value="${dto.ceoId }" id="ceoId" name="ceoId">
+           <input type="hidden" value="${userId }" id="userId" name="userId">
+           <input type="hidden" value="${chk }" id="chk" name="chk">
            
           </li>
           <li class="delivery-time-tooltip" ng-show="restaurant.estimated_delivery_time">영업시간
