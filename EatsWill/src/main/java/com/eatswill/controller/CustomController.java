@@ -71,6 +71,16 @@ public class CustomController {
 
 		return cnt;
 	}
+	
+	// 주문표 이동 기능
+	@RequestMapping(value = "/cartOpen.action", method = RequestMethod.POST)
+	@ResponseBody
+	public String cartOpen(String id) {
+
+		String cnt = dao.cartOpen(id);
+
+		return cnt;
+	}	
 
 	// 회원가입 페이지
 	@RequestMapping(value = "/signup.action", method = RequestMethod.GET)
@@ -338,11 +348,12 @@ public class CustomController {
 		List<MyDTO> lists = dao.getBuyList(dto.getId());
 		String reviewUrl = cp + "/reviewCreated.action?";
 		String myOrderCancel = cp + "/myOrderCancel.action?";
-		
+		String storeUrl = cp + "/page.action";
 		
 		req.setAttribute("lists", lists);
 		req.setAttribute("reviewUrl", reviewUrl);
 		req.setAttribute("myOrderCancel", myOrderCancel);
+		req.setAttribute("storeUrl", storeUrl);
 		
 		return "custom/myOrder";
 	}
@@ -405,13 +416,15 @@ public class CustomController {
 	// 찜한 매장 띄우기
 	@RequestMapping(value = "/heartStore.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String heartStore(HttpServletRequest req) throws Exception {
-		
+		String cp = req.getContextPath();
 		HttpSession session = req.getSession();
 		CustomDTO dto = (CustomDTO)session.getAttribute("customInfo");	
 		
 		List<MyDTO> lists = dao.getHeartList(dto.getId());
+		String storeUrl = cp + "/page.action";
 		
 		req.setAttribute("lists", lists);
+		req.setAttribute("storeUrl", storeUrl);
 		
 		return "custom/heartStore";
 	}
@@ -419,15 +432,17 @@ public class CustomController {
 	// 나의 리뷰 띄우기
 	@RequestMapping(value = "/myReview.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String myReivew(HttpServletRequest req) throws Exception {
-		
+		String cp = req.getContextPath();
 		HttpSession session = req.getSession();
 		CustomDTO dto = (CustomDTO)session.getAttribute("customInfo");	
 		
 		int myReviewCnt = dao.getMyReviewCnt(dto.getId());
 		List<MyDTO> lists = dao.getMyReviewList(dto.getId());
+		String storeUrl = cp + "/page.action";
 		
 		req.setAttribute("myReviewCnt", myReviewCnt);
 		req.setAttribute("lists", lists);
+		req.setAttribute("storeUrl", storeUrl);
 		
 		return "custom/myReview";
 	}

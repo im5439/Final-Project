@@ -326,17 +326,18 @@ ng\:form {
 							</c:otherwise>
 						</c:choose>
 						<li><a href="<%=cp%>/updateInfo.action">내정보수정</a></li>
-						<li><a href="generic.html">장바구니</a></li>
-						<li><a href="<%=cp%>/myOrder.action">주문내역</a></li>
-						<li><a href="<%=cp%>/heartStore.action">찜 목록</a></li>
-						<li><a href="<%=cp%>/myReview.action">마이 리뷰</a></li>
+                     <li><a href="generic.html">장바구니</a></li>
+                     <li><a href="<%=cp%>/myOrder.action">주문내역</a></li>
+                     <li><a href="<%=cp%>/heartStore.action">찜 목록</a></li>
+                     <li><a href="<%=cp%>/myReview.action">마이 리뷰</a></li>
 					</ul>
 				</nav>
             <!-- ----------------------------------------------------------------------------------------- -->   
                <div class="nav-top clearfix"
                   ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
+                  <a href="<%=cp%>/main.action" style="text-decoration: none;">
                   <img alt="" src="/eatswill/resources/img/icon3.png" width="125px"
-                  height="40px" style=" margin: 20px 10px;" >
+                  height="40px" style=" margin: 20px 10px;" ></a>
             <%--       <h1 class="logor pull-left" ng-click="<%=cp%>/main.action" ></h1>  --%><!-- 로고로고 -->
                   <div id="cart" class="pull-right">
                      <span class="gps-status ng-binding"
@@ -483,7 +484,7 @@ ng\:form {
                                  <div class="td_info">
                                     
                                     <ul>
-                                       <li class="seller_info"><em></em><a href="">${dto.shopName }</a></li>
+                                       <li class="seller_info"><em></em><a href="${storeUrl}?shopCode=${dto.shopCode}&ceoId=${dto.ceoId}">${dto.shopName }</a></li>
                                        <br>
                                        <li class="tit_info" style="font-size: 12pt">
                                        <span class="star-rating" style="text-align: left"><span style ="width:${dto.shopStar}%;text-align: left""></span></span>

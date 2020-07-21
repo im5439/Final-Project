@@ -6,7 +6,13 @@
 
 <!-- 주문표 개수 -->
 <select id="countCart" parameterType="String" resultType="String">
-	select count(*) from cart where USERID=#{id}
+	select nvl(sum(cqty), 0) from cart where USERID=#{id}
+</select>
+
+<!-- 주문표 내역 -->
+<select id="cartOpen" parameterType="String" resultType="String">
+	select s.shopcode || ',' || s.ceoid from cart c, shop s 
+	where c.shopcode = s.shopcode and c.userId=#{id} group by s.ceoid, s.shopcode
 </select>
 
 <!-- 회원가입시 아이디 중복확인 -->
@@ -53,7 +59,7 @@
 
 <!-- 해당 아이디의 주문 리스트 출력 -->
 <select id="getBuyList" parameterType="String" resultType="com.eatswill.dto.MyDTO">
-	SELECT om.orderdate, om.ordercode, s.shopname,s.shopCode shopCode, om.oamount, data1.menuname, cc.codename orderstatus, s.shopimg shopImg, data2.cnt cnt,om.request
+	SELECT om.orderdate, om.ordercode, s.shopname,s.shopCode shopCode, om.oamount, data1.menuname, cc.codename orderstatus, s.shopimg shopImg, data2.cnt cnt,om.request,s.ceoId
 from ordermain om, shop s, COMMON_CODE cc,(select ot.ordercode, listagg(m.menuname,',') within group (order by m.menuname) menuname from ORDERDETAIL ot, menu m where ot.MENUCODE=m.MENUCODE group by ot.ordercode) data1,
 (select a.ordercode, count(b.ordercode) cnt from ORDERMAIN a left outer join REVIEW b on a.ORDERCODE=b.ORDERCODE group by a.ordercode) data2
 where om.orderstatus=cc.code and om.userid=#{userId} and om.shopcode=s.shopcode and om.ordercode=data1.ordercode and om.ordercode = data2.ordercode
@@ -95,8 +101,8 @@ order by orderdate desc
 
 <!-- 자신이 쓴 리뷰 리스트 -->
 <select id="getMyReviewList" parameterType="String" resultType="com.eatswill.dto.MyDTO">
-	SELECT s.shopname,r1.rescore,r1.rescore*20 reStar,r1.recreated,data1.menuname,r1.recontent,r1.reImg reImg,r1.renum,r1.ceocontent,om.ORDERDATE
-from review r1,shop s,(select ot.ordercode, listagg(m.menuname,',') within group (order by m.menuname) menuname from ORDERDETAIL ot,menu m where ot.MENUCODE=m.MENUCODE group by ot.ordercode) data1,ordermain om
+	SELECT r1.userId, s.shopname,r1.rescore,r1.rescore*20 reStar,r1.recreated,data1.menuname,r1.recontent,r1.reImg reImg,r1.renum,r1.ceocontent,om.ORDERDATE,om.shopcode,s.ceoid
+from review r1,shop s,ordermain om, (select ot.ordercode, listagg(m.menuname,',') within group (order by m.menuname) menuname from ORDERDETAIL ot,menu m where ot.MENUCODE=m.MENUCODE group by ot.ordercode) data1
 where r1.userid=#{userId} and data1.orderCode=r1.orderCode and s.shopCode=r1.shopcode and data1.orderCode=om.ORDERCODE
 ORDER BY recreated desc
 </select>
@@ -108,7 +114,7 @@ ORDER BY recreated desc
 
 <!-- 해당 아이디의 찜 리스트 출력 -->
 <select id="getHeartList" parameterType="String" resultType="com.eatswill.dto.MyDTO">
-	SELECT s.shopImg shopImg, s.shopname shopName, data1.shopScore, data1.reCnt, data1.shopScore*20 shopStar
+	SELECT s.shopImg shopImg, s.shopname shopName, data1.shopScore, data1.reCnt, data1.shopScore*20 shopStar,s.ceoId
 	from shop s,heart h,(select SHOPCODE, round(AVG(rescore),1) shopScore, count(reNum) reCnt from review group by shopcode) data1
 	where s.shopcode=data1.shopCode and data1.shopCode=h.shopcode and h.userid=#{userid}
 </select>

@@ -35,8 +35,7 @@ public class MyDTO {
 	private int reStar;
 	private String ceoReContent;
 	private int cnt;
-	
-	
+	private String ceoId;
 	
 	//--------------getter/setter
 	public String getShopName() {
@@ -177,6 +176,12 @@ public class MyDTO {
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
 	}
-	
+	public String getCeoId() {
+		return ceoId;
+	}
+	public void setCeoId(String ceoId) {
+		this.ceoId = ceoId;
+	}
+
 	
 }

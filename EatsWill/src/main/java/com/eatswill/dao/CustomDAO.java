@@ -124,6 +124,14 @@ public class CustomDAO {
 
 		return cnt;
 	}
+	
+	// 주문표 내역(이동용)
+	public String cartOpen(String id) {
+
+		String cnt = sessionTemplate.selectOne("customMapper.cartOpen", id);
+
+		return cnt;
+	}
 
 	// 주문 목록 리스트
 	public List<MyDTO> getBuyList(String userId) {

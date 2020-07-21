@@ -411,8 +411,11 @@ ng\:form {
                      on-finish-render="scrollCartArea()" style="text-align: left;">
                      
                         <div style="text-align: left;">
-                           <small>${dto.orderDate }</small><br> <span ng-show="review.phone"
-                              class="review-id ng-binding">${dto.shopName } > </span> <a href="<%=cp %>/reviewDelete.action?reNum=${dto.reNum}"
+                           <small>${dto.orderDate }</small><br> 
+                           
+                           <span ng-show="review.phone"
+                              class="review-id ng-binding"><a href="${storeUrl}?shopCode=${dto.shopCode}&ceoId=${dto.ceoId}">${dto.shopName } ></a> </span> 
+                              <a href="<%=cp %>/reviewDelete.action?reNum=${dto.reNum}"
                               class="btn-report" >삭제</a>
                         </div>
    
