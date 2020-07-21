@@ -135,10 +135,11 @@ where c.shopCode=s.shopCode and c.sidemenuCode=m.menuCode and m.shopCode=s.shopC
 </delete>
 
 <!-- 전체 음식점 리스트(기본정렬)   -->
-<select id="shopList" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
+<select id="shopList" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
 	select shopname,shopcode,ceoid,category,shoptel,shopimg,franchise,shopaddr,timecode,
 	to_char(shopcreated,'YYYY-MM-DD') shopcreated 
 	from shop 
+	where replace(shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%'
 	order by shopname desc
 </select>
 

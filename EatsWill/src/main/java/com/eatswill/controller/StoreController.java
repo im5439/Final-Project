@@ -488,20 +488,22 @@ public class StoreController {
 	}
 
 	//음식점 리스트 출력
-	@RequestMapping(value="/storeList.action", method = {RequestMethod.GET,RequestMethod.POST})
-	public String list(HttpServletRequest request,StoreDTO dto) throws Exception{
+	@RequestMapping(value="/storeList.action", method = RequestMethod.POST)
+	public String list(HttpServletRequest request,StoreDTO dto,String searchKey,String searchValue,String index) throws Exception{
 
 		System.out.println("storeList 들어옴");
-
+		
 		String cp = request.getContextPath();
 
-		List<StoreDTO> lists = dao.shopList();
+		List<StoreDTO> lists = dao.shopList((searchKey+searchValue));
 
-		String articleUrl = 
-				cp + "/page.action" ;
+		String articleUrl = cp + "/page.action" ;
 
 		request.setAttribute("lists", lists);
 		request.setAttribute("articleUrl",articleUrl);
+		request.setAttribute("searchKey", searchKey);
+		request.setAttribute("searchValue", searchValue);
+		request.setAttribute("index", index);
 
 		return "store/storeList";
 
