@@ -48,7 +48,7 @@ public class StoreDAO {
 
 	//리뷰 리스트
 	public List<StoreDTO> reviewList(String shopCode) {
-		
+
 		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.reviewList",shopCode);
 		return lists;
 	}
@@ -136,7 +136,13 @@ public class StoreDAO {
 		return lists;
 
 	}
+	//장바구니 메뉴코드별 사이드메뉴 합계
+	public List<StoreDTO> selectMenuPrice(String userId) {
 
+		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.selectMenuPrice",userId);
+		return lists;
+
+	}
 	//장바구니 삭제
 	public void deleteCart(String userId) {
 
@@ -240,6 +246,25 @@ public class StoreDAO {
 				sessionTemplate.selectList("storeMapper.orderByRes");
 
 		return lists;
+
+	}
+
+	// 결제창 셀렉트
+	//고객INFO
+	public List<StoreDTO> selectOrderInfo(String userId){
+
+		List<StoreDTO> lists = 
+				sessionTemplate.selectList("storeMapper.selectOrderInfo",userId);
+
+		return lists;
+
+	}
+	
+	//shopName 셀렉트
+	public StoreDTO selectOrderShopName(String userId){
+		
+		StoreDTO dto = sessionTemplate.selectOne("storeMapper.selectOrderShopName",userId);
+		return dto;
 
 	}
 

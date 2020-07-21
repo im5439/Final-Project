@@ -59,6 +59,53 @@
 	href="https://www.yogiyo.co.kr/mobile/image/favicon.ico">
 
 <title>Insert title here</title>
+
+<script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=upey5zgsjf&submodules=geocoder"></script>
+
+<script type="text/javascript">
+
+$(function() {
+	$("#test").click(function() {
+		if($("#map").text() == "") {
+			naver.maps.Service.geocode({
+		        address: $("#shopAddr").val()
+		    }, function(status, response) {
+		        if (status !== naver.maps.Service.Status.OK) {
+		            return alert('Something wrong!');
+		        }
+		
+		        var result = response.result, 	// 검색 결과의 컨테이너
+		            items = result.items; 		// 검색 결과의 배열
+	
+	            var mapOptions = {
+	           		center: new naver.maps.LatLng(items[0].point.y, items[0].point.x),
+	           		zoom: 16
+	           	};
+	           	
+	           	var map = new naver.maps.Map('map', mapOptions);
+	           	
+	           	var markerOptions = {
+	           		position: new naver.maps.LatLng(items[0].point.y, items[0].point.x),
+	           		map: map
+	           	};
+	           	
+	           	var marker = new naver.maps.Marker(markerOptions);
+	
+		    });
+	
+			$("#map").css("width", "600px");
+			$("#map").css("height", "600px");
+		} else {
+			$("#map").text("");
+			$("#map").css("width", "0px");
+			$("#map").css("height", "0px");
+		}
+		
+	});
+});
+	
+</script>
 </head>
 <body>
 
@@ -89,10 +136,18 @@
         <div class="info-item-title info-icon1">업체정보</div>
         <p><i>영업시간</i> <span class="tc ng-binding">${dto.timeName } </span></p>
         <p ng-show="restaurant.phone.length > 0" class=""><i>전화번호</i> <span class="tc ng-binding">${dto.shopTel }</span></p>
-        <p ng-show="restaurant.address.length > 0" class=""><i>주소</i> <span class="tc ng-binding"> ${dto.shopAddr } </span></p>
+        <p ng-show="restaurant.address.length > 0" class="">
+        	<i>주소</i> <span class="tc ng-binding"> ${dto.shopAddr }</span>
+        	<input type="hidden" id="shopAddr" value="${dto.shopAddr }">
+        	<a id="test" style="display: table-cell;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="_2L0B-" role="presentation" style="fill: #03c75a; width: 18px;">
+	        	<path d="M10 0c4.4 0 7.95 3.5 7.95 7.79a7.6 7.6 0 0 1-1.23 4.15l-6.33 8.02a.5.5 0 0 1-.78 0l-6.38-8.1A7.6 7.6 0 0 1 2.05 7.8 7.89 7.89 0 0 1 10 0zm0 1.54A6.38 6.38 0 0 0 3.55 7.8c0 1.18.34 2.33.96 3.28l5.5 6.92 5.44-6.86a6.08 6.08 0 0 0 1-3.34A6.37 6.37 0 0 0 10 1.54zM6.75 6.92h6.5a.5.5 0 0 1 .5.5v.54a.5.5 0 0 1-.5.5h-6.5a.5.5 0 0 1-.5-.5v-.54a.5.5 0 0 1 .5-.5z"></path>
+	        </svg></a>
+        </p>
         <p ng-show="restaurant.tags.length > 0 &amp;&amp; restaurant.tags.indexOf(&quot;CESCO&quot;) >= 0" class="ng-hide"><i>부가정보</i> <span class="cesco info-icon5 tc">세스코멤버스 사업장</span></p>
       </div>
-
+      
+	  <div id="map"></div>
+	  
       <div class="info-item">
         <div class="info-item-title info-icon3">사업자정보</div>
         <p><i>상호명</i> <span ng-bind="restaurant_info.crmdata.company_name || restaurant.name" class="tc ng-binding">매장이름: ${dto.shopName }</span></p>

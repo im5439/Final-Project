@@ -282,12 +282,6 @@ ng\:form {
 			HeaderExtra.init();
 		}
 	</script>
-	
-	
-					
-			
-	
-	
 
 	<div yogiyo-header="">
 		<div id="header" class="header">

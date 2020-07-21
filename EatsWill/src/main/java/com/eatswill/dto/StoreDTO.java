@@ -5,11 +5,51 @@ public class StoreDTO {
 	
 	private String chk; //찜테이블 체크검증
 	private String reUserId; //review rpad userId
+	private int sideSum;
 	
 	private String userId; //고객아이디
+	private String userAddr1;
+	private String userAddr2;
+	private String userTel;
+	private String userPoint;
+	private String userName;
 	private int cAmount; //총액
 	private int cQty; //수량
+	private String request;
 	
+	private int orderSum;
+	
+	public int getOrderSum() {
+		return orderSum;
+	}
+	public void setOrderSum(int orderSum) {
+		this.orderSum = orderSum;
+	}
+	
+	public String getUserAddr1() {
+		return userAddr1;
+	}
+	public void setUserAddr1(String userAddr1) {
+		this.userAddr1 = userAddr1;
+	}
+	public String getUserAddr2() {
+		return userAddr2;
+	}
+	public void setUserAddr2(String userAddr2) {
+		this.userAddr2 = userAddr2;
+	}
+	public String getUserTel() {
+		return userTel;
+	}
+	public void setUserTel(String userTel) {
+		this.userTel = userTel;
+	}
+	public String getUserPoint() {
+		return userPoint;
+	}
+	public void setUserPoint(String userPoint) {
+		this.userPoint = userPoint;
+	}
 	//매장
 	private String shopCode;
 	private String shopName;
@@ -230,6 +270,24 @@ public class StoreDTO {
 	}
 	public void setSideMenuCode(String sideMenuCode) {
 		this.sideMenuCode = sideMenuCode;
+	}
+	public int getSideSum() {
+		return sideSum;
+	}
+	public void setSideSum(int sideSum) {
+		this.sideSum = sideSum;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getRequest() {
+		return request;
+	}
+	public void setRequest(String request) {
+		this.request = request;
 	}
 	
 

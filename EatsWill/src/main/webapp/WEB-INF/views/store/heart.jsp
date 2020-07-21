@@ -66,8 +66,9 @@ $(document).ready(function(){
           <li ng-show="show_discount_description()" class="discount-desc ng-hide">
           
           <span class="ng-binding">사장님 이름: ${dto.ceoName}</span></li>
-          
+           <c:if test="${userId != 'guest' }">
           <li>찜<span id="heartImg">
+         
           <c:if test="${chk=='in'}" >
       <img src="resources/img/fullheart.png" width="20px" height="20px" id="heartImg">
       </c:if>
@@ -75,7 +76,7 @@ $(document).ready(function(){
       <img  src="resources/img/emptyheart.png" width="20px" height="20px" id="heartImg">
       </c:if></span></li>
           <!--li class="restaurant-address">위치 : <span>{{restaurant.address|trim_address|normalize_address}}</span></li-->
-
+	</c:if>
           <li class="">결제
            <span ng-show="check_enable_online_payment()" class="ico-payment-yogiyo yogiseo-payment ng-binding">바로결제</span>
            
@@ -93,8 +94,6 @@ $(document).ready(function(){
             <span class="coupon-base ng-binding" ng-show="delivery_discount_value() > 0">적립금 사용 가능</span>
             <span class="coupon-base coupon-style1 ng-binding ng-hide" ng-show="additional_discount_value() > 0">추가할인 0%</span>
           </li>
-          
-          
           
         </ul>
         <input type="hidden">

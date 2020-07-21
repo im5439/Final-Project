@@ -57,19 +57,34 @@ public class StoreController {
 
 	//storePage
 	@RequestMapping(value = "/page", method = {RequestMethod.GET,RequestMethod.POST})
-	public String page(HttpServletRequest request,String shopCode,String ceoId) {
+	public String page(HttpServletRequest request,String shopCode,String ceoId,String userId) {
 
 		System.out.println("page 들어옴");
 		
 		//userId session처리
+		
 		HttpSession session = request.getSession();
 		CustomDTO dto = (CustomDTO)session.getAttribute("customInfo");
+		
+		if(dto==null || dto.equals("")) {
+			 userId="guest"; //세션값이 없을때 user로 임의의 아이디 부여
+			 
+			request.setAttribute("userId", userId);
+			request.setAttribute("shopCode", shopCode);
+			request.setAttribute("ceoId", ceoId);
+			
+			System.out.println("shopCode=>" + shopCode);
+			System.out.println("userId==>" + userId);
+			return "store/storePage";
+		}
 
 		System.out.println("shopCode=>" + shopCode);
+		System.out.println("userId==>" + userId);
 
 		request.setAttribute("shopCode", shopCode);
 		request.setAttribute("ceoId", ceoId);
 		request.setAttribute("userId", dto.getId());
+		
 		return "store/storePage";
 
 	}
@@ -81,11 +96,12 @@ public class StoreController {
 
 		System.out.println("review 들어옴");
 		System.out.println("shopCode ----> " + shopCode);
+		System.out.println("userId ----> " + userId);
 		List<StoreDTO> lists = dao.reviewList(shopCode);
 		
 		request.setAttribute("lists", lists);
 		request.setAttribute("shopCode", shopCode);
-		request.setAttribute(userId, userId);
+		request.setAttribute("userId", userId);
 		
 		return "store/reviewList";
 	}
@@ -151,6 +167,9 @@ public class StoreController {
 		int cAmount = Integer.parseInt(request.getParameter("cAmount")); //총액
 		int cQty = Integer.parseInt(request.getParameter("cQty")); //수량
 		int addAmount = Integer.parseInt(request.getParameter("addAmount")); //사이드메뉴의 총액
+		int a = cAmount+addAmount;
+		
+		System.out.println("a--------->" + a);
 		
 		System.out.println("addAmount: " + addAmount);
 		
@@ -270,115 +289,135 @@ public class StoreController {
 			}
 
 		}
-
+	
 		request.setAttribute("dto", dto);
 
-		return "redirect:/page.action?menuCode=" + menuCode + "&userId=" + userId +"&shopCode=" + shopCode + "&ceoId=" + ceoId + "&addAmount=" + addAmount;
+		return "redirect:/page.action?menuCode=" + menuCode + "&userId=" + userId +"&shopCode=" + shopCode + "&ceoId=" + ceoId   ;
 
 	}
 
 	//장바구니 select(page에서 처음 장바구니를 띄워주기위해서)
-	@RequestMapping(value = "/selectCartAll", method = {RequestMethod.POST,RequestMethod.GET})
-	public String selectCartAll(HttpServletRequest request,String userId,String ceoId,String menuCode,String shopCode) {
+		@RequestMapping(value = "/selectCartAll", method = {RequestMethod.POST,RequestMethod.GET})
+		public String selectCartAll(HttpServletRequest request,String userId,String ceoId,String menuCode,String shopCode) {
 
-		System.out.println("selectCartAll 들어옴---------------------");
-		
-		List<StoreDTO> lists = dao.selectCartMain(userId);
-
-		List<StoreDTO> lists1 = dao.selectCartSide(userId);
-		
-		int listsu = lists.size(); //매장의 메뉴 개수
-		int listSideSu = 0; //매장의 메뉴의 사이드메뉴 개수
-		
-
-		int[] priceAmountArr = new int[listsu] ; //메뉴들의 수로 배열 선언
-		int priceAmount=0; //주문하는 메뉴들의 총 금액 초기화
-		int priceSideAmount=0; //주문하는 사이드 메뉴들의 총 금액 초기화
-		
-		for(int i=0;i<listsu;i++) {
-
-			System.out.println(lists.get(i).getcAmount());
-			priceAmountArr[i] = lists.get(i).getcAmount();
-			priceAmount += priceAmountArr[i]; // 주문할 금액들의 합
-			System.out.println("main Amount--> " + priceAmount);
-			System.out.println("main getMenuCode--> " + lists.get(i).getMenuCode());
+			System.out.println("selectCartAll 들어옴---------------------");
 			
+			List<StoreDTO> lists = dao.selectCartMain(userId);
+
+			List<StoreDTO> lists1 = dao.selectCartSide(userId);
+			
+			List<StoreDTO> lists2 = dao.selectMenuPrice(userId);
+			
+			//int addAmount = Integer.parseInt(request.getParameter("addAmount"));
+			
+			//StoreDTO addprice = dao.selectMenuPrice(menuCode);
+			
+			int listsu = lists.size(); //매장의 메뉴 개수
+			int listSideSu = 0; //매장의 메뉴의 사이드메뉴 개수
+			
+
+			int[] priceAmountArr = new int[listsu] ; //메뉴들의 수로 배열 선언
+			int priceAmount=0; //주문하는 메뉴들의 총 금액 초기화
+			int priceSideAmount=0; //주문하는 사이드 메뉴들의 총 금액 초기화
+			
+			listSideSu = lists1.size(); //매장의 메뉴의 사이드메뉴 개수
+			int listSideGroup = lists2.size(); //각 메뉴별 사이드메뉴들의 가격의 합이 나오는 리스트 개수
+			
+			System.out.println("listsu->" + listsu );
+			System.out.println("listSideSu->" + listSideSu );
+			System.out.println("listSideGroup->" + listSideGroup );
+			
+			int []sidePrice = new int[listSideSu];
+			
+			for(int i=0;i<listsu;i++) {
+
+				System.out.println(lists.get(i).getcAmount());
+				priceAmountArr[i] = lists.get(i).getcAmount();
+				priceAmount += priceAmountArr[i]; // 주문할 금액들의 합
+				System.out.println("main Amount--> " + priceAmount);
+				System.out.println("main getMenuCode--> " + lists.get(i).getMenuCode());
+				
+			}
+
+			
+			//주문하는 사이드 메뉴들의 총 금액 계산
+			for(int i=0;i<listSideSu;i++) {
+					priceSideAmount += lists1.get(i).getcAmount();
+					sidePrice[i] = lists1.get(i).getcAmount();
+					System.out.println("side Amount--> " + priceSideAmount);
+					request.setAttribute("sidePrice"+i, sidePrice[i]);
+					System.out.println("sidePrice[i]= " + sidePrice[i]);
+			}		
+
+			request.setAttribute("listsu", listsu);
+			request.setAttribute("listSideSu", listSideSu);
+			request.setAttribute("listSideGroup", listSideGroup);
+			request.setAttribute("priceAmount", priceAmount + priceSideAmount); //사이드메뉴+메인메뉴 총액
+			
+			request.setAttribute("lists", lists);
+			request.setAttribute("lists1", lists1);
+			request.setAttribute("lists2", lists2);
+			
+			
+			return "store/cart";
 		}
 
-	
-		listSideSu = lists1.size(); //매장의 메뉴의 사이드메뉴 개수
+		//장바구니 delete
+		@RequestMapping(value = "/deleteCart", method = {RequestMethod.POST,RequestMethod.GET})
+		public String deleteCart(HttpServletRequest request, StoreDTO dto,String userId,String ceoId,String menuCode,String shopCode) {
 
-		System.out.println("listSideSu->" + listSideSu );
-		
-		
-		//주문하는 사이드 메뉴들의 총 금액 계산
-		for(int i=0;i<listSideSu;i++) {
-				priceSideAmount += lists1.get(i).getcAmount();
-				System.out.println("side Amount--> " + priceSideAmount);
+			System.out.println("deleteCart 들어옴");
+			System.out.println("userId: " + userId);
+			System.out.println("menuCode: " + menuCode);
+
+			dao.deleteCartOne(userId, menuCode);
+
+			List<StoreDTO> lists = dao.selectCartMain(userId);
+
+			List<StoreDTO> lists1 = dao.selectCartSide(userId);
 			
-		}		
-
-		request.setAttribute("listsu", listsu);
-		request.setAttribute("priceAmount", priceAmount + priceSideAmount); //사이드메뉴+메인메뉴 총액
-		request.setAttribute("lists1", lists1);
-		request.setAttribute("lists", lists);
-
-
-		return "store/cart";
-	}
-
-	//장바구니 delete
-	@RequestMapping(value = "/deleteCart", method = {RequestMethod.POST,RequestMethod.GET})
-	public String deleteCart(HttpServletRequest request, StoreDTO dto,String userId,String ceoId,String menuCode,String shopCode) {
-
-		System.out.println("deleteCart 들어옴");
-		System.out.println("userId: " + userId);
-		System.out.println("menuCode: " + menuCode);
-
-		dao.deleteCartOne(userId, menuCode);
-
-		List<StoreDTO> lists = dao.selectCartMain(userId);
-
-		List<StoreDTO> lists1 = dao.selectCartSide(userId);
-		
-		int listsu = lists.size(); //매장의 메뉴 개수
-		int listSideSu = 0; //매장의 메뉴의 사이드메뉴 개수
-		
-
-		int[] priceAmountArr = new int[listsu] ; //메뉴들의 수로 배열 선언
-		int priceAmount=0; //주문하는 메뉴들의 총 금액 초기화
-		int priceSideAmount=0; //주문하는 사이드 메뉴들의 총 금액 초기화
-		
-		for(int i=0;i<listsu;i++) {
-
-			System.out.println(lists.get(i).getcAmount());
-			priceAmountArr[i] = lists.get(i).getcAmount();
-			priceAmount += priceAmountArr[i]; // 주문할 금액들의 합
-			System.out.println("main Amount--> " + priceAmount);
-			System.out.println("main getMenuCode--> " + lists.get(i).getMenuCode());
+			List<StoreDTO> lists2 = dao.selectMenuPrice(userId);
 			
+			int listsu = lists.size(); //매장의 메뉴 개수
+			int listSideSu = 0; //매장의 메뉴의 사이드메뉴 개수
+			int listSideGroup = lists2.size(); //각 메뉴별 사이드메뉴들의 가격의 합이 나오는 리스트 개수
+
+			int[] priceAmountArr = new int[listsu] ; //메뉴들의 수로 배열 선언
+			int priceAmount=0; //주문하는 메뉴들의 총 금액 초기화
+			int priceSideAmount=0; //주문하는 사이드 메뉴들의 총 금액 초기화
+			
+			for(int i=0;i<listsu;i++) {
+
+				System.out.println(lists.get(i).getcAmount());
+				priceAmountArr[i] = lists.get(i).getcAmount();
+				priceAmount += priceAmountArr[i]; // 주문할 금액들의 합
+				System.out.println("main Amount--> " + priceAmount);
+				System.out.println("main getMenuCode--> " + lists.get(i).getMenuCode());
+				
+			}
+
+		
+			listSideSu = lists1.size(); //매장의 메뉴의 사이드메뉴 갯수
+
+			System.out.println("listSideSu->" + listSideSu );
+			
+			
+			//주문하는 사이드 메뉴들의 총 금액 계산
+			for(int i=0;i<listSideSu;i++) {
+					priceSideAmount += lists1.get(i).getcAmount();
+					System.out.println("side Amount--> " + priceSideAmount);
+				
+			}		
+
+			request.setAttribute("listsu", listsu);
+			request.setAttribute("priceAmount", priceAmount + priceSideAmount); //사이드메뉴+메인메뉴 총액
+			request.setAttribute("lists", lists);	
+			request.setAttribute("lists1", lists1);
+			request.setAttribute("lists2", lists2);
+			request.setAttribute("listSideGroup", listSideGroup);
+
+			return "store/cart";
 		}
-
-	
-		listSideSu = lists1.size(); //매장의 메뉴의 사이드메뉴 갯수
-
-		System.out.println("listSideSu->" + listSideSu );
-		
-		
-		//주문하는 사이드 메뉴들의 총 금액 계산
-		for(int i=0;i<listSideSu;i++) {
-				priceSideAmount += lists1.get(i).getcAmount();
-				System.out.println("side Amount--> " + priceSideAmount);
-			
-		}		
-
-		request.setAttribute("listsu", listsu);
-		request.setAttribute("priceAmount", priceAmount + priceSideAmount); //사이드메뉴+메인메뉴 총액
-		request.setAttribute("lists", lists);	request.setAttribute("lists", lists);
-		request.setAttribute("lists1", lists1);
-
-		return "store/cart";
-	}
 
 	//찜테이블 물리적(insert,delete)
 	@RequestMapping(value = "/heartInDel", method = {RequestMethod.POST,RequestMethod.GET})
@@ -525,5 +564,54 @@ public class StoreController {
 		return "store/storeList";
 
 	}
+	
+	//결제창
+	@RequestMapping(value="/order.action", method = {RequestMethod.GET,RequestMethod.POST})
+	public String order(HttpServletRequest request,String userId,String shopCode,String shopName) throws Exception{
+		
+		System.out.println("결제창 들어옴");
+		int priceAmount = Integer.parseInt(request.getParameter("priceAmount"));
+		System.out.println("priceAmount----->" + priceAmount);
+		
+		
+		HttpSession session = request.getSession();
+		CustomDTO dto = (CustomDTO)session.getAttribute("customInfo");
+		
+		List<StoreDTO> lists = dao.selectOrderInfo(dto.getId()); //고객정보
+		List<StoreDTO> lists1 = dao.selectCartAll(dto.getId()); //카트에 담겨있는 메뉴들
+		
+		StoreDTO dto1 =  dao.selectOrderShopName(dto.getId());
+	    shopName = dto1.getShopName();
+	    
+	    System.out.println("shopName------->" + shopName);
+		
+		request.setAttribute("lists", lists);
+		request.setAttribute("lists1", lists1);
+		request.setAttribute("userId", dto.getId());
+		request.setAttribute("shopName", shopName);
+		request.setAttribute("priceAmount", priceAmount); //총액
+		
+		return "store/payment";
+		
+	}
+	
+	//레알 결제
+	@RequestMapping(value="/orderReal.action", method = {RequestMethod.GET,RequestMethod.POST})
+	public String orderReal(HttpServletRequest request,String userId,String shopCode) throws Exception{
+		
+		System.out.println("orderReal 들어옴");
+		
+		System.out.println(shopCode);
+		System.out.println(request);
+	
+		
+		
+		
+		
+		
+		return "store/paymentChk";
+	}
+	
+	
 
 }

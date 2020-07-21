@@ -10,7 +10,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
+<script type="text/javascript">
 
+
+</script>
+<body>.
+<span id="aaa"></span>
 </body>
 </html>

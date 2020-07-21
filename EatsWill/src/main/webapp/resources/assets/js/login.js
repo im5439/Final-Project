@@ -393,6 +393,7 @@ function execDaumPostcode() {
     }
 
     function sample3_execDaumPostcode() {
+
     	// 우편번호 찾기 찾기 화면을 넣을 element
     	var element_wrap = document.getElementById('wrap');
     	document.getElementById('addr1').value = "";
@@ -409,6 +410,7 @@ function execDaumPostcode() {
 		
         new daum.Postcode({
             oncomplete: function(data) {
+            
                 // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
                 // 각 주소의 노출 규칙에 따라 주소를 조합한다.
@@ -459,11 +461,13 @@ function execDaumPostcode() {
                 document.body.scrollTop = currentScroll;
             },
             // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
+            /*
             onresize : function(size) {
                 element_wrap.style.height = size.height+'px';
             },
             width : '100%',
             height : '100%'
+            */
         }).embed(element_wrap);
 
         // iframe을 넣은 element를 보이게 한다.

@@ -362,10 +362,7 @@ ng\:form {
             </div>
          </div>
       </div>
-      
-      
-         
-
+     
       <div id="quick-btn" class="hide-btn">
          <a ng-click="click_cart_button()" id="button-cart-btm" href="" class="btn-cart ng-hide" ng-show="check_show_cart_button('quick')"><span class="badge ng-binding" ng-bind="global_cart.get_amount()">0</span></a>
          <a ng-click="scrollTop($event)" class="btn-top">top</a>
@@ -420,9 +417,9 @@ ng\:form {
                         <div class="order-items default ng-binding"
                            ng-click="show_review_menu($event)" style="text-align: left;">${dto.menuName}
                            </div>
-                           
-                        <img src="http://192.168.16.16:8080/reImg/${dto.reImg }" align="center" width="300" height="300">
-                           
+                        <c:if test="${dto.reImg!=null }">   
+                        <img src="http://localhost:8080/reImg/${dto.reImg }" align="center" width="300" height="300">
+                         </c:if> 
                         <p ng-show="review.comment"
                            ng-bind-html="review.comment|strip_html" class="ng-binding" style="text-align: left;">${dto.reContent }</p> 
                      
