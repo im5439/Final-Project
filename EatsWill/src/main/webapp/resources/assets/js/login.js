@@ -15,6 +15,27 @@ function cartList() {
     });
 }
 
+function logon() {
+
+	var f = document.myForm;
+
+	if($("#id").val()==null || $("#id").val()=="") {
+		alert("아이디를 입력하세요");
+		return;
+	}
+    
+	f.action = "login_ok.action";
+	f.submit();
+}
+
+function enterkey() {
+    if (window.event.keyCode == 13) {
+
+         // 엔터키가 눌렸을 때 실행할 내용
+         logon();
+    }
+}
+
 function isValidEmail(email) {
 	var format = /^((\w|[\-\.])+)@((\w|[\-\.])+)\.([A-Za-z]+)$/;
     if (email.search(format) != -1)
@@ -328,19 +349,6 @@ $(function() {
             }
         });
         
-	});
-	
-	$("#logon").click(function(){
-		
-		var f = document.myForm;
-
-		if($("#id").val()==null || $("#id").val()=="") {
-			alert("아이디를 입력하세요");
-			return;
-		}
-        
-		f.action = "login_ok.action";
-		f.submit();
 	});
 	
 });

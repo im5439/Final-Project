@@ -216,6 +216,7 @@ ng\:form {
 	}(window, document, 'script', '//connect.facebook.net/en_US/fbevents.js');
 	fbq('init', '1041485915908980');/* eslint-enable */
 </script>
+
 <noscript>
 	<img height="1" width="1" style="display: none"
 		src="https://www.facebook.com/tr?id=1041485915908980&ev=PageView&noscript=1" />
@@ -427,7 +428,7 @@ ng\:form {
 	        		<div class="control-label">패스워드</div>
 	
 	        		<div class="controls">
-	            		<input type="password" name="pw" id="pw" style="display: inline;height: 34px;width: 70%"/>
+	            		<input type="password" name="pw" id="pw" style="display: inline;height: 34px;width: 70%" onkeyup="enterkey();"/>
 					</div>
 				</div>
 			</div>
@@ -438,7 +439,7 @@ ng\:form {
 			</div>
 	
 	      	<div class="btn-wrapper" style="margin-bottom: 20px;">
-	        	<button type="button" id="logon" class="btn" style="color: #fff;width: 222px;font-size: 16px;">로그인</button>
+	        	<button type="button" class="btn" style="color: #fff;width: 222px;font-size: 16px;" onclick="logon();">로그인</button>
 	      	</div>
 	      	
 	      	<div style="text-align: center;margin-bottom: 20px">

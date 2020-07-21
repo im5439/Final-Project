@@ -60,8 +60,8 @@
 
 <title>Insert title here</title>
 
-<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=upey5zgsjf&submodules=geocoder"></script>
 <script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=upey5zgsjf&submodules=geocoder"></script>
 
 <script type="text/javascript">
 

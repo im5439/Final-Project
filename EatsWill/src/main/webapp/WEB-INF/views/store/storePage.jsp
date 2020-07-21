@@ -57,6 +57,8 @@ ng\:form {
 	<link rel="stylesheet" href="<%=cp%>/resources/data/css/jquery-ui.css" type="text/css" />
 <script type="text/javascript" src="<%=cp%>/resources/data/js/jquery-3.1.1.js"></script>
 <script type="text/javascript" src="<%=cp%>/resources/data/js/jquery-ui.js"></script>
+   <script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
+   <script type="text/javascript" src="/eatswill/resources/assets/js/cart.js"></script>
 
 
 	
@@ -395,41 +397,42 @@ ng\:form {
                </div>
             <!-- ----------------------------------------------------------------------------------------- -->   
                
-               <nav>
-                  <ul>
-                     <li><a href="#menu">Menu</a></li>
-                  </ul>
-               </nav>
-                  
-               <nav id="menu">
-                  <h2>Menu</h2>
-                  <input type="hidden" id="sessionId" value="${sessionScope.customInfo.id }"/>
-                  <ul>
-                     <c:choose>
-                        <c:when test="${empty sessionScope.customInfo.id }">
-                           <li><a href="${pageContext.request.contextPath}/login.action">로그인</a></li>
-                        </c:when>
-                        <c:otherwise>
-                           <li><a href="<%=cp%>/itving/myPage.do"><font color="blue">${sessionScope.customInfo.name }</font> 님 환영합니다.</a>
-                                  <p style="text-align: left">
-                                     전화번호 : ${sessionScope.customInfo.tel }</br>
-                                     포인트 : ${sessionScope.customInfo.point }
-                                  </p>
-                                 
-                           <a href="javascript:logout();" data-nethru_clcode="A000012">로그아웃</a></li>
-                        </c:otherwise>
-                     </c:choose>
-                     <li><a href="${pageContext.request.contextPath}/main.action">Home</a></li>
-                          <li><a href="main.action">내정보수정</a></li>
-                          <li><a href="generic.html">장바구니</a></li>
-                          <li><a href="generic.html">주문내역</a></li>
-                          <li><a href="elements.html">찜 목록</a></li>
-                  </ul>
-               </nav>
+    		 <nav>
+					<ul>
+						<li><a href="#menu">Menu</a></li>
+					</ul>
+				</nav>
+					
+				<nav id="menu">
+					<h2>Menu</h2>
+					<br/>
+					<input type="hidden" id="sessionId" value="${sessionScope.customInfo.id }"/>
+					<ul>
+						<c:choose>
+							<c:when test="${empty sessionScope.customInfo.id }">
+								<li><a href="${pageContext.request.contextPath}/login.action">로그인</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><font color="#F2849E">${sessionScope.customInfo.name }</font> 님 환영합니다.
+	                      		<p style="text-align: left">
+	                      			전화번호 : ${sessionScope.customInfo.tel }</br>
+	                      			포인트 : ${sessionScope.customInfo.point }
+	                      		</p>
+										
+								<a href="javascript:logout();" data-nethru_clcode="A000012">로그아웃</a></li>
+							</c:otherwise>
+						</c:choose>
+						<li><a href="<%=cp%>/updateInfo.action">내정보수정</a></li>
+						<li><a href="generic.html">장바구니</a></li>
+						<li><a href="<%=cp%>/myOrder.action">주문내역</a></li>
+						<li><a href="<%=cp%>/heartStore.action">찜 목록</a></li>
+						<li><a href="<%=cp%>/myReview.action">마이 리뷰</a></li>
+					</ul>
+				</nav>
             <!-- ----------------------------------------------------------------------------------------- -->   
                <div class="nav-top clearfix"
                   ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
-                  <a href="<%=cp%>/" style="text-decoration: none;"><img alt="" src="/eatswill/resources/img/icon3.png" width="125px"
+                  <a href="<%=cp%>/main.action" style="text-decoration: none;"><img alt="" src="/eatswill/resources/img/icon3.png" width="125px"
                   height="40px" style=" margin: 20px 10px;" ></a>
             <%--       <h1 class="logor pull-left" ng-click="<%=cp%>/main.action" ></h1>  --%><!-- 로고로고 -->
                   <div id="cart" class="pull-right">
@@ -445,16 +448,24 @@ ng\:form {
                         <span class="badge ng-binding"
                         ng-bind="global_cart.get_amount()">0</span>
                      </a>
-                     <button type="button" class="btn btn-login ng-binding" 
-                        ng-click="login()"
-                        ng-bind-html="check_login() ? '로그아웃' : '로그인 <span>|</span> 회원가입'"
-                        ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next" style="font-size: 1.2em; background-color: red;">
-                     로그인 <span>|</span> 회원가입 
-                     </button>
-                     <button type="button"
-                        class="btn btn-warning hidden-xs ng-binding"
-                        ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
-                        ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;" style="font-size: 1.2em; background-color: red;">주문표(0)</button>
+       		
+					<c:choose>
+						<c:when test="${empty sessionScope.customInfo.id }">
+							<button type="button" class="btn btn-login ng-binding" style="width: 95px"
+							onclick="javascript:location.href='<%=cp %>/login.action';">로그인</button>
+							<button type="button" class="btn btn-login ng-binding" style="width: 95px"
+							onclick="javascript:location.href='<%=cp %>/signup.action';">회원가입</button>
+						</c:when>
+						<c:otherwise>
+							<button type="button" class="btn btn-login ng-binding" style="width: 150px"
+							onclick="javascript:location.href='<%=cp %>/logout.action';">로그아웃</button>
+						</c:otherwise>
+					</c:choose>
+
+		
+					<button type="button" class="btn btn-warning hidden-xs ng-binding" id="cartList" style="width: 150px;font-size: 1.2em;background-color: red"
+							onclick="javascript:location.href='<%=cp %>/logout.action';">주문표(0)</button>	
+   
                  
                   </div>
                </div>
@@ -672,9 +683,9 @@ function heartPage() {
       
     <ul class="nav nav-tabs restaurant-tab">
       <li ng-class="! active_tab || active_tab == &quot;menu&quot; ? &quot;active&quot; : &quot;&quot;" class="active">
-      <a ng-click="toggle_tab(&quot;menu&quot;)" data-toggle="tab" href="#f1" id="sendMenu">메뉴 <span class="ng-binding"> 총갯수</span></a></li>
+      <a ng-click="toggle_tab(&quot;menu&quot;)" data-toggle="tab" href="#f1" id="sendMenu">메뉴 <span class="ng-binding"> </span></a></li>
       <li ng-class="active_tab == &quot;review&quot; ? &quot;active&quot; : &quot;&quot;">
-      <a ng-click="toggle_tab(&quot;review&quot;)" data-toggle="tab" href="#f2" id="sendReview">클린리뷰 <span class="ng-binding"> 총갯수</span></a></li>
+      <a ng-click="toggle_tab(&quot;review&quot;)" data-toggle="tab" href="#f2" id="sendReview">클린리뷰 <span class="ng-binding"> </span></a></li>
       <li ng-class="active_tab == &quot;info&quot; ? &quot;active&quot; : &quot;&quot;">
       <a ng-click="toggle_tab(&quot;info&quot;)" data-toggle="tab" href="#f3" id="sendInfo">가게정보</a></li>
     </ul>

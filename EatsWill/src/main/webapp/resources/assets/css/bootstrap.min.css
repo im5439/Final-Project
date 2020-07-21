@@ -6337,11 +6337,11 @@ a.close.disabled {
 }
 
 .carousel-control-prev {
-	left: 0
+	right: 90%;
 }
 
 .carousel-control-next {
-	right: 0
+	left: 90%;
 }
 
 .carousel-control-next-icon, .carousel-control-prev-icon {

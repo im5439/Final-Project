@@ -34,7 +34,7 @@ public class StoreDAO {
 	}
 
 	//음식점 정보
-	public List<StoreDTO>  shopInfo (String ceoId,String shopCode) {
+	public List<StoreDTO> shopInfo (String ceoId,String shopCode) {
 
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("shopCode", shopCode);
