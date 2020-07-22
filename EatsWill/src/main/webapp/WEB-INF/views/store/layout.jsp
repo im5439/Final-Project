@@ -57,9 +57,9 @@
 		<select id="searchKey" name="searchKey" class="form-control ng-pristine ng-scope ng-valid-minlength ng-valid ng-valid-required ng-touched"
 			style="height: 3.3em; width: 7em; font-size: 9pt; color: #6C757D; text-align-last: center; 
 			flex: inherit; -webkit-appearance: listbox; border-radius: 10px 10px 10px 10px;">
-			<option>강남구</option>
-			<option>송파구</option>
-			<option>강동구</option>				
+			<option value="1">강남구</option>
+			<option value="2">송파구</option>
+			<option value="3">강동구</option>				
 		</select>
 		<input type="search" id="searchValue" name="searchValue"
 			class="form-control ng-pristine ng-scope ng-valid-minlength ng-valid ng-valid-required ng-touched"

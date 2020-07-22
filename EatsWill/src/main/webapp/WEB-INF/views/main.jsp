@@ -51,25 +51,19 @@ ng\:form {
 <link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
 <link rel="stylesheet"
 	href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
-<link rel="stylesheet"
-	href="/eatswill/resources/assets/ButtonStylesInspiration/css/buttons.css" />
-<link rel="stylesheet"
-	href="/eatswill/resources/assets/ButtonStylesInspiration/css/normalize.css" />
-<link rel="stylesheet"
-	href="/eatswill/resources/assets/ButtonStylesInspiration/css/vicons-font.css" />
+<link rel="stylesheet" href="/eatswill/resources/assets/ButtonStylesInspiration/css/buttons.css" />
+<link rel="stylesheet" href="/eatswill/resources/assets/ButtonStylesInspiration/css/normalize.css" />
+<link rel="stylesheet" href="/eatswill/resources/assets/ButtonStylesInspiration/css/vicons-font.css" />
 
-<script type="text/javascript"
-	src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
-<script type="text/javascript"
-	src="/eatswill/resources/assets/js/login.js"></script>
+<script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="/eatswill/resources/assets/js/login.js"></script>
 
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 
 <!-- 시연 - 슬라이드 css -->
 <!-- <link rel="stylesheet"  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
-<link rel="stylesheet"
-	href="/eatswill/resources/assets/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/eatswill/resources/assets/css/bootstrap.min.css" />
 <style>
 .carousel-inner>.carousel-item>img { /* width: 640px; height: 720px; */
 	
@@ -393,140 +387,14 @@ $(document).ready(function() {
 
 	<div yogiyo-header="">
 		<div id="header" class="header">
-
 			<div role="navigation" class="nav-bar">
-				<div class="navigation ver-pc" ng-class="header_show()"
-					style="background-color: #FBFBEF;">
-					<!--  색상수정예정예정 -->
-					<div class="app-down-banner clearfix ng-hide"
-						ng-show="is_show_promotion_banner()">
-						<div class="landing-banner">
-							<div class="landing-header"></div>
-
-
-						</div>
-					</div>
-					<!-- ----------------------------------------------------------------------------------------- -->
-
-					<nav style="height: auto;">
-						<ul>
-							<li><a href="#menu">Menu</a></li>
-						</ul>
-					</nav>
-
-					<nav id="menu" style="font-size: 1.2em;">
-						<h2 style="font-size: 30px;">Menu</h2>
-						<br /> <input type="hidden" id="sessionId"
-							value="${sessionScope.customInfo.id }" />
-						<ul>
-							<c:choose>
-								<c:when test="${empty sessionScope.customInfo.id }">
-									<li><a
-										href="${pageContext.request.contextPath}/login.action">로그인</a></li>
-								</c:when>
-								<c:otherwise>
-									<li><font color="#F2849E">${sessionScope.customInfo.name }</font>
-										님 환영합니다.
-										<p style="text-align: left">
-											전화번호 : ${sessionScope.customInfo.tel }</br> 포인트 :
-											${sessionScope.customInfo.point }
-										</p> <a href="<%=cp %>/logout.action" data-nethru_clcode="A000012">로그아웃</a></li>
-								</c:otherwise>
-							</c:choose>
-							<li><a href="<%=cp%>/updateInfo.action">내정보수정</a></li>
-							<li><a id="basket">장바구니</a></li>
-							<li><a href="<%=cp%>/myOrder.action">주문내역</a></li>
-							<li><a href="<%=cp%>/heartStore.action">찜 목록</a></li>
-							<li><a href="<%=cp%>/myReview.action">마이 리뷰</a></li>
-						</ul>
-						<form method="POST" action="" name="myForm">
-							<div id="myInfo"></div>
-						</form>
-					</nav>
-					<!-- ----------------------------------------------------------------------------------------- -->
-					<div class="nav-top clearfix"
-						ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
-						<a href="<%=cp%>/main.action" style="text-decoration: none;"><img
-							alt="" src="/eatswill/resources/img/icon3.png" width="125px"
-							height="40px" style="margin: 20px 10px;"></a>
-						<%--       <h1 class="logor pull-left" ng-click="<%=cp%>/main.action" ></h1>  --%>
-						<!-- 로고로고 -->
-						<div id="cart" class="pull-right">
-							<span class="gps-status ng-binding"
-								ng-show="check_show_location_button()"
-								ng-click="toggle_location_block()" ng-bind="current_location"></span>
-							<a class="visible-xs" ng-show="check_show_location_button()"
-								ng-click="toggle_location_block()"> <span
-								class="ico-set-pic"></span>
-							</a> <a id="button-cart" href="" class="visible-xs ng-hide"
-								ng-click="click_cart_button()"
-								ng-show="check_show_cart_button()"> <span class="ico-cart"></span>
-								<span class="badge ng-binding"
-								ng-bind="global_cart.get_amount()">0</span>
-							</a>
-							<form method="POST" action="" name="cartForm">
-								<%-- <button type="button" class="btn btn-login ng-binding" 
-								ng-click="login()"
-								ng-bind-html="check_login() ? '로그아웃' : '로그인 <span>|</span> 회원가입'"
-								ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next"> --%>
-
-
-
-
-								<!-- 상단 버튼 부분 ----------------------------------------------------------------------------->
-
-								<c:choose>
-									<c:when test="${empty sessionScope.customInfo.id }">
-										<button type="button"
-											class="button button--ujarak button--border-thin button--text-thick"
-											style="width: 95px; height: 38px; background-color: #FAAC58; border-color: #FAAC58; font-size: 1.2em; font-weight: bold; font-family: 'Raleway', Arial, sans-serif;"
-											onclick="javascript:location.href='<%=cp %>/login.action';">Login</button>
-										<button type="button"
-											class="button button--ujarak button--border-thin button--text-thick"
-											style="width: 95px; height: 38px; background-color: #FAAC58; border-color: #FAAC58; font-size: 1.2em; font-weight: bold"
-											onclick="javascript:location.href='<%=cp %>/signup.action';">회원가입</button>
-									</c:when>
-									<c:otherwise>
-										<button type="button"
-											class="button button--ujarak button--border-thin button--text-thick"
-											style="width: 150px; height: 38px; background-color: #FAAC58; border-color: #FAAC58; font-size: 1.2em; font-weight: bold"
-											onclick="javascript:location.href='<%=cp %>/logout.action';">Logout</button>
-									</c:otherwise>
-								</c:choose>
-
-								<!-- <button type="button"
-								class="btn btn-warning hidden-xs ng-binding"
-								ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
-								ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;" style="font-size: 1.2em;background-color: red;">주문표(0)</button> -->
-
-								<button type="button"
-									class="button button--ujarak button--border-thin button--text-thick"
-									id="cartList"
-									style="width: 150px; height: 38px; font-size: 1.2em; background-color: #FAAC58; border-color: #FAAC58; font-weight: bold;">주문표(0)</button>
-								<div id="cartInfo"></div>
-							</form>
-
-							<!--------------------------------------------------------------------------------------------------------------------------->
-						</div>
-					</div>
-				</div>
-
-				<%@ include file="/WEB-INF/views/store/layout.jsp" %>
+				<%@ include file="/WEB-INF/views/store/header.jsp" %>
 				
+				<%@ include file="/WEB-INF/views/store/layout.jsp" %>
 			</div>
-
-
-
-
-
-			<div id="quick-btn" class="hide-btn">
-				<a ng-click="click_cart_button()" id="button-cart-btm" href=""
-					class="btn-cart ng-hide" ng-show="check_show_cart_button('quick')"><span
-					class="badge ng-binding" ng-bind="global_cart.get_amount()">0</span></a>
-				<a ng-click="scrollTop($event)" class="btn-top">top</a>
-			</div>
-
 		</div>
+		
+		
 		<div id="messages" class="messages"></div>
 		<div id="messages_bottom" class="messages messages-bottom"></div>
 		<div ng-show="on_loading" id="spinner" style="" class="ng-hide">
@@ -641,46 +509,9 @@ $(document).ready(function() {
 				</div>
 			</div>
 		</form>
-
-		<!------------------------------------------------------------------------------------------------- -->
-		<div class="footer" style="background-color: #FBFBEF">
-			<div class="footer-menu"></div>
-
-			<!-- =========================================================================================== 하단끝 -->
-
-			<div class="company-wrap">
-				<div class="company-logo"></div>
-				<div class="company-info">
-					<p>
-						<strong>(유) 윗츠윌 코리아 </strong>
-					</p>
-
-				</div>
-			</div>
-
-			<!-- ========================================================================= 하단 부분 -->
-
-			<div class="service-info">
-				<div class="bpg">
-					<a href="#/trust/"><span class="img"></span><span class="text">잇츠윌<br>안심센터
-					</span></a>
-				</div>
-				<div class="cleanreview">
-					<a href="#/cleanreview/"><span class="img"></span><span
-						class="text">잇츠윌 100%<br>클린리뷰
-					</span></a>
-				</div>
-				<div class="csc">
-					<em>고객만족센터</em> <strong>1661-5270</strong> <span>24시간, 연중무휴</span>
-				</div>
-			</div>
-			<div class="guide">
-				<p>(유) 잇츠윌 코리아는 통신판매중개자이며 통신판매의 당사자가 아닙니다. 따라서 상품/ 거래정보 및 거래와
-					관련하여 잇츠윌에 등록된 판매자의 고의 또는 과실로 소비자에게 발생하는 손해에 대해 (유)잇츠윌 코리아는 책임을 지지
-					않습니다. 상품 및 거래에 관하여 보다 정확한 정보는 해당 판매자에게 직접 확인하여 주시기 바랍니다. Copyright
-					EATSWILL. All Rights Reserved.</p>
-			</div>
-		</div>
+		
+		<%@ include file="/WEB-INF/views/store/footer.jsp" %>
+		
 		<script type="text/javascript">
       if (is_11st) {
          document
