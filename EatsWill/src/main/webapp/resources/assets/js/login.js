@@ -21,7 +21,7 @@ function cartOpen(check) {
 	var info = "";
 
 	if(check == "my") {
-		f = document.myForm;
+		f = document.infoForm;
 	} else {
 		f = document.cartForm;
 	}

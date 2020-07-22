@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="navigation ver-pc" ng-class="header_show()"
-	style="background-color: #FBFBEF;">
+	style="background-color: #FDF5E6;">
 	<!--  색상수정예정예정 -->
 	<div class="app-down-banner clearfix ng-hide"
 		ng-show="is_show_promotion_banner()">
@@ -45,7 +45,7 @@
 			<li><a href="heartStore.action">찜 목록</a></li>
 			<li><a href="myReview.action">마이 리뷰</a></li>
 		</ul>
-		<form method="POST" action="" name="myForm">
+		<form method="POST" action="" name="infoForm">
 			<div id="myInfo"></div>
 		</form>
 	</nav>
@@ -85,17 +85,17 @@
 					<c:when test="${empty sessionScope.customInfo.id }">
 						<button type="button"
 							class="button button--ujarak button--border-thin button--text-thick"
-							style="width: 95px; height: 38px; background-color: #FAAC58; border-color: #FAAC58; font-size: 1.2em; font-weight: bold; font-family: 'Raleway', Arial, sans-serif;"
+							style="width: 95px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 1.2em; font-weight: bold; font-family: 'Raleway', Arial, sans-serif;"
 							onclick="javascript:location.href='login.action';">Login</button>
 						<button type="button"
 							class="button button--ujarak button--border-thin button--text-thick"
-							style="width: 95px; height: 38px; background-color: #FAAC58; border-color: #FAAC58; font-size: 1.2em; font-weight: bold"
+							style="width: 95px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 1.2em; font-weight: bold"
 							onclick="javascript:location.href='signup.action';">회원가입</button>
 					</c:when>
 					<c:otherwise>
 						<button type="button"
 							class="button button--ujarak button--border-thin button--text-thick"
-							style="width: 150px; height: 38px; background-color: #FAAC58; border-color: #FAAC58; font-size: 1.2em; font-weight: bold"
+							style="width: 150px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 1.2em; font-weight: bold"
 							onclick="javascript:location.href='logout.action';">Logout</button>
 					</c:otherwise>
 				</c:choose>
@@ -108,7 +108,7 @@
 				<button type="button"
 					class="button button--ujarak button--border-thin button--text-thick"
 					id="cartList"
-					style="width: 150px; height: 38px; font-size: 1.2em; background-color: #FAAC58; border-color: #FAAC58; font-weight: bold;">주문표(0)</button>
+					style="width: 150px; height: 38px; font-size: 1.2em; background-color: #FDCD8C; border-color: #FDCD8C; font-weight: bold;">주문표(0)</button>
 				<div id="cartInfo"></div>
 			</form>
 

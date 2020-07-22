@@ -738,7 +738,7 @@ button, .button {
   font-size: 14px;
   font-weight: bold;
   color: #616161;
-  background: #f1f1f1;
+  background: initial;
   letter-spacing: -1px;
 }
 .form-horizontal .control-group .controls {
@@ -1422,9 +1422,11 @@ img {
 .btn-wrapper {
   text-align: center;
 }
+/* 
 .btn-wrapper button {
   width: 176px;
-}
+} 
+*/
 .country_origin_form {
   border-top: none;
 }

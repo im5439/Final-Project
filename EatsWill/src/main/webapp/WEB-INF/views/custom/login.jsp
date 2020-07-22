@@ -100,7 +100,7 @@ ng\:form {
 		document
 				.write('<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://www.yogiyo.co.kr/mobile/image/app_144x144.png">');
 		document
-				.write('<link rel="icon" type="image/png" href="/eatswill/resources/images/sicon.jpg" />');
+				.write('<link rel="icon" type="image/png" href="https://www.yogiyo.co.kr/mobile/image/favicon.ico" />');
 	}
 </script>
 
@@ -117,22 +117,23 @@ ng\:form {
 </script>
 
 <meta name="theme-color" content="#DC1400">
-<meta property="og:title" content="lets eats will !">
+<meta property="og:title" content="요기요 - 즐거움은 요기부터. 배달음식 주문은 역시 요기요!">
 <meta property="og:url" content="http://www.yogiyo.co.kr/">
 <meta property="og:image"
 	content="https://www.yogiyo.co.kr/mobile/image/app_img_560x292.png">
 <meta property="og:description"
-	content="">
+	content="요기요에서 원하는 배달음식을 쉽고 편리하게! 먹어본 사람만 쓸 수 있는 클린리뷰로 배달맛집 인증, 다양한 할인 혜택과 함께 배달되지 않던 인기맛집까지, 지금 바로 요기요에서 주문하세요.">
 <!-- ngIf: ! page.title -->
-<title ng-if="! page.title" class="ng-scope">다함께 eats will</title>
+<title ng-if="! page.title" class="ng-scope">요기요 - 즐거움은 요기부터.
+	배달음식 주문은 역시 요기요!</title>
 <!-- end ngIf: ! page.title -->
 <!-- ngIf: page.title -->
 <link rel="apple-touch-icon-precomposed"
-	href="/eatswill/resources/images/sicon.jpg">
+	href="https://www.yogiyo.co.kr/mobile/image/app_128x128.png">
 <link rel="apple-touch-icon-precomposed" sizes="144x144"
-	href="/eatswill/resources/images/sicon.jpg">
+	href="https://www.yogiyo.co.kr/mobile/image/app_144x144.png">
 <link rel="icon" type="image/png"
-	href="/eatswill/resources/images/sicon.jpg">
+	href="https://www.yogiyo.co.kr/mobile/image/favicon.ico">
 
 <!-- Start location.search generate Code for Naver 검색 유입 -->
 <script type="text/javascript">
@@ -307,48 +308,46 @@ ng\:form {
 
 	<div yogiyo-header="">
 		<div id="header" class="header">
-			<div role="navigation" class="nav-bar">
-				<%@ include file="/WEB-INF/views/store/header.jsp" %>	
-			</div>
+			<%@ include file="/WEB-INF/views/store/header.jsp" %>
 		</div>
 		
 		<div class="rd-wrapper contact-wrapper">
 	    	<form class="form-horizontal form-signin" method="POST" action="" name="myForm">
-	      	<div class="registration-wrap" style="width: 600px"> 
-				<div class="control-group">
-	        		<div class="control-label">아이디</div>
-	
-	        		<div class="controls">
-	            		<input type="text" name="id" id="id" style="display: inline;height: 34px;width: 70%"/>
+		      	<div class="registration-wrap" style="width: 600px"> 
+					<div class="control-group">
+		        		<div class="control-label">아이디</div>
+		
+		        		<div class="controls">
+		            		<input type="text" name="id" id="id" style="display: inline;height: 34px;width: 70%"/>
+						</div>
+					</div>
+		
+					<div class="control-group">
+		        		<div class="control-label">패스워드</div>
+		
+		        		<div class="controls">
+		            		<input type="password" name="pw" id="pw" style="display: inline;height: 34px;width: 70%" onkeyup="enterkey();"/>
+						</div>
 					</div>
 				</div>
-	
-				<div class="control-group">
-	        		<div class="control-label">패스워드</div>
-	
-	        		<div class="controls">
-	            		<input type="password" name="pw" id="pw" style="display: inline;height: 34px;width: 70%" onkeyup="enterkey();"/>
-					</div>
+				
+				<div style="text-align: center; font-size: 14px; color: brown;">
+					<label><a class="tryId" onclick="tryId_click();">아이디</a></label> / 
+					<label><a class="tryPw" onclick="tryPw_click();">비밀번호 찾기</a></label>
 				</div>
-			</div>
-			
-			<div style="text-align: center; font-size: 14px;">
-				<label><a href="#" class="tryId" onclick="tryId_click();">아이디</a></label> / 
-				<label><a href="#" class="tryPw" onclick="tryPw_click();">비밀번호 찾기</a></label>
-			</div>
-	
-	      	<div class="btn-wrapper" style="margin-bottom: 20px; text-align: -webkit-center">
-	        	<button type="button" class="button button--login"
-	        		onclick="logon();">일반계정으로 로그인</button>
-	      	</div>
-	      	
-	      	<div style="text-align: center;margin-bottom: 20px">
-	      		<a id="kakao-login-btn"></a>
-	      		<input type="hidden" id="kakaoSession" name="kakaoSession">
-	      		<input type="hidden" id="kakaoSession2" name="kakaoSession2">
-	      	</div>
-	    </form>
-	  </div>
+		
+		      	<div class="btn-wrapper" style="margin-bottom: 20px; text-align: -webkit-center">
+		        	<button type="button" class="button button--login"
+		        		onclick="logon();">일반계정으로 로그인</button>
+		      	</div>
+		      	
+		      	<div style="text-align: center;margin-bottom: 20px">
+		      		<a id="kakao-login-btn" style="padding-right: 5px;"></a>
+		      		<input type="hidden" id="kakaoSession" name="kakaoSession">
+		      		<input type="hidden" id="kakaoSession2" name="kakaoSession2">
+		      	</div>
+	    	</form>
+	    </div>
 		
 
 		<div id="quick-btn" class="hide-btn">
