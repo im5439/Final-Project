@@ -518,7 +518,15 @@ function sendIt() {
             <div class="shopping-webzine-center">
                <div class="shopping-webzine">
                   <div class="premium-reviews">
+                     <div>
+                     <img alt="" src="/eatswill/resources/img/리뷰이벤트.jpg">
+                     </div>
+                     <br>
+                     <hr>
                      <div class="product-review-modify">
+                     
+                     
+                     
                         <div class="product-info">
                            <span class="img"> <a
                               href="http://item.gmarket.co.kr/detailview/Item.asp?goodscode=1775279016">

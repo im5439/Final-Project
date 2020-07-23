@@ -257,10 +257,6 @@ function switchScreen() {
 
    로딩창 div ----------------------------------------------------------------------------- 맨밑에 /div 있음  -->
   
-  
-
-
-   
 
    <div yogiyo-header="">
       <div id="header" class="header">
@@ -439,9 +435,11 @@ function switchScreen() {
                
                   <label for="address" class="col-sm-2 control-label">주소</label>
                   <div class="col-sm-10">
-                  <input type="text" name="addr1" id="addr1" style="display: inline;height: 34px;width: 70%"
-	            		value="${sessionScope.customInfo.addr1 }"  readonly="readonly" disabled="disabled"/>
+                  <input type="text" name="deliveryAddr1" id="addr1" style="display: inline;height: 34px;width: 70%"
+	            		value="${dto.userAddr1 }"  readonly="readonly" disabled="disabled"/>
 	            <input type="button" value="주소검색" id="addrcheck" onclick="sample3_execDaumPostcode();"/>
+	            <input type="hidden" name="deliveryAddr1" id="deliveryAddr1"
+	            		value="${dto.userAddr1 }" />
 	            <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:10px 0;position:relative"></div>
                   
                   </div>
@@ -449,7 +447,7 @@ function switchScreen() {
                 <div class="form-group
                   ">
                   <div class="col-sm-offset-2 col-sm-10">
-                    <input type="text" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" placeholder="(필수)상세주소 입력" name="addr2" id="addr2" ng-model="session_storage.checkout_input.address_detail" ng-blur="check_address_detail($event)" ng-required="true" required="required">
+                    <input type="text" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" placeholder="(필수)상세주소 입력" name="deliveryAddr2" id="addr2" value="${dto.userAddr2 }" ng-model="session_storage.checkout_input.address_detail" ng-blur="check_address_detail($event)" ng-required="true" required="required">
                     <span class="help-block mar0 ng-hide" ng-show="(form_checkout.$submitted || form_checkout.address_detail.$touched)"><span class="text-danger" ng-show="form_checkout.address_detail.$error.required">상세한 주소를
                         입력해주세요.</span></span>
                   </div>
@@ -518,28 +516,19 @@ function switchScreen() {
             <div class="panel-body payment-wrap">
               <div class="ygy-payment clearfix" ng-show="check_enable_online_payment()">
                 <div>
-                  <strong>바로 결제</strong> <span class="stxt">ㅇㅇㅇ</span>
+                
                   <span ng-show="is_yogiyo &amp;&amp; is_discount()" class="">
-                    <span class="coupon ng-binding ng-hide" ng-show="delivery_discount_value() != 0">0원</span>
-                   
-                  </span>
-                  <span class="txt-ie" ng-show="!is_mobile_device &amp;&amp; !is_ie"><br><em>* 주의사항 적기</em></span>
-                </div>
-                <div class="btn-group">
-                  <label class="btn btn-default enabled_npay()"  >
-                    <i class="icon-check icon-card"></i>
-					<input type="radio"  value="click">신
-                  </label>
                   
-                  <label class="btn btn-default enabled_npay()"  >
-                    <i class="icon-check icon-phone"></i> 
-                    <input type="radio" name="payment" class="btn btn-default ng-pristine ng-untouched ng-valid ng-valid-required" 
-                    value="onlyhpp" ng-required="true" bs-radio="" 
-                    ng-click="select_payment($event)" required="required">현금
-                  </label>
-                 
+                       <!-- 포인트  -->
+                 <div>
+                 보유 포인트:${dto.userPoint }
+                  	<input type="text" value="0" name="userPoint" id="useUserPoint" > 
+                  	<input type=hidden value="${dto.count-1 }" id="orderCount" name="orderCount">
+                </div>
+                <input type="hidden" value="${dto.userName }" name="userName" id="userName">
                
                 </div>
+             
               </div>
 
               <div ng-show="is_show_creditcard || is_show_cash"><strong>현장결제</strong> <span class="stxt">음식받고 직접
@@ -553,25 +542,19 @@ function switchScreen() {
                 
                 <label class="btn btn-default active" ng-show="is_show_creditcard" ng-class="is_show_cash ? '':'btn-full'">
                   <i class="icon-check icon-card"></i>
-                   <input type="radio" name="payment" 
+                   <input type="radio" id="orderMode" 
                   class="btn btn-default ng-pristine ng-untouched ng-valid ng-valid-required" 
-                  ng-model="session_storage.checkout_input.payment" value="creditcard" 
-                  ng-required="true" bs-radio="" ng-click="select_payment($event)" required="required" oncl>신용카드
+                  ng-model="session_storage.checkout_input.payment" 
+                  ng-required="true" bs-radio="" required="required" onclick="confirm('현장에서 결제하시겠습니까?');requestPay('no');">신용카드
                 </label>
                 
                 <label class="btn btn-default" ng-show="is_show_cash" ng-class="is_show_creditcard ? '':'btn-full'">
-                  <i class="icon-check icon-money"></i> <input type="radio" name="payment" class="btn btn-default ng-pristine ng-untouched ng-valid ng-valid-required" 
-                  ng-model="session_storage.checkout_input.payment" value="cash" ng-required="true" bs-radio="" ng-click="select_payment($event)" required="required">현금
+                  <i class="icon-check icon-money"></i> <input type="radio" id="orderMode" class="btn btn-default ng-pristine ng-untouched ng-valid ng-valid-required" 
+                  ng-model="session_storage.checkout_input.payment"  ng-required="true" bs-radio="" onclick="requestPay('no');" required="required">현금
                 </label>
                 
-                <!-- 포인트  -->
-                 <div>
-                 보유 포인트:${dto.userPoint }
-                  	<input type="text" value="0" name="userPoint" id="userPoint" > 
-                  	<input type=text value="${dto.count-1 }" id="orderCount" name="orderCount">
-                </div>
-                <input type="hidden" value="${dto.userName }" name="userName" id="userName">
-                
+           
+         
               </c:forEach> 
               </div>
             </div>
@@ -635,7 +618,6 @@ function switchScreen() {
                <c:forEach var="dto1" items="${lists1 }">
               ${dto1.menuName } x${dto1.cQty }
               <input type="hidden" value="${dto1.menuName }" id="menuName" name="menuName">
-              <input type="text" value="${dto1.shopCode}" name="shopCode" id="orderShopCode">
             </c:forEach>
                 <div class="order-item clearfix">
                   <div class="order-name">
@@ -660,12 +642,13 @@ function switchScreen() {
                 <div class="order-price">
                   <span ng-bind="total_price|krw" class="ng-binding">${priceAmount }</span>
                   <input type="hidden" value="${priceAmount }" id="priceAmount" name="priceAmount">
+                  <input type="hidden" value="${shopCode }" id="orderShopCode" name="orderShopCode">
                 </div>    
               </span>
             </div>
           </div>
         </div>
- </form>  
+ 
 <!--  결제창 위 공지사항 -->
         <div class="agree-set">
           <small>
@@ -678,11 +661,11 @@ function switchScreen() {
           </span></small>
         </div>
 <!-- ------------------------------------------------------------------------------------------------------------------------ -->
-    
+   </form>   
 
        
         
-        <button class="btn btn-lg btn-block btn-ygy1 ng-binding" onclick="requestPay();" value="결제하기">결제하기</button>
+        <button class="btn btn-lg btn-block btn-ygy1 ng-binding" onclick="requestPay('yes');" value="바로결제하기">바로결제하기</button>
       </div>
   
 </div>

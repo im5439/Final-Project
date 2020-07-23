@@ -326,17 +326,18 @@ ng\:form {
 							</c:otherwise>
 						</c:choose>
 						<li><a href="<%=cp%>/updateInfo.action">내정보수정</a></li>
-						<li><a href="generic.html">장바구니</a></li>
-						<li><a href="<%=cp%>/myOrder.action">주문내역</a></li>
-						<li><a href="<%=cp%>/heartStore.action">찜 목록</a></li>
-						<li><a href="<%=cp%>/myReview.action">마이 리뷰</a></li>
+                     <li><a href="generic.html">장바구니</a></li>
+                     <li><a href="<%=cp%>/myOrder.action">주문내역</a></li>
+                     <li><a href="<%=cp%>/heartStore.action">찜 목록</a></li>
+                     <li><a href="<%=cp%>/myReview.action">마이 리뷰</a></li>
 					</ul>
 				</nav>
             <!-- ----------------------------------------------------------------------------------------- -->   
                <div class="nav-top clearfix"
                   ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
+                  <a href="<%=cp%>/main.action" style="text-decoration: none;">
                   <img alt="" src="/eatswill/resources/img/icon3.png" width="125px"
-                  height="40px" style=" margin: 20px 10px;" >
+                  height="40px" style=" margin: 20px 10px;" ></a>
             <%--       <h1 class="logor pull-left" ng-click="<%=cp%>/main.action" ></h1>  --%><!-- 로고로고 -->
                   <div id="cart" class="pull-right">
                      <span class="gps-status ng-binding"
@@ -462,7 +463,7 @@ ng\:form {
                   <table width="100%" border="1" class="b_table_grey">
                      <thead align="center">
                         <tr align="center">
-                           <th colspan="2" align="center">매장 정보</th>
+                           <th colspan="2" style="text-align: center;">매장 정보</th>
                         </tr>
                      </thead>
                      <c:forEach var="dto" items="${lists}">
@@ -483,11 +484,26 @@ ng\:form {
                                  <div class="td_info">
                                     
                                     <ul>
-                                       <li class="seller_info"><em></em><a href="">${dto.shopName }</a></li>
+                                       <li class="seller_info"><em></em><a href="${storeUrl}?shopCode=${dto.shopCode}&ceoId=${dto.ceoId}">${dto.shopName }</a></li>
                                        <br>
                                        <li class="tit_info" style="font-size: 12pt">
-                                       <span class="star-rating" style="text-align: left"><span style ="width:${dto.shopStar}%;text-align: left""></span></span>
-                                       ${dto.shopScore } (${dto.reCnt })</li>
+                                      <div>
+									<div class="star-point">
+										<span class="total"> <c:forEach begin="0"
+												end="${dto.shopScore - 1 }">
+												<span class="full ng-scope"
+													ng-repeat="i in review.rating|number_to_array track by $index">★</span>
+											</c:forEach> <c:if test="${dto.shopScore < 5 }">
+												<c:forEach begin="0" end="${4 - dto.shopScore }">
+													<span class="empty ng-scope"
+														ng-repeat="i in (5.9 - (review.rating|number:1))|number_to_array track by $index">★</span>
+												</c:forEach>
+											</c:if>
+										</span> 
+											  ${dto.shopScore } (${dto.reCnt })
+									</div>
+								</div>
+                                      </li>
                                     </ul>
                                  </div>
                               </td>
@@ -503,10 +519,10 @@ ng\:form {
 
 
                   <!-- 더보기 기능 -->
-                  <li class="list-group-item btn-more" ng-show="check_more_review()">
+                  <!-- <li class="list-group-item btn-more" ng-show="check_more_review()">
                      <a ng-click="get_next_reviews()"><span>더 보기<i
                            class="arr-down"></i></span></a>
-                  </li>
+                  </li> -->
                </ul>
             </div>
 
@@ -518,6 +534,25 @@ ng\:form {
          <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
          <script src="/eatswill/resources/assets/js/main.js"></script>
 
+<!-- 카카오톡 채팅 시작 -->
+		<div style="position: fixed; right: 10px; bottom: 10px;" class="talk_image">
+			<a id="channel-chat-button" href=""
+				onclick="void chatChannel();"> <img
+				src="/eatswill/resources/img/consult_small_yellow_pc1.png"
+				width="70" height="70"/>
+			</a>
+			<script type="text/javascript">
+			  // 웹 플랫폼 도메인 등 초기화한 앱의 설정이 그대로 적용됩니다.
+			  // 초기화한 앱에 현재 도메인이 등록되지 않은 경우 에러가 발생합니다.
+			  Kakao.init('c089c8172def97eb00c07217cae17495')
+			  function chatChannel() {
+			    Kakao.Channel.chat({
+			      channelPublicId: '_Yfaxoxb',
+			    })
+			  }
+			</script>
+		</div>
+		<!-- 카카오톡 채팅 끝 -->
 
 </body>
 </html>

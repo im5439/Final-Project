@@ -71,6 +71,16 @@ public class CustomController {
 
 		return cnt;
 	}
+	
+	// 주문표 이동 기능
+	@RequestMapping(value = "/cartOpen.action", method = RequestMethod.POST)
+	@ResponseBody
+	public String cartOpen(String id) {
+
+		String cnt = dao.cartOpen(id);
+
+		return cnt;
+	}	
 
 	// 회원가입 페이지
 	@RequestMapping(value = "/signup.action", method = RequestMethod.GET)
@@ -103,7 +113,7 @@ public class CustomController {
 	}
 
 	// 로그인 페이지
-	@RequestMapping(value = "/login.action", method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value = "/login.action", method = RequestMethod.GET)
 	public String login(HttpServletRequest req, String message) {
 		
 		if (message != null && !message.equals("")) {
@@ -254,7 +264,6 @@ public class CustomController {
 			Transport.send(msg);
 
 		} catch (Exception e) {
-			System.out.println("I am here??? ");
 	   		e.printStackTrace();
 		} 
 		return "redirect:/login.action";
@@ -338,11 +347,12 @@ public class CustomController {
 		List<MyDTO> lists = dao.getBuyList(dto.getId());
 		String reviewUrl = cp + "/reviewCreated.action?";
 		String myOrderCancel = cp + "/myOrderCancel.action?";
-		
+		String storeUrl = cp + "/page.action";
 		
 		req.setAttribute("lists", lists);
 		req.setAttribute("reviewUrl", reviewUrl);
 		req.setAttribute("myOrderCancel", myOrderCancel);
+		req.setAttribute("storeUrl", storeUrl);
 		
 		return "custom/myOrder";
 	}
@@ -395,8 +405,9 @@ public class CustomController {
 		dto.setShopCode(req.getParameter("shopCode"));
 		dto.setUserId(cdto.getId());
 		dto.setReNum(maxReNum + 1);
-		
+
 		dao.reviewInsert(dto);
+		dao.pointUpdate(cdto.getId());
 		
 		return "redirect:/myReview.action";
 	}
@@ -405,13 +416,15 @@ public class CustomController {
 	// 찜한 매장 띄우기
 	@RequestMapping(value = "/heartStore.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String heartStore(HttpServletRequest req) throws Exception {
-		
+		String cp = req.getContextPath();
 		HttpSession session = req.getSession();
 		CustomDTO dto = (CustomDTO)session.getAttribute("customInfo");	
 		
 		List<MyDTO> lists = dao.getHeartList(dto.getId());
+		String storeUrl = cp + "/page.action";
 		
 		req.setAttribute("lists", lists);
+		req.setAttribute("storeUrl", storeUrl);
 		
 		return "custom/heartStore";
 	}
@@ -419,15 +432,17 @@ public class CustomController {
 	// 나의 리뷰 띄우기
 	@RequestMapping(value = "/myReview.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String myReivew(HttpServletRequest req) throws Exception {
-		
+		String cp = req.getContextPath();
 		HttpSession session = req.getSession();
 		CustomDTO dto = (CustomDTO)session.getAttribute("customInfo");	
 		
 		int myReviewCnt = dao.getMyReviewCnt(dto.getId());
 		List<MyDTO> lists = dao.getMyReviewList(dto.getId());
+		String storeUrl = cp + "/page.action";
 		
 		req.setAttribute("myReviewCnt", myReviewCnt);
 		req.setAttribute("lists", lists);
+		req.setAttribute("storeUrl", storeUrl);
 		
 		return "custom/myReview";
 	}
@@ -437,6 +452,7 @@ public class CustomController {
 	public String reviewDelete(HttpServletRequest req) throws Exception {
 		int reNum = Integer.parseInt(req.getParameter("reNum"));
 		dao.reviewDelete(reNum);
+		
 		return "redirect:/myReview.action";
 	}
 

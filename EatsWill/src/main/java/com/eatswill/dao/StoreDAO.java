@@ -143,6 +143,19 @@ public class StoreDAO {
 		return lists;
 
 	}
+	
+	//장바구니에서 직접 수량 변경시 디비에 업데이트
+	public void updateQTY(int cQty,String userId,String menuCode,int cAmount) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("cQty", cQty);
+		map.put("userId", userId);
+		map.put("menuCode", menuCode);
+		map.put("cAmount", cAmount);
+		
+		sessionTemplate.update("storeMapper.updateQTY",map);
+	}
+	
 	//장바구니 삭제
 	public void deleteCart(String userId) {
 
@@ -216,6 +229,42 @@ public class StoreDAO {
 
 	}
 
+	//음식점 리스트 페이징(start, end) + 카테고리
+	public List<StoreDTO> shopPaging(int start, int end, String category){
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("category", category);
+
+		List<StoreDTO> lists = 
+				sessionTemplate.selectList("storeMapper.shopPaging",map);
+		return lists;
+
+	}
+
+
+	//음식점 카운트 all
+	public int shopCountall() {
+
+		int shopCountall = sessionTemplate.selectOne("storeMapper.shopCountall");
+
+		return shopCountall;
+
+	}
+
+	//음식점 카운트(category별)
+	public int shopCount(String category ) {
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("category", category);
+		int shopCount = sessionTemplate.selectOne("storeMapper.shopCount",map);
+
+		return shopCount;
+
+	}
+
+
 	//음식점 리스트 리뷰순 정렬
 
 	public List<StoreDTO> orderByRe(){
@@ -259,13 +308,42 @@ public class StoreDAO {
 		return lists;
 
 	}
-	
+
 	//shopName 셀렉트
 	public StoreDTO selectOrderShopName(String userId){
-		
+
 		StoreDTO dto = sessionTemplate.selectOne("storeMapper.selectOrderShopName",userId);
 		return dto;
 
+	}
+
+	//결제 메뉴코드 셀렉트
+	public List<StoreDTO> selectPreOrderDe(String userId){
+
+		List<StoreDTO> lists = 
+				sessionTemplate.selectList("storeMapper.selectPreOrderDe",userId);
+		return lists;
+
+	}
+
+	//결제 오더메인 인서트
+	public void insertOrderMain(StoreDTO dto) {	
+		sessionTemplate.insert("storeMapper.insertOrderMain",dto);	
+	}
+
+	//결제 오더디테일 인서트
+	public void insertOrderDetail(StoreDTO dto) {	
+		sessionTemplate.insert("storeMapper.insertOrderDetail",dto);	
+	}
+
+	//포인트로 결제시 포인트 차감
+	public void useUserPoint(StoreDTO dto) {	
+		sessionTemplate.update("storeMapper.useUserPoint",dto);	
+	}
+
+	//결제후 결제금액 5프로 포인트 적립
+	public void updateOrderPoint(String userId) {	
+		sessionTemplate.update("storeMapper.updateOrderPoint",userId);	
 	}
 
 

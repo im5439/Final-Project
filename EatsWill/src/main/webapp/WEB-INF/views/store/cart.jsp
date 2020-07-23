@@ -126,16 +126,20 @@ input[type=button]{
         
 		
 		if(cal==2){
-    	 
+			alert("a");
+			 
 	         var val = Number(obj1.value) + 1;
+	         alert("b");
 	         obj1.value = val;
-	
+	         alert("c");
 	         obj3.value =  Number(obj1.value) * Number(obj2.value);
+	         alert("d");
 	         addsidesel(btnIdx);
+	         alert("e");
 	         //기존의 주문 총 금액에서 선택한 메뉴의 금액을 더함
 	         priceAmount.value = Number(priceAmount.value) + Number(obj2.value);
-         
-         
+	         alert("f");
+	         updateQty(btnIdx);         
 		}
 		
 		
@@ -144,7 +148,7 @@ input[type=button]{
 	        var val = Number(obj1.value)-1;
 	        
 	      	//기존의 주문 총 금액에서 선택한 메뉴의 금액을 뺌
-	        if(val>=1)
+	        if(val>=1) {
 	        	priceAmount.value = Number(priceAmount.value) - Number(obj2.value);
 			}
 	        
@@ -154,6 +158,9 @@ input[type=button]{
 	        obj3.value =  Number(obj1.value) * Number(obj2.value);
 	        addsidesel(btnIdx);
 	        
+	        updateQty(btnIdx);     
+	        
+		}
 		 
     }
 	
@@ -182,6 +189,36 @@ input[type=button]{
     		
     	});
     }
+	
+	
+	function updateQty(btnIdx) {
+		
+		alert("드러옴");
+		
+    	var params = "cQty=" + $("#amount" + btnIdx).val()
+    	+ "&menuCode=" + $("#cartMenuCode" + btnIdx).val()
+    	+ "&cAmount=" + $("#cAmount" + btnIdx).val();
+    	
+    	alert(params);
+    	
+    	$.ajax({
+    		type:"POST",
+    		url:"<%=cp%>/updateCQTY.action",
+    		data:params,
+    		success:function(args){
+    					
+    		$("#cartHere").html(args);
+    			
+    		},
+    		error:function(e){
+    			alert(e.responseText);
+    		}
+    		
+    	});
+		
+		
+		
+	}
  
     </script>
     

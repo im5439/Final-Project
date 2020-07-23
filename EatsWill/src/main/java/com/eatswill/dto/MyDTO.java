@@ -31,12 +31,10 @@ public class MyDTO {
 	private String shopImg;
 	private double shopScore;
 	private int reCnt;
-	private int shopStar;
 	private int reStar;
 	private String ceoReContent;
 	private int cnt;
-	
-	
+	private String ceoId;
 	
 	//--------------getter/setter
 	public String getShopName() {
@@ -153,12 +151,6 @@ public class MyDTO {
 	public void setReCnt(int reCnt) {
 		this.reCnt = reCnt;
 	}
-	public int getShopStar() {
-		return shopStar;
-	}
-	public void setShopStar(int shopStar) {
-		this.shopStar = shopStar;
-	}
 	public String getCeoReContent() {
 		return ceoReContent;
 	}
@@ -177,6 +169,12 @@ public class MyDTO {
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
 	}
-	
+	public String getCeoId() {
+		return ceoId;
+	}
+	public void setCeoId(String ceoId) {
+		this.ceoId = ceoId;
+	}
+
 	
 }
