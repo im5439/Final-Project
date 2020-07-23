@@ -539,7 +539,7 @@ body {
 
 /* 2020.07.08 수정 */
 input[type="text"],input[type="password"], input.txt {
-  width: 30%;		/* width: auto; */
+  width: 45%;		/* width: auto; */
   height: 24px;
   line-height: 1;
   font-size: 14px;
@@ -740,9 +740,10 @@ button, .button {
   color: #616161;
   background: initial;
   letter-spacing: -1px;
+  padding-left: 20px;
 }
 .form-horizontal .control-group .controls {
-  padding-left: 203px;
+  padding-left: 130px;
 }
 .form-horizontal textarea {
   width: 96%;

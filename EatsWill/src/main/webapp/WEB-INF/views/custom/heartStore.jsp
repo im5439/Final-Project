@@ -51,42 +51,37 @@ ng\:form {
 <script async="" src="//connect.facebook.net/en_US/fbevents.js"></script>
 
 <meta name="theme-color" content="#DC1400">
-<meta property="og:title" content="잇츠윌-누구보다빠르게 남들과는 다르게">
+<meta property="og:title" content="lets eats will !">
 <meta property="og:url" content="http://www.yogiyo.co.kr/">
-<meta property="og:image"
-   content="https://www.yogiyo.co.kr/mobile/image/app_img_560x292.png">
-<meta property="og:description"
-   content="요기요에서 원하는 배달음식을 쉽고 편리하게! 먹어본 사람만 쓸 수 있는 클린리뷰로 배달맛집 인증, 다양한 할인 혜택과 함께 배달되지 않던 인기맛집까지, 지금 바로 요기요에서 주문하세요.">
+<meta property="og:description" content="">
 <!-- ngIf: ! page.title -->
+<title ng-if="! page.title" class="ng-scope">나의 관심 매장</title>
+<!-- end ngIf: ! page.title -->
 <!-- ngIf: page.title -->
-<title ng-if="page.title" ng-bind="page.title + &quot; - 요기요&quot;"
-   class="ng-binding ng-scope">나의 관심 매장</title>
-<!-- end ngIf: page.title -->
 <link rel="apple-touch-icon-precomposed"
-   href="https://www.yogiyo.co.kr/mobile/image/app_128x128.png">
+	href="/eatswill/resources/images/sicon.jpg">
 <link rel="apple-touch-icon-precomposed" sizes="144x144"
-   href="https://www.yogiyo.co.kr/mobile/image/app_144x144.png">
+	href="/eatswill/resources/images/sicon.jpg">
 <link rel="icon" type="image/png"
-   href="https://www.yogiyo.co.kr/mobile/image/favicon.ico">
-<link rel="stylesheet"
-   href="css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
-<link rel="stylesheet" href="/eatswill/resources/assets/css/app.css"
-   type="text/css" />
-   <link rel="shortcut icon"
-   href="http://image.gmarket.co.kr/_Net/MyG/favicon/gmarket.ico">
+	href="/eatswill/resources/images/sicon.jpg">
+   
 <link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
+<link rel="stylesheet" href="/eatswill/resources/assets/ButtonStylesInspiration/css/buttons.css" />
+<link rel="stylesheet" href="/eatswill/resources/assets/ButtonStylesInspiration/css/normalize.css" />
+<link rel="stylesheet" href="/eatswill/resources/assets/ButtonStylesInspiration/css/vicons-font.css" />
+<link rel="stylesheet" href="/eatswill/resources/assets/css/bootstrap.min.css" />
 
 
 <link rel="stylesheet" type="text/css"
    href="http://script.gmarket.co.kr/pc/css/common/kr/ui/desktop_layout.css">
 <link rel="stylesheet" type="text/css"
-   href="http://script.gmarket.co.kr/pc/css/ko/myg.css">
+   href="/eatswill/resources/assets/css/myg.css">
 <link rel="stylesheet" type="text/css"
    href="http://script.gmarket.co.kr/pc/css/ko/myg_net.css">
 
 <script async="" src="//script.gmarket.co.kr/js/header/statsna.js"></script>
 <script async=""
-   src="//montelena.gmarket.co.kr/montelena.js?path=http://192.168.16.23:8080/eatswill/myOrder.action"></script>
+   src="//montelena.gmarket.co.kr/montelena.js"></script>
 <script async=""
    src="//script.gmarket.co.kr/mobile/js/common/kr/util/viewability.js"></script>
 <script async="" src="//script.gmarket.co.kr/js/header/statsna.js"></script>
@@ -114,6 +109,7 @@ ng\:form {
    <link rel="stylesheet"
    href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
    <script type="text/javascript" src="/eatswill/resources/assets/js/cart.js"></script>
+   <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
 <script type="text/javascript"
    src="http://script.gmarket.co.kr/_Net/js/gmkt.js?dummy=2012091327262"></script>
@@ -274,145 +270,128 @@ ng\:form {
 
    <div yogiyo-header="">
       <div id="header" class="header">
-
-         <div role="navigation" class="nav-bar">
-            <div class="navigation ver-pc" ng-class="header_show()" style="background-color:orange;   "> <!--  색상수정예정예정 -->
-               <div class="app-down-banner clearfix ng-hide"
-                  ng-show="is_show_promotion_banner()">
-                  <div class="landing-banner">
-                     <div class="landing-header">
-                        <input type="checkbox" id="landing_close" name="landing_close"
-                           ng-model="is_check_noshow"
-                           class="ng-pristine ng-untouched ng-valid"> <label
-                           for="landing_close"><span></span><img
-                           src="image/img_day_close.png" alt=""></label> <a href=""
-                           ng-click="hide_app_download_block()"
-                           class="ygy-app-down-btn-close"><img
-                           src="image/img_close.png" alt=""></a>
-                     </div>
-                     <img src="image/splash_banner_firstorder_5000.png" alt="">
-                     <a href="" ng-click="download_app()" class="btn-ygy-app-down"><img
-                        src="image/btn-appdown.png" alt="앱 다운로드"></a>
-                  </div>
-               </div>
-            <!-- ----------------------------------------------------------------------------------------- -->   
-               
-               
-               
-               
-               <nav>
-					<ul>
-						<li><a href="#menu">Menu</a></li>
-					</ul>
-				</nav>
-					
-				<nav id="menu">
-					<h2>Menu</h2>
-					<br/>
-					<input type="hidden" id="sessionId" value="${sessionScope.customInfo.id }"/>
-					<ul>
-						<c:choose>
-							<c:when test="${empty sessionScope.customInfo.id }">
-								<li><a href="${pageContext.request.contextPath}/login.action">로그인</a></li>
-							</c:when>
-							<c:otherwise>
-								<li><font color="#F2849E">${sessionScope.customInfo.name }</font> 님 환영합니다.
-	                      		<p style="text-align: left">
-	                      			전화번호 : ${sessionScope.customInfo.tel }</br>
-	                      			포인트 : ${sessionScope.customInfo.point }
-	                      		</p>
-										
-								<a href="javascript:logout();" data-nethru_clcode="A000012">로그아웃</a></li>
-							</c:otherwise>
-						</c:choose>
-						<li><a href="<%=cp%>/updateInfo.action">내정보수정</a></li>
-                     <li><a href="generic.html">장바구니</a></li>
-                     <li><a href="<%=cp%>/myOrder.action">주문내역</a></li>
-                     <li><a href="<%=cp%>/heartStore.action">찜 목록</a></li>
-                     <li><a href="<%=cp%>/myReview.action">마이 리뷰</a></li>
-					</ul>
-				</nav>
-            <!-- ----------------------------------------------------------------------------------------- -->   
-               <div class="nav-top clearfix"
-                  ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
-                  <a href="<%=cp%>/main.action" style="text-decoration: none;">
-                  <img alt="" src="/eatswill/resources/img/icon3.png" width="125px"
-                  height="40px" style=" margin: 20px 10px;" ></a>
-            <%--       <h1 class="logor pull-left" ng-click="<%=cp%>/main.action" ></h1>  --%><!-- 로고로고 -->
-                  <div id="cart" class="pull-right">
-                     <span class="gps-status ng-binding"
-                        ng-show="check_show_location_button()"
-                        ng-click="toggle_location_block()" ng-bind="current_location">서초동</span>
-                     <a class="visible-xs" ng-show="check_show_location_button()"
-                        ng-click="toggle_location_block()"> <span
-                        class="ico-set-pic"></span>
-                     </a> <a id="button-cart" href="" class="visible-xs ng-hide"
-                        ng-click="click_cart_button()"
-                        ng-show="check_show_cart_button()"> <span class="ico-cart"></span>
-                        <span class="badge ng-binding"
-                        ng-bind="global_cart.get_amount()">0</span>
-                     </a>
-                    <%-- <button type="button" class="btn btn-login ng-binding" 
-								ng-click="login()"
-								ng-bind-html="check_login() ? '로그아웃' : '로그인 <span>|</span> 회원가입'"
-								ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next"> --%>
-							
+		<div class="navigation ver-pc" ng-class="header_show()"
+			style="background-color: #FDF5E6;">
+			<!--  색상수정예정예정 -->
+			<div class="app-down-banner clearfix ng-hide"
+				ng-show="is_show_promotion_banner()">
+				<div class="landing-banner">
+					<div class="landing-header"></div>
+		
+		
+				</div>
+			</div>
+			<!-- ----------------------------------------------------------------------------------------- -->
+		
+			<nav style="height: auto;font-size: 12px;">
+				<ul>
+					<li><a href="#menu">Menu</a></li>
+				</ul>
+			</nav>
+		
+			<nav id="menu" style="font-size: 14.4px;">
+				<h2 style="font-size: 29px;margin-top: 0;font-weight: bold;">Menu</h2>
+				<br /> <input type="hidden" id="sessionId"
+					value="${sessionScope.customInfo.id }" />
+				<ul>
 					<c:choose>
 						<c:when test="${empty sessionScope.customInfo.id }">
-							<button type="button" class="btn btn-login ng-binding" style="width: 95px"
-							onclick="javascript:location.href='<%=cp %>/login.action';">로그인</button>
-							<button type="button" class="btn btn-login ng-binding" style="width: 95px"
-							onclick="javascript:location.href='<%=cp %>/signup.action';">회원가입</button>
+							<li><a
+								href="${pageContext.request.contextPath}/login.action">로그인</a></li>
 						</c:when>
 						<c:otherwise>
-							<button type="button" class="btn btn-login ng-binding" style="width: 150px"
-							onclick="javascript:location.href='<%=cp %>/logout.action';">로그아웃</button>
+							<li><font color="#F2849E">${sessionScope.customInfo.name }</font>
+								님 환영합니다.
+								<p style="text-align: left">
+									전화번호 : ${sessionScope.customInfo.tel }</br> 포인트 :
+									${sessionScope.customInfo.point }
+								</p> <a href="logout.action" data-nethru_clcode="A000012">로그아웃</a></li>
 						</c:otherwise>
 					</c:choose>
-
-					<!-- <button type="button"
+					<li><a href="updateInfo.action">내정보수정</a></li>
+					<li><a id="basket">장바구니</a></li>
+					<li><a href="myOrder.action">주문내역</a></li>
+					<li><a href="heartStore.action">찜 목록</a></li>
+					<li><a href="myReview.action">마이 리뷰</a></li>
+				</ul>
+				<form method="POST" action="" name="infoForm">
+					<div id="myInfo"></div>
+				</form>
+			</nav>
+			<!-- ----------------------------------------------------------------------------------------- -->
+			<div class="nav-top clearfix"
+				ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
+				<a href="main.action" style="text-decoration: none;"><img
+					alt="" src="/eatswill/resources/img/icon3.png" width="125px"
+					height="40px" style="margin: 20px 10px;"></a>
+				<%--       <h1 class="logor pull-left" ng-click="<%=cp%>/main.action" ></h1>  --%>
+				<!-- 로고로고 -->
+				<div id="cart" class="pull-right">
+					<span class="gps-status ng-binding"
+						ng-show="check_show_location_button()"
+						ng-click="toggle_location_block()" ng-bind="current_location"></span>
+					<a class="visible-xs" ng-show="check_show_location_button()"
+						ng-click="toggle_location_block()"> <span
+						class="ico-set-pic"></span>
+					</a> <a id="button-cart" href="" class="visible-xs ng-hide"
+						ng-click="click_cart_button()"
+						ng-show="check_show_cart_button()"> <span class="ico-cart"></span>
+						<span class="badge ng-binding"
+						ng-bind="global_cart.get_amount()">0</span>
+					</a>
+					<form method="POST" action="" name="cartForm">
+						<%-- <button type="button" class="btn btn-login ng-binding" 
+						ng-click="login()"
+						ng-bind-html="check_login() ? '로그아웃' : '로그인 <span>|</span> 회원가입'"
+						ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next"> --%>
+		
+		
+		
+		
+						<!-- 상단 버튼 부분 ----------------------------------------------------------------------------->
+		
+						<c:choose>
+							<c:when test="${empty sessionScope.customInfo.id }">
+								<button type="button"
+									class="button button--ujarak button--border-thin button--text-thick"
+									style="width: 95px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 14.4px; font-weight: bold; 
+									font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
+									onclick="javascript:location.href='login.action';">Login</button>
+								<button type="button"
+									class="button button--ujarak button--border-thin button--text-thick"
+									style="width: 95px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 14.4px; font-weight: bold;
+									font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
+									onclick="javascript:location.href='signup.action';">회원가입</button>
+							</c:when>
+							<c:otherwise>
+								<button type="button"
+									class="button button--ujarak button--border-thin button--text-thick"
+									style="width: 150px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 14.4px; font-weight: bold;
+									font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
+									onclick="javascript:location.href='logout.action';">Logout</button>
+							</c:otherwise>
+						</c:choose>
+		
+						<!-- <button type="button"
 						class="btn btn-warning hidden-xs ng-binding"
 						ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
 						ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;" style="font-size: 1.2em;background-color: red;">주문표(0)</button> -->
-					<button type="button" class="btn btn-warning hidden-xs ng-binding" id="cartList" style="width: 150px;font-size: 1.2em;background-color: red"
-							onclick="javascript:location.href='<%=cp %>/logout.action';">주문표(0)</button>	
-   
-                  </div>
-               </div>
-            </div>
-
-            <div id="search" class="clearfix search search-show" style="background:url('/eatswill/resources/images/th.gif'); color: white;">
-               
-               <div class="input-group">
-                  <span class="input-group-btn loc">
-                     <button class="btn btn-default ico-loc" type="button"
-                        ng-click="get_current_location()">&nbsp;</button>
-                  </span>
-                  <form action="." onsubmit="return false"
-                     class="ng-pristine ng-valid-minlength ng-valid ng-valid-required">
-                     <input type="search"
-                        class="form-control ng-pristine ng-scope ng-valid-minlength ng-valid ng-valid-required ng-touched"
-                        name="address_input" autocomplete="off" autocorrect="off"
-                        autocapitalize="off" spellcheck="false"
-                        placeholder="건물명, 도로명, 지번으로 검색하세요." ng-minlength="1"
-                        ng-required="true"
-                        ng-model="session_storage.location.address_input" bs-dropdown=""
-                        ng-focus="show_location_search()" required="required">
-                  </form>
-                  <span id="button_search_address"
-                     class="input-group-btn always-show-search-buttons">
-                     <button
-                        class="btn-search-location-cancel btn-search-location btn btn-default ng-hide"
-                        type="button" ng-click="clear_search_location_input($event)"
-                        ng-show="is_shown_location_search.v">
-                        <span class="searchfield-cancel-button">&nbsp;</span>
-                     </button>
-                     <button class="btn btn-default ico-pick" type="button"
-                        ng-click="select_location($event)" style="background-color: red;">검색</button>
-                  </span>
-               </div>
-            </div>
-         </div>
+		
+						<button type="button"
+							class="button button--ujarak button--border-thin button--text-thick"
+							id="cartList"
+							style="width: 150px; height: 38px; font-size: 14.4px; background-color: #FDCD8C; border-color: #FDCD8C; font-weight: bold;
+							font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';">주문표(0)</button>
+						<div id="cartInfo"></div>
+					</form>
+		
+					<!--------------------------------------------------------------------------------------------------------------------------->
+				</div>
+			</div>
+			
+			<%@ include file="/WEB-INF/views/layout/banner.jsp" %>
+			
+		</div>
       </div>
          
 
@@ -428,8 +407,9 @@ ng\:form {
       <div></div>
       <span class="message"></span>
    </div>
+   
    <!-- ngView:  -->
-   <div id="content" class="container-fluid ng-scope" ng-view="">
+   <div id="content" class="container-fluid ng-scope" ng-view="" style="border-top: 1px solid #d0d0d0;padding-top: 7em;padding-bottom: 7em;">
       <div class="restaurant-category-menu ng-scope ng-hide"
          ng-show="!is_mobile_width &amp;&amp; !is_mobile_width_for_category">
          <div yogiyo-restaurant-category="">
@@ -438,7 +418,7 @@ ng\:form {
          </div>
       </div>
 
-      <div class="restaurant-detail row ng-scope">
+      <div class="restaurant-detail row ng-scope" style="place-content: center;">
 
          <div class="col-sm-8" style="width: 1000px">
             <div id="banner_11st" class="banner_11st"></div>
@@ -461,9 +441,9 @@ ng\:form {
                      on-finish-render="scrollCartArea()">
                      <div class="b_ta_info">
                   <table width="100%" border="1" class="b_table_grey">
-                     <thead align="center">
-                        <tr align="center">
-                           <th colspan="2" align="center">매장 정보</th>
+                     <thead style="text-align-last: center;">
+                        <tr>
+                           <th colspan="2">매장 정보</th>
                         </tr>
                      </thead>
                      <c:forEach var="dto" items="${lists}">
@@ -487,8 +467,21 @@ ng\:form {
                                        <li class="seller_info"><em></em><a href="${storeUrl}?shopCode=${dto.shopCode}&ceoId=${dto.ceoId}">${dto.shopName }</a></li>
                                        <br>
                                        <li class="tit_info" style="font-size: 12pt">
-                                       <span class="star-rating" style="text-align: left"><span style ="width:${dto.shopStar}%;text-align: left""></span></span>
-                                       ${dto.shopScore } (${dto.reCnt })</li>
+                                       	   <div class="star-point">
+				                              <span class="total"> <c:forEach begin="0"
+				                                    end="${dto.shopScore - 1 }">
+				                                    <span class="full ng-scope"
+				                                       ng-repeat="i in review.rating|number_to_array track by $index">★</span>
+				                                 </c:forEach> <c:if test="${dto.shopScore < 5 }">
+				                                    <c:forEach begin="0" end="${4 - dto.shopScore }">
+				                                       <span class="empty ng-scope"
+				                                          ng-repeat="i in (5.9 - (review.rating|number:1))|number_to_array track by $index">★</span>
+				                                    </c:forEach>
+				                                 </c:if>
+				                              </span> 
+				                                   ${dto.shopScore } (${dto.reCnt })
+				                           </div>
+										</li>
                                     </ul>
                                  </div>
                               </td>
@@ -504,21 +497,54 @@ ng\:form {
 
 
                   <!-- 더보기 기능 -->
-                  <li class="list-group-item btn-more" ng-show="check_more_review()">
+                  <!-- <li class="list-group-item btn-more" ng-show="check_more_review()">
                      <a ng-click="get_next_reviews()"><span>더 보기<i
                            class="arr-down"></i></span></a>
-                  </li>
+                  </li> -->
                </ul>
             </div>
+         </div>
+      </div>
+    </div>
+       		
+    <%@ include file="/WEB-INF/views/layout/footer.jsp" %>     
 
-
-   <!-- Scripts -->
-         <script src="/eatswill/resources/assets/js/jquery.min.js"></script>
-         <script src="/eatswill/resources/assets/js/skel.min.js"></script>
-         <script src="/eatswill/resources/assets/js/util.js"></script>
-         <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-         <script src="/eatswill/resources/assets/js/main.js"></script>
-
+   	<!-- Scripts -->
+   	<script src="/eatswill/resources/assets/js/jquery.min.js"></script>
+   	<script src="/eatswill/resources/assets/js/skel.min.js"></script>
+	<script src="/eatswill/resources/assets/js/util.js"></script>
+    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+  	<script src="/eatswill/resources/assets/js/main.js"></script>
+  	
+  	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<script> $('.carousel').carousel({ interval: 1200 //기본 5초 }) </script>
+		
+	<!-- 카카오톡 채팅 시작 -->
+	<div style="position: fixed; right: 10px; bottom: 10px;"
+		class="talk_image">
+		<a id="channel-chat-button" href="" onclick="void chatChannel();">
+			<img src="/eatswill/resources/img/consult_small_yellow_pc1.png"
+			width="70" height="70" />
+		</a>
+		<script type="text/javascript">
+           // 웹 플랫폼 도메인 등 초기화한 앱의 설정이 그대로 적용됩니다.
+           // 초기화한 앱에 현재 도메인이 등록되지 않은 경우 에러가 발생합니다.
+           Kakao.init('c089c8172def97eb00c07217cae17495')
+           function chatChannel() {
+             Kakao.Channel.chat({
+               channelPublicId: '_Yfaxoxb',
+             })
+           }
+         </script>
+	</div>
+	<!-- 카카오톡 채팅 끝 -->
 
 </body>
 </html>

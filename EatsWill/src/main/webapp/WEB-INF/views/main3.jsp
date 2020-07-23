@@ -395,7 +395,7 @@ ng\:form {
 					</div>
 				</div>
 
-				<%@ include file="/WEB-INF/views/store/layout.jsp" %>
+				<%@ include file="/WEB-INF/views/layout/banner.jsp" %>
 				
 			</div>
 		</div>

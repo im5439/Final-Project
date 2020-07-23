@@ -166,6 +166,11 @@ public class CustomDAO {
 	public void reviewInsert(MyDTO dto) {
 		sessionTemplate.insert("customMapper.reviewInsert", dto);
 	}
+	
+	// 리뷰 등록시 포인트 업데이트
+    public void pointUpdate(String userId) {
+    	sessionTemplate.update("customMapper.pointUpdate", userId);
+    }
 
 	// 나의 리뷰 개수 확인
 	public int getMyReviewCnt(String userId) {

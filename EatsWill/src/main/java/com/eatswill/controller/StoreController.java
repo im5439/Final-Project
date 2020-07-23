@@ -492,7 +492,7 @@ public class StoreController {
 	public String list(HttpServletRequest request,StoreDTO dto,String searchKey,String searchValue,String index) throws Exception{
 
 		System.out.println("storeList µé¾î¿È");
-		
+		//System.out.println("A: " + searchKey + "B: " + searchValue + "C: " + index);
 		String cp = request.getContextPath();
 
 		List<StoreDTO> lists = dao.shopList((searchKey+searchValue));
@@ -506,7 +506,6 @@ public class StoreController {
 		request.setAttribute("index", index);
 
 		return "store/storeList";
-
 	}
 
 	//¸®ºä¼ø Á¤·Ä

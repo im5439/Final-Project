@@ -408,6 +408,10 @@ public class CustomController {
 		dto.setReNum(maxReNum + 1);
 		
 		dao.reviewInsert(dto);
+		dao.pointUpdate(cdto.getId());
+	      
+	    cdto = dao.renewSession(cdto.getId());
+	    session.setAttribute("customInfo", cdto);
 		
 		return "redirect:/myReview.action";
 	}

@@ -7,7 +7,7 @@ public class MyDTO {
 	// orderMain ÄÃ·³
 	private String orderCode;
 	private String userId;
-	private int oAmount;
+	private String oAmount;
 	private String orderDate;
 	private String shopCode;
 	private String request;
@@ -31,7 +31,6 @@ public class MyDTO {
 	private String shopImg;
 	private double shopScore;
 	private int reCnt;
-	private int shopStar;
 	private int reStar;
 	private String ceoReContent;
 	private int cnt;
@@ -62,10 +61,10 @@ public class MyDTO {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public int getoAmount() {
+	public String getoAmount() {
 		return oAmount;
 	}
-	public void setoAmount(int oAmount) {
+	public void setoAmount(String oAmount) {
 		this.oAmount = oAmount;
 	}
 	public String getOrderDate() {
@@ -151,12 +150,6 @@ public class MyDTO {
 	}
 	public void setReCnt(int reCnt) {
 		this.reCnt = reCnt;
-	}
-	public int getShopStar() {
-		return shopStar;
-	}
-	public void setShopStar(int shopStar) {
-		this.shopStar = shopStar;
 	}
 	public String getCeoReContent() {
 		return ceoReContent;

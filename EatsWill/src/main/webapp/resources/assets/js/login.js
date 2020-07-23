@@ -259,7 +259,7 @@ $(function() {
 	});
 	
 	$("#kakao-login-btn").show(function(){
-		
+
 		// 사용할 앱의 JavaScript 키를 설정해 주세요.
 		Kakao.init('da5ed75e6d7f9bcac9abaeae41fd1108');
 	   
@@ -267,6 +267,7 @@ $(function() {
 	   	Kakao.Auth.createLoginButton({
 	    	container: '#kakao-login-btn',
 	    	success: function(authObj) {
+	    		alert("A");
 	    		// 로그인 창을 매번 새로 띄웁니다.
 	     		Kakao.Auth.loginForm({
 	     			success: function(authObj) {

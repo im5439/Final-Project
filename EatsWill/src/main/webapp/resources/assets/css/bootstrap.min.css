@@ -853,11 +853,11 @@ pre code {
 		flex: 0 0 58.333333%;
 		max-width: 58.333333%
 	}
-	.col-sm-8 {
+	/* .col-sm-8 {
 		-ms-flex: 0 0 66.666667%;
 		flex: 0 0 66.666667%;
 		max-width: 66.666667%
-	}
+	} */
 	.col-sm-9 {
 		-ms-flex: 0 0 75%;
 		flex: 0 0 75%;

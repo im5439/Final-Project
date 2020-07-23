@@ -92,7 +92,7 @@ ng\:form {
 		document
 				.write('<meta property="og:description" content="요기요에서 원하는 배달음식을 쉽고 편리하게! 먹어본 사람만 쓸 수 있는 클린리뷰로 배달맛집 인증, 다양한 할인 혜택과 함께 배달되지 않던 인기맛집까지, 지금 바로 요기요에서 주문하세요.">');
 		document
-				.write('<title ng-if="! page.title">요기요 - 즐거움은 요기부터. 배달음식 주문은 역시 요기요!</title>');
+        		.write('<title ng-if="! page.title">다함께 잇츠윌</title>');
 		document
 				.write('<title ng-if="page.title" ng-bind=\'page.title + " - 요기요"\'></title>');
 		document
@@ -100,7 +100,7 @@ ng\:form {
 		document
 				.write('<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://www.yogiyo.co.kr/mobile/image/app_144x144.png">');
 		document
-				.write('<link rel="icon" type="image/png" href="https://www.yogiyo.co.kr/mobile/image/favicon.ico" />');
+         		.write('<link rel="icon" type="image/png" href="/eatswill/resources/images/sicon.jpg" />');
 	}
 </script>
 
@@ -117,23 +117,21 @@ ng\:form {
 </script>
 
 <meta name="theme-color" content="#DC1400">
-<meta property="og:title" content="요기요 - 즐거움은 요기부터. 배달음식 주문은 역시 요기요!">
+<meta property="og:title" content="lets eats will !">
 <meta property="og:url" content="http://www.yogiyo.co.kr/">
 <meta property="og:image"
 	content="https://www.yogiyo.co.kr/mobile/image/app_img_560x292.png">
-<meta property="og:description"
-	content="요기요에서 원하는 배달음식을 쉽고 편리하게! 먹어본 사람만 쓸 수 있는 클린리뷰로 배달맛집 인증, 다양한 할인 혜택과 함께 배달되지 않던 인기맛집까지, 지금 바로 요기요에서 주문하세요.">
+<meta property="og:description" content="">
 <!-- ngIf: ! page.title -->
-<title ng-if="! page.title" class="ng-scope">요기요 - 즐거움은 요기부터.
-	배달음식 주문은 역시 요기요!</title>
+<title ng-if="! page.title" class="ng-scope">다함께 eats will</title>
 <!-- end ngIf: ! page.title -->
 <!-- ngIf: page.title -->
 <link rel="apple-touch-icon-precomposed"
-	href="https://www.yogiyo.co.kr/mobile/image/app_128x128.png">
+	href="/eatswill/resources/images/sicon.jpg">
 <link rel="apple-touch-icon-precomposed" sizes="144x144"
-	href="https://www.yogiyo.co.kr/mobile/image/app_144x144.png">
+	href="/eatswill/resources/images/sicon.jpg">
 <link rel="icon" type="image/png"
-	href="https://www.yogiyo.co.kr/mobile/image/favicon.ico">
+	href="/eatswill/resources/images/sicon.jpg">
 
 <!-- Start location.search generate Code for Naver 검색 유입 -->
 <script type="text/javascript">
@@ -308,17 +306,17 @@ ng\:form {
 
 	<div yogiyo-header="">
 		<div id="header" class="header">
-			<%@ include file="/WEB-INF/views/store/header.jsp" %>
+			<%@ include file="/WEB-INF/views/layout/header.jsp" %>
 		</div>
 		
 		<div class="rd-wrapper contact-wrapper">
 	    	<form class="form-horizontal form-signin" method="POST" action="" name="myForm">
-		      	<div class="registration-wrap" style="width: 600px"> 
+		      	<div class="registration-wrap" style="width: 420px"> 
 					<div class="control-group">
 		        		<div class="control-label">아이디</div>
 		
 		        		<div class="controls">
-		            		<input type="text" name="id" id="id" style="display: inline;height: 34px;width: 70%"/>
+		            		<input type="text" name="id" id="id" style="display: inline;height: 34px;width: 90%"/>
 						</div>
 					</div>
 		
@@ -326,7 +324,7 @@ ng\:form {
 		        		<div class="control-label">패스워드</div>
 		
 		        		<div class="controls">
-		            		<input type="password" name="pw" id="pw" style="display: inline;height: 34px;width: 70%" onkeyup="enterkey();"/>
+		            		<input type="password" name="pw" id="pw" style="display: inline;height: 34px;width: 90%" onkeyup="enterkey();"/>
 						</div>
 					</div>
 				</div>
@@ -338,10 +336,10 @@ ng\:form {
 		
 		      	<div class="btn-wrapper" style="margin-bottom: 20px; text-align: -webkit-center">
 		        	<button type="button" class="button button--login"
-		        		onclick="logon();">일반계정으로 로그인</button>
+		        		onclick="logon();">로그인</button>
 		      	</div>
 		      	
-		      	<div style="text-align: center;margin-bottom: 20px">
+		      	<div style="text-align: center;padding-bottom: 20px">
 		      		<a id="kakao-login-btn" style="padding-right: 5px;"></a>
 		      		<input type="hidden" id="kakaoSession" name="kakaoSession">
 		      		<input type="hidden" id="kakaoSession2" name="kakaoSession2">
@@ -390,7 +388,7 @@ ng\:form {
 </div-->
 	</div>
 	
-	  <div class="footer" style="background-color: #FBFBEF; display: block; padding-bottom: 160px;">
+	  <div class="footer" style="background-color: #FDF5E6; display: block; padding-bottom: 239px;">
 		<div class="footer-menu">
 		
 		</div>
@@ -669,11 +667,31 @@ ng\:form {
 	</script>
 	
 	<!-- Scripts -->
-			<script src="/eatswill/resources/assets/js/jquery.min.js"></script>
-			<script src="/eatswill/resources/assets/js/skel.min.js"></script>
-			<script src="/eatswill/resources/assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="/eatswill/resources/assets/js/main.js"></script>
+	<script src="/eatswill/resources/assets/js/jquery.min.js"></script>
+	<script src="/eatswill/resources/assets/js/skel.min.js"></script>
+	<script src="/eatswill/resources/assets/js/util.js"></script>
+	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+	<script src="/eatswill/resources/assets/js/main.js"></script>
+			
+	<!-- 카카오톡 채팅 시작 -->
+	<div style="position: fixed; right: 10px; bottom: 10px;"
+		class="talk_image">
+		<a id="channel-chat-button" href="" onclick="void chatChannel();">
+			<img src="/eatswill/resources/img/consult_small_yellow_pc1.png"
+			width="70" height="70" />
+		</a>
+		<script type="text/javascript">
+           // 웹 플랫폼 도메인 등 초기화한 앱의 설정이 그대로 적용됩니다.
+           // 초기화한 앱에 현재 도메인이 등록되지 않은 경우 에러가 발생합니다.
+           //Kakao.init('c089c8172def97eb00c07217cae17495')
+           function chatChannel() {
+             Kakao.Channel.chat({
+               channelPublicId: '_Yfaxoxb',
+             })
+           }
+         </script>
+	</div>
+	<!-- 카카오톡 채팅 끝 -->	
 	
 </body>
 </html>

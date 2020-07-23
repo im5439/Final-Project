@@ -388,9 +388,9 @@ $(document).ready(function() {
 	<div yogiyo-header="">
 		<div id="header" class="header">
 			<div role="navigation" class="nav-bar">
-				<%@ include file="/WEB-INF/views/store/header.jsp" %>
+				<%@ include file="/WEB-INF/views/layout/header.jsp" %>
 				
-				<%@ include file="/WEB-INF/views/store/layout.jsp" %>
+				<%@ include file="/WEB-INF/views/layout/banner.jsp" %>
 			</div>
 		</div>
 		
@@ -510,7 +510,7 @@ $(document).ready(function() {
 			</div>
 		</form>
 		
-		<%@ include file="/WEB-INF/views/store/footer.jsp" %>
+		<%@ include file="/WEB-INF/views/layout/footer.jsp" %>
 		
 		<script type="text/javascript">
       if (is_11st) {

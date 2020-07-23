@@ -85,17 +85,17 @@
 					<c:when test="${empty sessionScope.customInfo.id }">
 						<button type="button"
 							class="button button--ujarak button--border-thin button--text-thick"
-							style="width: 95px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 1.2em; font-weight: bold; font-family: 'Raleway', Arial, sans-serif;"
+							style="width: 95px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 1.2em; font-weight: bold;"
 							onclick="javascript:location.href='login.action';">Login</button>
 						<button type="button"
 							class="button button--ujarak button--border-thin button--text-thick"
-							style="width: 95px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 1.2em; font-weight: bold"
+							style="width: 95px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 1.2em; font-weight: bold;"
 							onclick="javascript:location.href='signup.action';">회원가입</button>
 					</c:when>
 					<c:otherwise>
 						<button type="button"
 							class="button button--ujarak button--border-thin button--text-thick"
-							style="width: 150px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 1.2em; font-weight: bold"
+							style="width: 150px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 1.2em; font-weight: bold;"
 							onclick="javascript:location.href='logout.action';">Logout</button>
 					</c:otherwise>
 				</c:choose>

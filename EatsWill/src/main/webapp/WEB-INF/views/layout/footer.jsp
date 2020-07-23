@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!------------------------------------------------------------------------------------------------- -->
-<div class="footer" style="background-color: #FBFBEF;">
+<div class="footer" style="background-color: #FDF5E6; display: block;">
 	<div class="footer-menu"></div>
 
 	<!-- =========================================================================================== 하단끝 -->
