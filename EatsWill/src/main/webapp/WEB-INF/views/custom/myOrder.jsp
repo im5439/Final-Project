@@ -75,6 +75,11 @@ ng\:form {
 <link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
 <link rel="stylesheet"
 	href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
+<script type="text/javascript"
+	src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
+<script type="text/javascript"
+	src="/eatswill/resources/assets/js/cart.js"></script>
+
 
 <!--------------------------------------------------------------------------------------- -->
 
@@ -226,9 +231,6 @@ ng\:form {
 		src="https://www.facebook.com/tr?id=1041485915908980&ev=PageView&noscript=1" />
 </noscript>
 <!--End Facebook  Pixel  Code -->
-
-
-
 <!-- Google Analytics -->
 <script>
    /* eslint-disable */(function(i, s, o, g, r, a, m) {
@@ -330,30 +332,38 @@ ng\:form {
 					<nav id="menu">
 					<h2>Menu</h2>
 					<br />
+					<input type="hidden" id="sessionId"
+						value="${sessionScope.customInfo.id }" />
 					<ul>
-						<p>
-							내 아이디 : ㅇㅇㅇ <br /> 내 주소지 : ㅇㅇㅇㅇ <br /> 내 전화번호 : ㅇㅇㅇㅇ
-						</p>
-						<br />
+						<c:choose>
+							<c:when test="${empty sessionScope.customInfo.id }">
+								<li><a
+									href="${pageContext.request.contextPath}/login.action">로그인</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><font color="#F2849E">${sessionScope.customInfo.name }</font>
+									님 환영합니다.
+									<p style="text-align: left">
+										전화번호 : ${sessionScope.customInfo.tel }</br> 포인트 :
+										${sessionScope.customInfo.point }
+									</p> <a href="javascript:logout();" data-nethru_clcode="A000012">로그아웃</a></li>
+							</c:otherwise>
+						</c:choose>
 
-						<li><a href="<%=cp%>/test.action">Home</a></li>
-						<li><a href="generic.html">내정보수정</a></li>
+						<li><a href="<%=cp%>/updateInfo.action">내정보수정</a></li>
 						<li><a href="generic.html">장바구니</a></li>
-						<li><a
-							href="javascript:location.href='<%=cp%>/myReview.action'">내 글
-								보기</a></li>
-						<li><a
-							href="javascript:location.href='<%=cp%>/myOrder.action'">주문내역</a></li>
-						<li><a
-							href="javascript:location.href='<%=cp%>/heartStore.action'">찜
-								목록</a></li>
+						<li><a href="<%=cp%>/myOrder.action">주문내역</a></li>
+						<li><a href="<%=cp%>/heartStore.action">찜 목록</a></li>
+						<li><a href="<%=cp%>/myReview.action">마이 리뷰</a></li>
 					</ul>
 					</nav>
 					<!-- ----------------------------------------------------------------------------------------- -->
 					<div class="nav-top clearfix"
 						ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
-						<img alt="" src="/eatswill/resources/img/icon3.png" width="125px"
+						<a href="<%=cp%>/main.action" style="text-decoration: none;">
+							<img alt="" src="/eatswill/resources/img/icon3.png" width="125px"
 							height="40px" style="margin: 20px 10px;">
+						</a>
 						<%--       <h1 class="logor pull-left" ng-click="<%=cp%>/main.action" ></h1>  --%>
 						<!-- 로고로고 -->
 						<div id="cart" class="pull-right">
@@ -369,19 +379,35 @@ ng\:form {
 								<span class="badge ng-binding"
 								ng-bind="global_cart.get_amount()">0</span>
 							</a>
-							<button type="button" class="btn btn-login ng-binding"
+							<%-- <button type="button" class="btn btn-login ng-binding" 
 								ng-click="login()"
 								ng-bind-html="check_login() ? '로그아웃' : '로그인 <span>|</span> 회원가입'"
-								ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next"
-								style="font-size: 1.2em; background-color: red;">
-								로그인 <span>|</span> 회원가입
-							</button>
-							<button type="button"
-								class="btn btn-warning hidden-xs ng-binding"
-								ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
-								ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;"
-								style="font-size: 1.2em; background-color: red;">주문표(0)</button>
+								ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next"> --%>
 
+							<c:choose>
+								<c:when test="${empty sessionScope.customInfo.id }">
+									<button type="button" class="btn btn-login ng-binding"
+										style="width: 95px"
+										onclick="javascript:location.href='<%=cp %>/login.action';">로그인</button>
+									<button type="button" class="btn btn-login ng-binding"
+										style="width: 95px"
+										onclick="javascript:location.href='<%=cp %>/signup.action';">회원가입</button>
+								</c:when>
+								<c:otherwise>
+									<button type="button" class="btn btn-login ng-binding"
+										style="width: 150px"
+										onclick="javascript:location.href='<%=cp %>/logout.action';">로그아웃</button>
+								</c:otherwise>
+							</c:choose>
+
+							<!-- <button type="button"
+						class="btn btn-warning hidden-xs ng-binding"
+						ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
+						ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;" style="font-size: 1.2em;background-color: red;">주문표(0)</button> -->
+							<button type="button"
+								class="btn btn-warning hidden-xs ng-binding" id="cartList"
+								style="width: 150px; font-size: 1.2em; background-color: red"
+								onclick="javascript:location.href='<%=cp %>/logout.action';">주문표(0)</button>
 
 						</div>
 					</div>
@@ -483,10 +509,15 @@ ng\:form {
 											<th width="108">확인/신청</th>
 										</tr>
 									</thead>
-									<c:forEach var="dto" items="${lists}">
-										<tbody id="orderList">
 
+									<c:forEach var="dto" items="${lists}">
+
+										<tbody id="orderList">
+											<tr>
+												<td colspan="4" style="padding: 0;"><hr></td>
+											</tr>
 											<tr cno="3273614152" ctype="G" column="4" class="first">
+
 												<td class="first_cell" rowspan="1">
 													<div class="td_detail">
 
@@ -501,8 +532,12 @@ ng\:form {
 														</p>
 														<br>
 														<ul style="text-align-last: left">
-															<li class="seller_info"><em></em><a href="">${dto.shopName }</a></li>
+															<li class="seller_info"><em></em>
+															<a href="${storeUrl}?shopCode=${dto.shopCode}&ceoId=${dto.ceoId}">${dto.shopName }</a></li>
 															<li class="tit_info" style="color: orange">${dto.menuName }</li>
+															<c:if test="${dto.request != null }">
+																<li class="seller_info">요청사항 : ${dto.request }</li>
+															</c:if>
 															<li class="price"><strong>${dto.oAmount }</strong>원</li>
 														</ul>
 													</div>
@@ -527,8 +562,16 @@ ng\:form {
 																	취소</a></span>
 														</c:when>
 														<c:when test="${dto.orderStatus == '배달완료' }">
-															<span class="btn_bg btn_w81_2"><a
-																href="${reviewUrl }orderCode=${dto.orderCode}">리뷰 쓰기</a></span>
+															<span class="btn_bg btn_w81_2"> <c:if
+																	test="${dto.cnt == 0 }">
+																	<a href="${reviewUrl }orderCode=${dto.orderCode}">리뷰
+																		쓰기</a>
+																</c:if> <c:if test="${dto.cnt != 0 }">
+																	<a
+																		href="javascript:location.href='<%=cp%>/myReview.action'">리뷰
+																		보기</a>
+																</c:if>
+															</span>
 														</c:when>
 														<c:otherwise></c:otherwise>
 													</c:choose></td>
@@ -544,10 +587,10 @@ ng\:form {
 
 
 						<!-- 더보기 기능 -->
-						<li class="list-group-item btn-more" ng-show="check_more_review()">
+						<!-- <li class="list-group-item btn-more" ng-show="check_more_review()">
 							<a ng-click="get_next_reviews()"><span>더 보기<i
 									class="arr-down"></i></span></a>
-						</li>
+						</li> -->
 					</ul>
 				</div>
 				<script src="/eatswill/resources/assets/js/jquery.min.js"></script>
@@ -557,5 +600,24 @@ ng\:form {
 				<script src="/eatswill/resources/assets/js/main.js"></script>
 				<input type="hidden" value="${sessionScope.custominfo.id }"
 					name="sessionId">
+					<!-- 카카오톡 채팅 시작 -->
+		<div style="position: fixed; right: 10px; bottom: 10px;" class="talk_image">
+			<a id="channel-chat-button" href=""
+				onclick="void chatChannel();"> <img
+				src="/eatswill/resources/img/consult_small_yellow_pc1.png"
+				width="70" height="70"/>
+			</a>
+			<script type="text/javascript">
+			  // 웹 플랫폼 도메인 등 초기화한 앱의 설정이 그대로 적용됩니다.
+			  // 초기화한 앱에 현재 도메인이 등록되지 않은 경우 에러가 발생합니다.
+			  Kakao.init('c089c8172def97eb00c07217cae17495')
+			  function chatChannel() {
+			    Kakao.Channel.chat({
+			      channelPublicId: '_Yfaxoxb',
+			    })
+			  }
+			</script>
+		</div>
+		<!-- 카카오톡 채팅 끝 -->
 </body>
 </html>

@@ -7,7 +7,7 @@
 <!-- spring과 다른 framework와 같이써서 프로젝트를 만들 경우 DB정보를 명시해줘야함 , spring만 쓸경우는 필요없다. -->
 <properties>
 	<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
-	<property name="url" value="jdbc:oracle:thin:@localhost:1521:TestDB"/>
+	<property name="url" value="jdbc:oracle:thin:@192.168.16.23:1521:TestDB"/>
 	<property name="username" value="proj"/>
 	<property name="password" value="a123"/>
 </properties>
@@ -27,7 +27,8 @@
 
 
 <mappers>
-	<mapper resource="com/eatswill/mybatis/myMapper.xml"/>
+	<mapper resource="com/eatswill/mybatis/customMapper.xml"/>
+	<mapper resource="com/eatswill/mybatis/storeMapper.xml"/>
 </mappers>
 
 </configuration>

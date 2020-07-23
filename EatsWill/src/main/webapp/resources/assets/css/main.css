@@ -9,14 +9,14 @@
 
 /* Reset */
 
-	html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption , hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	html,span, applet, object, iframe, h1, h2, h3, h4, h5, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, caption,  tfoot, thead,  article, aside, canvas, details, embed, figure, figcaption , hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
 		margin: 0;
 		padding: 0;
 		border: 0;
 		font-size: 100%;
 		font: inherit;
 		vertical-align: baseline;
-		text-align: center;
+		
 	}
 
 	article, aside, details, figcaption, figure, , , hgroup, menu, nav, section {
@@ -48,6 +48,35 @@
 	body {
 		
 	}
+	
+	
+
+.navigationl {
+	background-color: #f000le;
+}
+
+@media (min-width: 768px)
+
+
+}
+.navigation .logor {
+    background-image: url(/eatswill/resources/img/eatswill.png) no-repeat;
+    background-size: 72px;
+    width: 72px;
+    height: 30px;
+    text-indent: -9999em;
+    overflow: hidden;
+    margin: 15px 10px;
+    cursor: pointer;
+}
+
+
+.pull-left {
+    float: left !important;
+}
+.pull-left {
+    float: left;
+}
 
 /* Box Model */
 
@@ -1647,9 +1676,8 @@
 		-webkit-transition: border-bottom-color 0.2s ease, color 0.2s ease;
 		-ms-transition: border-bottom-color 0.2s ease, color 0.2s ease;
 		transition: border-bottom-color 0.2s ease, color 0.2s ease;
-		text-decoration: none;
+		text-decoration:none !important;
 		color: #585858;
-		border-bottom: dotted 1px rgba(88, 88, 88, 0.5);
 	}
 
 		a:hover {
@@ -1698,7 +1726,7 @@
 
 		}
 
-	h2, h3, h4, h5, h6 {
+	h2, h3, h4, h5 h6 {
 		font-weight: 900;
 		line-height: 1.5;
 		margin: 0 0 2em 0;
@@ -2137,7 +2165,7 @@
 		display: block;
 		outline: 0;
 		padding: 0;
-		text-decoration: none;
+		text-decoration:none !important;
 		width: 100%;
 	}
 
@@ -2203,20 +2231,6 @@
 	textarea {
 		padding: 0;
 		min-height: 3.75em;
-	}
-
-	input[type="checkbox"],
-	input[type="radio"] {
-		-moz-appearance: none;
-		-webkit-appearance: none;
-		-ms-appearance: none;
-		appearance: none;
-		display: block;
-		float: left;
-		margin-right: -2em;
-		opacity: 0;
-		width: 1em;
-		z-index: -1;
 	}
 
 		input[type="checkbox"] + label,
@@ -2301,7 +2315,25 @@
 		}
 
 /* Image */
-
+.talk_image  img {
+    -webkit-transform:scale(1);
+    -moz-transform:scale(1);
+    -ms-transform:scale(1); 
+    -o-transform:scale(1);  
+    transform:scale(1);
+    -webkit-transition:.3s;
+    -moz-transition:.3s;
+    -ms-transition:.3s;
+    -o-transition:.3s;
+    transition:.3s;
+}
+.talk_image:hover img {
+    -webkit-transform:scale(1.2);
+    -moz-transform:scale(1.2);
+    -ms-transform:scale(1.2);   
+    -o-transform:scale(1.2);
+    transform:scale(1.2);
+}
 	.image {
 		border-radius: 4px;
 		border: 0;
@@ -2363,72 +2395,6 @@
 			}
 
 /* Table */
-
-	.table-wrapper {
-		-webkit-overflow-scrolling: touch;
-		overflow-x: auto;
-	}
-
-	table {
-		margin: 0 0 2em 0;
-		width: 100%;
-	}
-
-		table tbody tr {
-			border: solid 1px #c9c9c9;
-			border-left: 0;
-			border-right: 0;
-		}
-
-			table tbody tr:nth-child(2n + 1) {
-				background-color: rgba(144, 144, 144, 0.075);
-			}
-
-		table td {
-			padding: 0.75em 0.75em;
-		}
-
-		table th {
-			font-size: 0.9em;
-			font-weight: 900;
-			padding: 0 0.75em 0.75em 0.75em;
-			text-align: left;
-		}
-
-		table thead {
-			border-bottom: solid 2px #c9c9c9;
-		}
-
-		table tfoot {
-			border-top: solid 2px #c9c9c9;
-		}
-
-		table.alt {
-			border-collapse: separate;
-		}
-
-			table.alt tbody tr td {
-				border: solid 1px #c9c9c9;
-				border-left-width: 0;
-				border-top-width: 0;
-			}
-
-				table.alt tbody tr td:first-child {
-					border-left-width: 1px;
-				}
-
-			table.alt tbody tr:first-child td {
-				border-top-width: 1px;
-			}
-
-			table.alt thead {
-				border-bottom: 0;
-			}
-
-			table.alt tfoot {
-				border-top: 0;
-			}
-
 /* Button */
 
 	
@@ -2461,8 +2427,10 @@
 			-ms-transition: -ms-transform 0.5s ease, opacity 0.5s ease;
 			transition: transform 0.5s ease, opacity 0.5s ease;
 			position: relative;
-			width: calc(22.33333% - 2.5em);
-			margin: 2.5em 0 0 2.5em;
+			/* width: calc(22.33333% - 2.5em); */
+			width: 25%;
+			/* margin: 2.5em 0 0 2.5em; */
+			padding:  0 10px 10px 10px;
 		}
 
 			.tiles article > .image {
@@ -2471,7 +2439,7 @@
 				-ms-transition: -ms-transform 0.5s ease;
 				transition: transform 0.5s ease;
 				position: relative;
-				display: block;
+				/* display: block; */
 				width: 100%;
 				border-radius: 4px;
 				overflow: hidden;
@@ -2491,7 +2459,7 @@
 					-webkit-transition: background-color 0.5s ease, opacity 0.5s ease;
 					-ms-transition: background-color 0.5s ease, opacity 0.5s ease;
 					transition: background-color 0.5s ease, opacity 0.5s ease;
-					content: '';
+					/* content: ''; */
 					display: block;
 					position: absolute;
 					top: 0;
@@ -2775,7 +2743,7 @@
 						height: 3em;
 						line-height: 3em;
 						padding: 0 1.5em;
-						background-color: rgba(255, 255, 255, 0.5);
+						/* background-color: rgba(255, 255, 255, 0.5); */
 						border-radius: 4px;
 						border: 0;
 						font-size: 0.8em;
@@ -2788,7 +2756,7 @@
 						-webkit-tap-highlight-color: transparent;
 						width: 4em;
 						text-indent: 4em;
-						font-size: 1em;
+						font-size: 1.2em;
 						overflow: hidden;
 						padding: 0;
 						white-space: nowrap;
@@ -2802,7 +2770,7 @@
 							content: '';
 							display: block;
 							position: absolute;
-							top: 0;
+							top: -6px;
 							left: 0;
 							width: 100%;
 							height: 100%;
@@ -2921,7 +2889,7 @@
 			-webkit-tap-highlight-color: transparent;
 			display: block;
 			position: absolute;
-			top: 2em;
+			top: 1em;
 			left: -6em;
 			width: 6em;
 			text-indent: 6em;
