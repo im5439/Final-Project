@@ -34,15 +34,15 @@ public class StoreDAO {
 	}
 
 	//음식점 정보
-	public List<StoreDTO>  shopInfo (String ceoId,String shopCode) {
+	public StoreDTO shopInfo (String ceoId,String shopCode) {
 
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("shopCode", shopCode);
 		map.put("ceoId", ceoId);
 
-		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.shopInfo",map);
+		StoreDTO dto = sessionTemplate.selectOne("storeMapper.shopInfo",map);
 
-		return lists;
+		return dto;
 	}
 
 
@@ -143,19 +143,14 @@ public class StoreDAO {
 		return lists;
 
 	}
-	
+
 	//장바구니에서 직접 수량 변경시 디비에 업데이트
-	public void updateQTY(int cQty,String userId,String menuCode,int cAmount) {
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("cQty", cQty);
-		map.put("userId", userId);
-		map.put("menuCode", menuCode);
-		map.put("cAmount", cAmount);
-		
-		sessionTemplate.update("storeMapper.updateQTY",map);
+	public void updateQTY(StoreDTO dto) {
+
+		sessionTemplate.update("storeMapper.updateQTY",dto);
+
 	}
-	
+
 	//장바구니 삭제
 	public void deleteCart(String userId) {
 
@@ -300,12 +295,12 @@ public class StoreDAO {
 
 	// 결제창 셀렉트
 	//고객INFO
-	public List<StoreDTO> selectOrderInfo(String userId){
+	public StoreDTO selectOrderInfo(String userId){
 
-		List<StoreDTO> lists = 
-				sessionTemplate.selectList("storeMapper.selectOrderInfo",userId);
+		StoreDTO dto = 
+				sessionTemplate.selectOne("storeMapper.selectOrderInfo",userId);
 
-		return lists;
+		return dto;
 
 	}
 
@@ -344,6 +339,14 @@ public class StoreDAO {
 	//결제후 결제금액 5프로 포인트 적립
 	public void updateOrderPoint(String userId) {	
 		sessionTemplate.update("storeMapper.updateOrderPoint",userId);	
+	}
+
+	//결제후 결제금액 5프로 포인트 적립
+	public StoreDTO selectOrderOne(String userId) {	
+
+		StoreDTO dto = sessionTemplate.selectOne("storeMapper.selectOrderOne",userId);
+		return dto;
+
 	}
 
 

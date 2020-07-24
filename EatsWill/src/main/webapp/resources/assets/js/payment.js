@@ -1,34 +1,76 @@
 
+ function requestPay(mode) {
+ var f = document.orderForm;
+  alert("들어옴");
+  alert(mode);
+	
+	if(mode=="no") {
+		
+	    f.action="order_ok.action";	
+	    f.submit();
+	
+	}
+	
+	IMP.init("imp91142724"); 
 
-function requestPay() {
-    // IMP.request_pay(param, callback) 호출
-    alert("들어옴");
-  IMP.init("imp91142724"); 
-	IMP.request_pay({
-	    pg : 'inicis', // version 1.1.0부터 지원.
-	    pay_method : 'card',
-	    merchant_uid : 'merchant_' + new Date().getTime(),
-	    name : 'eatswill',
-	    amount 100,
-	    buyer_email : 'hyehellohi@gmail.com',
-	    buyer_name : '구매자이름',
-	    buyer_tel : '010-1234-5678',
-	    buyer_addr : '서울특별시 강남구 삼성동',
-	    buyer_postcode : '123-456',
-	    m_redirect_url : '<%=cp%>/orderReal.action'
+		 IMP.request_pay({
+			  pg : 'inicis',
+			  pay_method : 'card',
+			  merchant_uid : 'merchant_' + new Date().getTime(),	
+			  name: $("#menuName").val() + "  외   " + $("#orderCount").val() + "  개",
+	          amount: 100,
+	          buyer_email: "hyehellohi@gmail.com",
+	          buyer_name: "eatsWill",
+	          buyer_tel: "010-8858-8032",
+	          buyer_addr: "서울특별시 강남구 잇츠윌",
+	          buyer_postcode: "1004"
 	}, function(rsp) {
+	
 	    if ( rsp.success ) {
-	        var msg = '결제가 완료되었습니다.';
-	        msg += '이름 : ' + rsp.name;
-	        msg += '결제 금액 : ' + rsp.amount;
-	        msg += '카드 승인번호 : ' + rsp.apply_num;
+			alert("aa");
+	    	f.action="order_ok.action";	
+	    	f.submit();
+	
 	    } else {
-	        var msg = '결제에 실패하였습니다.';
-	        msg += '에러내용 : ' + rsp.error_msg;
+	    	
+	        msg = '에러내용 : ' + rsp.error_msg;
+	
+	        alert(msg);
 	    }
-	    alert(msg);
-	});
- 	
+});
+
+
 }
-   
-   
+
+//포인트체크
+function pointChk(userPoint) {
+
+	var use = Number($("#useUserPoint").val());
+	
+
+	
+	if(use>userPoint) {
+		alert("포인트가 부족합니다!");
+		$("#useUserPoint").val("0");
+		$("#useUserPoint").focus();
+		return;
+	}
+
+}
+
+
+//현장결제 확인
+function onSite() {
+
+
+	var con = confirm("현장에서 결제하시겠습니까?");
+	
+	if(con==true) {
+		
+		requestPay('no');
+	}else{
+	
+		return;
+	}
+
+}

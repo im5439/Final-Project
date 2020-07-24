@@ -147,10 +147,8 @@ function sendIt() {
 			sideMenuPrice +=  f.sideMenuPrice[i].value + ',';
 		}
 	}
-	alert("${userId}");
 	
 	if(userId=="guest"){
-		alert("들어옴");
 		f.action = "<%=cp %>/login.action";
 		f.submit();	
 		return;	

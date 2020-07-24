@@ -7,7 +7,7 @@ public class MyDTO {
 	// orderMain ÄÃ·³
 	private String orderCode;
 	private String userId;
-	private int oAmount;
+	private String oAmount;
 	private String orderDate;
 	private String shopCode;
 	private String request;
@@ -61,10 +61,10 @@ public class MyDTO {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public int getoAmount() {
+	public String getoAmount() {
 		return oAmount;
 	}
-	public void setoAmount(int oAmount) {
+	public void setoAmount(String oAmount) {
 		this.oAmount = oAmount;
 	}
 	public String getOrderDate() {

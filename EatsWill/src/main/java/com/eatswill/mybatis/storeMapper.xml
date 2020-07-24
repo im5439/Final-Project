@@ -61,8 +61,8 @@ ORDER BY recreated desc
 
 <!-- 장바구니 인서트  -->
 <insert id="insertCart" parameterType="com.eatswill.dto.StoreDTO">
-	insert into cart (userId,menuCode,sideMenuCode,cQty,cAmount,shopCode) values
-	(#{userId},#{menuCode},#{sideMenuCode},#{cQty},#{cAmount},#{shopCode})
+	insert into cart (userId,menuCode,sideMenuCode,cQty,cAmount,shopCode,cartDate) values
+	(#{userId},#{menuCode},#{sideMenuCode},#{cQty},#{cAmount},#{shopCode},sysdate)
 </insert>
 
 <!-- 장바구니 업데이트(같은메뉴코드일시 수량과 가격만 변경)  -->
@@ -86,9 +86,10 @@ ORDER BY recreated desc
 
 <!-- 장바구니 셀렉트  -->
 <select id="selectCartAll" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
-select distinct c.shopCode,c.sideMenuCode,c.cqty,c.cAmount,s.shopName,m.menuName,(select sum(cAmount) from cart where userId=#{userId}) orderSum
-from Cart c, shop s,menu m 
-where c.shopCode=s.shopCode and c.sidemenuCode=m.menuCode and m.shopCode=s.shopCode and userId=#{userId} order by c.cAmount desc
+select c.shopCode,c.sideMenuCode,sum(c.cqty) cqty,sum(c.cAmount) cAmount,s.shopName,m.menuName,(select sum(cAmount) from cart where userId=#{userId}) orderSum
+from Cart c, shop s,menu m
+where c.shopCode=s.shopCode and c.sidemenuCode=m.menuCode and m.shopCode=s.shopCode and userId=#{userId}
+group by c.shopCode,c.sideMenuCode,c.cqty,s.shopName,m.menuName
 </select>
 <select id="selectCartMain" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
 	select c.menuCode,c.cAmount,c.cQty,c.userId,m.menuName,m.menuPrice
@@ -112,8 +113,8 @@ where c.shopCode=s.shopCode and c.sidemenuCode=m.menuCode and m.shopCode=s.shopC
 </select>
 
 <!-- 장바구니에서 수량을 변경시 디비에 업데이트  -->
-<update id="updateQTY" parameterType="hashMap">
-	update cart set cQty=#{cQty},cAmount=#{cAmount} where userId=#{userId} and sideMenuCode=#{menuCode}
+<update id="updateQTY" parameterType="com.eatswill.dto.StoreDTO">
+	update cart set cQty=#{cQty},cAmount=#{cAmount}-#{sidePrice} where userId=#{userId} and sideMenuCode=#{menuCode}
 </update>
 <!-- 장바구니 delete  -->
 <delete id="deleteCart" parameterType="String">
@@ -230,4 +231,10 @@ update custom set userPoint=userPoint-#{userPoint} where userId=#{userId}
 update custom set userPoint=userPoint+
 (select oAmount*0.05 from (select oAmount from ordermain where userId=#{userId} order by orderdate desc) where rownum='1')
 </update>
+
+<!-- 주문번호 조회  -->
+<select id="selectOrderOne" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
+	select * from (select orderCode,orderDate from (select rownum rnum,orderCode,orderDate from 
+	(select orderCode,orderDate from ordermain where userId=#{userId} order by orderDate desc)) where rnum='1')
+</select>
 </mapper>

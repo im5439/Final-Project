@@ -36,20 +36,20 @@ public class CustomController {
 	@Autowired
 	@Qualifier("customDAO")
 	CustomDAO dao;
-	
-	@Autowired 
+
+	@Autowired
 	private JavaMailSenderImpl mailSender;
-	
+
 	// 테스트용
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home() {		
+	public String home() {
 		return "main2";
 	}
 
 	// 메인 페이지
 	@RequestMapping(value = "/main.action", method = RequestMethod.GET)
 	public String main(HttpServletRequest req, String message) {
-		
+
 		if (message != null && !message.equals("")) {
 			Map<String, ?> reaMap = RequestContextUtils.getInputFlashMap(req);
 			if (reaMap != null) {
@@ -58,7 +58,7 @@ public class CustomController {
 
 			req.setAttribute("message", message);
 		}
-		
+
 		return "main";
 	}
 
@@ -71,7 +71,7 @@ public class CustomController {
 
 		return cnt;
 	}
-	
+
 	// 주문표 이동 기능
 	@RequestMapping(value = "/cartOpen.action", method = RequestMethod.POST)
 	@ResponseBody
@@ -80,7 +80,7 @@ public class CustomController {
 		String cnt = dao.cartOpen(id);
 
 		return cnt;
-	}	
+	}
 
 	// 회원가입 페이지
 	@RequestMapping(value = "/signup.action", method = RequestMethod.GET)
@@ -115,7 +115,7 @@ public class CustomController {
 	// 로그인 페이지
 	@RequestMapping(value = "/login.action", method = RequestMethod.GET)
 	public String login(HttpServletRequest req, String message) {
-		
+
 		if (message != null && !message.equals("")) {
 			Map<String, ?> reaMap = RequestContextUtils.getInputFlashMap(req);
 			if (reaMap != null) {
@@ -150,7 +150,7 @@ public class CustomController {
 
 		return "redirect:/main.action";
 	}
-	
+
 	// 카카오 로그인 확인 기능
 	@RequestMapping(value = "/kakaoLogin_ok.action", method = RequestMethod.POST)
 	public String kakaoLogin_ok(HttpServletRequest req, String kakaoSession, String kakaoSession2) {
@@ -160,7 +160,7 @@ public class CustomController {
 		dto.setId(kakaoSession);
 		dto.setName(kakaoSession);
 		dto.setEmail(kakaoSession2);
-		
+
 		HttpSession session = req.getSession(); // 세션 만들기
 		session.setAttribute("customInfo", dto); // 세션에 올리기
 		session.setAttribute("cart", 0);
@@ -174,16 +174,16 @@ public class CustomController {
 
 		HttpSession session = req.getSession();
 		session.removeAttribute("customInfo"); // 세션에 있는 데이터 삭제
-		session.removeAttribute("cart");   
-	    session.invalidate();
+		session.removeAttribute("cart");
+		session.invalidate();
 
 		return "redirect:/main.action";
 	}
 
 	// 아이디/비밀번호 찾기 페이지
-	@RequestMapping(value = "/findidpw.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/findidpw.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String findidpw(HttpServletRequest req, String mode, String message) {
-		
+
 		if (message != null && !message.equals("")) {
 			Map<String, ?> reaMap = RequestContextUtils.getInputFlashMap(req);
 			if (reaMap != null) {
@@ -193,12 +193,12 @@ public class CustomController {
 
 			req.setAttribute("message", message);
 		}
-		
+
 		req.setAttribute("mode", mode);
 
 		return "custom/findIdPw";
 	}
-	
+
 	// 아이디/비밀번호 데이터 확인 후 메일로 전송
 	@RequestMapping(value = "/findidpw_ok.action", method = RequestMethod.POST)
 	public String findidpw_ok(HttpServletRequest req, CustomDTO dto, RedirectAttributes rea) {
@@ -210,28 +210,28 @@ public class CustomController {
 		if (dto.getName() != null && !dto.getName().equals("")) {
 
 			dto = dao.tryId(dto.getName(), dto.getEmail());
-			
-			if (dto == null) { 
+
+			if (dto == null) {
 				message = "이름 또는 이메일을 정확히 입력하세요.";
 				rea.addFlashAttribute("mode", "id");
-				rea.addFlashAttribute("message", message); 
-				return "redirect:/findidpw.action"; 
+				rea.addFlashAttribute("message", message);
+				return "redirect:/findidpw.action";
 			}
-			
+
 			subject = "회원님의 아이디";
 			content = dto.getName() + " 회원님의 아이디는 [" + dto.getId() + "] 입니다.";
 
 		} else if (dto.getId() != null && !dto.getId().equals("")) {
 
 			dto = dao.tryPw(dto.getId(), dto.getEmail());
-			
-			if (dto == null) { 
+
+			if (dto == null) {
 				message = "아이디 또는 이메일을 정확히 입력하세요.";
 				rea.addFlashAttribute("mode", "pw");
 				rea.addFlashAttribute("message", message);
-				return "redirect:/findidpw.action"; 
+				return "redirect:/findidpw.action";
 			}
-			
+
 			subject = "회원님의 비밀번호";
 			content = dto.getName() + " 회원님의 비밀번호는 [" + dto.getPw() + "] 입니다.";
 		}
@@ -239,20 +239,20 @@ public class CustomController {
 		String senderName = "EatsWill";
 		String senderEmail = "EatsWill@eatswill.com";
 		String receiverEmail = dto.getEmail();
-		
+
 		Properties props = new Properties();
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.host", mailSender.getHost());
 		props.put("mail.smtp.port", mailSender.getPort());
-		
+
 		Authenticator auth = new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(mailSender.getUsername(), mailSender.getPassword());
 			}
 		};
-		
+
 		Session session = Session.getDefaultInstance(props, auth);
 
 		try {
@@ -264,29 +264,30 @@ public class CustomController {
 			Transport.send(msg);
 
 		} catch (Exception e) {
-	   		e.printStackTrace();
-		} 
+			System.out.println("I am here??? ");
+			e.printStackTrace();
+		}
 		return "redirect:/login.action";
 	}
-	
+
 	// 정보 수정 페이지
 	@RequestMapping(value = "/updateInfo.action", method = RequestMethod.GET)
 	public String updateInfo(HttpServletRequest req, RedirectAttributes rea) {
-		
+
 		String message = "";
-		
+
 		HttpSession session = req.getSession();
-		CustomDTO dto = (CustomDTO)session.getAttribute("customInfo");	
-		
-		if (dto.getId() == dto.getName() || dto.getId().equals(dto.getName())) { 
+		CustomDTO dto = (CustomDTO) session.getAttribute("customInfo");
+
+		if (dto.getId() == dto.getName() || dto.getId().equals(dto.getName())) {
 			message = "카카오계정은 이용할수없는 기능입니다.";
-			rea.addFlashAttribute("message", message); 
-			return "redirect:/main.action"; 
+			rea.addFlashAttribute("message", message);
+			return "redirect:/main.action";
 		}
-		
+
 		return "custom/updateInfo";
 	}
-	
+
 	// 회원가입 데이터 DB에 입력
 	@RequestMapping(value = "/update.action", method = RequestMethod.POST)
 	public String update(HttpServletRequest req, CustomDTO dto) {
@@ -336,57 +337,78 @@ public class CustomController {
 		return "redirect:/main.action";
 	}
 
-	// 나의 주문 목록 띄우기
-	@RequestMapping(value = "/myOrder.action", method = {RequestMethod.GET, RequestMethod.POST})
-	public String myOrder(HttpServletRequest req) throws Exception {
+	// 마이 페이지 띄우기
+	@RequestMapping(value = "/myPage.action", method = { RequestMethod.GET, RequestMethod.POST })
+	public String myPage(HttpServletRequest req, String status) {
 		String cp = req.getContextPath();
-		
+
 		HttpSession session = req.getSession();
-		CustomDTO dto = (CustomDTO)session.getAttribute("customInfo");	
-		
+		CustomDTO dto = (CustomDTO) session.getAttribute("customInfo");
+
 		List<MyDTO> lists = dao.getBuyList(dto.getId());
 		String reviewUrl = cp + "/reviewCreated.action?";
 		String myOrderCancel = cp + "/myOrderCancel.action?";
 		String storeUrl = cp + "/page.action";
-		
+
 		req.setAttribute("lists", lists);
 		req.setAttribute("reviewUrl", reviewUrl);
 		req.setAttribute("myOrderCancel", myOrderCancel);
 		req.setAttribute("storeUrl", storeUrl);
-		
+		req.setAttribute("status", status);
+
+		return "custom/myPage";
+	}
+
+	// 나의 주문 목록 띄우기
+	@RequestMapping(value = "/myOrder.action", method = { RequestMethod.GET, RequestMethod.POST })
+	public String myOrder(HttpServletRequest req) throws Exception {
+		String cp = req.getContextPath();
+
+		HttpSession session = req.getSession();
+		CustomDTO dto = (CustomDTO) session.getAttribute("customInfo");
+
+		List<MyDTO> lists = dao.getBuyList(dto.getId());
+		String reviewUrl = cp + "/reviewCreated.action?";
+		String myOrderCancel = cp + "/myOrderCancel.action?";
+		String storeUrl = cp + "/page.action";
+
+		req.setAttribute("lists", lists);
+		req.setAttribute("reviewUrl", reviewUrl);
+		req.setAttribute("myOrderCancel", myOrderCancel);
+		req.setAttribute("storeUrl", storeUrl);
+
 		return "custom/myOrder";
 	}
-	
+
 	// 주문 취소하기
-	@RequestMapping(value = "/myOrderCancel.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/myOrderCancel.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String myOrderCancel(HttpServletRequest req) throws Exception {
 		String orderCode = req.getParameter("orderCode");
 		dao.myOrderCancel(orderCode);
-		
+
 		return "redirect:/myOrder.action";
 	}
-	
-	
-	
+
 	// 리뷰 작성창 띄우기
-	@RequestMapping(value = "/reviewCreated.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/reviewCreated.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String reviewCreated(HttpServletRequest req) throws Exception {
 		String orderCode = req.getParameter("orderCode");
-		
+
 		MyDTO dto = dao.getReadData(orderCode);
 		req.setAttribute("dto", dto);
-		
+
 		return "custom/reviewCreated";
 	}
-	
+
 	// 리뷰 등록시 실행
-	@RequestMapping(value = "/reviewCreated_ok.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/reviewCreated_ok.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String reviewCreated_ok(HttpServletRequest req, MyDTO dto) throws Exception {
-		
+
 		MultipartFile uploadfile = dto.getUploadfile();
-		
-		//String path = req.getSession().getServletContext().getRealPath("resource/reImg");
-		if(uploadfile!=null) {
+
+		// String path =
+		// req.getSession().getServletContext().getRealPath("resource/reImg");
+		if (uploadfile != null) {
 			String reImg = uploadfile.getOriginalFilename();
 			dto.setReImg(reImg);
 			try {
@@ -396,11 +418,11 @@ public class CustomController {
 				e.printStackTrace();
 			}
 		}
-		
+
 		int maxReNum = dao.getMaxReNum();
 		HttpSession session = req.getSession();
-		CustomDTO cdto = (CustomDTO)session.getAttribute("customInfo");
-		
+		CustomDTO cdto = (CustomDTO) session.getAttribute("customInfo");
+
 		dto.setOrderCode(req.getParameter("orderCode"));
 		dto.setShopCode(req.getParameter("shopCode"));
 		dto.setUserId(cdto.getId());
@@ -408,52 +430,65 @@ public class CustomController {
 
 		dao.reviewInsert(dto);
 		dao.pointUpdate(cdto.getId());
-		
-		return "redirect:/myReview.action";
+
+		cdto = dao.renewSession(cdto.getId());
+		session.setAttribute("customInfo", cdto);
+
+		return "redirect:/myPage.action";
 	}
-	
-	
+
 	// 찜한 매장 띄우기
-	@RequestMapping(value = "/heartStore.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/heartStore.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String heartStore(HttpServletRequest req) throws Exception {
 		String cp = req.getContextPath();
 		HttpSession session = req.getSession();
-		CustomDTO dto = (CustomDTO)session.getAttribute("customInfo");	
-		
+		CustomDTO dto = (CustomDTO) session.getAttribute("customInfo");
+
 		List<MyDTO> lists = dao.getHeartList(dto.getId());
 		String storeUrl = cp + "/page.action";
-		
+
 		req.setAttribute("lists", lists);
 		req.setAttribute("storeUrl", storeUrl);
-		
+
 		return "custom/heartStore";
 	}
-	
+
 	// 나의 리뷰 띄우기
-	@RequestMapping(value = "/myReview.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/myReview.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String myReivew(HttpServletRequest req) throws Exception {
 		String cp = req.getContextPath();
 		HttpSession session = req.getSession();
-		CustomDTO dto = (CustomDTO)session.getAttribute("customInfo");	
+		CustomDTO dto = (CustomDTO) session.getAttribute("customInfo");
+
 		
-		int myReviewCnt = dao.getMyReviewCnt(dto.getId());
 		List<MyDTO> lists = dao.getMyReviewList(dto.getId());
 		String storeUrl = cp + "/page.action";
+
 		
-		req.setAttribute("myReviewCnt", myReviewCnt);
 		req.setAttribute("lists", lists);
 		req.setAttribute("storeUrl", storeUrl);
-		
+
 		return "custom/myReview";
 	}
-	
+
 	// 리뷰 삭제하기
-	@RequestMapping(value = "/reviewDelete.action", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/reviewDelete.action", method = { RequestMethod.GET, RequestMethod.POST })
 	public String reviewDelete(HttpServletRequest req) throws Exception {
 		int reNum = Integer.parseInt(req.getParameter("reNum"));
 		dao.reviewDelete(reNum);
 		
-		return "redirect:/myReview.action";
+		String cp = req.getContextPath();
+		HttpSession session = req.getSession();
+		CustomDTO dto = (CustomDTO) session.getAttribute("customInfo");
+		
+		List<MyDTO> lists = dao.getMyReviewList(dto.getId());
+		String storeUrl = cp + "/page.action";
+
+		
+		req.setAttribute("lists", lists);
+		req.setAttribute("storeUrl", storeUrl);
+		
+		return "custom/myReview";
 	}
 
 }

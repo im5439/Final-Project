@@ -47,8 +47,6 @@ $(document).ready(function(){
 <form action="" method="post" name="infoForm">
     <div class="restaurant-info">
    
-    	 <c:forEach var="dto" items="${lists}">
-    
       <div class="restaurant-title">
         <span class="restaurant-name ng-binding" ng-bind="restaurant.name"> ${dto.shopName}</span>
       </div>
@@ -100,8 +98,6 @@ $(document).ready(function(){
        
         
       </div>
-      <div class="clearfix"></div>
-          </c:forEach>
     </div>
  
     </form>

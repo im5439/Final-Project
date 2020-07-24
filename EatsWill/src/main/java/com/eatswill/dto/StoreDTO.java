@@ -18,6 +18,7 @@ public class StoreDTO {
 	private String request;
 	private int oQty;
 	private int oAmount;
+	private String orderDate;
 	
 	private String deliveryAddr1;
 	private String deliveryAddr2;
@@ -111,7 +112,14 @@ public class StoreDTO {
 	private String reImg;
 	private int count;
 	private String ceoContent;
+	private int sidePrice;
 	
+	public int getSidePrice() {
+		return sidePrice;
+	}
+	public void setSidePrice(int sidePrice) {
+		this.sidePrice = sidePrice;
+	}
 	public String getChk() {
 		return chk;
 	}
@@ -317,6 +325,12 @@ public class StoreDTO {
 	}
 	public void setRequest(String request) {
 		this.request = request;
+	}
+	public String getOrderDate() {
+		return orderDate;
+	}
+	public void setOrderDate(String orderDate) {
+		this.orderDate = orderDate;
 	}
 	
 
