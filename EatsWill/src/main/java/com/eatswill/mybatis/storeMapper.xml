@@ -90,11 +90,13 @@ select distinct c.sideMenuCode,c.cqty,c.cAmount,s.shopName,m.menuName,(select su
 from Cart c, shop s,menu m 
 where c.shopCode=s.shopCode and c.sidemenuCode=m.menuCode and m.shopCode=s.shopCode and userId=#{userId}
 </select>
+
 <select id="selectCartMain" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
 	select c.menuCode,c.cAmount,c.cQty,c.userId,m.menuName,m.menuPrice
 	from cart c, menu m
 	where c.menuCode=m.menuCode and c.menuCode=c.sideMenuCode  and c.userId=#{userId}
 </select>
+
 <select id="selectCartSide" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
 	select c.menuCode, c.sideMenuCode,c.cAmount,c.cQty,c.userId,m.menuName,m.menuPrice
 	from cart c, menu m

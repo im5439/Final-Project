@@ -41,9 +41,7 @@
 			</c:choose>
 			<li><a href="updateInfo.action">내정보수정</a></li>
 			<li><a id="basket">장바구니</a></li>
-			<li><a href="myOrder.action">주문내역</a></li>
-			<li><a href="heartStore.action">찜 목록</a></li>
-			<li><a href="myReview.action">마이 리뷰</a></li>
+			<li><a href="myPage.action">마이 페이지</a></li>
 		</ul>
 		<form method="POST" action="" name="infoForm">
 			<div id="myInfo"></div>

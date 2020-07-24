@@ -155,9 +155,28 @@ function sendIt(){
 		f.addr1.focus();
 		return;
 	}
-
-	f.action = "insert.action";
-	f.submit();
+	
+	var param = "id=" + $("#id").val();
+            
+    $.ajax({
+        url: "idcheck.action",
+        type: "POST",            
+        data: param,
+        success: function(data){
+        	if(data=="fail") {
+        		alert("이미 사용중인 아이디입니다.");
+        		f.id.focus();
+        		return;
+        	} else {
+        		f.action = "insert.action";
+				f.submit();
+        	}
+        	
+        },
+        error: function(){
+            alert("Error");
+        }
+    });
 
 }
 
