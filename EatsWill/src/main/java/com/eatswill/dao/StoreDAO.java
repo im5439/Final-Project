@@ -207,10 +207,10 @@ public class StoreDAO {
 
 
 	//음식점 전체 리스트
-	public List<StoreDTO> shopList(){
+	public List<StoreDTO> shopList(String search){
 
 		List<StoreDTO> lists = 
-				sessionTemplate.selectList("storeMapper.shopList");
+				sessionTemplate.selectList("storeMapper.shopList",search);
 
 		return lists;
 

@@ -94,11 +94,6 @@
 	values (#{orderCode},null,#{reNum},#{userId},#{shopCode},#{reScore},#{reContent},sysdate,#{reImg})
 </insert>
 
-<!-- 리뷰 작성시 포인트 update -->
-<update id="pointUpdate" parameterType="String">
-	update custom set USERPOINT=USERPOINT+500 where userId=#{userId}
-</update>
-
 <!-- 자신이 쓴 리뷰 개수 -->
 <select id="myReviewCnt" parameterType="String" resultType="int">
 	select count(*) reCnt from REVIEW where userId=#{userId}
@@ -112,18 +107,21 @@ where r1.userid=#{userId} and data1.orderCode=r1.orderCode and s.shopCode=r1.sho
 ORDER BY recreated desc
 </select>
 
-<!-- 리뷰 작성시 포인트 update -->
-
 <!-- 자신이 쓴 리뷰 삭제 -->
 <delete id="reviewDelete" parameterType="int">
 	delete review where renum=#{renum}
 </delete>
 
+<!-- 리뷰 작성시 포인트 update -->
+<update id="pointUpdate" parameterType="String">
+   update custom set USERPOINT=USERPOINT+500 where userId=#{userId}
+</update>
+
 <!-- 해당 아이디의 찜 리스트 출력 -->
 <select id="getHeartList" parameterType="String" resultType="com.eatswill.dto.MyDTO">
-	SELECT s.shopImg shopImg, s.shopname shopName, data1.shopScore, data1.reCnt, data1.shopScore*20 shopStar,s.ceoId
-	from shop s,heart h,(select SHOPCODE, round(AVG(rescore),1) shopScore, count(reNum) reCnt from review group by shopcode) data1
-	where s.shopcode=data1.shopCode and data1.shopCode=h.shopcode and h.userid=#{userid}
+	SELECT s.shopImg shopImg, s.shopname shopName, nvl(data1.shopScore, 0) shopScore, nvl(data1.reCnt, 0) reCnt,s.ceoId,s.shopCode
+from shop s,heart h,(select SHOPCODE, round(AVG(rescore),1) shopScore, count(reNum) reCnt from review group by shopcode) data1
+where s.shopcode=h.shopCode and h.shopcode=data1.shopCode(+) and h.userid=#{userId}
 </select>
 
 </mapper>

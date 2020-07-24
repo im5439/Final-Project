@@ -15,17 +15,55 @@ function cartList() {
     });
 }
 
-function logon() {
-      
-   var f = document.myForm;
+function cartOpen(check) {
 
-   if($("#id").val()==null || $("#id").val()=="") {
-      alert("아이디를 입력하세요");
-      return;
-   }
+	var f = "";
+	var info = "";
+
+	if(check == "my") {
+		f = document.infoForm;
+	} else {
+		f = document.cartForm;
+	}
+		
+	var param = "id=" + $("#sessionId").val();
+
+    $.ajax({
+        url: "cartOpen.action",
+        type: "POST",            
+        data: param,
+        success: function(data){
+        	var shopCode = data.substring(0, data.indexOf(','));
+        	var ceoId = data.substring((data.indexOf(',')+1), data.length);
+        
+        	if(check == "my") {
+        		$("#myInfo").append($('<input/>', {type: 'hidden', name: 'shopCode', value: shopCode}));
+        		$("#myInfo").append($('<input/>', {type: 'hidden', name: 'ceoId', value: ceoId}));
+        	} else {
+        		$("#cartInfo").append($('<input/>', {type: 'hidden', name: 'shopCode', value: shopCode}));
+        		$("#cartInfo").append($('<input/>', {type: 'hidden', name: 'ceoId', value: ceoId}));
+        	}
+        	
+        	f.action = "page.action";
+			f.submit();
+        },
+        error: function(){
+            alert("Error");
+        }
+    });
+}
+
+function logon() {
+
+	var f = document.myForm;
+
+	if($("#id").val()==null || $("#id").val()=="") {
+		alert("아이디를 입력하세요");
+		return;
+	}
     
-   f.action = "login_ok.action";
-   f.submit();
+	f.action = "login_ok.action";
+	f.submit();
 }
 
 function enterkey() {
@@ -117,9 +155,28 @@ function sendIt(){
 		f.addr1.focus();
 		return;
 	}
-
-	f.action = "insert.action";
-	f.submit();
+	
+	var param = "id=" + $("#id").val();
+            
+    $.ajax({
+        url: "idcheck.action",
+        type: "POST",            
+        data: param,
+        success: function(data){
+        	if(data=="fail") {
+        		alert("이미 사용중인 아이디입니다.");
+        		f.id.focus();
+        		return;
+        	} else {
+        		f.action = "insert.action";
+				f.submit();
+        	}
+        	
+        },
+        error: function(){
+            alert("Error");
+        }
+    });
 
 }
 
@@ -221,7 +278,7 @@ $(function() {
 	});
 	
 	$("#kakao-login-btn").show(function(){
-		
+
 		// 사용할 앱의 JavaScript 키를 설정해 주세요.
 		Kakao.init('da5ed75e6d7f9bcac9abaeae41fd1108');
 	   
@@ -229,6 +286,7 @@ $(function() {
 	   	Kakao.Auth.createLoginButton({
 	    	container: '#kakao-login-btn',
 	    	success: function(authObj) {
+	    		alert("A");
 	    		// 로그인 창을 매번 새로 띄웁니다.
 	     		Kakao.Auth.loginForm({
 	     			success: function(authObj) {
@@ -270,6 +328,26 @@ $(function() {
 		f.action = "kakaoLogin_ok.action";
 		f.submit();
 	}
+	
+	$("#cartList").click(function(){
+		cartOpen("cart");
+	});
+	
+	$("#basket").click(function(){
+		cartOpen("my");
+	});
+	
+	$(".thumbnail").click(function(){
+		
+		var f = document.findAddr;
+		var index = $(this).attr("index");
+		
+		$(f).append($('<input/>', {type: 'hidden', name: 'index', value: index}));
+		
+		f.action = "storeList.action";
+		f.submit();
+		
+	});
 		
 	$("#findIdPw").click(function(){
 
@@ -350,8 +428,6 @@ $(function() {
         });
         
 	});
-	
-	
 	
 });
 
@@ -469,11 +545,13 @@ function execDaumPostcode() {
                 document.body.scrollTop = currentScroll;
             },
             // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
+            /*
             onresize : function(size) {
                 element_wrap.style.height = size.height+'px';
             },
             width : '100%',
             height : '100%'
+            */
         }).embed(element_wrap);
 
         // iframe을 넣은 element를 보이게 한다.

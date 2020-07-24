@@ -139,7 +139,8 @@ where c.shopCode=s.shopCode and c.sidemenuCode=m.menuCode and m.shopCode=s.shopC
 	select shopname,shopcode,ceoid,category,shoptel,shopimg,franchise,shopaddr,timecode,
 	to_char(shopcreated,'YYYY-MM-DD') shopcreated 
 	from shop 
-	order by shopname desc
+	where replace(shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%'
+   order by shopname desc
 </select>
 
 <!-- 음식점 리스트 (리뷰순 정렬)  -->

@@ -144,8 +144,8 @@
                 <div style="width: 569px; height: 284px;">
                 	
                 
-                  <img alt="" src="resources/img/${dto.reImg}"
-                  style="visibility: visible; width: 569px; height: 758.37px; left: 0px; top: -237px;">
+                  <img alt="" src="http://localhost:8080/reImg/${dto.reImg}"
+                  style="visibility: visible; width: 300px; height: 300px;">
                 </div>
                 
                 
