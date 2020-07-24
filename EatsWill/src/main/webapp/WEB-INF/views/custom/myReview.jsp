@@ -308,7 +308,7 @@ ng\:form {
 					<div class="order-items default ng-binding"
 						ng-click="show_review_menu($event)" style="text-align: left;">${dto.menuName}
 					</div> <c:if test="${dto.reImg != null }">
-						<img src="http://192.168.16.23:8080/reImg/${dto.reImg }"
+						<img src="http://localhost:8080/reImg/${dto.reImg }"
 							align="center" width="300" height="300">
 					</c:if>
 					<p ng-show="review.comment"

@@ -64,28 +64,15 @@ ng\:form {
 
 <!-- css---------------------------------------------------------- -->
 
-<link rel="stylesheet"
-	href="css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
+
 <link rel="stylesheet" href="/eatswill/resources/assets/css/app.css"
 	type="text/css" />
 
 <link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
-<link rel="stylesheet"
-	href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
-<link rel="stylesheet"
-	href="/eatswill/resources/assets/ButtonStylesInspiration/css/buttons.css" />
-<link rel="stylesheet"
-	href="/eatswill/resources/assets/ButtonStylesInspiration/css/normalize.css" />
-<link rel="stylesheet"
-	href="/eatswill/resources/assets/ButtonStylesInspiration/css/vicons-font.css" />
-<link rel="stylesheet"
-	href="/eatswill/resources/assets/css/bootstrap.min.css" />
+
 
 <script type="text/javascript"
 	src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
-<!-- <script type="text/javascript"
-	src="/eatswill/resources/assets/js/cart.js"></script>
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script> -->
 
 
 <!--------------------------------------------------------------------------------------- -->
@@ -139,176 +126,12 @@ ng\:form {
 <script type="text/javascript"
 	src="http://script.gmarket.co.kr/_Net/js/MygSmileStamp.js"></script>
 
-<!-- Start location.search generate Code for Naver 검색 유입 -->
-<script type="text/javascript">
-	if (is_yogiyo) {
-		(function() {
-			function beginsWith(begin, whole) {
-				if (whole.indexOf(begin) === 0) {
-					return whole.substr(begin.length);
-				}
-			}
-			function urlResolve(url) {
-				var href = url;
-				if (msie) {
-					urlParsingNode.setAttribute('href', href);
-					href = urlParsingNode.href;
-				}
-				urlParsingNode.setAttribute('href', href);
-				return {
-					href : urlParsingNode.href,
-					protocol : urlParsingNode.protocol ? urlParsingNode.protocol
-							.replace(/:$/, '')
-							: '',
-					host : urlParsingNode.host,
-					search : urlParsingNode.search ? urlParsingNode.search
-							.replace(/^\?/, '') : '',
-					hash : urlParsingNode.hash ? urlParsingNode.hash.replace(
-							/^#/, '') : '',
-					hostname : urlParsingNode.hostname,
-					port : urlParsingNode.port,
-					pathname : (urlParsingNode.pathname.charAt(0) === '/') ? urlParsingNode.pathname
-							: '/' + urlParsingNode.pathname
-				};
-			}
-			var msie = document.documentMode;
-			var urlParsingNode = document.createElement('a');
-			var originUrl = urlResolve(window.location.href);
-			var originSearchUrl = originUrl.search;
-			var withoutHashUrl = originUrl.hash;
-			if (withoutHashUrl !== '') {
-				if (withoutHashUrl.charAt(0) === '#') {
-					withoutHashUrl = beginsWith('#', withoutHashUrl);
-				}
-				var hashUrl = urlResolve(withoutHashUrl);
-				if (hashUrl.search !== '' && originSearchUrl === '') {
-					window.location.search = hashUrl.search;
-				}
-			}
-		})();
-	} else {
-		if (document.styleSheets.length > 0
-				&& document.styleSheets[document.styleSheets.length - 1].cssRules) {
-			document.styleSheets[document.styleSheets.length - 1]
-					.insertRule(
-							'.asp_check .fake-header, .asp_check .category-list, .asp_check .footer { display: none; }',
-							document.styleSheets[document.styleSheets.length - 1].cssRules.length);
-		}
-	}
-</script>
-<!-- End location.search generate Code -->
-<!-- Start optimizely Code -->
-<script src="//cdn.optimizely.com/js/9026702317.js"></script>
-<!-- End optimizely Code -->
-<!--Start Facebook  Pixel  Code -->
-<script>
-	/* eslint-disable */
-	!function(f, b, e, v, n, t, s) {
-		if (f.fbq)
-			return;
-		n = f.fbq = function() {
-			n.callMethod ? n.callMethod.apply(n, arguments) : n.queue
-					.push(arguments)
-		};
-		if (!f._fbq)
-			f._fbq = n;
-		n.push = n;
-		n.loaded = !0;
-		n.version = '2.0';
-		n.queue = [];
-		t = b.createElement(e);
-		t.async = !0;
-		t.src = v;
-		s = b.getElementsByTagName(e)[0];
-		s.parentNode.insertBefore(t, s)
-	}(window, document, 'script', '//connect.facebook.net/en_US/fbevents.js');
-	fbq('init', '1041485915908980');/* eslint-enable */
-</script>
-<!-- <script type="text/javascript">
 
-$(function() {
 
-	$("#readReview").click(function(){ 
-		  alert("aa");
-		  sBtn.removeClass("active");  
-	    $("#myReviewLi").attr('class','active');
-	   $(function(){
-	      myReview();
-	   }); 
-});
 
-</script> -->
-<noscript>
-	<img height="1" width="1" style="display: none"
-		src="https://www.facebook.com/tr?id=1041485915908980&ev=PageView&noscript=1" />
-</noscript>
-<!--End Facebook  Pixel  Code -->
-<!-- Google Analytics -->
-<script>
-	/* eslint-disable */(function(i, s, o, g, r, a, m) {
-		i['GoogleAnalyticsObject'] = r;
-		i[r] = i[r] || function() {
-			(i[r].q = i[r].q || []).push(arguments)
-		}, i[r].l = 1 * new Date();
-		a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-		a.async = 1;
-		a.src = g;
-		m.parentNode.insertBefore(a, m)
-	})(window, document, 'script', '//www.google-analytics.com/analytics.js',
-			'ga');
-	ga('create', 'UA-42635603-1', 'auto');
-	ga('require', 'ec');/* eslint-enable */
-</script>
-<!-- // -->
-<!-- End Google Analytics -->
-<!-- Google Tag Manager -->
-<script>
-	var dataLayer = [];
-</script>
 
-<script src="http://code.jquery.com/jquery-1.11.0.js"></script>
-
-<script>
-	function geo() {
-		// Geolocation API에 액세스할 수 있는지를 확인
-		if (navigator.geolocation) {
-			//위치 정보를 얻기
-			navigator.geolocation.getCurrentPosition(function(pos) {
-				$('#latitude').html(pos.coords.latitude); // 위도
-				$('#longitude').html(pos.coords.longitude); // 경도
-			});
-			alert("aaa");
-		} else {
-			alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
-		}
-	}
-</script>
-
-<script>
-	/* eslint-disable */
-	(function(w, d, s, l, i) {
-		w[l] = w[l] || [];
-		w[l].push({
-			'gtm.start' : new Date().getTime(),
-			event : 'gtm.js'
-		});
-		var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l='
-				+ l
-				: '';
-		j.async = true;
-		j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl;
-		f.parentNode.insertBefore(j, f);
-	})(window, document, 'script', 'dataLayer', 'GTM-NSQ8BP');/* eslint-enable */
-</script>
-<!-- End Google Tag Manager -->
-<script type="text/javascript" charset="UTF-8"
-	src="https://maps.googleapis.com/maps-api-v3/api/js/41/4/intl/ko_ALL/common.js"></script>
-<script type="text/javascript" charset="UTF-8"
-	src="https://maps.googleapis.com/maps-api-v3/api/js/41/4/intl/ko_ALL/util.js"></script>
 </head>
 <body class="asp_check" style="margin-top: 0px;">
-	
-
 		<div class="col-sm-8" style="width: 1000px;padding-left: 0px;padding-right: 20px;">
 
 			<div ng-show="active_tab == &quot;review&quot;" class="">
@@ -398,8 +221,5 @@ $(function() {
 				</ul>
 			</div>
 		</div>
-	
-
-
 </body>
 </html>

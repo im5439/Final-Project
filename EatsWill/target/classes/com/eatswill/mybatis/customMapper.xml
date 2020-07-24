@@ -119,7 +119,7 @@ ORDER BY recreated desc
 
 <!-- 해당 아이디의 찜 리스트 출력 -->
 <select id="getHeartList" parameterType="String" resultType="com.eatswill.dto.MyDTO">
-	SELECT s.shopImg shopImg, s.shopname shopName, nvl(data1.shopScore, 0) shopScore, nvl(data1.reCnt, 0) reCnt, nvl((data1.shopScore*20), 0) shopStar,s.ceoId
+	SELECT s.shopImg shopImg, s.shopname shopName, nvl(data1.shopScore, 0) shopScore, nvl(data1.reCnt, 0) reCnt, nvl((data1.shopScore*20), 0) shopStar, s.shopcode, s.ceoId
 	from shop s,heart h,(select SHOPCODE, round(AVG(rescore),1) shopScore, count(reNum) reCnt from review group by shopcode) data1
 	where s.shopcode=h.shopCode and h.shopcode=data1.shopCode(+) and h.userid=#{userid}
 </select>
