@@ -261,33 +261,45 @@ public class StoreDAO {
 
 
 	//음식점 리스트 리뷰순 정렬
-
-	public List<StoreDTO> orderByRe(){
-
+	public List<StoreDTO> orderByRe(int start, int end, String category){
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("category", category);
+		
 		List<StoreDTO> lists = 
-				sessionTemplate.selectList("storeMapper.orderByRe");
+				sessionTemplate.selectList("storeMapper.orderByRe",map);
 
 		return lists;
 
 	}
 
 	//음식점 리스트 주문순 정렬
-
-	public List<StoreDTO> orderByO(){
+	public List<StoreDTO> orderByO(int start, int end, String category){
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("category", category);
 
 		List<StoreDTO> lists = 
-				sessionTemplate.selectList("storeMapper.orderByO");
+				sessionTemplate.selectList("storeMapper.orderByO",map);
 
 		return lists;
 
 	}
 
 	//음식점 리스트 별점순 정렬
-
-	public List<StoreDTO> orderByRes(){
+	public List<StoreDTO> orderByRes(int start, int end, String category){
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("category", category);
 
 		List<StoreDTO> lists = 
-				sessionTemplate.selectList("storeMapper.orderByRes");
+				sessionTemplate.selectList("storeMapper.orderByRes",map);
 
 		return lists;
 

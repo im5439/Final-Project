@@ -133,8 +133,9 @@ ng\:form {
   		
   		var shopCount = "${shopCount}";
 		var category = "${category}";
+		var sortMode = "${sortMode}";
 		
-		var params ="pageNum="+index +"&category="+category;
+		var params ="pageNum="+index +"&category="+category+"&sortMode="+sortMode;
 		var url="<%=cp%>/stores.action";
 		
 		$.post(url,params,function(args){
@@ -149,6 +150,14 @@ ng\:form {
 		}
 			
 	}
+  	
+  	
+  	function sendIt(sort){
+  		
+  		location.href = sort;
+  		
+  	}
+  	
 	
 </script>
 
@@ -536,21 +545,20 @@ ng\:form {
     
 <!-- ====================================================================================================================  카테고리 끝 -->    
     
-       <div class="list-option">
+      <div class="list-option">
                <div class="list-option-inner">
-               <form action="" method="get" name="myForm">
-                  <select class="form-control ng-pristine ng-untouched ng-valid"
-                     onchange="window.open(value,'_self')"
-                     onclick="select_order_for_ga()">
-                     <option value="storeList.action" >기본 정렬순</option>
-                     <option value="orderByRes.action">별점순</option>
-                     <option 
-                     value="orderByRe.action">리뷰 많은순</option>
-                     <option value="orderByO.action">주문수</option>
+               <form action="" method="post" name="myForm">
+                  <select name="sort" onchange="sendIt(this.value)">
+           			 <option value="storeList.action" >전체</option>
+                     <option value="storeList.action" >매장 이름 순</option>
+                     <option value="orderByRes.action" >별점순</option>
+                     <option value="orderByRe.action">리뷰 많은순</option>
+                     <option value="orderByO.action" >주문수</option>
                   </select> <i class="arr-down"></i>
                   </form>
                </div>
             </div>
+           
          </div>
 
 <!-- ====================================================================================================================  리스트 시작 -->
