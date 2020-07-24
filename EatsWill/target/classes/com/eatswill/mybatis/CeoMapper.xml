@@ -20,9 +20,14 @@
 	values (#{category}||'_'||no_seq_shopCode.nextval, #{ceoId}, #{shopName}, #{category}, #{shopAddr}, #{shopTel}, 1, #{shopImg}, sysdate, #{franchise})	
 </insert>
 
+<!-- 해당매장 삭제 -->
+<delete id="deleteStore" parameterType="String">
+	delete shop where shopCode = #{shopCode}
+</delete>
+
 <!-- 사장님 보유매장 -->
-<select id="getStore" parameterType="String" resultType="com.eatswill.dto.CeoDTO">
-	select shopCode, shopName, category, shopAddr, shopTel, shopImg, shopCreated, franchise from shop where ceoId = #{ceoId}
+<select id="getStoreList" parameterType="String" resultType="com.eatswill.dto.CeoDTO">
+	select shopCode, shopName, category, shopAddr, shopTel, shopImg, shopCreated, franchise from shop where ceoId = #{ceoId} order by shopCreated
 </select>
 
 <!-- 사장님 보유매장 개수 -->
@@ -59,12 +64,17 @@
 
 <!-- 메뉴추가 -->
 <insert id="insertMenu" parameterType="com.eatswill.dto.CeoDTO">
-	insert into menu (menuCode, shopCode, menuName, menuPrice, menuImg, part) values (no_seq_menuCode.nextval, #{shopCode}, #{menuName}, #{menuPrice}, #{menuImg}, #{part})
+	insert into menu (menuCode, shopCode, menuName, menuPrice, menuImg, part, menuDate) values (no_seq_menuCode.nextval, #{shopCode}, #{menuName}, #{menuPrice}, #{menuImg}, #{part}, sysdate)
 </insert>
+
+<!-- 메뉴삭제 -->
+<delete id="deleteMenu" parameterType="String">
+	delete menu where menuCode = #{menuCode}
+</delete>
 
 <!-- 매장 메뉴 불러오기 -->
 <select id="getStoreMenu" parameterType="String" resultType="com.eatswill.dto.CeoDTO">
-	select menuCode, menuName, menuPrice, menuImg from menu where shopCode = #{shopCode}
+	select menuName ,menuCode, menuDate from menu where shopCode = #{shopCode} order by menuDate desc
 </select>
 
 <!-- 매장 정보 불러오기 -->
@@ -88,8 +98,23 @@
 
 <!-- 주문코드로 주문상태 update -->
 <update id="orderUpdate" parameterType="String">
-	update ordermain set orderStatus = '22' where orderCode = #{orderCode}
+	update ordermain set orderStatus = '200' where orderCode = #{orderCode}
 </update>
 
+<!-- 매장별 메뉴개수 -->
+<select id="getMenuCount" parameterType="String" resultType="int">
+	select nvl(count(*),0) from menu where shopCode=#{shopCode}
+</select>
+
+<!-- 메뉴개수별 데이터 불러오기 -->
+<select id="getMenuList" parameterType="hashMap" resultType="com.eatswill.dto.CeoDTO">
+	select rnum, menuName, menuCode, menuPrice, menuImg, part from (
+	select rownum rnum, data.* from (
+	select menuName, menuCode, menuPrice, menuImg, part
+	from menu where shopCode = #{shopCode} order by rownum desc) data)
+	<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+	]]>
+</select>
 
 </mapper>

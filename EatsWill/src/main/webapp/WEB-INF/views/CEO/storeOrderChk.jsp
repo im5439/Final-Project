@@ -39,7 +39,7 @@
 <link rel="stylesheet" type="text/css"
 	href="https://owner.yogiyo.co.kr/media/owners/css/owners_new.css?v=3c43aea">
 
-
+<!-- list css -->
 <link rel="stylesheet" href="/eatswill/resources/css/graindashboard.css" type="text/css"/>
 
 
@@ -93,9 +93,8 @@
     	
 		
 		
-	$(function(){ 
-		
-		$(window).load(function(){
+		//페이지 실행시 orderChkList.jsp 불러옴
+		$(window).ready(function(){
 			
 	        var params = "shopCode=" + $("#shopCode").val();
 	        params += "&shopName=" + $("#shopName").val();
@@ -112,7 +111,6 @@
 	            	console.log(args);
 	            	
 	            	$("#orderChkList").html(args);
-	            	
 		            
 	            },
 	            error:function(request, error){
@@ -123,10 +121,10 @@
 	          }
 	          
 	        });
+	        return false;  
 		});
 		
 		
-	});
 	
 
 	//window.setTimeout('window.location.reload()',30000); //30초마다 새로고침
@@ -168,7 +166,7 @@
 			</div>
 
 
-			<span id="orderChkList"></span>
+			<span id="orderChkList"></span> <!-- storeOrderChk.jsp 불러옴 -->
 
 			<input type="hidden" value="${shopCode }" id="shopCode">
 			<input type="hidden" value="${shopName }" id="shopName">

@@ -22,10 +22,10 @@
 	            type:"post",
 	            url:"<%=cp%>/storeOrderChk_ok.action",
 	            async: false,
-	            data:params,
+	            data: params,
 	            success: function(args){
 	               
-	               $("#orderChkList").html(args);
+	               $("#orderChkList").innerhtml(args);
 	               
 	            },
 	            error:function(e){
@@ -35,14 +35,13 @@
 	          }
 	          
 	        });
-	        
+	        return false;
 	    });
 		
 	});
 	
 		
 </script>
-
 
 				<div class="card mb-3 mb-md-4">
                         <div class="card-header">
@@ -82,16 +81,16 @@
                                         
                                         <td class="py-3">\ <fmt:formatNumber value="${dto.oamount }" type="number"/> 원</td>
                                         <td class="py-3">
-                                        <c:if test="${dto.orderStatus == '11' }">
+                                        <c:if test="${dto.orderStatus == '100' }">
                                             <span class="badge badge-pill badge-warning">주문확인</span></c:if>
-                                            <c:if test="${dto.orderStatus == '22' }">
+                                            <c:if test="${dto.orderStatus == '200' }">
                                             <span class="badge badge-pill badge-success">준비중</span></c:if>
-                                            <c:if test="${dto.orderStatus == '33' }">
+                                            <c:if test="${dto.orderStatus == '300' }">
                                             <span class="badge badge-pill badge-light">배달완료</span></c:if>
                                         </td>
                                         <td class="py-3">
                                             <div class="position-relative">
-                                            	<c:if test="${dto.orderStatus == '11' }">
+                                            	<c:if test="${dto.orderStatus == '100' }">
 												<div><a href="" class="orderChk" index="${status.index }"><span class="badge badge-pill badge-danger" style="background-color: #00ff33;'">주문확인</span></a></div>
 												<div><a href="" class="orderChk" index="${status.index }"><span class="badge badge-pill badge-danger" style="background-color: #ff0033;'">주문취소</span></a></div>
 												<input type="hidden" id="orderCode${status.index }" value="${dto.orderCode }">

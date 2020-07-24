@@ -39,6 +39,8 @@
 <link rel="stylesheet" type="text/css"
 	href="https://owner.yogiyo.co.kr/media/owners/css/owners_new.css?v=3c43aea">
 
+<link rel='stylesheet' href='https://www.yogiyo.co.kr/mobile/css/app.css?v=71b8bbd02b288c15133166a751af94e192e3c7e9'>
+
 
 <script type="text/javascript"
 	src="https://owner.yogiyo.co.kr/media/owners/js/jquery-1.9.1.min.js"></script>
@@ -112,6 +114,76 @@
 			f.submit();
     		
     	}
+		
+	$(function(){
+		
+		$(window).load(function(){
+			
+	        $.ajax({
+	            type:"post",
+	            url:"<%=cp%>/storeItem.action",
+	            async: false,
+	            success: function(args){
+	            	/* alert("저장되었습니다."); */ 
+	            	console.log(args);
+	            	
+	            	$("#storeItem").html(args);
+		            
+	            },
+	            error:function(request, error){
+	            	alert("실패하였습니다.");
+	            	console.log(request.status);
+	            	console.log(request.responseText);
+	            	console.log(error);
+	          }
+	          
+	        });
+	        return false;
+		});
+		
+    	
+		$("#addStore").click(function(){
+			
+			var formData = new FormData();
+			formData.append("shopName", $("input[name=shopName]").val());
+			formData.append("shopTel", $("input[name=shopTel]").val());
+			formData.append("shopAddr1", $("input[name=shopAddr1]").val());
+			formData.append("shopAddr2", $("input[name=shopAddr2]").val());
+			formData.append("category", $("select[name=category]").val());
+			formData.append("franchise", $("select[name=franchise]").val());
+			formData.append("uploadfile", $("input[name=uploadfile]")[0].files[0]); 
+			
+			$.ajax({
+				url: "<%=cp%>/addStore_ok.action", 
+				data: formData, 
+				processData: false, 
+				contentType: false, 
+				type: 'POST', 
+				success: function(args){ 
+					
+					$("#storeItem").html(args);
+					
+					//input value 초기화
+					$("#shopName").val('');
+					$("#shopTel").val('');
+					$("#sample2_address").val('');
+					$("#sample2_detailAddress").val('');
+					$("#category").val('');
+					$("#uploadfile").val('');
+					$("#franchise").val('');
+					
+				},
+				error:function(e){
+	            	alert("실패하였습니다.");
+	            	console.log(request.status);
+	            	console.log(request.responseText);
+	            	console.log(error);
+	          }
+				
+			}); 
+			return false;
+		}); 
+	}); 
     	
 </script>
 
@@ -122,7 +194,7 @@
 
 	<jsp:include page="ceoIncludeTop.jsp" flush="false"/>
 
-	<div class="own-container" style="padding-bottom: 300;">
+	<div class="own-container" style="overflow: auto;">
 		<div class="own-main">
 		<%-- 
 			<ul class="nav clearfix">
@@ -155,17 +227,14 @@
 								<input type="hidden" name="csrfmiddlewaretoken"
 									value="DCGEbT42tnubIG598OST9DRvHdTwj1Y8">
 							</div>
-							<input type="hidden" name="next_url" id="next_url"
-								value="/owner/">
+							<input type="hidden" name="next_url" id="next_url" value="/owner/">
 
 							<div>
-								<input type="text" class="inp-txt" name="shopName"
-									placeholder=" 매장명">
+								<input type="text" class="inp-txt" name="shopName" placeholder=" 매장명" id="shopName">
 							</div>
 							<br/>
 							<div>
-								<input type="text" class="inp-txt" name="shopTel"
-									placeholder=" 매장전화번호">
+								<input type="text" class="inp-txt" name="shopTel" placeholder=" 매장전화번호" id="shopTel">
 							</div>
 							<br/>
 							<div>
@@ -182,24 +251,24 @@
 							</div>
 							<br/>
 							<div>
-								<select class="inp-txt pwd" name="category">
+								<select class="inp-txt pwd" name="category" id="category">
 									<option value="">카테고리</option>
 									<option value="CK">치킨</option>
 									<option value="PY">피자/양식</option>
-									<option value="CH">분식</option>
 									<option value="KR">한식</option>
-									<option value="JP">중식</option>
-									<option value="BS">일식</option>
+									<option value="BS">분식</option>
+									<option value="CH">중식</option>
+									<option value="JP">일식</option>
 								</select>
 							</div>
 							<br/>
 							
 							<div>
-								<input type="file" class="inp-txt pwd" name="uploadfile" placeholder=" ">
+								<input type="file" class="inp-txt pwd" name="uploadfile" placeholder=" " id="uploadfile">
 							</div>
 							<br/>
 							<div>
-								<select class="inp-txt pwd" name="franchise">
+								<select class="inp-txt pwd" name="franchise" id="franchise">
 									<option value="">프랜차이즈유무</option>
 									<option value="y">YES</option>
 									<option value="n">NO</option>
@@ -207,17 +276,41 @@
 							</div>
 							<br/>
 							<div>
-								<button type="submit" class="btn-own-login" onclick="sendIt();">매장등록</button>
+								<button type="submit" class="btn-own-login" id="addStore">매장등록</button>
 							</div>
 						</form>
 					</div>
 
 				</div>
 			</div>
+			<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
+
+			<div class="ng-scope">
+			    <div class="" style="overflow: auto;" id="storeList">
+			      <div ng-if="key === 'contract'" class="ranking-guide ng-scope">
+			        <p>매장 목록</p>
+			      </div>
+			      
+						<span id="storeItem"></span><!-- menuItem.jsp 불러옴 -->
+						
+				</div>
+			</div>
+			
 		</div>
 	</div>
-<!-- 주소API --------------------------------------------------------------------------------------------------- -->
+	
+	<div class="modal fade popup-notice" id="modal-notice">
+		<a href="#" onclick="redirectLogin('/owner/vat/')" class="btn1">부가세
+			신고 자료 조회하기</a> <a href="#" data-dismiss="modal" id="no-show-modal"
+			class="pop-close-day">다시보지않기</a> <a href="#" data-dismiss="modal"
+			class="pop-close">Close</a>
+	</div>
+
+
+	<jsp:include page="ceoIncludeBottom.jsp" flush="false"/>
+	
+	<!-- 주소API --------------------------------------------------------------------------------------------------- -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     // 우편번호 찾기 화면을 넣을 element
@@ -307,16 +400,6 @@
     }
 </script>
 <!-- 주소API --------------------------------------------------------------------------------------------------- -->
-	<div class="modal fade popup-notice" id="modal-notice">
-		<a href="#" onclick="redirectLogin('/owner/vat/')" class="btn1">부가세
-			신고 자료 조회하기</a> <a href="#" data-dismiss="modal" id="no-show-modal"
-			class="pop-close-day">다시보지않기</a> <a href="#" data-dismiss="modal"
-			class="pop-close">Close</a>
-	</div>
-
-
-	<jsp:include page="ceoIncludeBottom.jsp" flush="false"/>
-	
 	
 	<script type="text/javascript">
     $(document).ready(function() {

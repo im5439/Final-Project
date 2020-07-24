@@ -156,7 +156,7 @@ $(function(){
 	              <c:if test="${dto.reImg != null }">
 	                <!-- ngRepeat: img in review.review_images -->
 	                <div class="info ng-scope" ng-repeat="img in review.review_images" style="width: 312px; height: 312px; margin-right: 1px;">
-	                  <img class="ng-isolate-scope" src="<spring:url value='/img/${dto.reImg }'/>" style="visibility: visible; width: 312px; height: 448.988px; left: 0px; top: -68.5px;">
+	                  <img class="ng-isolate-scope" src="<spring:url value='/reimg/${dto.reImg }'/>" style="visibility: visible; width: 312px; height: 448.988px; left: 0px; top: -68.5px;">
 	                </div><!-- end ngRepeat: img in review.review_images -->
 	              </c:if>
 	              </td>

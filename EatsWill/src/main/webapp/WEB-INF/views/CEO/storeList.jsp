@@ -39,6 +39,8 @@
 <link rel="stylesheet" type="text/css"
 	href="https://owner.yogiyo.co.kr/media/owners/css/owners_new.css?v=3c43aea">
 
+<!-- list css -->
+<link rel="stylesheet" href="/eatswill/resources/css/graindashboard.css" type="text/css"/>
 
 <script type="text/javascript"
 	src="https://owner.yogiyo.co.kr/media/owners/js/jquery-1.9.1.min.js"></script>
@@ -121,6 +123,7 @@
 					</ol>
 
 				</div>
+				<%-- 
 				<c:if test="${mode == 'addMenu' }">메뉴추가 매장리스트</c:if>
 				<c:if test="${mode == 'orderChk' }">주문확인 매장리스트</c:if>
 				<c:if test="${mode == 'ceoReview' }">리뷰관리 매장리스트</c:if>
@@ -143,12 +146,124 @@
 				<li><a href="<%=cp%>/storeReview.action?shopCode=${dto.shopCode}">매장명 : ${dto.shopName } 매장주소 : ${dto.shopAddr } 매장등록일 : ${dto.shopCreated }</a></li>
 				</c:forEach>
 				</c:if>
+				 --%>
+				<div class="card mb-3 mb-md-4">
+                        <div class="card-header">
+                            <c:if test="${mode == 'addMenu' }"><h5 class="font-weight-semi-bold mb-0">메뉴추가 매장리스트</h5></c:if>
+                            <c:if test="${mode == 'orderChk' }"><h5 class="font-weight-semi-bold mb-0">주문확인 매장리스트</h5></c:if>
+                            <c:if test="${mode == 'ceoReview' }"><h5 class="font-weight-semi-bold mb-0">리뷰관리 매장리스트</h5></c:if>
+                        </div>
+
+                        <div class="card-body pt-0">
+                            <div class="table-responsive-xl">
+                                <table class="table text-nowrap mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">매장명</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">매장주소</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">매장등록일</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">영업시간</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">상태</th>
+                                        <th class="font-weight-semi-bold border-top-0 py-2">Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    
+                                    <c:if test="${mode == 'addMenu' }">
+                                    <c:forEach var="dto" items="${shopList }" varStatus="status">
+                                    <tr>
+                                        <td class="py-3"><a href="<%=cp%>/addMenu.action?shopCode=${dto.shopCode }&shopName=${dto.shopName }">${dto.shopName }</a></td>
+                                        <td class="py-3">
+                                            <div><a href="<%=cp%>/addMenu.action?shopCode=${dto.shopCode }&shopName=${dto.shopName }">${dto.shopAddr }</a></div>
+                                            <div class="text-muted"></div>
+                                        </td>
+                                        <td class="py-3">
+                                        	<div><a href="<%=cp%>/addMenu.action?shopCode=${dto.shopCode }&shopName=${dto.shopName }">${dto.shopCreated }</a></div>
+                                        </td>
+                                        
+                                        <td class="py-3"></td>
+                                        <td class="py-3">
+                                            <span class="badge badge-pill badge-warning">영업중</span>
+                                            <span class="badge badge-pill badge-success">준비중</span>
+                                            <span class="badge badge-pill badge-light">영업종료</span>
+                                        </td>
+                                        <td class="py-3">
+                                            <div class="position-relative">
+												<div><span class="badge badge-pill badge-danger" style="background-color: #00ff33;'">주문확인</span></div>
+												<div><span class="badge badge-pill badge-danger" style="background-color: #ff0033;'">주문취소</span></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </c:forEach>
+                                    </c:if>
+                                    
+                                    <c:if test="${mode == 'orderChk' }">
+                                    <c:forEach var="dto" items="${shopList }" varStatus="status">
+                                    <tr>
+                                        <td class="py-3"><a href="<%=cp%>/storeOrderChk.action?shopCode=${dto.shopCode }&shopName=${dto.shopName }">${dto.shopName }</a></td>
+                                        <td class="py-3">
+                                            <div><a href="<%=cp%>/storeOrderChk.action?shopCode=${dto.shopCode }&shopName=${dto.shopName }">${dto.shopAddr }</a></div>
+                                            <div class="text-muted"></div>
+                                        </td>
+                                        <td class="py-3">
+                                        	<div><a href="<%=cp%>/storeOrderChk.action?shopCode=${dto.shopCode }&shopName=${dto.shopName }">${dto.shopCreated }</a></div>
+                                        </td>
+                                        
+                                        <td class="py-3"></td>
+                                        <td class="py-3">
+                                            <span class="badge badge-pill badge-warning">영업중</span>
+                                            <span class="badge badge-pill badge-success">준비중</span>
+                                            <span class="badge badge-pill badge-light">영업종료</span>
+                                        </td>
+                                        <td class="py-3">
+                                            <div class="position-relative">
+												<div><span class="badge badge-pill badge-danger" style="background-color: #00ff33;'">주문확인</span></div>
+												<div><span class="badge badge-pill badge-danger" style="background-color: #ff0033;'">주문취소</span></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </c:forEach>
+                                    </c:if>
+                                    
+                                    <c:if test="${mode == 'ceoReview' }">
+                                    <c:forEach var="dto" items="${shopList }" varStatus="status">
+                                    <tr>
+                                        <td class="py-3"><a href="<%=cp%>/storeReview.action?shopCode=${dto.shopCode}">${dto.shopName }</a></td>
+                                        <td class="py-3">
+                                            <div><a href="<%=cp%>/storeReview.action?shopCode=${dto.shopCode}">${dto.shopAddr }</a></div>
+                                            <div class="text-muted"></div>
+                                        </td>
+                                        <td class="py-3">
+                                        	<div><a href="<%=cp%>/storeReview.action?shopCode=${dto.shopCode}">${dto.shopCreated }</a></div>
+                                        </td>
+                                        
+                                        <td class="py-3"></td>
+                                        <td class="py-3">
+                                            <span class="badge badge-pill badge-warning">영업중</span>
+                                            <span class="badge badge-pill badge-success">준비중</span>
+                                            <span class="badge badge-pill badge-light">영업종료</span>
+                                        </td>
+                                        <td class="py-3">
+                                            <div class="position-relative">
+												<div><span class="badge badge-pill badge-danger" style="background-color: #00ff33;'">주문확인</span></div>
+												<div><span class="badge badge-pill badge-danger" style="background-color: #ff0033;'">주문취소</span></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </c:forEach>
+                                    </c:if>
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
 				
 				</div>
 			</div>
 
 		</div>
-	</div>
+		
 	<div class="modal fade popup-notice" id="modal-notice">
 		<a href="#" onclick="redirectLogin('/owner/vat/')" class="btn1">부가세
 			신고 자료 조회하기</a> <a href="#" data-dismiss="modal" id="no-show-modal"

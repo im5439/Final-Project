@@ -36,12 +36,12 @@ a:hover {
 
 .main,
 .container > header {
-	width: 100%;
+	/* width: 100%; */
 	margin: 0 auto;
 	/* padding: 2em; */
-	padding-right: 189;
-    padding-left: 189;
-    padding-top: 30;
+	padding-right: 19px;
+    padding-left: 189px;
+    padding-top: 30px;
 }
 
 .main {

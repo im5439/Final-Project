@@ -26,7 +26,7 @@
  			-->
 			<ul class="ext">
 				<li class="outlink"><a href="https://boss.yogiyo.co.kr/"
-					target="_blank">매출관리</a></li>
+					target="_blank"></a></li>
 			</ul>
 			
 		</div>
@@ -71,19 +71,11 @@
 							</a>
 						</li>
 						<li>
-							<a href="href=<%=cp %>/sales.action">
+							<a href="<%=cp %>/sales.action">
 								<span class="icon">
 									<i aria-hidden="true" class="icon-team"></i>
 								</span>
 								<span>매출관리</span>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<span class="icon">
-									<i aria-hidden="true" class="icon-contact"></i>
-								</span>
-								<span>Contact</span>
 							</a>
 						</li>
 					</ul>
