@@ -417,42 +417,37 @@ function sendIt() {
 				</div>
 			</div>
 			<!-- ----------------------------------------------------------------------------------------- -->
-		
-			<nav style="height: auto;font-size: 12px;">
-				<ul>
-					<li><a href="#menu">Menu</a></li>
-				</ul>
-			</nav>
-		
-			<nav id="menu" style="font-size: 14.4px;">
-				<h2 style="font-size: 29px;margin-top: 0;font-weight: bold;">Menu</h2>
-				<br /> <input type="hidden" id="sessionId"
-					value="${sessionScope.customInfo.id }" />
-				<ul>
-					<c:choose>
-						<c:when test="${empty sessionScope.customInfo.id }">
-							<li><a
-								href="${pageContext.request.contextPath}/login.action">로그인</a></li>
-						</c:when>
-						<c:otherwise>
-							<li><font color="#F2849E">${sessionScope.customInfo.name }</font>
-								님 환영합니다.
+			<c:choose>
+				<c:when test="${!empty sessionScope.customInfo.id }">
+					<nav style="height: auto;font-size: 12px;">
+						<ul>
+							<li><a href="#menu">Menu</a></li>
+						</ul>
+					</nav>
+				
+					<nav id="menu" style="font-size: 14.4px;">
+						<h2 style="font-size: 29px;margin-top: 0;font-weight: bold;">Menu</h2>
+						<br /> <input type="hidden" id="sessionId"
+							value="${sessionScope.customInfo.id }" />
+						<ul>
+							<li>
+								<font color="#F2849E">${sessionScope.customInfo.name }</font>님 환영합니다.
 								<p style="text-align: left">
 									전화번호 : ${sessionScope.customInfo.tel }</br> 포인트 :
 									${sessionScope.customInfo.point }
-								</p> <a href="logout.action" data-nethru_clcode="A000012">로그아웃</a></li>
-						</c:otherwise>
-					</c:choose>
-					<li><a href="updateInfo.action">내정보수정</a></li>
-					<li><a id="basket">장바구니</a></li>
-					<li><a href="myOrder.action">주문내역</a></li>
-					<li><a href="heartStore.action">찜 목록</a></li>
-					<li><a href="myReview.action">마이 리뷰</a></li>
-				</ul>
-				<form method="POST" action="" name="infoForm">
-					<div id="myInfo"></div>
-				</form>
-			</nav>
+								</p> 
+								<a href="logout.action" data-nethru_clcode="A000012">로그아웃</a>
+							</li>
+							<li><a href="updateInfo.action">내정보수정</a></li>
+							<li><a href="myPage.action">마이 페이지</a></li>
+							<li><a id="basket">장바구니</a></li>
+						</ul>
+						<form method="POST" action="" name="infoForm">
+							<div id="myInfo"></div>
+						</form>
+					</nav>
+				</c:when>
+			</c:choose>
 			<!-- ----------------------------------------------------------------------------------------- -->
 			<div class="nav-top clearfix"
 				ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
@@ -489,12 +484,12 @@ function sendIt() {
 							<c:when test="${empty sessionScope.customInfo.id }">
 								<button type="button"
 									class="button button--ujarak button--border-thin button--text-thick"
-									style="width: 95px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 14.4px; font-weight: bold; 
+									style="width: 150px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 14.4px; font-weight: bold; 
 									font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
-									onclick="javascript:location.href='login.action';">Login</button>
+									onclick="javascript:location.href='login.action';">로그인</button>
 								<button type="button"
 									class="button button--ujarak button--border-thin button--text-thick"
-									style="width: 95px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 14.4px; font-weight: bold;
+									style="width: 150px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 14.4px; font-weight: bold;
 									font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
 									onclick="javascript:location.href='signup.action';">회원가입</button>
 							</c:when>
@@ -503,7 +498,14 @@ function sendIt() {
 									class="button button--ujarak button--border-thin button--text-thick"
 									style="width: 150px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 14.4px; font-weight: bold;
 									font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
-									onclick="javascript:location.href='logout.action';">Logout</button>
+									onclick="javascript:location.href='logout.action';">로그아웃</button>
+									
+								<button type="button"
+									class="button button--ujarak button--border-thin button--text-thick"
+									id="cartList"
+									style="width: 150px; height: 38px; font-size: 14.4px; background-color: #FDCD8C; border-color: #FDCD8C; font-weight: bold;
+									font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';">주문표(0)</button>
+								<div id="cartInfo"></div>	
 							</c:otherwise>
 						</c:choose>
 		
@@ -512,12 +514,7 @@ function sendIt() {
 						ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
 						ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;" style="font-size: 1.2em;background-color: red;">주문표(0)</button> -->
 		
-						<button type="button"
-							class="button button--ujarak button--border-thin button--text-thick"
-							id="cartList"
-							style="width: 150px; height: 38px; font-size: 14.4px; background-color: #FDCD8C; border-color: #FDCD8C; font-weight: bold;
-							font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';">주문표(0)</button>
-						<div id="cartInfo"></div>
+						
 					</form>
 		
 					<!--------------------------------------------------------------------------------------------------------------------------->
@@ -683,7 +680,7 @@ function sendIt() {
 	<!-- 카카오톡 채팅 시작 -->
 	<div style="position: fixed; right: 10px; bottom: 10px;"
 		class="talk_image">
-		<a id="channel-chat-button" href="" onclick="void chatChannel();">
+		<a id="channel-chat-button" onclick="void chatChannel();">
 			<img src="/eatswill/resources/img/consult_small_yellow_pc1.png"
 			width="70" height="70" />
 		</a>

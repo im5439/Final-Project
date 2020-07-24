@@ -443,7 +443,7 @@ public class CustomController {
 		String cp = req.getContextPath();
 		HttpSession session = req.getSession();
 		CustomDTO dto = (CustomDTO) session.getAttribute("customInfo");
-		System.out.println(dto.getId());
+
 		List<MyDTO> lists = dao.getHeartList(dto.getId());
 		String storeUrl = cp + "/page.action";
 
@@ -476,7 +476,19 @@ public class CustomController {
 	public String reviewDelete(HttpServletRequest req) throws Exception {
 		int reNum = Integer.parseInt(req.getParameter("reNum"));
 		dao.reviewDelete(reNum);
-		return "redirect:/myPage.action";
+		
+		String cp = req.getContextPath();
+		HttpSession session = req.getSession();
+		CustomDTO dto = (CustomDTO) session.getAttribute("customInfo");
+		
+		List<MyDTO> lists = dao.getMyReviewList(dto.getId());
+		String storeUrl = cp + "/page.action";
+
+		
+		req.setAttribute("lists", lists);
+		req.setAttribute("storeUrl", storeUrl);
+		
+		return "custom/myReview";
 	}
 
 }

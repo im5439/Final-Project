@@ -83,9 +83,9 @@ ng\:form {
 
 <script type="text/javascript"
 	src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
-<script type="text/javascript"
+<!-- <script type="text/javascript"
 	src="/eatswill/resources/assets/js/cart.js"></script>
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script> -->
 
 
 <!--------------------------------------------------------------------------------------- -->

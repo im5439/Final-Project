@@ -245,23 +245,6 @@ ng\:form {
    var dataLayer = [];
 </script>
 
-<!-- 로딩창 스크립---------------------------------------------------- -->
-<script type="text/javascript">
-
-	function switchScreen() {
-	   	setTimeout("switchScreenTime()", 1300);
-	}
-	
-	function switchScreenTime() {
-	   	document.getElementById("divLoading").style.display = "none";
-		document.getElementById("divBody").style.display = "";
-	}
-
-
-</script>
-<!------------------------------------------------------------------  -->
-
-
 <noscript>
 	<iframe src="//www.googletagmanager.com/ns.html?id=GTM-NSQ8BP"
 		height="0" width="0" style="display: none; visibility: hidden"></iframe>
@@ -322,21 +305,8 @@ $(document).ready(function() {
 
 </head>
 
-
-
-  <!--  로딩창 div ----------------------------------------------------------------------------- -->
   
-<body onload="switchScreen();">
-
-<div id="divLoading" style="position:absolute; top:30%; left:0;  text-align:center; margin:0 auto; width: 100%;">
-    <img src="/eatswill/resources/images/hicon2.gif" alt="잠시만 기다려 주세요. 로딩중입니다."  style="height: 30em; width: 30em;"/>
-</div>
-
-<div id="divBody" style="display:none;">
-
-  <!--  로딩창 div ----------------------------------------------------------------------------- 맨밑에 /div 있음  --> 
-
-
+<body>
 
 	<!-- 시연 - 팝업창 -->
 	<form name="notice_form">
@@ -768,7 +738,7 @@ $(document).ready(function() {
 	<!-- 카카오톡 채팅 시작 -->
 	<div style="position: fixed; right: 10px; bottom: 10px;"
 		class="talk_image">
-		<a id="channel-chat-button" href="" onclick="void chatChannel();">
+		<a id="channel-chat-button" onclick="void chatChannel();">
 			<img src="/eatswill/resources/img/consult_small_yellow_pc1.png"
 			width="70" height="70" />
 		</a>
@@ -784,6 +754,6 @@ $(document).ready(function() {
          </script>
 	</div>
 	<!-- 카카오톡 채팅 끝 -->
-	</div>
+
 </body>
 </html>

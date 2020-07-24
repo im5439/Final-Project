@@ -69,9 +69,9 @@ ng\:form {
 	href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
 <script type="text/javascript"
 	src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
-<script type="text/javascript"
+<!-- <script type="text/javascript"
 	src="/eatswill/resources/assets/js/cart.js"></script>
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script> -->
 
 
 <meta name="theme-color" content="#DC1400">
@@ -97,6 +97,9 @@ ng\:form {
 	href="css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
 <link rel="stylesheet" href="/eatswill/resources/assets/css/app.css"
 	type="text/css" />
+
+<script type="text/javascript" src="<%=cp%>/resources/data/js/jquery-ui.js"></script>
+
 <!-- Start location.search generate Code for Naver 검색 유입 -->
 <script type="text/javascript">
 	if (is_yogiyo) {
@@ -225,6 +228,8 @@ ng\:form {
 		f.parentNode.insertBefore(j, f);
 	})(window, document, 'script', 'dataLayer', 'GTM-NSQ8BP');/* eslint-enable */
 </script>
+
+
 <!-- End Google Tag Manager -->
 <script type="text/javascript" charset="UTF-8"
 	src="https://maps.googleapis.com/maps-api-v3/api/js/41/4/intl/ko_ALL/common.js"></script>
@@ -233,13 +238,43 @@ ng\:form {
 </head>
 <body class="asp_check" style="margin-top: 0px;">
 
+<!-- 리뷰삭제 아작스  -->
+<script type="text/javascript">
+
+
+	function myReviewDel(pIndx) {
+		var btnIdx = pIndx;                      
+		
+		var params = "reNum=" + $("#myReNum" + btnIdx).val();
+	
+		$.ajax({
+			
+			type:"POST",
+			url:"<%=cp%>/reviewDelete.action",
+			data:params,
+			success:function(args){
+				
+				$("#myReview").html(args);
+			
+			},
+			error:function(e){
+				alert(e.responseText);
+			}
+		});
+		
+				
+			}
+
+</script>
+
 
 	<div ng-show="active_tab == &quot;review&quot;" align="left">
+	<form action="" method="post" name="myReviewForm">
 
 		<ul id="review" class="list-group review-list">
 
 			<!-- ngRepeat: review in restaurant.reviews -->
-			<c:forEach var="dto" items="${lists}">
+			<c:forEach var="dto" items="${lists}" varStatus="status">
 				<li class="list-group-item star-point ng-scope"
 					ng-repeat="review in restaurant.reviews"
 					on-finish-render="scrollCartArea()" style="text-align: left;">
@@ -248,8 +283,9 @@ ng\:form {
 						<small>${dto.orderDate }</small><br> <span
 							ng-show="review.phone" class="review-id ng-binding"><a
 							href="${storeUrl}?shopCode=${dto.shopCode}&ceoId=${dto.ceoId}">${dto.shopName }
-								></a> </span> <a href="<%=cp %>/reviewDelete.action?reNum=${dto.reNum}"
-							class="btn-report">삭제</a>
+								></a> </span> <img src="resources/img/delete.png" width="20px" height="20px" 
+        id="deleteImg1" onclick="myReviewDel(${status.index});"> 
+							<input type="hidden" value="${dto.reNum }" name="reNum" id="myReNum${status.index}">
 					</div> <!--   <span ng-bind="review.time|since" class="review-time ng-binding" style="text-align: left"><span class="star-rating" style="text-align: left"><span style ="width:${dto.reStar}%; text-align: left"></span></span>(${dto.reScore})</span> -->
 
 					<div>
@@ -298,6 +334,7 @@ ng\:form {
 			</c:forEach>
 
 		</ul>
+		</form>
 	</div>
 
 </body>

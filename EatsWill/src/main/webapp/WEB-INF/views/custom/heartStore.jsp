@@ -108,8 +108,8 @@ ng\:form {
    <link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
    <link rel="stylesheet"
    href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
-   <script type="text/javascript" src="/eatswill/resources/assets/js/cart.js"></script>
-   <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+   <!-- <script type="text/javascript" src="/eatswill/resources/assets/js/cart.js"></script>
+   <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script> -->
 
 <script type="text/javascript"
    src="http://script.gmarket.co.kr/_Net/js/gmkt.js?dummy=2012091327262"></script>

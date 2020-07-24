@@ -659,7 +659,7 @@ ng\:form {
 	<!-- 카카오톡 채팅 시작 -->
 	<div style="position: fixed; right: 10px; bottom: 10px;"
 		class="talk_image">
-		<a id="channel-chat-button" href="" onclick="void chatChannel();">
+		<a id="channel-chat-button" onclick="void chatChannel();">
 			<img src="/eatswill/resources/img/consult_small_yellow_pc1.png"
 			width="70" height="70" />
 		</a>

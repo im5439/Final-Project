@@ -60,7 +60,7 @@ public class StoreController {
 	public String page(HttpServletRequest request,String shopCode,String ceoId,String userId) {
 
 		System.out.println("page µé¾î¿È");
-		
+		System.out.println("A: " + shopCode + " B: " + ceoId + " C: " + userId);
 		//userId sessionÃ³¸®
 		
 		HttpSession session = request.getSession();

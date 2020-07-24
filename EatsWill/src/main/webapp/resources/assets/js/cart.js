@@ -32,9 +32,10 @@ function cartOpen(check) {
         type: "POST",            
         data: param,
         success: function(data){
+        
         	var shopCode = data.substring(0, data.indexOf(','));
         	var ceoId = data.substring((data.indexOf(',')+1), data.length);
-        
+        	
         	if(check == "my") {
         		$("#myInfo").append($('<input/>', {type: 'hidden', name: 'shopCode', value: shopCode}));
         		$("#myInfo").append($('<input/>', {type: 'hidden', name: 'ceoId', value: ceoId}));
