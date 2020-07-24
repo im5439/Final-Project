@@ -106,12 +106,12 @@
       
           <div>
            
-            <span ng-show="review.phone" class="review-id ng-binding"> ${dto.userId } 님 </span>
+            <span ng-show="review.phone" class="review-id ng-binding"> ${dto.reUserId } 님 </span>
             <span ng-bind="review.time|since" class="review-time ng-binding"> 작성날짜 ${dto.reCreated } </span>
-       
+       		<c:if test="${userId != 'guest' }">
           	신고 (${dto.count })
             <img alt="" src="/eatswill/resources/img/siren.png" style="height: 1.5em; width: 1.5em;" id="report"  onclick="reportIt(${status.index});" >
-            
+            </c:if>
              <input type="hidden" id="reNum${status.index}" value="${dto.reNum}" name="reNum">
             <input type="hidden" id="userId" value="${userId}">
             <input type="hidden" id="shopCode" value="${dto.shopCode}">
@@ -141,13 +141,14 @@
               <td>
                
                <!--  리뷰 이미지  -->
+               <c:if test="${dto.reImg!=null }">
                 <div style="width: 569px; height: 284px;">
                 	
                 
-                  <img alt="" src="http://localhost:8080/reImg/${dto.reImg}"
-                  style="visibility: visible; width: 300px; height: 300px;">
+                  <img alt="" src="resources/img/${dto.reImg}"
+                  style="visibility: visible; width: 569px; height: 758.37px; left: 0px; top: -237px;">
                 </div>
-                
+                </c:if>
                 
               </td>
             </tr>

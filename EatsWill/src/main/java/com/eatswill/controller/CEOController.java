@@ -25,6 +25,7 @@ import com.eatswill.dto.OrderDTO;
 import com.eatswill.util.MyUtil;
 
 @SessionAttributes("CeoInfo")
+
 @Controller("CEOController")
 public class CEOController {
 
@@ -232,7 +233,7 @@ public class CEOController {
 	//매장추가 END=============================================================================================================================
 
 	//매장리스트 mode (주문확인,메뉴관리,리뷰관리)
-		@RequestMapping(value = "/storeList.action", method = { RequestMethod.POST, RequestMethod.GET })
+		@RequestMapping(value = "/cepStoreList.action", method = { RequestMethod.POST, RequestMethod.GET })
 		public String storeList(HttpServletRequest request, HttpSession session, CeoDTO dto) {
 			
 			String mode = request.getParameter("mode");

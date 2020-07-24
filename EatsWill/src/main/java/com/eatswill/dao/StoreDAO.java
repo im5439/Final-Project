@@ -34,15 +34,15 @@ public class StoreDAO {
 	}
 
 	//음식점 정보
-	public List<StoreDTO>  shopInfo (String ceoId,String shopCode) {
+	public StoreDTO shopInfo (String ceoId,String shopCode) {
 
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("shopCode", shopCode);
 		map.put("ceoId", ceoId);
 
-		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.shopInfo",map);
+		StoreDTO dto = sessionTemplate.selectOne("storeMapper.shopInfo",map);
 
-		return lists;
+		return dto;
 	}
 
 
@@ -143,6 +143,14 @@ public class StoreDAO {
 		return lists;
 
 	}
+
+	//장바구니에서 직접 수량 변경시 디비에 업데이트
+	public void updateQTY(StoreDTO dto) {
+
+		sessionTemplate.update("storeMapper.updateQTY",dto);
+
+	}
+
 	//장바구니 삭제
 	public void deleteCart(String userId) {
 
@@ -216,47 +224,140 @@ public class StoreDAO {
 
 	}
 
-	//음식점 리스트 리뷰순 정렬
+	//음식점 리스트 페이징(start, end) + 카테고리
+	public List<StoreDTO> shopPaging(int start, int end, String category){
 
-	public List<StoreDTO> orderByRe(){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("category", category);
 
 		List<StoreDTO> lists = 
-				sessionTemplate.selectList("storeMapper.orderByRe");
+				sessionTemplate.selectList("storeMapper.shopPaging",map);
+		return lists;
+
+	}
+
+
+	//음식점 카운트 all
+	public int shopCountall() {
+
+		int shopCountall = sessionTemplate.selectOne("storeMapper.shopCountall");
+
+		return shopCountall;
+
+	}
+
+	//음식점 카운트(category별)
+	public int shopCount(String category ) {
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("category", category);
+		int shopCount = sessionTemplate.selectOne("storeMapper.shopCount",map);
+
+		return shopCount;
+
+	}
+
+
+	//음식점 리스트 리뷰순 정렬
+	public List<StoreDTO> orderByRe(int start, int end, String category){
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("category", category);
+		
+		List<StoreDTO> lists = 
+				sessionTemplate.selectList("storeMapper.orderByRe",map);
 
 		return lists;
 
 	}
 
 	//음식점 리스트 주문순 정렬
-
-	public List<StoreDTO> orderByO(){
+	public List<StoreDTO> orderByO(int start, int end, String category){
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("category", category);
 
 		List<StoreDTO> lists = 
-				sessionTemplate.selectList("storeMapper.orderByO");
+				sessionTemplate.selectList("storeMapper.orderByO",map);
 
 		return lists;
 
 	}
 
 	//음식점 리스트 별점순 정렬
-
-	public List<StoreDTO> orderByRes(){
+	public List<StoreDTO> orderByRes(int start, int end, String category){
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("category", category);
 
 		List<StoreDTO> lists = 
-				sessionTemplate.selectList("storeMapper.orderByRes");
+				sessionTemplate.selectList("storeMapper.orderByRes",map);
 
 		return lists;
 
 	}
 
 	// 결제창 셀렉트
+	//고객INFO
+	public StoreDTO selectOrderInfo(String userId){
 
-	public List<StoreDTO> selectOrderInfo(String userId){
+		StoreDTO dto = 
+				sessionTemplate.selectOne("storeMapper.selectOrderInfo",userId);
+
+		return dto;
+
+	}
+
+	//shopName 셀렉트
+	public StoreDTO selectOrderShopName(String userId){
+
+		StoreDTO dto = sessionTemplate.selectOne("storeMapper.selectOrderShopName",userId);
+		return dto;
+
+	}
+
+	//결제 메뉴코드 셀렉트
+	public List<StoreDTO> selectPreOrderDe(String userId){
 
 		List<StoreDTO> lists = 
-				sessionTemplate.selectList("storeMapper.selectOrderInfo",userId);
-
+				sessionTemplate.selectList("storeMapper.selectPreOrderDe",userId);
 		return lists;
+
+	}
+
+	//결제 오더메인 인서트
+	public void insertOrderMain(StoreDTO dto) {	
+		sessionTemplate.insert("storeMapper.insertOrderMain",dto);	
+	}
+
+	//결제 오더디테일 인서트
+	public void insertOrderDetail(StoreDTO dto) {	
+		sessionTemplate.insert("storeMapper.insertOrderDetail",dto);	
+	}
+
+	//포인트로 결제시 포인트 차감
+	public void useUserPoint(StoreDTO dto) {	
+		sessionTemplate.update("storeMapper.useUserPoint",dto);	
+	}
+
+	//결제후 결제금액 5프로 포인트 적립
+	public void updateOrderPoint(String userId) {	
+		sessionTemplate.update("storeMapper.updateOrderPoint",userId);	
+	}
+
+	//결제후 결제금액 5프로 포인트 적립
+	public StoreDTO selectOrderOne(String userId) {	
+
+		StoreDTO dto = sessionTemplate.selectOne("storeMapper.selectOrderOne",userId);
+		return dto;
 
 	}
 

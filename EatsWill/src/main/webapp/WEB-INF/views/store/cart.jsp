@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%
    request.setCharacterEncoding("UTF-8");
    String cp = request.getContextPath();
@@ -128,14 +129,14 @@ input[type=button]{
 		if(cal==2){
     	 
 	         var val = Number(obj1.value) + 1;
+	         
+	         priceAmount.value = Number(priceAmount.value) + Number(obj2.value);
 	         obj1.value = val;
-	
 	         obj3.value =  Number(obj1.value) * Number(obj2.value);
 	         addsidesel(btnIdx);
 	         //기존의 주문 총 금액에서 선택한 메뉴의 금액을 더함
-	         priceAmount.value = Number(priceAmount.value) + Number(obj2.value);
-         
-         
+	       
+	     
 		}
 		
 		
@@ -153,8 +154,7 @@ input[type=button]{
 	
 	        obj3.value =  Number(obj1.value) * Number(obj2.value);
 	        addsidesel(btnIdx);
-	        
-		 
+	    
     }
 	
 	function deleteIt(pIndx) {
@@ -182,6 +182,50 @@ input[type=button]{
     		
     	});
     }
+	
+
+	function cQtyChk() {
+		
+		alert("cQtyChk 들어옴");
+		var f = document.storeForm;
+		var size = $("#cartMainListsSize").val();
+		var size2 = $("#cartMainListsSize2").val();
+	
+		alert(size);
+
+		var mainQty = "";
+		var cartMenuCode = "";
+		var cartAmount = "";
+		var sidePrice = "";
+		
+		for(var i=0; i<size; i++) {
+			
+			mainQty +=  document.getElementById("amount" + i).value + ',';
+			cartMenuCode +=  document.getElementById("cartMenuCode" + i).value + ',';
+			cartAmount +=  document.getElementById("cAmount" + i).value + ',';
+			
+			
+		}
+		
+		for(var i=0; i<size2; i++) {
+			
+			sidePrice +=  document.getElementById("sidePrice" + i).value + ',';
+		}
+		
+		alert(mainQty);
+		alert(cartMenuCode);
+		alert(cartAmount);
+		alert(sidePrice);
+		
+		document.getElementById("mainQty").value = mainQty;
+		document.getElementById("cartMenuCode").value = cartMenuCode;
+		document.getElementById("cartAmount").value = cartAmount;
+		document.getElementById("sidePrice2").value = sidePrice;
+	
+		
+		alert("끝");
+	
+	}
  
     </script>
     
@@ -209,7 +253,7 @@ input[type=button]{
       <!-- ngRepeat: item in cart.get().items -->
     </ul>
  
-        <form name="storeForm" method="post">
+        <form name="storeForm" method="post" action="<%=cp%>/cartUpdate.action">
         <c:forEach var="dto" items="${lists }" varStatus="status">
  
         <div align="center"  style="">
@@ -222,8 +266,8 @@ input[type=button]{
         <c:forEach var="dto1" items="${lists1 }">
         <c:if test="${lists1!=null && dto.menuCode==dto1.menuCode}" >
         	${dto1.menuName }(${dto1.cQty})
-  
        	</c:if>
+   
         </c:forEach>
      
        </td>
@@ -247,7 +291,7 @@ input[type=button]{
        		<td colspan="2">
        		
        			<input type="text" id="cAmount${status.index}" name="cAmount" value="${dto.cAmount}" size="11" readonly="readonly" style="text-align: right;"/>	
-       		
+       			
        		</td>
        		<td>원</td>
        </tr>
@@ -261,20 +305,26 @@ input[type=button]{
         <input type="hidden" id="cartMenuCode${status.index}" value="${dto.menuCode }" name="menuCode">
         <input type=hidden name="menuPrice" value="${dto.menuPrice }"  id="menuPrice${status.index}">
         <input type="hidden" name="menuName" value="${dto.menuName }">
+        <input type="hidden" name="cartMainListsSize" value="${fn:length(lists)} " id="cartMainListsSize">
+        <input type="hidden" name="cartMainListsSize2" value="${fn:length(lists2)} " id="cartMainListsSize2">
+		
         </c:forEach>
         
         <!--  메인메뉴별 사이드메뉴들의 합을 가져와서 메인메뉴합에 더해줌-->
         <c:forEach var="dto2" items="${lists2 }" varStatus="sts">
         <input type="hidden" id="sidePrice${sts.index }" value="${dto2.sideSum }"/>
         </c:forEach>
-        
-       <input type="hidden" name="shopCode" value="${dto.shopCode }">
-       <input type="hidden" name="userId" value="${userId }">
+
        <input type="hidden" name="priceSideAmount" value="${priceSideAmount }"/>
+       <input type="hidden" id="cartAmount" name="cartAmount" value="${cartAmount}">
+       <input type="hidden" name="mainQty" id="mainQty" value="${mainQty }">
+       <input type="hidden" name="cartMenuCode" id="cartMenuCode" value="${cartMenuCode }">
+       <input type="hidden" name="sidePrice2" id="sidePrice2" value="${sidePrice2 }">
+       
 
         <div class="clearfix">
           <span class="list-group-item clearfix text-right ng-binding" ng-show="cart.get_delivery_fee(restaurant) > 0">
-           총금액 : <input type="text"  id="priceAmount" value="${priceAmount }" size="11" readonly="readonly" > <span ng-show="restaurant.free_delivery_threshold > 0" class="ng-binding ng-hide"> (0원 이상 주문시 배달무료)</span>
+           총금액 : <input type="text"  id="priceAmount" value="${priceAmount }" name="priceAmount" size="11" readonly="readonly" > <span ng-show="restaurant.free_delivery_threshold > 0" class="ng-binding ng-hide"> (0원 이상 주문시 배달무료)</span>
           </span>
           <span class="list-group-item minimum-order-price ng-hide" ng-show="!cart.is_empty() &amp;&amp; (restaurant.min_order_amount > cart.get_total() || (cart.has_discounted_item() &amp;&amp; restaurant.discounts.additional.delivery.discount_mov > restaurant.min_order_amount))">
             <p class="discount-color ng-binding ng-hide" ng-show="cart.has_discounted_item() &amp;&amp; restaurant.discounts.additional.delivery.discount_mov > restaurant.min_order_amount">
@@ -288,14 +338,14 @@ input[type=button]{
             합계 : <input type="text" name="totAmount" value="-" size="11" readonly="readonly" 원><br/>
           </span>
         </div>
-
+      
         </form>
     <div class="cart-btn clearfix">
       <a class="btn btn-lg btn-ygy2 btn-left ng-hide" ng-show="$route.$$route.originalPath == &quot;/cart/&quot;" ng-click="add_cart()">
             <span ng-show="! cart.is_empty()" class="ng-hide">메뉴추가</span>
             <span ng-show="cart.is_empty()">홈으로 가기</span>
       </a>
-      <a class="btn btn-lg btn-ygy1 btn-block" ng-disabled="cart.get_restaurant_id() != restaurant.id || cart.get_amount() < 1" ng-click="checkout()" disabled="disabled">주문하기</a>
+      <a class="btn btn-lg btn-ygy1 btn-block" ng-disabled="cart.get_restaurant_id() != restaurant.id || cart.get_amount() < 1" onclick="cQtyChk();javascript:storeForm.submit();">주문하기</a>
     </div>
   </div>
 </div>

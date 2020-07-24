@@ -110,10 +110,6 @@ $(function() {
 <body>
 
 
-
-
-<c:forEach var="dto" items="${lists}">
-
 <div id="info" class="info-list" ng-show="active_tab == &quot;info&quot;">
       <div class="info-item" ng-show="restaurant_info.introduction_by_owner">
         <div class="info-item-title info-icon">사장님알림</div>
@@ -168,10 +164,6 @@ $(function() {
         </ul>
       </div>
     </div>
-
-
-</c:forEach>
-
 
 </body>
 </html>

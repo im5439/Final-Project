@@ -409,16 +409,14 @@ function switchScreen() {
 
 	
 <!-- ------------------------------------------------------------------------------------------------- -->	
-    
+    <form name="orderForm" method="post" action="">
 	<div id="content" class="container-fluid ng-scope" ng-view="">
-	
 <div class="checkout-wrap ng-scope">
     <div class="col-sm-8">
-    	<form name="orderForm" method="post" action="">
       <div class="sub-title">
         <span>결제하기</span>
       </div>
-      
+      <c:forEach var="dto" items="${lists }">
       <div class="panel-group" data-allow-multiple="true" bs-collapse="">
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -437,9 +435,10 @@ function switchScreen() {
                   <label for="address" class="col-sm-2 control-label">주소</label>
                   <div class="col-sm-10">
                   <input type="text" name="deliveryAddr1" id="addr1" style="display: inline;height: 34px;width: 70%"
-	            		value="${dto1.userAddr1 }" readonly="readonly"/>
+	            		value="${dto.userAddr1 }"  readonly="readonly" disabled="disabled"/>
 	            <input type="button" value="주소검색" id="addrcheck" onclick="sample3_execDaumPostcode();"/>
-	            
+	            <input type="hidden" name="deliveryAddr1" id="deliveryAddr1"
+	            		value="${dto.userAddr1 }" />
 	            <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:10px 0;position:relative"></div>
                   
                   </div>
@@ -448,7 +447,7 @@ function switchScreen() {
                   ">
                   <div class="col-sm-offset-2 col-sm-9">
                     <%-- <input type="text" placeholder="(필수)상세주소 입력" name="deliveryAddr2" id="addr2" value="${dto.userAddr2 }" required="required"> --%>
-                    <input type="text" placeholder="(필수)상세주소 입력" name="deliveryAddr2" id="addr2" value="${dto1.userAddr2 }" required="false">
+                    <input type="text" placeholder="(필수)상세주소 입력" name="deliveryAddr2" id="addr2" value="${dto.userAddr2 }" required="false">
      
                   </div>
                 </div> 
@@ -458,7 +457,7 @@ function switchScreen() {
 
                   <div class="ol-sm-offset-2 col-sm-10">
                     <div class="">
-                      <input type="tel" class="form-control input-type1 ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-pattern" placeholder="(필수)휴대전화 번호 입력" name="phone" ng-pattern="/^[0-9]+$/" ng-model="session_storage.checkout_input.phone" value="${dto1.userTel }" readonly="readonly" ng-required="true" ng-valid="" ng-change="update_phone_number()" ng-class="sms_verified ? 'success' : ''" required="required">
+                      <input type="tel" class="form-control input-type1 ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-pattern" placeholder="(필수)휴대전화 번호 입력" name="phone" ng-pattern="/^[0-9]+$/" ng-model="session_storage.checkout_input.phone" value="${dto.userTel }" readonly="readonly" ng-required="true" ng-valid="" ng-change="update_phone_number()" ng-class="sms_verified ? 'success' : ''" required="required">
                     </div>
 
                     <span class="help-block mar0 ng-hide" ng-show="form_checkout.$submitted || form_checkout.phone.$touched">
@@ -492,7 +491,7 @@ function switchScreen() {
           <div class="panel-collapse collapse am-collapse in" bs-collapse-target="">
             <div class="panel-body">
               <textarea class="form-control ng-pristine ng-untouched ng-valid ng-valid-maxlength" rows="3" ng-blur="check_order_request($event)" 
-              name="orderRequest" id="orderRequest" ng-model="session_storage.checkout_input.comment" maxlength="100" placeholder="코로나19 예방을 위해 비대면 배달 권장드립니다. 요기서 결제 선택 후, &quot;문 앞 배달&quot;을 요청사항에 남겨주세요.">${dto1.request}</textarea>
+              name="orderRequest" id="orderRequest" ng-model="session_storage.checkout_input.comment" maxlength="100" placeholder="코로나19 예방을 위해 비대면 배달 권장드립니다. 요기서 결제 선택 후, &quot;문 앞 배달&quot;을 요청사항에 남겨주세요.">${dto.request}</textarea>
               <div class="txt-limit">
                 <div class="txt-length ng-binding">0 / 100</div>
                 <span class="help-block ng-hide" ng-show="(session_storage.checkout_input.comment.length) >= 100">
@@ -521,12 +520,12 @@ function switchScreen() {
                   
                        <!-- 포인트  -->
                  <div>
-                 보유 포인트:${dto1.userPoint }
-                 <input type="text" value="0" name="useUserPoint" id="useUserPoint" onblur="pointChk(${dto1.userPoint });"> 
+                 보유 포인트:${dto.userPoint }
+                 <input type="text" value="0" name="useUserPoint" id="useUserPoint" onblur="pointChk(${dto.userPoint });"> 
                  
-                  	<input type=hidden value="${dto1.count-1 }" id="orderCount" name="orderCount">
+                  	<input type=hidden value="${dto.count-1 }" id="orderCount" name="orderCount">
                 </div>
-                <input type="hidden" value="${dto1.userName }" name="userName" id="userName">
+                <input type="hidden" value="${dto.userName }" name="userName" id="userName">
                
                 </div>
              
@@ -556,7 +555,7 @@ function switchScreen() {
                 
            
          
-          
+              </c:forEach> 
               </div>
             </div>
           </div>
@@ -596,11 +595,6 @@ function switchScreen() {
 
         </div>
       </div>
-      
-      <input type="hidden" value="${priceAmount }" id="priceAmount" name="priceAmount">
-      <input type="hidden" value="${dto2.shopCode }" id="orderShopCode" name="orderShopCode">
-                  
-      </form>
     </div>
 
 <!-- 결제창 따라다님 ----------------------------------------------------------------------------------------------------------------- -->
@@ -616,14 +610,14 @@ function switchScreen() {
           
             <div class="list-group-item restaurant_name ng-binding" ng-bind="cart.get().restaurant_name"> 
             
-            ${dto2.shopName }
+            ${shopName }
            	
             </div>
             <ul class="list-group order-list">
               <!-- ngRepeat: item in cart.get().items --><li class="list-group-item ng-scope" ng-repeat="item in cart.get().items" ng-show="item.amount > 0"> 
-               <c:forEach var="dto3" items="${lists1 }">
-              ${dto3.menuName } x${dto3.cQty }
-              <input type="hidden" value="${dto3.menuName }" id="menuName" name="menuName">
+               <c:forEach var="dto1" items="${lists1 }">
+              ${dto1.menuName } x${dto1.cQty }
+              <input type="hidden" value="${dto1.menuName }" id="menuName" name="menuName">
             </c:forEach>
                 <div class="order-item clearfix">
                   <div class="order-name">
@@ -647,7 +641,8 @@ function switchScreen() {
                 <div class="order-name">총 결제 금액</div>
                 <div class="order-price">
                   <span ng-bind="total_price|krw" class="ng-binding">${priceAmount }</span>
-                  
+                  <input type="hidden" value="${priceAmount }" id="priceAmount" name="priceAmount">
+                  <input type="hidden" value="${shopCode }" id="orderShopCode" name="orderShopCode">
                 </div>    
               </span>
             </div>
@@ -666,21 +661,14 @@ function switchScreen() {
           </span></small>
         </div>
 <!-- ------------------------------------------------------------------------------------------------------------------------ -->
-		<button class="btn btn-lg btn-block btn-ygy1 ng-binding" onclick="requestPay('yes');" value="바로결제하기">바로결제하기</button>
-		</div>
-	</div>
-</div>
-</div>
-
-
-    
+   </form>   
 
        
         
-        
-     
+        <button class="btn btn-lg btn-block btn-ygy1 ng-binding" onclick="requestPay('yes');" value="바로결제하기">바로결제하기</button>
+      </div>
   
-
+</div>
 
 
 

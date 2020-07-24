@@ -11,10 +11,42 @@ public class StoreDTO {
 	private String userAddr1;
 	private String userAddr2;
 	private String userTel;
-	private String userPoint;
+	private int userPoint;
+	private String userName;
 	private int cAmount; //총액
 	private int cQty; //수량
+	private String request;
+	private int oQty;
+	private int oAmount;
+	private String orderDate;
 	
+	private String deliveryAddr1;
+	private String deliveryAddr2;
+	
+	public String getDeliveryAddr1() {
+		return deliveryAddr1;
+	}
+	public void setDeliveryAddr1(String deliveryAddr1) {
+		this.deliveryAddr1 = deliveryAddr1;
+	}
+	public String getDeliveryAddr2() {
+		return deliveryAddr2;
+	}
+	public void setDeliveryAddr2(String deliveryAddr2) {
+		this.deliveryAddr2 = deliveryAddr2;
+	}
+	public int getoAmount() {
+		return oAmount;
+	}
+	public void setoAmount(int oAmount) {
+		this.oAmount = oAmount;
+	}
+	public int getoQty() {
+		return oQty;
+	}
+	public void setoQty(int oQty) {
+		this.oQty = oQty;
+	}
 	private int orderSum;
 	
 	public int getOrderSum() {
@@ -42,11 +74,11 @@ public class StoreDTO {
 	public void setUserTel(String userTel) {
 		this.userTel = userTel;
 	}
-	public String getUserPoint() {
+	public int getUserPoint() {
 		return userPoint;
 	}
-	public void setUserPoint(String userPoint) {
-		this.userPoint = userPoint;
+	public void setUserPoint(int userPoint2) {
+		this.userPoint = userPoint2;
 	}
 	//매장
 	private String shopCode;
@@ -80,7 +112,14 @@ public class StoreDTO {
 	private String reImg;
 	private int count;
 	private String ceoContent;
+	private int sidePrice;
 	
+	public int getSidePrice() {
+		return sidePrice;
+	}
+	public void setSidePrice(int sidePrice) {
+		this.sidePrice = sidePrice;
+	}
 	public String getChk() {
 		return chk;
 	}
@@ -274,6 +313,24 @@ public class StoreDTO {
 	}
 	public void setSideSum(int sideSum) {
 		this.sideSum = sideSum;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getRequest() {
+		return request;
+	}
+	public void setRequest(String request) {
+		this.request = request;
+	}
+	public String getOrderDate() {
+		return orderDate;
+	}
+	public void setOrderDate(String orderDate) {
+		this.orderDate = orderDate;
 	}
 	
 

@@ -135,6 +135,7 @@ function sendIt() {
 	var sideMenuCode = '';
 	var sideMenuName = '';
 	var sideMenuPrice = '';
+	var userId = "${userId}";
 	
 	var count = f.chkbox.length;
 	for(var i=0;i<count;i++){
@@ -146,9 +147,16 @@ function sendIt() {
 			sideMenuPrice +=  f.sideMenuPrice[i].value + ',';
 		}
 	}
+	
+	if(userId=="guest"){
+		f.action = "<%=cp %>/login.action";
+		f.submit();	
+		return;	
+	}
+	
 	f.action = "<%=cp %>/cartInsert.action?sideMenuCode=" + sideMenuCode +"&sideMenuName=" + sideMenuName +"&sideMenuPrice=" + sideMenuPrice;
+	f.submit();
 
-	f.submit();		
 	
 }
 
