@@ -296,6 +296,22 @@ ng\:form {
       
    }
    
+   
+   
+   
+ //카테검색
+	function select_category(cate){
+		
+	 	alert(cate);
+	 
+	  	var f = document.formCate;
+	  	
+	  	f.action="<%=cp %>/storeList.action?category=" + cate;
+	  	f.submit();
+	  
+	}
+   
+   
 </script>
 
 
@@ -548,23 +564,23 @@ ng\:form {
   </button>
   
   <!-- ------------------------------------------------------------------------------------------------- 리스트 상단 카테고리 -->
-  
+  <form action="" name="formCate" method="post">
   <div id="category" class="category-menu clearfix collapse in" aria-expanded="true">
     <ul>
 
       <li class="hidden-xs menu-search"><a class="btn btn-default ico-search1" ng-click="toggle_category_block()">검색</a></li><!--pc button-->
      
       <!--카테고리시작 -->
-      <li ng-repeat="ct in session_storage.categories" class="" ng-hide="! ct.enabled &amp;&amp; ct.optional" ontouchend="(function(){})()" ng-click="select_category(ct, city, zipcode, $event)"><i class="category-icon ico-ct01"></i><span ng-bind="ct.title" class="category-name ng-binding">전체보기</span></li>
-      <li ng-repeat="ct in session_storage.categories" class="" ng-hide="! ct.enabled &amp;&amp; ct.optional" ontouchend="(function(){})()" ng-click="select_category(ct, city, zipcode, $event)"><i class="category-icon ico-ct02"></i><span ng-bind="ct.title" class="category-name ng-binding">한식</span></li>
-      <li ng-repeat="ct in session_storage.categories" class="" ng-hide="! ct.enabled &amp;&amp; ct.optional" ontouchend="(function(){})()" ng-click="select_category(ct, city, zipcode, $event)"><i class="category-icon ico-ct03"></i><span ng-bind="ct.title" class="category-name ng-binding">중식</span></li>
       
-      <li ng-repeat="ct in session_storage.categories" class="" ng-hide="! ct.enabled &amp;&amp; ct.optional" ontouchend="(function(){})()" ng-click="select_category(ct, city, zipcode, $event)"><i class="category-icon ico-ct04"></i><span ng-bind="ct.title" class="category-name ng-binding">치킨</span></li>
-      <li ng-repeat="ct in session_storage.categories" class="" ng-hide="! ct.enabled &amp;&amp; ct.optional" ontouchend="(function(){})()" ng-click="select_category(ct, city, zipcode, $event)"><i class="category-icon ico-ct05"></i><span ng-bind="ct.title" class="category-name ng-binding">피자/양식</span></li>
-      <li ng-repeat="ct in session_storage.categories" class="" ng-hide="! ct.enabled &amp;&amp; ct.optional" ontouchend="(function(){})()" ng-click="select_category(ct, city, zipcode, $event)"><i class="category-icon ico-ct06"></i><span ng-bind="ct.title" class="category-name ng-binding">분식</span></li>
-	  <li ng-repeat="ct in session_storage.categories" class="" ng-hide="! ct.enabled &amp;&amp; ct.optional" ontouchend="(function(){})()" ng-click="select_category(ct, city, zipcode, $event)"><i class="category-icon ico-ct07"></i><span ng-bind="ct.title" class="category-name ng-binding">일식</span></li>
-	  <li ng-repeat="ct in session_storage.categories" class="" ng-hide="! ct.enabled &amp;&amp; ct.optional" ontouchend="(function(){})()" ng-click="select_category(ct, city, zipcode, $event)"><i class="category-icon ico-ct08"></i><span ng-bind="ct.title" class="category-name ng-binding">프렌차이즈</span></li> 
-	  
+      <li  onclick="select_category('');"><i class="category-icon ico-ct01"></i><span ng-bind="ct.title" class="category-name ng-binding">전체보기</span></li>
+      <li  onclick="select_category('kr')"><i class="category-icon ico-ct02"></i><span ng-bind="ct.title" class="category-name ng-binding">한식</span></li>
+      <li  onclick="select_category('ch')"><i class="category-icon ico-ct03"></i><span ng-bind="ct.title" class="category-name ng-binding">중식</span></li>
+      
+      <li onclick="select_category('ck')"><i class="category-icon ico-ct04"></i><span ng-bind="ct.title" class="category-name ng-binding">치킨</span></li>
+      <li onclick="select_category('py')"><i class="category-icon ico-ct05"></i><span ng-bind="ct.title" class="category-name ng-binding">피자/양식</span></li>
+      <li onclick="select_category('bs')"><i class="category-icon ico-ct06"></i><span ng-bind="ct.title" class="category-name ng-binding">분식</span></li>
+	  <li onclick="select_category('jp')"><i class="category-icon ico-ct07"></i><span ng-bind="ct.title" class="category-name ng-binding">일식</span></li>
+	  <li onclick="select_category('fr')"><i class="category-icon ico-ct08"></i><span ng-bind="ct.title" class="category-name ng-binding">프렌차이즈</span></li> 
       <li class="main-search hide">
       <form action="." onsubmit="return false" class="ng-pristine ng-valid">
         <div class="input-group">
@@ -578,6 +594,8 @@ ng\:form {
       </li>
     </ul>
   </div>
+  
+  </form>
 </div>
 
 </div>
@@ -587,35 +605,6 @@ ng\:form {
 <!-- ====================================================================================================================  카테고리 끝 -->    
 
 <!-- ====================================================================================================================  리스트 시작 -->
-
-<!-- 신고 아작스  -->
-
-<script type="text/javascript">
-
- $(function(){
-	
-	 reportPage(); 
-		
-}); 
- 
- 
-
-function reportPage() {
-	
-	var url = "<%=cp%>/review.action";
-	var params = "userId=" + $("#userId").val()
-	+ "&ceoId=" + $("#ceoId").val();
-	
-	$.post(url,params,function(args){
-		$("#").html(args);
-	});
-	
-	$("#reviewData").show();
-	
-}
-
-</script>
-
 
    
   <!-- ------------------------------------------------------------------------------------------------------------------------------------------------ -->        

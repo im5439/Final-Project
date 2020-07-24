@@ -109,6 +109,7 @@ function addall(){
 function menuAdd(){
 	
 	//var Idx = index;
+	
 	var chk_leng = form.chkbox.length;
 	var sum = 0;
 	
@@ -134,9 +135,9 @@ function sendIt() {
 	var sideMenuCode = '';
 	var sideMenuName = '';
 	var sideMenuPrice = '';
+	var userId = "${userId}";
 	
 	var count = f.chkbox.length;
-
 	for(var i=0;i<count;i++){
 		if(f.chkbox[i].checked){
 			
@@ -146,9 +147,16 @@ function sendIt() {
 			sideMenuPrice +=  f.sideMenuPrice[i].value + ',';
 		}
 	}
+	
+	if(userId=="guest"){
+		f.action = "<%=cp %>/login.action";
+		f.submit();	
+		return;	
+	}
+	
 	f.action = "<%=cp %>/cartInsert.action?sideMenuCode=" + sideMenuCode +"&sideMenuName=" + sideMenuName +"&sideMenuPrice=" + sideMenuPrice;
+	f.submit();
 
-	f.submit();		
 	
 }
 
@@ -186,7 +194,7 @@ function sendIt() {
 	<input type="hidden" name="sideMenuPrice" value="${dto.menuPrice }"/>
 	<td align="center">${dto.menuPrice }</td>
 	<td align="center"><input type="checkbox" name="chkbox" style="height: 16px; -webkit-appearance: checkbox; opacity: 1;" value="${dto.menuPrice }"
-	onclick="menuAdd();"></td>
+	onclick="menuAdd();" ></td>
 </tr>
 
 </c:forEach>
