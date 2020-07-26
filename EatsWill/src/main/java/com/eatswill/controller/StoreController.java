@@ -312,7 +312,7 @@ public class StoreController {
 
 		listSideSu = lists1.size(); //매장의 메뉴의 사이드메뉴 개수
 		int listSideGroup = lists2.size(); //각 메뉴별 사이드메뉴들의 가격의 합이 나오는 리스트 개수
-
+		
 		System.out.println("listsu->" + listsu );
 		System.out.println("listSideSu->" + listSideSu );
 		System.out.println("listSideGroup->" + listSideGroup );
@@ -401,6 +401,7 @@ public class StoreController {
 		}		
 
 		request.setAttribute("listsu", listsu);
+		request.setAttribute("listSideSu", listSideSu);
 		request.setAttribute("priceAmount", priceAmount + priceSideAmount); //사이드메뉴+메인메뉴 총액
 		request.setAttribute("lists", lists);	
 		request.setAttribute("lists1", lists1);
@@ -486,7 +487,7 @@ public class StoreController {
 
 	//음식점 리스트 출력
 		@RequestMapping(value="/storeList.action", method = {RequestMethod.GET,RequestMethod.POST})
-		public String list(HttpServletRequest request,StoreDTO dto) throws Exception{
+		public String list(HttpServletRequest request,StoreDTO dto, String searchKey, String searchValue) throws Exception{
 
 			System.out.println("storeList 들어옴");
 			
@@ -514,6 +515,8 @@ public class StoreController {
 			request.setAttribute("articleUrl",articleUrl);
 			request.setAttribute("category", category);
 			request.setAttribute("sortMode",sortMode);
+			request.setAttribute("searchKey",searchKey);
+			request.setAttribute("searchValue",searchValue);
 
 			return "store/storeList";
 
@@ -800,9 +803,10 @@ public class StoreController {
 
 	//음식점 더보기로 출력 - ajax
 	@RequestMapping(value="/stores", method = {RequestMethod.GET,RequestMethod.POST})
-	public String stores(HttpServletRequest request,StoreDTO dto) throws Exception{
+	public String stores(HttpServletRequest request,StoreDTO dto, String searchKey, String searchValue) throws Exception{
 		
 		System.out.println("stores.action 들어옴!");
+		System.out.println("searchKey: " + (searchKey+searchValue));
 		List<StoreDTO> page_lists =null;
 		
 		String cp = request.getContextPath();
@@ -843,25 +847,25 @@ public class StoreController {
 		//if else 로 나누어서page_lists가 정렬순에 따른 카테고리로 나오도록 구분
 		if(sortMode.equals("orderByRe")) {//리뷰순
 			System.out.println("stores-if 안의 orderByRe");
-			page_lists = dao.orderByRe(start, end,category);
+			page_lists = dao.orderByRe(start, end,category, (searchKey+searchValue));
 			
 		}
 		
 		if(sortMode.equals("orderByRes")){ 
 			System.out.println("stores-if 안의 orderByRes");
-			page_lists = dao.orderByRes(start, end,category);
+			page_lists = dao.orderByRes(start, end,category, (searchKey+searchValue));
 			
 		}
 		
 		if(sortMode.equals("orderByO")) {
 			System.out.println("stores-if 안의 orderByO");
-			page_lists = dao.orderByO(start, end,category);
+			page_lists = dao.orderByO(start, end,category, (searchKey+searchValue));
 
 		}
 		
 		if(sortMode==null || sortMode.equals("")){
 			System.out.println("stores-if 안의 else");
-			page_lists = dao.shopPaging(start, end,category);
+			page_lists = dao.shopPaging(start, end,category, (searchKey+searchValue));
 			
 		}
 		

@@ -1794,7 +1794,7 @@ pre code {
 	display: block;
 	width: 100%;
 	height: calc(1.5em + .75rem + 2px);
-	padding: .375rem .75rem;
+	padding: .375rem .75rem .375rem 12px;
 	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.5;
@@ -5707,7 +5707,7 @@ a.close.disabled {
 .toast-body {
 	padding: .75rem
 }
-
+/*
 .modal-open {
 	overflow: hidden
 }
@@ -5899,7 +5899,7 @@ a.close.disabled {
 }
 
 @media ( min-width :576px) {
-	.modal-dialog {
+	 .modal-dialog {
 		max-width: 500px;
 		margin: 1.75rem auto
 	}
@@ -5931,7 +5931,7 @@ a.close.disabled {
 		max-width: 1140px
 	}
 }
-
+*/
 .tooltip {
 	position: absolute;
 	z-index: 1070;

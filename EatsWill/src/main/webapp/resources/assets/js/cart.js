@@ -59,6 +59,12 @@ $(function() {
 		cartList();
 	});
 	
+	$("#searchKey").show(function(){
+		if($('#searchKeyin').val() != null && $('#searchKeyin').val() != "") {
+			$('#searchKey').val($('#searchKeyin').val());
+		}
+	});
+	
 	$("#cartList").click(function(){
 		cartOpen("cart");
 	});

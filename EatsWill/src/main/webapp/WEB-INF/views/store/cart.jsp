@@ -89,17 +89,24 @@ input[type=button]{
     
     //카트에  각각의 메뉴+사이드메뉴 합 구하는 함수(모든 for 출력에 더함)
     function addside(){
-    	
-    	var listSideGroup = "${listSideGroup}";
-    	
-	    for(var i=0;i<listSideGroup;i++){
-	    	
+
+    	var listsu = "${listsu}";
+    	var listSideSu = "${listSideSu}";
+	
+	    for(var i=0;i<listsu;i++){
 	    	document.getElementById("cAmount"+i).value = 
-	    		Number(document.getElementById("cAmount"+i).value) 
-	    		+ Number(document.getElementById("sidePrice"+i).value);
+	    		Number(document.getElementById("cAmount"+i).value); 
+	    		//+ Number(document.getElementById("sidePrice"+i).value);
+		    	if(document.getElementById("cAmountSide"+i+"_"+i)){
+		    		for(var j=0;j<listSideSu;j++){
+			    		document.getElementById("cAmount"+i).value = 
+			    			Number(document.getElementById("cAmount"+i).value)
+			    			+ Number(document.getElementById("cAmountSide"+i+"_"+j).value);
+		    		}
+		        }
 	    	
 	    }
-    
+
     }
     
     //+ , - 했을때 해당 index만 가져와 더해주고 빼주는 함수
@@ -290,7 +297,14 @@ input[type=button]{
        
        		<td colspan="2">
        		
-       			<input type="text" id="cAmount${status.index}" name="cAmount" value="${dto.cAmount}" size="11" readonly="readonly" style="text-align: right;"/>	
+       			<input type="text" id="cAmount${status.index}" name="cAmount" value="${dto.cAmount }" size="11" readonly="readonly" style="text-align: right;"/>
+       			
+       			<c:forEach var="dto1" items="${lists1 }" varStatus="statusSide">
+	       			 <c:if test="${lists1!=null && dto.menuCode==dto1.menuCode}" >
+		       			 <input type="hidden" id="cAmountSide${status.index}_${statusSide.index}"  value="${dto1.cAmount }" size="11" readonly="readonly" style="text-align: right;"/>
+		       		</c:if>
+        		</c:forEach>
+       			
        			
        		</td>
        		<td>원</td>
@@ -303,7 +317,7 @@ input[type=button]{
         <hr>
         </div>
         <input type="hidden" id="cartMenuCode${status.index}" value="${dto.menuCode }" name="menuCode">
-        <input type=hidden name="menuPrice" value="${dto.menuPrice }"  id="menuPrice${status.index}">
+        <input type="hidden" name="menuPrice" value="${dto.menuPrice }"  id="menuPrice${status.index}">
         <input type="hidden" name="menuName" value="${dto.menuName }">
         <input type="hidden" name="cartMainListsSize" value="${fn:length(lists)} " id="cartMainListsSize">
         <input type="hidden" name="cartMainListsSize2" value="${fn:length(lists2)} " id="cartMainListsSize2">

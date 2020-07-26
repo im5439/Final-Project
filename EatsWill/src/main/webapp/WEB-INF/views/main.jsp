@@ -405,7 +405,7 @@ $(document).ready(function() {
 					<section class="tiles">
 						<article>
 							<span class="image"> 
-								<a class="thumbnail" index="1">
+								<a class="thumbnail" index="">
 									<div class="category-title">전체보기</div> 
 									<img src="/eatswill/resources/img/eatswill3.png">
 								</a>
@@ -414,7 +414,7 @@ $(document).ready(function() {
 	
 						<article>
 							<span class="image"> 
-								<a class="thumbnail" index="2">
+								<a class="thumbnail" index="fr">
 									<div class="category-title">프랜차이즈</div> 
 									<img src="https://www.yogiyo.co.kr/mobile/image/category-10.png">
 								</a>
@@ -423,7 +423,7 @@ $(document).ready(function() {
 	
 						<article>
 							<span class="image"> 
-								<a class="thumbnail" index="3">
+								<a class="thumbnail" index="ck">
 									<div class="category-title">치킨</div> 
 									<img src="https://www.yogiyo.co.kr/mobile/image/category-02.png">
 								</a>
@@ -432,7 +432,7 @@ $(document).ready(function() {
 	
 						<article>
 							<span class="image"> 
-								<a class="thumbnail" index="4">
+								<a class="thumbnail" index="py">
 									<div class="category-title">피자/양식</div> 
 									<img src="https://www.yogiyo.co.kr/mobile/image/category-03.png">
 								</a>
@@ -441,7 +441,7 @@ $(document).ready(function() {
 	
 						<article>
 							<span class="image"> 
-								<a class="thumbnail" index="5">
+								<a class="thumbnail" index="ch">
 									<div class="category-title">중국집</div> 
 									<img src="https://www.yogiyo.co.kr/mobile/image/category-04.png">
 								</a> 
@@ -450,7 +450,7 @@ $(document).ready(function() {
 	
 						<article>
 							<span class="image"> 
-								<a class="thumbnail" index="6">
+								<a class="thumbnail" index="kr">
 									<div class="category-title">한식</div> 
 									<img src="https://www.yogiyo.co.kr/mobile/image/category-05.png">
 								</a>
@@ -459,7 +459,7 @@ $(document).ready(function() {
 	
 						<article>
 							<span class="image"> 
-								<a class="thumbnail" index="7">
+								<a class="thumbnail" index="jp">
 									<div class="category-title">일식/돈까스</div> 
 									<img src="https://www.yogiyo.co.kr/mobile/image/category-06.png">
 								</a>
@@ -468,7 +468,7 @@ $(document).ready(function() {
 	
 						<article>
 							<span class="image"> 
-							<a class="thumbnail" index="8">
+							<a class="thumbnail" index="bs">
 								<div class="category-title">분식</div> 
 								<img src="https://www.yogiyo.co.kr/mobile/image/category-09.png">
 							</a>

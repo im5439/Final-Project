@@ -13,9 +13,9 @@
 	<annotation-driven />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-	<resources mapping="/shopimg/**" location="file:///D:/shopimg/" />
-	<resources mapping="/menuimg/**" location="file:///D:/menuimg/" />
-	<resources mapping="/reimg/**" location="file:///D:/reimg/" />
+	<resources mapping="/shopimg/**" location="file:///C:/shopimg/" />
+	<resources mapping="/menuimg/**" location="file:///C:/menuimg/" />
+	<resources mapping="/reimg/**" location="file:///C:/reimg/" />
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
@@ -64,7 +64,7 @@
 
 	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<beans:property name="url" value="jdbc:oracle:thin:@192.168.16.16:1521:TestDB"/>
+		<beans:property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
 		<beans:property name="username" value="proj"/>
 		<beans:property name="password" value="a123"/>
 	</beans:bean>
