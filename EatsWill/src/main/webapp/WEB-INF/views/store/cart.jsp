@@ -97,8 +97,8 @@ input[type=button]{
 	    	document.getElementById("cAmount"+i).value = 
 	    		Number(document.getElementById("cAmount"+i).value); 
 	    		//+ Number(document.getElementById("sidePrice"+i).value);
-		    	if(document.getElementById("cAmountSide"+i+"_"+i)){
-		    		for(var j=0;j<listSideSu;j++){
+		    	for(var j=0;j<listSideSu;j++){
+		    		if(document.getElementById("cAmountSide"+i+"_"+j)){
 			    		document.getElementById("cAmount"+i).value = 
 			    			Number(document.getElementById("cAmount"+i).value)
 			    			+ Number(document.getElementById("cAmountSide"+i+"_"+j).value);
@@ -139,8 +139,9 @@ input[type=button]{
 	         
 	         priceAmount.value = Number(priceAmount.value) + Number(obj2.value);
 	         obj1.value = val;
-	         obj3.value =  Number(obj1.value) * Number(obj2.value);
-	         addsidesel(btnIdx);
+
+	         obj3.value =  (Number(obj3.value) + Number(obj2.value));
+	         // addsidesel(btnIdx);
 	         //기존의 주문 총 금액에서 선택한 메뉴의 금액을 더함
 	       
 	     
@@ -149,18 +150,22 @@ input[type=button]{
 		
 		if(cal==1){
  	    	
-	        var val = Number(obj1.value)-1;
-	        
-	      	//기존의 주문 총 금액에서 선택한 메뉴의 금액을 뺌
-	        if(val>=1)
-	        	priceAmount.value = Number(priceAmount.value) - Number(obj2.value);
-			}
-	        
-	        if(val <= 0){ val=1; }
-	        obj1.value = val;
-	
-	        obj3.value =  Number(obj1.value) * Number(obj2.value);
-	        addsidesel(btnIdx);
+		        var val = Number(obj1.value)-1;
+		        
+		      	//기존의 주문 총 금액에서 선택한 메뉴의 금액을 뺌
+		        if(val>=1) {
+		        	priceAmount.value = Number(priceAmount.value) - Number(obj2.value);
+		        }				
+		     
+		        if(val <= 0){ val=1; }
+		        
+		        obj1.value = val;
+		
+		        if((Number(obj3.value) - Number(obj2.value))>0) {
+		        	obj3.value =  Number(obj3.value) - Number(obj2.value);
+		        }
+		       // addsidesel(btnIdx);
+		}
 	    
     }
 	
