@@ -14,6 +14,14 @@
 	select * from ceo where ceoId = #{ceoId}
 </select>
 
+<!-- 사장님아이디의 전체 주문상태 불러오기 -->
+<select id="ceoIdOrderStatus" parameterType="hashMap" resultType="int">
+	select count(*) from 
+	(select s.ceoId, s.shopCode, o.orderStatus 
+	from shop s, ordermain o
+	where s.shopCode = o.shopCode and ceoId = #{ceoId} and orderStatus = #{orderStatus})
+</select>
+
 <!-- 사장님 매장추가 -->
 <insert id="insertStore" parameterType="com.eatswill.dto.CeoDTO">
 	insert into shop (shopCode, ceoId, shopName, category, shopAddr, shopTel, timeCode, shopImg, shopCreated, franchise)
@@ -37,9 +45,9 @@
 
 <!-- 보유매장에 대한 리뷰 -->
 <select id="getStoreReivew" parameterType="hashMap" resultType="com.eatswill.dto.CeoDTO">
-	select rpad(substr(r.userId,1,3),6,'*') userId, r.reScore,to_char(reCreated,'yyyy-mm-dd hh:mm'),r.reCreated,r.reContent ,r.reImg,r.shopCode,m.menuName, s.shopName, s.shopAddr, r.ceoContent, r.renum 
-	from review r, orderdetail o,menu m,shop s
-	where r.orderCode=o.orderCode and o.menuCode=m.menuCode  and r.shopcode = s.shopcode and r.shopCode = #{shopCode} and s.ceoId = #{ceoId} order by r.renum desc
+	select rpad(substr(r.userId,1,3),6,'*') userId, r.reScore,to_char(reCreated,'yyyy-mm-dd hh:mm:ss'), r.orderCode, r.reCreated, r.reContent, r.reImg, r.shopCode, r.renum, r.ceocontent
+	from review r, shop s, ordermain d
+	where r.shopcode = s.shopcode and d.orderCode = r.orderCode and r.shopCode = #{shopCode} and s.ceoId = #{ceoId} order by r.renum desc
 </select>
 
 <!-- 보유매장의 리뷰 count -->
@@ -64,7 +72,7 @@
 
 <!-- 메뉴추가 -->
 <insert id="insertMenu" parameterType="com.eatswill.dto.CeoDTO">
-	insert into menu (menuCode, shopCode, menuName, menuPrice, menuImg, part, menuDate) values (no_seq_menuCode.nextval, #{shopCode}, #{menuName}, #{menuPrice}, #{menuImg}, #{part}, sysdate)
+	insert into menu (menuCode, shopCode, menuName, menuPrice, menuImg, part, menuDate) values (#{shopCode}||'_'||no_seq_menuCode.nextval, #{shopCode}, #{menuName}, #{menuPrice}, #{menuImg}, #{part}, sysdate)
 </insert>
 
 <!-- 메뉴삭제 -->
@@ -84,9 +92,9 @@
 
 <!-- 매장 주문 확인 -->
 <select id="getOrderChk" parameterType="String" resultType="com.eatswill.dto.CeoDTO">
-	select rpad(substr(c.userId,1,3),6,'*') userId, c.userTel, nvl(c.userAddr1,'-') userAddr1, nvl(c.userAddr2,'-') userAddr2, o.orderCode, o.oamount, o.orderDate, o.request, o.orderStatus 
-	from menu m, custom c, ordermain o, orderdetail d 
-	where o.userId = c.userId and o.shopCode = m.shopCode and o.orderCode = d.orderCode and d.menuCode = m.menuCode and o.shopCode = #{shopCode} order by orderStatus, orderdate
+	select rpad(substr(c.userId,1,3),6,'*') userId, c.userTel, nvl(deliveryAddr1,'-') deliveryAddr1, nvl(deliveryAddr2,'-') deliveryAddr2, o.orderCode, o.oamount, o.orderDate, o.request, o.orderStatus 
+	from custom c, ordermain o
+	where o.userId = c.userId and o.shopCode = #{shopCode} order by orderStatus, orderdate
 </select>
 
 <!-- 주문한 메뉴 detail -->
@@ -97,8 +105,13 @@
 </select>
 
 <!-- 주문코드로 주문상태 update -->
-<update id="orderUpdate" parameterType="String">
-	update ordermain set orderStatus = '200' where orderCode = #{orderCode}
+<update id="orderUpdate" parameterType="hashMap">
+	update ordermain set orderStatus = #{orderStatus} where orderCode = #{orderCode}
+</update>
+
+<!-- 주문코드로 주문상태 주문취소-->
+<update id="orderCancel" parameterType="String">
+	update ordermain set orderStatus = '400' where orderCode = #{orderCode}
 </update>
 
 <!-- 매장별 메뉴개수 -->
@@ -115,6 +128,37 @@
 	<![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
 	]]>
+</select>
+
+<!-- 일별 매출 가져오기 -->
+<select id="getDaySales" parameterType="String" resultType="com.eatswill.dto.SalesDTO">
+	select TO_char(orderDate, 'yyyy-mm-dd') meta, SUM(oamount) value from ORDERMAIN
+	where shopCode = #{shopCode} 
+	group by TO_char(orderDate, 'yyyy-mm-dd') 
+	order by TO_CHAR(orderDate, 'yyyy-mm-dd')
+</select>
+
+<!-- 월별 매출 가져오기 -->
+<select id="getMonthSales" parameterType="String" resultType="com.eatswill.dto.SalesDTO">
+	select TO_char(orderDate, 'yyyy-mm') meta, SUM(oamount) value from ORDERMAIN
+	where shopCode = #{shopCode} 
+	group by TO_char(orderDate, 'yyyy-mm') 
+	order by TO_char(orderDate, 'yyyy-mm')
+</select>
+
+<!-- 매장별 총매출 -->
+<select id="getTotSales" parameterType="String" resultType="int">
+	select sum(oamount) totSales from ordermain where shopCode = #{shopCode}
+</select>
+
+<!-- 매장별 주문횟수 -->
+<select id="getOrderCount" parameterType="String" resultType="int">
+	select count(orderCode) from ordermain where shopCode = #{shopCode}
+</select>
+
+<!-- 매장별 찜횟수 -->
+<select id="getHeartCount" parameterType="String" resultType="int">
+	select count(shopCode) from heart where shopCode = #{shopCode}
 </select>
 
 </mapper>

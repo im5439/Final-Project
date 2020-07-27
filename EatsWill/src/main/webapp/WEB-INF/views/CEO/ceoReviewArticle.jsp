@@ -156,7 +156,7 @@ $(function(){
 	              <c:if test="${dto.reImg != null }">
 	                <!-- ngRepeat: img in review.review_images -->
 	                <div class="info ng-scope" ng-repeat="img in review.review_images" style="width: 312px; height: 312px; margin-right: 1px;">
-	                  <img class="ng-isolate-scope" src="<spring:url value='/reimg/${dto.reImg }'/>" style="visibility: visible; width: 312px; height: 448.988px; left: 0px; top: -68.5px;">
+	                  <img class="ng-isolate-scope" src="<spring:url value='/reImg/${dto.reImg }'/>" style="visibility: visible; width: 312px; height: 448.988px; left: 0px; top: -68.5px;">
 	                </div><!-- end ngRepeat: img in review.review_images -->
 	              </c:if>
 	              </td>
@@ -167,7 +167,11 @@ $(function(){
 	          <!-- ngIf: review.review_images.length == 3 -->
 	
 	          <div class="order-items default ng-binding" ng-click="show_review_menu($event)">
-	            ${dto.menuName }
+	          <%-- 
+	          <c:forEach var="dedto" items="${dto.orderDetail }">
+	            	${dedto.menuName }
+	          </c:forEach>
+	           --%>
 	          </div>
 	
 	          <p ng-show="review.comment" ng-bind-html="review.comment|strip_html" class="ng-binding"> ${dto.reContent } </p>

@@ -9427,7 +9427,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav,
 	section {
 	display: block
 }
-
+/* 
 body {
 	margin: 0;
 	font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
@@ -9437,7 +9437,7 @@ body {
 	color: #4a4e69;
 	text-align: left
 }
-
+ */
 [tabindex="-1"]:focus {
 	outline: 0 !important
 }
@@ -9472,7 +9472,7 @@ address {
 	font-style: normal;
 	line-height: inherit
 }
-
+/* 
 address, dl, ol, ul {
 	margin-bottom: 1rem
 }
@@ -9484,7 +9484,7 @@ dl, ol, ul {
 ol ol, ol ul, ul ol, ul ul {
 	margin-bottom: 0
 }
-
+ */
 dt {
 	font-weight: 700
 }
@@ -9520,7 +9520,7 @@ sub {
 sup {
 	top: -.5em
 }
-
+/* 
 a {
 	color: #265df1;
 	background-color: transparent
@@ -9543,7 +9543,7 @@ a:not([href]):not([tabindex]), a:not([href]):not([tabindex]):focus, a:not([href]
 a:not([href]):not([tabindex]):focus {
 	outline: 0
 }
-
+ */
 code, kbd, pre, samp {
 	font-family: SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono,
 		Courier New, monospace;
@@ -13447,7 +13447,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 		transition: none
 	}
 }
-
+/* 
 .nav {
 	display: flex;
 	flex-wrap: wrap;
@@ -13455,7 +13455,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 	margin-bottom: 0;
 	list-style: none
 }
-
+ */
 .nav-link {
 	display: block;
 	padding: .5rem 1rem
@@ -23061,7 +23061,7 @@ input.focused+*+.focus-hide, input.focused+.focus-hide, input:focus+*+.focus-hid
 .bg-hero-dark:before {
 	background-color: rgba(0, 0, 0, .6)
 }
-
+/* 
 .icon {
 	width: 3rem;
 	height: 3rem;
@@ -23069,7 +23069,7 @@ input.focused+*+.focus-hide, input.focused+.focus-hide, input:focus+*+.focus-hid
 	text-align: center;
 	line-height: 3.19rem
 }
-
+ */
 .icon-xs {
 	width: 1.5rem;
 	height: 1.5rem;
@@ -23377,14 +23377,14 @@ input.focused+*+.focus-hide, input.focused+.focus-hide, input:focus+*+.focus-hid
 .main, body.has-sidebar {
 	position: relative
 }
-
+/* 
 .main {
 	display: flex;
 	flex-wrap: wrap;
 	min-height: calc(100% - 4.0625rem);
 	padding-left: 0
 }
-
+ */
 body.side-nav-transition-on .main {
 	transition: padding-left .3s ease-in
 }

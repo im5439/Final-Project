@@ -43,7 +43,6 @@
 	
 
 </script>
-
    
 
     <c:if test="${lists != null }">
@@ -58,7 +57,7 @@
                 <td>
                   <div ng-show="restaurant|restaurant_is_available" class="logo" ng-style="{'background-image':'url(' + get_logo_url(restaurant.logo_url) + ')'}" style="background-image: url(&quot;/media/franchise_logos/나우픽_20191220_Franchise_crop_200x200.jpg&quot;);">
                   	<c:if test="${dto.shopImg != null }">
-                  	<img src="<spring:url value='/shopimg/${dto.shopImg }'/>"  style="width : 68; height : 68; max-height: max-content;"/>
+                  	<img src="<spring:url value='/shopImg/${dto.shopImg }'/>"  style="width : 68; height : 68; max-height: max-content;"/>
                   	</c:if>
 					<c:if test="${dto.shopImg == null }">
                   	<div class="logo not-available ng-binding ng-hide"><br/>이미지가<br/>없습니다.</div>
@@ -72,19 +71,19 @@
                     </div>
                     <ul>
                       <li class="payment-methods ng-binding yogiseo-payment" ng-class="is_online_payment(restaurant) ? 'yogiseo-payment' : ''">
-                      <c:if test="${dto.category == 'CK' }">치킨</c:if>
-                      <c:if test="${dto.category == 'PY' }">피자</c:if>
-                      <c:if test="${dto.category == 'KR' }">한식</c:if>
-                      <c:if test="${dto.category == 'BS' }">분식</c:if>
-                      <c:if test="${dto.category == 'CH' }">중식</c:if>
-                      <c:if test="${dto.category == 'JP' }">일식</c:if>
+                      <c:if test="${dto.category == 'ck' }">치킨</c:if>
+                      <c:if test="${dto.category == 'py' }">피자</c:if>
+                      <c:if test="${dto.category == 'kr' }">한식</c:if>
+                      <c:if test="${dto.category == 'bs' }">분식</c:if>
+                      <c:if test="${dto.category == 'ch' }">중식</c:if>
+                      <c:if test="${dto.category == 'jp' }">일식</c:if>
                       </li>
                       <li class="min-price ng-binding">${dto.shopAddr }</li>
                       <li class="full-w" ng-show="is_yogiyo &amp;&amp; (delivery_discount_value(restaurant) > 0 || additional_discount_value(restaurant) > 0 || restaurant.tags.length > 0 &amp;&amp; restaurant.tags.indexOf('CESCO') >= 0)">
                       
                       </li>
                       <li class="delivery-time ng-binding" ng-show="restaurant.estimated_delivery_time">
-                      <a href="#">수정</a>&nbsp;&nbsp;<a href="#" class="btn-del" index="${status.index  }">삭제</a>
+                      <!-- <a href="#">수정</a>&nbsp;&nbsp; --><a href="#" class="btn-del" index="${status.index  }">삭제</a>
                       <input type="hidden" value="${dto.shopCode }" id="shopCode${status.index }">
                       </li>
                     </ul>

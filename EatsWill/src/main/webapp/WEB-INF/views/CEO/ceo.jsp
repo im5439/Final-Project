@@ -195,9 +195,7 @@
 										<button type="submit" class="btn-own-login" onclick="login();">로그인</button>
 									</div>
 								</form>
-								<a href="<%=cp%>/ceoSignup.action"
-									onclick="ga_event_tracker('OWNER_AUTH', this, event)"
-									class="btn-own-auth">사장님 회원가입</a>
+								<a href="<%=cp%>/ceoSignup.action" class="btn-own-auth">사장님 회원가입</a>
 
 								<p class="txt">
 									입점신청 후 처음 방문하시는 사장님은<br>회원가입 인증하기를 통해 입점을 완료해주세요.
@@ -209,7 +207,7 @@
 					<c:otherwise>
 						<div class="own-login">
 
-							<div class="status-logout">
+							<div class="status-logout" style="border: 1px solid #cccccc;">
 								<form method="POST" action="" name="myForm">
 									<div style="display: none">
 										<input type="hidden" name="csrfmiddlewaretoken"
@@ -217,21 +215,20 @@
 									</div>
 									<input type="hidden" name="next_url" id="next_url"
 										value="/owner/"> <br />
-									<br />
-									<div>
-										<font color="blue">${sessionScope.ceoInfo.ceoId }</font> 님
+									<div style="padding-left: 20px;">
+										<font color="blue">${sessionScope.ceoInfo.ceoId }</font> 사장님
 										환영합니다.
 									</div>
 									<br />
 									<br />
-									<div></div>
+									<div style="padding-left: 20px;">사장님 보유매장 : <span style="color: blue">${storeCount }</span> 개의 매장</div>
 									<br />
 									<br />
+									<div style="padding-left: 20px;">< 현재 주문량 ></div>
 									<br />
+									<div style="padding-left: 50px;">주문확인 : <span style="color: #ff55ff">${orderChk }</span></div>
 									<br />
-									<br />
-									<br />
-									<br />
+									<div style="padding-left: 50px;">준비중 : <span style="color: #ff55ff">${orderReady }</span></div>
 									<br />
 									<div>
 										<button type="submit" class="btn-own-login"
