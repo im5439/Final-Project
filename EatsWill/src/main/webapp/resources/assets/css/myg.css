@@ -406,7 +406,8 @@ span.btn_small_sta16{background-position:-500px -337px;width:68px;height:13px}
 span.btn_sm_pay_now{background-position:-441px -436px;margin:10px auto 0px;width:44px;height:14px;display:block}
 span.btn_small_sta17{background-position:-510px -537px;width:57px;height:13px}
 .b_table_grey{clear:both}
-.b_table_grey th{background:url(//pics.gmarket.co.kr/pc/ko/myg/bg_myg_table.png) repeat-x;height:21px;color:red;padding-top:10px;font-size:11px;width: 100}
+/* .b_table_grey th{background:url(//pics.gmarket.co.kr/pc/ko/myg/bg_myg_table.png) repeat-x;height:21px;color:red;padding-top:10px;font-size:11px;width: 100} */
+.b_table_grey th{height:21px;color:white;padding-top:5px;padding-bottom:5px;font-size:12px;font-weight:bold;background-color:brown;width: 100}
 .b_table_grey td{padding:12px 0 10px 0;border-top-color:rgb(170, 170, 170);border-left-color:rgb(241, 241, 241);border-top-width:1px;border-left-width:1px;border-top-style:solid;border-left-style:solid}
 .b_table_grey tr.first td{border-top-color:currentColor;border-top-width:0px;border-top-style:none}
 .b_table_grey td.no_data{padding:50px 0px;text-align:center;border-left-color:currentColor;border-left-width:0px;border-left-style:none}

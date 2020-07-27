@@ -113,7 +113,7 @@ public class CustomController {
 	}
 
 	// 로그인 페이지
-	@RequestMapping(value = "/login.action", method = RequestMethod.GET)
+	@RequestMapping(value = "/login.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String login(HttpServletRequest req, String message) {
 
 		if (message != null && !message.equals("")) {

@@ -19,205 +19,38 @@ ng\:form {
 	display: block;
 }
 
-.star-rating {
-	width: 80px;
-}
-
-.star-rating, .star-rating span {
-	display: inline-block;
-	height: 13px;
-	overflow: hidden;
-	background: url(/eatswill/resources/images/star1.png) no-repeat;
-}
-
-.star-rating span {
-	background-position: left bottom;
-	line-height: 0;
-	vertical-align: top;
-}
 </style>
 
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style"
-	content="black-translucent">
-<meta name="google-site-verification"
-	content="U4GhkkNiUMneDT6RC-apM8m8D6hZJfAXVfXi2_SuyWU">
-<meta name="keywords"
-	content="치킨, 요기요, 중국집, 피자, 치킨추천, 배달음식, 야식, 내주변맛집, 짜장면, 근처중국집, 배달, 뭐먹지, 맛있는치킨추천, 여기요, 점심메뉴추천, 요기요첫주문할인, 중화요리, 피자추천, 맛있는음식, 치킨배달, 피자배달, 근처중국집배달, 맛있는치킨순위, 야식추천, 근처치킨집, 후라이드치킨순위, 족발집, 낙지소면, 요기요쿠폰, 짜장면집, 배달앱, 족발배달, 피자집, 피자할인, 식사, 요기요할인, 낙지볶음배달, 곱창배달, 배달어플할인, 24시중국집, 배달어플, 치킨할인, 떡볶이배달, 야식배달, 낙지소면배달, 중국집배달, 냉면배달, 점심배달음식, 치킨집, 요기요첫주문, 요기요쿠폰코드, 배달떡볶이, 피자치킨세트, 야식어플, 배달피자, 배달앱추천, 보쌈, 요기요할인쿠폰, 배달요기요, 초밥배달, 근처피자집, 맛있는치킨, 배달야식추천, 24시간중국집, 족발, 돈까스배달, 배달맛집, 배달음식순위, 비비큐할인, 삼계탕배달, 24시간피자배달, 집들이음식배달, 맛있는피자, 분식배달, 24시치킨, 배달사이트, 저녁메뉴추천, 요기오, 부대찌개배달, 혼자배달음식, 배달음식추천, 요기요배달, 요기요치킨, 배달서비스, 스파게티배달, 아침식사배달, 24시야식배달, 24시배달, 배달할인, 여기요할인, 24시간배달, 24시간치킨, 요기여, 1인분배달, yogiyo, 치킨배달할인, 강남역배달, 배달죽, 요기요플러스, 플러스요기요">
-<meta name="description"
-	content="요기요에서 원하는 배달음식을 쉽고 편리하게! 먹어본 사람만 쓸 수 있는 클린리뷰로 배달맛집 인증, 다양한 할인 혜택과 함께 배달되지 않던 인기맛집까지, 지금 바로 요기요에서 주문하세요.">
-<script type="text/javascript" async=""
-	src="https://www.google-analytics.com/analytics.js"></script>
-<script type="text/javascript" defer="" async=""
-	src="https://collector-658.tvsquared.com/piwik/tv2track.js"></script>
-<script type="text/javascript" async=""
-	src="https://www.google-analytics.com/plugins/ua/ec.js"></script>
-<script async="" src="//www.googletagmanager.com/gtm.js?id=GTM-NSQ8BP"></script>
-<script async="" src="//www.google-analytics.com/analytics.js"></script>
-<script async="" src="//connect.facebook.net/en_US/fbevents.js"></script>
-
-
-
 
 	<link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
-	<link rel="stylesheet"
-	href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
 	
 	<link rel="stylesheet" href="<%=cp%>/resources/data/css/jquery-ui.css" type="text/css" />
-<script type="text/javascript" src="<%=cp%>/resources/data/js/jquery-3.1.1.js"></script>
-<script type="text/javascript" src="<%=cp%>/resources/data/js/jquery-ui.js"></script>
-   <script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
+	<script type="text/javascript" src="<%=cp%>/resources/data/js/jquery-3.1.1.js"></script>
+	<script type="text/javascript" src="<%=cp%>/resources/data/js/jquery-ui.js"></script>
+
    <script type="text/javascript" src="/eatswill/resources/assets/js/cart.js"></script>
+   <script type="text/javascript" src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+	<link rel="stylesheet" href="/eatswill/resources/assets/css/app.css"
+	type="text/css" />
 
+<link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
+<link rel="stylesheet"
+	href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
 
-	
-	
-<script>
-	var is_yogiyo = window.location.hostname.indexOf('yogiyo.co.kr') >= 0;
-	var is_11st = window.location.hostname.indexOf('yogiyo.m.11st.co.kr') >= 0;
-	if (is_11st) {
-		document
-				.write('<link rel="apple-touch-icon-precomposed" href="//m.11st.co.kr/MW/img/mw11st_touchicon.png">');
-		document
-				.write('<link rel="shortcut icon" type="image/png" href="//m.11st.co.kr/MW/img/mw11st_touchicon.png" />');
-		document.write('<title>요기요배달상품 - 11번가모바일</title>');
-		document
-				.write('<s'
-						+ 'cript src="'
-						+ '//m.11st.co.kr/MW/js/lifecategory/delivery/inc_header_extra.js?random='
-						+ Math.random()
-						+ '" charset="euc-kr" type="text/javascript">'
-						+ '</s' + 'cript>');
-	} else {
-		document.write('<meta name="theme-color" content="#DC1400">');
-		document
-				.write('<meta property="og:title" content="요기요 - 즐거움은 요기부터. 배달음식 주문은 역시 요기요!">');
-		document
-				.write('<meta property="og:url" content="http://www.yogiyo.co.kr/">');
-		document
-				.write('<meta property="og:image" content="https://www.yogiyo.co.kr/mobile/image/app_img_560x292.png">');
-		document
-				.write('<meta property="og:description" content="요기요에서 원하는 배달음식을 쉽고 편리하게! 먹어본 사람만 쓸 수 있는 클린리뷰로 배달맛집 인증, 다양한 할인 혜택과 함께 배달되지 않던 인기맛집까지, 지금 바로 요기요에서 주문하세요.">');
-		document
-				.write('<title ng-if="! page.title">요기요 - 즐거움은 요기부터. 배달음식 주문은 역시 요기요!</title>');
-		document
-				.write('<title ng-if="page.title" ng-bind=\'page.title + " - 요기요"\'></title>');
-		document
-				.write('<link rel="apple-touch-icon-precomposed" href="https://www.yogiyo.co.kr/mobile/image/app_128x128.png">');
-		document
-				.write('<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://www.yogiyo.co.kr/mobile/image/app_144x144.png">');
-		document
-				.write('<link rel="icon" type="image/png" href="https://www.yogiyo.co.kr/mobile/image/favicon.ico" />');
-	}
-</script>
-<meta name="theme-color" content="#DC1400">
-<meta property="og:title" content="요기요 - 즐거움은 요기부터. 배달음식 주문은 역시 요기요!">
-<meta property="og:url" content="http://www.yogiyo.co.kr/">
-<meta property="og:image"
-	content="https://www.yogiyo.co.kr/mobile/image/app_img_560x292.png">
-<meta property="og:description"
-	content="요기요에서 원하는 배달음식을 쉽고 편리하게! 먹어본 사람만 쓸 수 있는 클린리뷰로 배달맛집 인증, 다양한 할인 혜택과 함께 배달되지 않던 인기맛집까지, 지금 바로 요기요에서 주문하세요.">
-<!-- ngIf: ! page.title -->
+<link rel="stylesheet"
+	href="/eatswill/resources/assets/ButtonStylesInspiration/css/buttons.css" />
+<link rel="stylesheet"
+	href="/eatswill/resources/assets/ButtonStylesInspiration/css/normalize.css" />
+<link rel="stylesheet"
+	href="/eatswill/resources/assets/ButtonStylesInspiration/css/vicons-font.css" />
+<link rel="stylesheet"
+	href="/eatswill/resources/assets/css/bootstrap.min.css" />
+<script type="text/javascript"
+	src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>		
+
 <title ng-if="! page.title" class="ng-scope">요기요 - 즐거움은 요기부터.
 	배달음식 주문은 역시 요기요!</title>
-<!-- end ngIf: ! page.title -->
-<!-- ngIf: page.title -->
-<link rel="apple-touch-icon-precomposed"
-	href="https://www.yogiyo.co.kr/mobile/image/app_128x128.png">
-<link rel="apple-touch-icon-precomposed" sizes="144x144"
-	href="https://www.yogiyo.co.kr/mobile/image/app_144x144.png">
-<link rel="icon" type="image/png"
-	href="https://www.yogiyo.co.kr/mobile/image/favicon.ico">
-
-<!-- Start location.search generate Code for Naver 검색 유입 -->
-<script type="text/javascript">
-	if (is_yogiyo) {
-		(function() {
-			function beginsWith(begin, whole) {
-				if (whole.indexOf(begin) === 0) {
-					return whole.substr(begin.length);
-				}
-			}
-			function urlResolve(url) {
-				var href = url;
-				if (msie) {
-					urlParsingNode.setAttribute('href', href);
-					href = urlParsingNode.href;
-				}
-				urlParsingNode.setAttribute('href', href);
-				return {
-					href : urlParsingNode.href,
-					protocol : urlParsingNode.protocol ? urlParsingNode.protocol
-							.replace(/:$/, '')
-							: '',
-					host : urlParsingNode.host,
-					search : urlParsingNode.search ? urlParsingNode.search
-							.replace(/^\?/, '') : '',
-					hash : urlParsingNode.hash ? urlParsingNode.hash.replace(
-							/^#/, '') : '',
-					hostname : urlParsingNode.hostname,
-					port : urlParsingNode.port,
-					pathname : (urlParsingNode.pathname.charAt(0) === '/') ? urlParsingNode.pathname
-							: '/' + urlParsingNode.pathname
-				};
-			}
-			var msie = document.documentMode;
-			var urlParsingNode = document.createElement('a');
-			var originUrl = urlResolve(window.location.href);
-			var originSearchUrl = originUrl.search;
-			var withoutHashUrl = originUrl.hash;
-			if (withoutHashUrl !== '') {
-				if (withoutHashUrl.charAt(0) === '#') {
-					withoutHashUrl = beginsWith('#', withoutHashUrl);
-				}
-				var hashUrl = urlResolve(withoutHashUrl);
-				if (hashUrl.search !== '' && originSearchUrl === '') {
-					window.location.search = hashUrl.search;
-				}
-			}
-		})();
-	} else {
-		if (document.styleSheets.length > 0
-				&& document.styleSheets[document.styleSheets.length - 1].cssRules) {
-			document.styleSheets[document.styleSheets.length - 1]
-					.insertRule(
-							'.asp_check .fake-header, .asp_check .category-list, .asp_check .footer { display: none; }',
-							document.styleSheets[document.styleSheets.length - 1].cssRules.length);
-		}
-	}
-</script>
-<!-- End location.search generate Code -->
-<!-- Start optimizely Code -->
-<script src="https://cdn.optimizely.com/js/9026702317.js"></script>
-<!-- End optimizely Code -->
-<!--Start Facebook  Pixel  Code -->
-<script>
-	/* eslint-disable */
-	!function(f, b, e, v, n, t, s) {
-		if (f.fbq)
-			return;
-		n = f.fbq = function() {
-			n.callMethod ? n.callMethod.apply(n, arguments) : n.queue
-					.push(arguments)
-		};
-		if (!f._fbq)
-			f._fbq = n;
-		n.push = n;
-		n.loaded = !0;
-		n.version = '2.0';
-		n.queue = [];
-		t = b.createElement(e);
-		t.async = !0;
-		t.src = v;
-		s = b.getElementsByTagName(e)[0];
-		s.parentNode.insertBefore(t, s)
-	}(window, document, 'script', '//connect.facebook.net/en_US/fbevents.js');
-	fbq('init', '1041485915908980');/* eslint-enable */
-</script>
 
 
 <script type="text/javascript">
@@ -317,95 +150,32 @@ ng\:form {
       
    }
    
-</script>
-
-
-
-
-
-<noscript>
-	<img height="1" width="1" style="display: none"
-		src="https://www.facebook.com/tr?id=1041485915908980&ev=PageView&noscript=1" />
-</noscript>
-<!--End Facebook  Pixel  Code -->
-<!-- Google Analytics -->
-<script>
-   /* eslint-disable */(function(i, s, o, g, r, a, m) {
-      i['GoogleAnalyticsObject'] = r;
-      i[r] = i[r] || function() {
-         (i[r].q = i[r].q || []).push(arguments)
-      }, i[r].l = 1 * new Date();
-      a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-      a.async = 1;
-      a.src = g;
-      m.parentNode.insertBefore(a, m)
-   })(window, document, 'script', '//www.google-analytics.com/analytics.js',
-         'ga');
-   ga('create', 'UA-42635603-1', 'auto');
-   ga('require', 'ec');/* eslint-enable */
-</script>
-<!-- // -->
-<!-- End Google Analytics -->
-<!-- Google Tag Manager -->
-<script>
-   var dataLayer = [];
-</script>
-
-<script>
-   /* eslint-disable */(function(w, d, s, l, i) {
-      w[l] = w[l] || [];
-      w[l].push({
-         'gtm.start' : new Date().getTime(),
-         event : 'gtm.js'
-      });
-      var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l='
-            + l
-            : '';
-      j.async = true;
-      j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl;
-      f.parentNode.insertBefore(j, f);
-   })(window, document, 'script', 'dataLayer', 'GTM-NSQ8BP');/* eslint-enable */
-   
-
-
-</script>
-
-
-
-<!-- End Google Tag Manager -->
-<script type="text/javascript" charset="UTF-8"
-	src="https://maps.googleapis.com/maps-api-v3/api/js/41/4/intl/ko_ALL/common.js"></script>
-<script type="text/javascript" charset="UTF-8"
-	src="https://maps.googleapis.com/maps-api-v3/api/js/41/4/intl/ko_ALL/util.js"></script>
-</head>
-<body class="asp_check" style="margin-top: 0px;">
-
-
-<!-- 리뷰삭제  -->
-<script type="text/javascript">
-
-$(function(){
-	
-	reviewDelPage(); 
+   // 리뷰 삭제
+   $(function(){
 		
-}); 
+		reviewDelPage(); 
+			
+	}); 
 
-function reviewDelPage() {
-	
-	var url = "<%=cp%>/myReview.action";
-	var params = "reNum=" + $("#myReNum").val();
-	
-	$.post(url,params,function(args){
-		$("#myReview").html(args);
-	});
-	
-	$("#myReview").hide();
-	
-}
-
-
-
+	function reviewDelPage() {
+		
+		var url = "<%=cp%>/myReview.action";
+		var params = "reNum=" + $("#myReNum").val();
+		
+		$.post(url,params,function(args){
+			$("#myReview").html(args);
+		});
+		
+		$("#myReview").hide();
+		
+	}
+   
 </script>
+
+
+</head>
+
+<body class="asp_check" style="margin-top: 0px;">
 
 
 	<div yogiyo-header="">
@@ -417,48 +187,41 @@ function reviewDelPage() {
 					ng-show="is_show_promotion_banner()">
 					<div class="landing-banner">
 						<div class="landing-header"></div>
-
-
 					</div>
 				</div>
 				<!-- ----------------------------------------------------------------------------------------- -->
 
-				<nav style="height: auto;font-size: 12px;">
-				<ul>
-					<li><a href="#menu">Menu</a></li>
-				</ul>
-				</nav>
-
-				<nav id="menu" style="font-size: 14.4px;">
-				<h2 style="font-size: 29px; margin-top: 0; font-weight: bold;">Menu</h2>
-				<br />
-				<input type="hidden" id="sessionId"
-					value="${sessionScope.customInfo.id }" />
-				<ul>
-					<c:choose>
-						<c:when test="${empty sessionScope.customInfo.id }">
-							<li><a
-								href="${pageContext.request.contextPath}/login.action">로그인</a></li>
-						</c:when>
-						<c:otherwise>
-							<li><font color="#F2849E">${sessionScope.customInfo.name }</font>
-								님 환영합니다.
-								<p style="text-align: left">
-									전화번호 : ${sessionScope.customInfo.tel }</br> 포인트 :
-									${sessionScope.customInfo.point }
-								</p> <a href="logout.action" data-nethru_clcode="A000012">로그아웃</a></li>
-						</c:otherwise>
-					</c:choose>
-					<li><a href="updateInfo.action">내정보수정</a></li>
-					<li><a id="basket">장바구니</a></li>
-					<li><a href="myOrder.action">주문내역</a></li>
-					<li><a href="heartStore.action">찜 목록</a></li>
-					<li><a href="myReview.action">마이 리뷰</a></li>
-				</ul>
-				<form method="POST" action="" name="infoForm">
-					<div id="myInfo"></div>
-				</form>
-				</nav>
+				<c:choose>
+					<c:when test="${!empty sessionScope.customInfo.id }">
+						<nav style="height: auto;font-size: 12px;">
+							<ul>
+								<li><a href="#menu">Menu</a></li>
+							</ul>
+						</nav>
+		
+						<nav id="menu" style="font-size: 14.4px;">
+							<h2 style="font-size: 29px; margin-top: 0; font-weight: bold;">Menu</h2>
+							<br/>
+							<input type="hidden" id="sessionId" value="${sessionScope.customInfo.id }"/>
+							<ul>
+								<li>
+									<font color="#F2849E">${sessionScope.customInfo.name }</font>님 환영합니다.
+									<p style="text-align: left">
+										전화번호 : ${sessionScope.customInfo.tel }</br> 포인트 :
+										${sessionScope.customInfo.point }
+									</p> 
+									<a href="logout.action" data-nethru_clcode="A000012">로그아웃</a>
+								</li>
+								<li><a href="updateInfo.action">내정보수정</a></li>
+								<li><a href="myPage.action">마이 페이지</a></li>	
+								<li><a id="basket">장바구니</a></li>		
+							</ul>
+							<form method="POST" action="" name="infoForm">
+								<div id="myInfo"></div>
+							</form>
+						</nav>
+					</c:when>
+				</c:choose>
 				<!-- ----------------------------------------------------------------------------------------- -->
 				<div class="nav-top clearfix"
 					ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
@@ -493,18 +256,18 @@ function reviewDelPage() {
 								<c:when test="${empty sessionScope.customInfo.id }">
 									<button type="button"
 										class="button button--ujarak button--border-thin button--text-thick"
-										style="width: 95px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 14.4px; font-weight: bold; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
-										onclick="javascript:location.href='login.action';">Login</button>
+										style="width: 150px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 14.4px; font-weight: bold; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
+										onclick="javascript:location.href='login.action';">로그인</button>
 									<button type="button"
 										class="button button--ujarak button--border-thin button--text-thick"
-										style="width: 95px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 14.4px; font-weight: bold; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
+										style="width: 150px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 14.4px; font-weight: bold; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
 										onclick="javascript:location.href='signup.action';">회원가입</button>
 								</c:when>
 								<c:otherwise>
 									<button type="button"
 										class="button button--ujarak button--border-thin button--text-thick"
 										style="width: 150px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 14.4px; font-weight: bold; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
-										onclick="javascript:location.href='logout.action';">Logout</button>
+										onclick="javascript:location.href='logout.action';">로그아웃</button>
 								</c:otherwise>
 							</c:choose>
 
@@ -524,8 +287,89 @@ function reviewDelPage() {
 					</div>
 				</div>
 
-				<%@ include file="/WEB-INF/views/layout/banner.jsp"%>
-
+				<!-- 시연 - 슬라이드쇼 -->
+				<div class="container"></div>
+				<div id="demo" class="carousel slide" data-ride="carousel">
+					<div class="carousel-inner">
+						<!-- 슬라이드 쇼 -->
+						<div class="carousel-item active">
+							<img class="d-block w-100"
+								src="/eatswill/resources/img/엽떡배너_1.jpg" alt="First slide"
+								style="width: 100px; height: 300px;">
+						</div>
+						<div class="carousel-item">
+							<img class="d-block w-100"
+								src="/eatswill/resources/img/생일배너_1.jpg" alt="Second slide"
+								style="width: 100px; height: 300px;">
+						</div>
+						<div class="carousel-item">
+							<img class="d-block w-100"
+								src="/eatswill/resources/img/냉면배너_1.jpg" alt="Third slide"
+								style="width: 100px; height: 300px;">
+						</div>
+						<div class="carousel-item">
+							<img class="d-block w-100"
+								src="/eatswill/resources/img/마라배너_1.jpg" alt="Fourth slide"
+								style="width: 100px; height: 300px;">
+						</div>
+						<div class="carousel-item">
+							<img class="d-block w-100"
+								src="/eatswill/resources/img/본죽배너_1.jpg" alt="Fifth slide"
+								style="width: 100px; height: 300px;">
+						</div>
+						<div class="carousel-item">
+							<img class="d-block w-100"
+								src="/eatswill/resources/img/타임배너_1.jpg" alt="Sixth slide"
+								style="width: 100px; height: 300px;">
+						</div>
+						<!-- / 슬라이드 쇼 끝 -->
+						<!-- 왼쪽 오른쪽 화살표 버튼 -->
+						<a class="carousel-control-prev" href="#demo" data-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<!-- <span>Previous</span> -->
+						</a> <a class="carousel-control-next" href="#demo" data-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<!-- <span>Next</span> -->
+						</a>
+						<!-- / 화살표 버튼 끝 -->
+					</div>
+				</div>
+				
+				<!-- 시연 - 검색 -->
+				<form method="POST" action="" name="findAddr">
+					<div class="input-group"
+						style="width: 100%; height: 85px; background-image: url('/eatswill/resources/img/background.jpg'); align-content: center; place-content: center; display: flex;">
+						&nbsp;
+						<select id="searchKey" name="searchKey" class="form-control ng-pristine ng-scope ng-valid-minlength ng-valid ng-valid-required ng-touched"
+							style="height: 3.3em; width: 7em; font-size: 9pt; color: #6C757D; text-align-last: center; 
+							flex: inherit; -webkit-appearance: listbox; border-radius: 10px 10px 10px 10px;
+							font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,  'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',  'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';">
+							<option>강남구</option>
+							<option>송파구</option>
+							<option>강동구</option>				
+						</select>
+						<input type="search" id="searchValue" name="searchValue"
+							class="form-control ng-pristine ng-scope ng-valid-minlength ng-valid ng-valid-required ng-touched"
+							placeholder="건물명, 도로명, 지번으로 검색하세요." ng-minlength="1"
+							ng-required="true"
+							ng-model="session_storage.location.address_input" bs-dropdown=""
+							style="height: 3.3em; width: 35em; left: 1em; font-size: 9pt; flex: inherit; border-radius: 10px 10px 10px 10px;
+							font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,  'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',  'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';">
+						<span id="button_search_address"
+							class="input-group-btn always-show-search-buttons">
+							<button
+								class="btn-search-location-cancel btn-search-location btn btn-default ng-hide"
+								type="button" ng-click="clear_search_location_input($event)"
+								ng-show="is_shown_location_search.v">
+								<span class="searchfield-cancel-button">&nbsp;</span>
+							</button>
+							<button class="btn btn-default ico-pick" type="button"
+								ng-click="select_location($event)"
+								style="background-color: #FE642E; left: 2em; font-size: 10pt; border-radius: 20px 20px 20px 20px;
+								font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,  'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',  'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';">검색</button>
+						</span>
+					</div>
+				</form>
 			</div>
 		</div>
 
@@ -547,7 +391,7 @@ function reviewDelPage() {
 
 	<!-- ngView:  -->
 	<div id="content" class="container-fluid ng-scope" ng-view=""
-		style="border-top: 1px solid #d0d0d0; padding-top: 7em; padding-bottom: 7em; text-align: -webkit-center;">
+		style="border-top: 1px solid #d0d0d0; padding-top: 98px; padding-bottom: 7em; text-align: -webkit-center;">
 		<div class="restaurant-category-menu ng-scope ng-hide"
 			ng-show="!is_mobile_width &amp;&amp; !is_mobile_width_for_category">
 			<div yogiyo-restaurant-category="">
@@ -562,7 +406,7 @@ function reviewDelPage() {
 			<div class="col-sm-8" style="width: 1000px">
 				<div id="banner_11st" class="banner_11st"></div>
 <div id="container">
-				<ul class="nav nav-tabs restaurant-tab">
+				<ul class="nav nav-tabs restaurant-tab" style="font-size: 11pt;">
 					<li
 						ng-class="! active_tab || active_tab == &quot;menu&quot; ? &quot;active&quot; : &quot;&quot;"
 						 id="myOrderLi" class="active"><a ng-click="toggle_tab(&quot;menu&quot;)"
@@ -620,7 +464,7 @@ function reviewDelPage() {
 	<!-- 카카오톡 채팅 시작 -->
 	<div style="position: fixed; right: 10px; bottom: 10px;"
 		class="talk_image">
-		<a id="channel-chat-button" href="" onclick="void chatChannel();">
+		<a id="channel-chat-button" onclick="void chatChannel();">
 			<img src="/eatswill/resources/img/consult_small_yellow_pc1.png"
 			width="70" height="70" />
 		</a>

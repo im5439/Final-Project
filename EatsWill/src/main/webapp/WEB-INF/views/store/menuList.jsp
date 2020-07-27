@@ -93,9 +93,7 @@
                           <span ng-class="is_discount(item) ? 'text-strike' : ''" ng-bind="item.price|krw" class="ng-binding">${dto.menuPrice } 원</span>
                      
                         </div>
-                        
-                        
-          
+         
                       </td>
                       
                       <!-- 사진 -->

@@ -15,7 +15,7 @@
 </head>
 <body>
 
-
+<form action="<%=cp %>/page.action" name="storesForm" method="post">
 <c:forEach var="dto" items="${page_lists}">
                      <div class="col-sm-6 contract" ng-repeat="restaurant in list">
                         <div class="item clearfix"
@@ -44,8 +44,11 @@
 
                                           <div class="restaurant-name ng-binding"
                                              ng-bind="storename" id="storename" title="">
-                                             <a href="${articleUrl}?shopCode=${dto.shopCode}&ceoId=${dto.ceoId}">
+                                             <a onclick="javascript:storesForm.submit();">
                                                 ${dto.shopName }</a>
+                                             <input type="hidden" name="shopCode" value="${dto.shopCode}">
+                                             <input type="hidden" name="ceoId" value="${dto.ceoId}">
+                           
                                           </div>
                                           <div class="stars">
                                              <span> <span class="ico-star1 ng-binding"
@@ -88,7 +91,7 @@
                      <!-- end ngRepeat: restaurant in list -->
                   </c:forEach>
 
-
+</form>
 
 
 </body>

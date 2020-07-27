@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CeoMapper">
+
+<!-- 사장님 회원가입 -->
+<insert id="insertCeo" parameterType="com.eatswill.dto.CeoDTO">
+	insert into ceo (ceoId,ceoPw,ceoName,ceoEmail) values (#{ceoId},#{ceoPw},#{ceoName},#{ceoEmail})
+</insert>
+
+<!-- 사장님아이디에 대한 정보 -->
+<select id="getReadData" parameterType="String" resultType="com.eatswill.dto.CeoDTO">
+	select * from ceo where ceoId = #{ceoId}
+</select>
+
+<!-- 사장님 매장추가 -->
+<insert id="insertStore" parameterType="com.eatswill.dto.CeoDTO">
+	insert into shop (shopCode, ceoId, shopName, category, shopAddr, shopTel, timeCode, shopImg, shopCreated, franchise)
+	values (#{category}||'_'||no_seq_shopCode.nextval, #{ceoId}, #{shopName}, #{category}, #{shopAddr}, #{shopTel}, 1, #{shopImg}, sysdate, #{franchise})	
+</insert>
+
+<!-- 해당매장 삭제 -->
+<delete id="deleteStore" parameterType="String">
+	delete shop where shopCode = #{shopCode}
+</delete>
+
+<!-- 사장님 보유매장 -->
+<select id="getStoreList" parameterType="String" resultType="com.eatswill.dto.CeoDTO">
+	select shopCode, shopName, category, shopAddr, shopTel, shopImg, shopCreated, franchise from shop where ceoId = #{ceoId} order by shopCreated
+</select>
+
+<!-- 사장님 보유매장 개수 -->
+<select id="getStoreCount" parameterType="String" resultType="int">
+	select nvl(count(*),0) from shop where ceoId = #{ceoId}
+</select>
+
+<!-- 보유매장에 대한 리뷰 -->
+<select id="getStoreReivew" parameterType="hashMap" resultType="com.eatswill.dto.CeoDTO">
+	select rpad(substr(r.userId,1,3),6,'*') userId, r.reScore,to_char(reCreated,'yyyy-mm-dd hh:mm'),r.reCreated,r.reContent ,r.reImg,r.shopCode,m.menuName, s.shopName, s.shopAddr, r.ceoContent, r.renum 
+	from review r, orderdetail o,menu m,shop s
+	where r.orderCode=o.orderCode and o.menuCode=m.menuCode  and r.shopcode = s.shopcode and r.shopCode = #{shopCode} and s.ceoId = #{ceoId} order by r.renum desc
+</select>
+
+<!-- 보유매장의 리뷰 count -->
+<select id="getReviewCount" parameterType="String" resultType="int">
+	select nvl(count(*),0) from review where shopCode = #{shopCode}
+</select>
+
+<!-- 해당매장 리뷰 평균 -->
+<select id="getAvgReScore" parameterType="String" resultType="double">
+	select TRUNC((avg(nvl(reScore,0))),1) totReScore from review where shopCode = #{shopCode}
+</select>
+
+<!-- 사장님 답글 추가(업데이트) -->
+<update id="ceoReviewAdd" parameterType="com.eatswill.dto.CeoDTO">
+	update review set ceoContent = #{ceoContent} where renum = #{renum}
+</update>
+
+<!-- 사장님 답글 삭제(업데이트) -->
+<update id="ceoReviewDel" parameterType="String">
+	update review set ceoContent = '' where renum = #{renum}
+</update>
+
+<!-- 메뉴추가 -->
+<insert id="insertMenu" parameterType="com.eatswill.dto.CeoDTO">
+	insert into menu (menuCode, shopCode, menuName, menuPrice, menuImg, part, menuDate) values (no_seq_menuCode.nextval, #{shopCode}, #{menuName}, #{menuPrice}, #{menuImg}, #{part}, sysdate)
+</insert>
+
+<!-- 메뉴삭제 -->
+<delete id="deleteMenu" parameterType="String">
+	delete menu where menuCode = #{menuCode}
+</delete>
+
+<!-- 매장 메뉴 불러오기 -->
+<select id="getStoreMenu" parameterType="String" resultType="com.eatswill.dto.CeoDTO">
+	select menuName ,menuCode, menuDate from menu where shopCode = #{shopCode} order by menuDate desc
+</select>
+
+<!-- 매장 정보 불러오기 -->
+<select id="getStoreName" parameterType="String" resultType="com.eatswill.dto.CeoDTO">
+	select shopName, shopAddr, shopCreated, shopCode from shop where shopCode = #{shopCode}
+</select>
+
+<!-- 매장 주문 확인 -->
+<select id="getOrderChk" parameterType="String" resultType="com.eatswill.dto.CeoDTO">
+	select rpad(substr(c.userId,1,3),6,'*') userId, c.userTel, nvl(c.userAddr1,'-') userAddr1, nvl(c.userAddr2,'-') userAddr2, o.orderCode, o.oamount, o.orderDate, o.request, o.orderStatus 
+	from custom c, ordermain o
+	where o.userId = c.userId and o.shopCode = #{shopCode} order by orderStatus, orderdate
+</select>
+
+<!-- 주문한 메뉴 detail -->
+<select id="getOrderDetail" parameterType="String" resultType="com.eatswill.dto.OrderDTO">
+	select o.oqty, m.menuName
+	from menu m, orderdetail o
+	where m.menuCode = o.menuCode and orderCode = #{orderCode}
+</select>
+
+<!-- 주문코드로 주문상태 update -->
+<update id="orderUpdate" parameterType="String">
+	update ordermain set orderStatus = '200' where orderCode = #{orderCode}
+</update>
+
+<!-- 매장별 메뉴개수 -->
+<select id="getMenuCount" parameterType="String" resultType="int">
+	select nvl(count(*),0) from menu where shopCode=#{shopCode}
+</select>
+
+<!-- 메뉴개수별 데이터 불러오기 -->
+<select id="getMenuList" parameterType="hashMap" resultType="com.eatswill.dto.CeoDTO">
+	select rnum, menuName, menuCode, menuPrice, menuImg, part from (
+	select rownum rnum, data.* from (
+	select menuName, menuCode, menuPrice, menuImg, part
+	from menu where shopCode = #{shopCode} order by rownum desc) data)
+	<![CDATA[
+	where rnum>=#{start} and rnum<=#{end}
+	]]>
+</select>
+
+</mapper>

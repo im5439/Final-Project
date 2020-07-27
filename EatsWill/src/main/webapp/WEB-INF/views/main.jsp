@@ -245,23 +245,6 @@ ng\:form {
    var dataLayer = [];
 </script>
 
-<!-- 로딩창 스크립---------------------------------------------------- -->
-<script type="text/javascript">
-
-	function switchScreen() {
-	   	setTimeout("switchScreenTime()", 500);
-	}
-	
-	function switchScreenTime() {
-	   	document.getElementById("divLoading").style.display = "none";
-		document.getElementById("divBody").style.display = "";
-	}
-
-
-</script>
-<!------------------------------------------------------------------  -->
-
-
 <noscript>
 	<iframe src="//www.googletagmanager.com/ns.html?id=GTM-NSQ8BP"
 		height="0" width="0" style="display: none; visibility: hidden"></iframe>
@@ -322,21 +305,8 @@ $(document).ready(function() {
 
 </head>
 
-
-
-  <!--  로딩창 div ----------------------------------------------------------------------------- -->
   
-<body onload="switchScreen();">
-
-<div id="divLoading" style="position:absolute; top:30%; left:0;  text-align:center; margin:0 auto; width: 100%;">
-    <img src="/eatswill/resources/images/hicon2.gif" alt="잠시만 기다려 주세요. 로딩중입니다."  style="height: 30em; width: 30em;"/>
-</div>
-
-<div id="divBody" style="display:none;">
-
-  <!--  로딩창 div ----------------------------------------------------------------------------- 맨밑에 /div 있음  --> 
-
-
+<body>
 
 	<!-- 시연 - 팝업창 -->
 	<form name="notice_form">
@@ -435,7 +405,7 @@ $(document).ready(function() {
 					<section class="tiles">
 						<article>
 							<span class="image"> 
-								<a class="thumbnail" index="1">
+								<a class="thumbnail" index="">
 									<div class="category-title">전체보기</div> 
 									<img src="/eatswill/resources/img/eatswill3.png">
 								</a>
@@ -444,7 +414,7 @@ $(document).ready(function() {
 	
 						<article>
 							<span class="image"> 
-								<a class="thumbnail" index="2">
+								<a class="thumbnail" index="fr">
 									<div class="category-title">프랜차이즈</div> 
 									<img src="https://www.yogiyo.co.kr/mobile/image/category-10.png">
 								</a>
@@ -453,7 +423,7 @@ $(document).ready(function() {
 	
 						<article>
 							<span class="image"> 
-								<a class="thumbnail" index="3">
+								<a class="thumbnail" index="ck">
 									<div class="category-title">치킨</div> 
 									<img src="https://www.yogiyo.co.kr/mobile/image/category-02.png">
 								</a>
@@ -462,7 +432,7 @@ $(document).ready(function() {
 	
 						<article>
 							<span class="image"> 
-								<a class="thumbnail" index="4">
+								<a class="thumbnail" index="py">
 									<div class="category-title">피자/양식</div> 
 									<img src="https://www.yogiyo.co.kr/mobile/image/category-03.png">
 								</a>
@@ -471,7 +441,7 @@ $(document).ready(function() {
 	
 						<article>
 							<span class="image"> 
-								<a class="thumbnail" index="5">
+								<a class="thumbnail" index="ch">
 									<div class="category-title">중국집</div> 
 									<img src="https://www.yogiyo.co.kr/mobile/image/category-04.png">
 								</a> 
@@ -480,7 +450,7 @@ $(document).ready(function() {
 	
 						<article>
 							<span class="image"> 
-								<a class="thumbnail" index="6">
+								<a class="thumbnail" index="kr">
 									<div class="category-title">한식</div> 
 									<img src="https://www.yogiyo.co.kr/mobile/image/category-05.png">
 								</a>
@@ -489,7 +459,7 @@ $(document).ready(function() {
 	
 						<article>
 							<span class="image"> 
-								<a class="thumbnail" index="7">
+								<a class="thumbnail" index="jp">
 									<div class="category-title">일식/돈까스</div> 
 									<img src="https://www.yogiyo.co.kr/mobile/image/category-06.png">
 								</a>
@@ -498,7 +468,7 @@ $(document).ready(function() {
 	
 						<article>
 							<span class="image"> 
-							<a class="thumbnail" index="8">
+							<a class="thumbnail" index="bs">
 								<div class="category-title">분식</div> 
 								<img src="https://www.yogiyo.co.kr/mobile/image/category-09.png">
 							</a>
@@ -768,7 +738,7 @@ $(document).ready(function() {
 	<!-- 카카오톡 채팅 시작 -->
 	<div style="position: fixed; right: 10px; bottom: 10px;"
 		class="talk_image">
-		<a id="channel-chat-button" href="" onclick="void chatChannel();">
+		<a id="channel-chat-button" onclick="void chatChannel();">
 			<img src="/eatswill/resources/img/consult_small_yellow_pc1.png"
 			width="70" height="70" />
 		</a>
@@ -784,6 +754,6 @@ $(document).ready(function() {
          </script>
 	</div>
 	<!-- 카카오톡 채팅 끝 -->
-	</div>
+
 </body>
 </html>

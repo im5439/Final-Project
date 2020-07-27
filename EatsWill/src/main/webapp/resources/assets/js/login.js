@@ -15,6 +15,65 @@ function cartList() {
     });
 }
 
+function cartOpen(check) {
+
+	var f = "";
+	var info = "";
+
+	if(check == "my") {
+		f = document.infoForm;
+	} else {
+		f = document.cartForm;
+	}
+		
+	var param = "id=" + $("#sessionId").val();
+
+    $.ajax({
+        url: "cartOpen.action",
+        type: "POST",            
+        data: param,
+        success: function(data){
+        	var shopCode = data.substring(0, data.indexOf(','));
+        	var ceoId = data.substring((data.indexOf(',')+1), data.length);
+        
+        	if(check == "my") {
+        		$("#myInfo").append($('<input/>', {type: 'hidden', name: 'shopCode', value: shopCode}));
+        		$("#myInfo").append($('<input/>', {type: 'hidden', name: 'ceoId', value: ceoId}));
+        	} else {
+        		$("#cartInfo").append($('<input/>', {type: 'hidden', name: 'shopCode', value: shopCode}));
+        		$("#cartInfo").append($('<input/>', {type: 'hidden', name: 'ceoId', value: ceoId}));
+        	}
+        	
+        	f.action = "page.action";
+			f.submit();
+        },
+        error: function(){
+            alert("Error");
+        }
+    });
+}
+
+function logon() {
+
+	var f = document.myForm;
+
+	if($("#id").val()==null || $("#id").val()=="") {
+		alert("아이디를 입력하세요");
+		return;
+	}
+    
+	f.action = "login_ok.action";
+	f.submit();
+}
+
+function enterkey() {
+    if (window.event.keyCode == 13) {
+
+         // 엔터키가 눌렸을 때 실행할 내용
+         logon();
+    }
+}
+
 function isValidEmail(email) {
 	var format = /^((\w|[\-\.])+)@((\w|[\-\.])+)\.([A-Za-z]+)$/;
     if (email.search(format) != -1)
@@ -96,9 +155,28 @@ function sendIt(){
 		f.addr1.focus();
 		return;
 	}
-
-	f.action = "insert.action";
-	f.submit();
+	
+	var param = "id=" + $("#id").val();
+            
+    $.ajax({
+        url: "idcheck.action",
+        type: "POST",            
+        data: param,
+        success: function(data){
+        	if(data=="fail") {
+        		alert("이미 사용중인 아이디입니다.");
+        		f.id.focus();
+        		return;
+        	} else {
+        		f.action = "insert.action";
+				f.submit();
+        	}
+        	
+        },
+        error: function(){
+            alert("Error");
+        }
+    });
 
 }
 
@@ -199,8 +277,14 @@ $(function() {
 		cartList();
 	});
 	
+	$("#searchKey").show(function(){
+		if($('#searchKeyin').val() != null && $('#searchKeyin').val() != "") {
+			$('#searchKey').val($('#searchKeyin').val());
+		}
+	});
+	
 	$("#kakao-login-btn").show(function(){
-		
+
 		// 사용할 앱의 JavaScript 키를 설정해 주세요.
 		Kakao.init('da5ed75e6d7f9bcac9abaeae41fd1108');
 	   
@@ -249,6 +333,26 @@ $(function() {
 		f.action = "kakaoLogin_ok.action";
 		f.submit();
 	}
+	
+	$("#cartList").click(function(){
+		cartOpen("cart");
+	});
+	
+	$("#basket").click(function(){
+		cartOpen("my");
+	});
+	
+	$(".thumbnail").click(function(){
+		
+		var f = document.findAddr;
+		var index = $(this).attr("index");
+		
+		$(f).append($('<input/>', {type: 'hidden', name: 'category', value: index}));
+		
+		// f.action = "storeList.action";
+		f.submit();
+		
+	});
 		
 	$("#findIdPw").click(function(){
 
@@ -330,19 +434,6 @@ $(function() {
         
 	});
 	
-	$("#logon").click(function(){
-		
-		var f = document.myForm;
-
-		if($("#id").val()==null || $("#id").val()=="") {
-			alert("아이디를 입력하세요");
-			return;
-		}
-        
-		f.action = "login_ok.action";
-		f.submit();
-	});
-	
 });
 
 function execDaumPostcode() {
@@ -393,7 +484,6 @@ function execDaumPostcode() {
     }
 
     function sample3_execDaumPostcode() {
-  
     	// 우편번호 찾기 찾기 화면을 넣을 element
     	var element_wrap = document.getElementById('wrap');
     	document.getElementById('addr1').value = "";
@@ -410,7 +500,6 @@ function execDaumPostcode() {
 		
         new daum.Postcode({
             oncomplete: function(data) {
-            
                 // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
                 // 각 주소의 노출 규칙에 따라 주소를 조합한다.

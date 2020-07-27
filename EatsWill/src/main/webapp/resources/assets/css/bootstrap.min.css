@@ -853,11 +853,11 @@ pre code {
 		flex: 0 0 58.333333%;
 		max-width: 58.333333%
 	}
-	.col-sm-8 {
+	/* .col-sm-8 {
 		-ms-flex: 0 0 66.666667%;
 		flex: 0 0 66.666667%;
 		max-width: 66.666667%
-	}
+	} */
 	.col-sm-9 {
 		-ms-flex: 0 0 75%;
 		flex: 0 0 75%;
@@ -1794,7 +1794,7 @@ pre code {
 	display: block;
 	width: 100%;
 	height: calc(1.5em + .75rem + 2px);
-	padding: .375rem .75rem;
+	padding: .375rem .75rem .375rem 12px;
 	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.5;
@@ -2363,14 +2363,16 @@ textarea.form-control {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	background-color: transparent;
+	/* background-color: transparent; */
 	border: 1px solid transparent;
 	padding: .375rem .75rem;
 	font-size: 1rem;
 	line-height: 1.5;
-	border-radius: .25rem;
-	transition: color .15s ease-in-out, background-color .15s ease-in-out,
-		border-color .15s ease-in-out, box-shadow .15s ease-in-out
+	border-radius: 0.5rem;
+	/* transition: color .15s ease-in-out, background-color .15s ease-in-out,
+		border-color .15s ease-in-out, box-shadow .15s ease-in-out; */
+	-webkit-transition: border-color 0.4s, color 0.4s;
+	transition: border-color 0.4s, color 0.4s;	
 }
 
 @media ( prefers-reduced-motion :reduce) {
@@ -5705,7 +5707,7 @@ a.close.disabled {
 .toast-body {
 	padding: .75rem
 }
-
+/*
 .modal-open {
 	overflow: hidden
 }
@@ -5897,7 +5899,7 @@ a.close.disabled {
 }
 
 @media ( min-width :576px) {
-	.modal-dialog {
+	 .modal-dialog {
 		max-width: 500px;
 		margin: 1.75rem auto
 	}
@@ -5929,7 +5931,7 @@ a.close.disabled {
 		max-width: 1140px
 	}
 }
-
+*/
 .tooltip {
 	position: absolute;
 	z-index: 1070;
@@ -6337,11 +6339,11 @@ a.close.disabled {
 }
 
 .carousel-control-prev {
-	left: 0
+	right: 90%;
 }
 
 .carousel-control-next {
-	right: 0
+	left: 90%;
 }
 
 .carousel-control-next-icon, .carousel-control-prev-icon {

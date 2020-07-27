@@ -533,7 +533,7 @@ ng\:form {
 
 						<!-- 더보기 기능 -->
 						<li class="list-group-item btn-more" ng-show="check_more_review()" >
-							<a href="<%=cp%>/myOrder.action" >주문확인 바로가기</a>
+							<a href="<%=cp%>/myPage.action" >주문확인 바로가기</a>
 							
 						</li>
 					</ul>

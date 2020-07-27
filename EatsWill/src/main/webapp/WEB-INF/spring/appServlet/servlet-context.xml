@@ -13,6 +13,9 @@
 	<annotation-driven />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/shopimg/**" location="file:///D:/shopimg/" />
+	<resources mapping="/menuimg/**" location="file:///D:/menuimg/" />
+	<resources mapping="/reimg/**" location="file:///D:/reimg/" />
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
@@ -22,19 +25,25 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.eatswill.controller" />
-	
-	<!-- 코딩  -->
-	
-	<beans:bean id="myUtil" class="com.eatswill.util.MyUtil"/>
-	
-	<beans:bean id="storeDAO" class="com.eatswill.dao.StoreDAO">
+ 	
+ 	<!-- 코딩 -->
+ 	<beans:bean id="storeDAO" class="com.eatswill.dao.StoreDAO">
 		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
 	</beans:bean>
+	
 	<beans:bean id="customDAO" class="com.eatswill.dao.CustomDAO">
 		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
 	</beans:bean>
-	<!-- E-DAO --> 	
- 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></beans:bean>
+	
+	<beans:bean id="ceoDAO" class="com.eatswill.dao.CeoDAO">
+		<beans:property name="sessionTemplate" ref="sessionTemplate"/>
+	</beans:bean>
+
+ 	<!-- E-DAO --> 	
+ 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+ 		<!-- one of the properties available; the maximum file size in bytes 2MB -->
+        <beans:property name="maxUploadSize" value="2000000"/>
+ 	</beans:bean>
  	
  	<!-- 메일 api -->
  	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
@@ -47,13 +56,12 @@
 	<beans:bean id="sessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<beans:constructor-arg ref="sessionFactory"/>
 	</beans:bean>
-	
+
 	<beans:bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="dataSource"/>
 		<beans:property name="configLocation" value="classpath:/mybatis-config.xml"/>
 	</beans:bean>
 
-	
 	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
 		<beans:property name="url" value="jdbc:oracle:thin:@192.168.16.18:1521:TestDB"/>
@@ -61,10 +69,9 @@
 		<beans:property name="password" value="a123"/>
 	</beans:bean>
 	
-<resources mapping="/resources/**" location="/resources/" />
-    <resources mapping="/reImg/**" location="d:/reImg" />
+	<beans:bean id="myUtil" class="com.eatswill.util.MyUtil"/>
 	
-	
-	
+	<!-- <resources mapping="/resources/**" location="/resources/" /> -->
+    <!-- <resources mapping="/reImg/**" location="d:/reImg" /> -->
 	
 </beans:beans>

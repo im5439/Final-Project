@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
@@ -34,10 +32,12 @@ public class StoreController {
 	public String menu(HttpServletRequest request, String shopCode, String userId, String ceoId) throws Exception {
 
 		System.out.println("menu 들어옴");
+		System.out.println("shopCode==> " + shopCode);
 
 		List<StoreDTO> lists = dao.menuList(shopCode);
 
 		System.out.println("menuList" + ceoId);
+		System.out.println("menuList size= " + lists.size());
 
 		request.setAttribute("lists", lists);
 		request.setAttribute("userId", userId);
@@ -62,13 +62,24 @@ public class StoreController {
 
 	// storePage
 	@RequestMapping(value = "/page", method = { RequestMethod.GET, RequestMethod.POST })
-	public String page(HttpServletRequest request, String shopCode, String ceoId, String userId) {
+	public String page(HttpServletRequest request, String shopCode, String ceoId, String userId,String menuCode) {
 
 		System.out.println("page 들어옴");
 
 		// userId session처리
 		HttpSession session = request.getSession();
 		CustomDTO dto = (CustomDTO) session.getAttribute("customInfo");
+		
+		Map<String, ?> reaMap = RequestContextUtils.getInputFlashMap(request);
+		if (reaMap != null) {
+			shopCode = (String)reaMap.get("shopCode");
+			ceoId = (String)reaMap.get("ceoId");
+			menuCode = (String)reaMap.get("menuCode");
+		}
+		
+		System.out.println("page shopCode==> " + shopCode);
+		System.out.println("page ceoId==> " + ceoId);
+		System.out.println("page menuCode==> " + menuCode);
 
 		if (dto == null || dto.equals("")) {
 			userId = "guest"; // 세션값이 없을때 guest로 임의의 아이디 부여
@@ -153,7 +164,7 @@ public class StoreController {
 
 	//장바구니 inset/update/delete
 	@RequestMapping(value = "/cartInsert", method = {RequestMethod.POST,RequestMethod.GET})
-	public String cartInsert(HttpServletRequest request, StoreDTO dto,String userId,String ceoId,String menuCode,String shopCode) {
+	public String cartInsert(HttpServletRequest request, StoreDTO dto,String userId,String ceoId,String menuCode,String shopCode, RedirectAttributes rea) {
 
 		System.out.println("cartInsert 들어옴");
 
@@ -245,8 +256,11 @@ public class StoreController {
 			}
 
 			request.setAttribute("dto", dto);
+			rea.addFlashAttribute("menuCode", menuCode);
+			rea.addFlashAttribute("shopCode", shopCode);
+			rea.addFlashAttribute("ceoId", ceoId);
 
-			return "redirect:/page.action?menuCode=" + menuCode + "&userId=" + userId +"&shopCode=" + shopCode + "&ceoId=" + ceoId;
+			return "redirect:/page.action";
 
 		}
 
@@ -281,8 +295,11 @@ public class StoreController {
 		}
 
 		request.setAttribute("dto", dto);
+		rea.addFlashAttribute("menuCode", menuCode);
+		rea.addFlashAttribute("shopCode", shopCode);
+		rea.addFlashAttribute("ceoId", ceoId);
 
-		return "redirect:/page.action?menuCode=" + menuCode + "&userId=" + userId +"&shopCode=" + shopCode + "&ceoId=" + ceoId;
+		return "redirect:/page.action";
 
 	}
 
@@ -312,7 +329,7 @@ public class StoreController {
 
 		listSideSu = lists1.size(); //매장의 메뉴의 사이드메뉴 개수
 		int listSideGroup = lists2.size(); //각 메뉴별 사이드메뉴들의 가격의 합이 나오는 리스트 개수
-
+		
 		System.out.println("listsu->" + listsu );
 		System.out.println("listSideSu->" + listSideSu );
 		System.out.println("listSideGroup->" + listSideGroup );
@@ -401,6 +418,7 @@ public class StoreController {
 		}		
 
 		request.setAttribute("listsu", listsu);
+		request.setAttribute("listSideSu", listSideSu);
 		request.setAttribute("priceAmount", priceAmount + priceSideAmount); //사이드메뉴+메인메뉴 총액
 		request.setAttribute("lists", lists);	
 		request.setAttribute("lists1", lists1);
@@ -486,7 +504,7 @@ public class StoreController {
 
 	//음식점 리스트 출력
 		@RequestMapping(value="/storeList.action", method = {RequestMethod.GET,RequestMethod.POST})
-		public String list(HttpServletRequest request,StoreDTO dto) throws Exception{
+		public String list(HttpServletRequest request,StoreDTO dto, String searchKey, String searchValue) throws Exception{
 
 			System.out.println("storeList 들어옴");
 			
@@ -514,6 +532,8 @@ public class StoreController {
 			request.setAttribute("articleUrl",articleUrl);
 			request.setAttribute("category", category);
 			request.setAttribute("sortMode",sortMode);
+			request.setAttribute("searchKey",searchKey);
+			request.setAttribute("searchValue",searchValue);
 
 			return "store/storeList";
 
@@ -616,7 +636,12 @@ public class StoreController {
 	public String order(HttpServletRequest request) throws Exception {
 
 		System.out.println("결제창 들어옴");
-		int priceAmount = Integer.parseInt(request.getParameter("priceAmount"));
+		int priceAmount = 0;
+		
+		Map<String, ?> reaMap = RequestContextUtils.getInputFlashMap(request);
+		if (reaMap != null) {
+			priceAmount = (Integer) reaMap.get("priceAmount");
+		}
 
 		HttpSession session = request.getSession();
 		CustomDTO dto = (CustomDTO) session.getAttribute("customInfo");
@@ -638,7 +663,7 @@ public class StoreController {
 
 	// 장바구니에서 수량변경시 업데이트
 	@RequestMapping(value = "/cartUpdate", method = { RequestMethod.GET, RequestMethod.POST })
-	public String cartUpdate(HttpServletRequest request,RedirectAttributes redirectAttr,
+	public String cartUpdate(HttpServletRequest request,RedirectAttributes rea,
 			String shopCode, String shopName,String mainQty,String cartAmount,String cartMenuCode,String sidePrice2) throws Exception {
 
 		int priceAmount = Integer.parseInt(request.getParameter("priceAmount")); //메인+사이드 총액 
@@ -721,8 +746,10 @@ public class StoreController {
 				dao.updateQTY(dto1);
 			}
 		}
+		
+		rea.addFlashAttribute("priceAmount", priceAmount);
 
-		return "redirect:/order.action?priceAmount=" + priceAmount;
+		return "redirect:/order.action";
 
 	}
 
@@ -800,9 +827,10 @@ public class StoreController {
 
 	//음식점 더보기로 출력 - ajax
 	@RequestMapping(value="/stores", method = {RequestMethod.GET,RequestMethod.POST})
-	public String stores(HttpServletRequest request,StoreDTO dto) throws Exception{
+	public String stores(HttpServletRequest request,StoreDTO dto, String searchKey, String searchValue) throws Exception{
 		
 		System.out.println("stores.action 들어옴!");
+		System.out.println("searchKey: " + (searchKey+searchValue));
 		List<StoreDTO> page_lists =null;
 		
 		String cp = request.getContextPath();
@@ -843,25 +871,25 @@ public class StoreController {
 		//if else 로 나누어서page_lists가 정렬순에 따른 카테고리로 나오도록 구분
 		if(sortMode.equals("orderByRe")) {//리뷰순
 			System.out.println("stores-if 안의 orderByRe");
-			page_lists = dao.orderByRe(start, end,category);
+			page_lists = dao.orderByRe(start, end,category, (searchKey+searchValue));
 			
 		}
 		
 		if(sortMode.equals("orderByRes")){ 
 			System.out.println("stores-if 안의 orderByRes");
-			page_lists = dao.orderByRes(start, end,category);
+			page_lists = dao.orderByRes(start, end,category, (searchKey+searchValue));
 			
 		}
 		
 		if(sortMode.equals("orderByO")) {
 			System.out.println("stores-if 안의 orderByO");
-			page_lists = dao.orderByO(start, end,category);
+			page_lists = dao.orderByO(start, end,category, (searchKey+searchValue));
 
 		}
 		
 		if(sortMode==null || sortMode.equals("")){
 			System.out.println("stores-if 안의 else");
-			page_lists = dao.shopPaging(start, end,category);
+			page_lists = dao.shopPaging(start, end,category, (searchKey+searchValue));
 			
 		}
 		

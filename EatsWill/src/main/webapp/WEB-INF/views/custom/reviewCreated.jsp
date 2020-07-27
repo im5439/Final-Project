@@ -67,19 +67,31 @@ h1 {
 <meta name="description">
 <meta name="keywords">
 
-<link rel="stylesheet" href="/eatswill/resources/assets/css/nav.css" />
-   <link rel="stylesheet"
-   href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
-   <script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
-   <script type="text/javascript" src="/eatswill/resources/assets/js/cart.js"></script>
-
-<link rel="shortcut icon"
-   href="http://image.gmarket.co.kr/_Net/MyG/favicon/gmarket.ico">
-
+<meta name="theme-color" content="#DC1400">
+<meta property="og:title" content="lets eats will !">
+<meta property="og:url" content="http://www.yogiyo.co.kr/">
+<meta property="og:description" content="">
+<!-- ngIf: ! page.title -->
+<title ng-if="! page.title" class="ng-scope">리뷰 쓰기</title>
+<!-- end ngIf: ! page.title -->
+<!-- ngIf: page.title -->
 <link rel="apple-touch-icon-precomposed"
-   href="http://image.gmarket.co.kr/_Net/apple-touch-icon-precomposed.png">
-<link rel="apple-touch-icon"
-   href="http://image.gmarket.co.kr/_Net/apple-touch-icon.png">
+	href="/eatswill/resources/images/sicon.jpg">
+<link rel="apple-touch-icon-precomposed" sizes="144x144"
+	href="/eatswill/resources/images/sicon.jpg">
+<link rel="icon" type="image/png"
+	href="/eatswill/resources/images/sicon.jpg">
+	
+<link rel="stylesheet" href="/eatswill/resources/assets/css/nav.css" />
+<link rel="stylesheet" href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
+<link rel="stylesheet" href="/eatswill/resources/assets/ButtonStylesInspiration/css/buttons.css" />
+<link rel="stylesheet" href="/eatswill/resources/assets/ButtonStylesInspiration/css/normalize.css" />
+<link rel="stylesheet" href="/eatswill/resources/assets/ButtonStylesInspiration/css/vicons-font.css" />
+<link rel="stylesheet" href="/eatswill/resources/assets/css/bootstrap.min.css" />
+
+<script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="/eatswill/resources/assets/js/cart.js"></script>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
 <script async=""
    src="//script.gmarket.co.kr/mobile/js/common/kr/util/viewability.js"></script>
@@ -393,98 +405,124 @@ function sendIt() {
    <div yogiyo-header="">
 		<div id="header" class="header">
 
-			<div role="navigation" class="nav-bar">
-				<div class="navigation ver-pc" ng-class="header_show()" style="background-color:orange;	"> <!--  색상수정예정예정 -->
-
-				<!-- ----------------------------------------------------------------------------------------- -->	
-					
-					
-					
-					
-					<nav>
+			<div class="navigation ver-pc" ng-class="header_show()"
+			style="background-color: #FDF5E6;">
+			<!--  색상수정예정예정 -->
+			<div class="app-down-banner clearfix ng-hide"
+				ng-show="is_show_promotion_banner()" style="background-color: initial;position: static;z-index: 0;">
+				<div class="landing-banner">
+					<div class="landing-header"></div>
+		
+		
+				</div>
+			</div>
+			<!-- ----------------------------------------------------------------------------------------- -->
+			<c:choose>
+				<c:when test="${!empty sessionScope.customInfo.id }">
+					<nav style="height: auto;font-size: 12px;">
 						<ul>
 							<li><a href="#menu">Menu</a></li>
 						</ul>
 					</nav>
-						
-					<nav id="menu" style="font-size: 14px;">
-						<h2 style="padding-top: 20px; padding-bottom: 10px; font: 30px 'Malgun Gothic','맑은 고딕', '나눔고딕', NanumGothic, '돋움', Dotum, tahoma, helvetica, sans-serif">
-						Menu</h2>
-						<br/>
-						<input type="hidden" id="sessionId" value="${sessionScope.customInfo.id }"/>
+				
+					<nav id="menu" style="font-size: 14.4px;">
+						<h2 style="font-size: 29px;margin-top: 0;font-weight: bold;">Menu</h2>
+						<br /> <input type="hidden" id="sessionId"
+							value="${sessionScope.customInfo.id }" />
 						<ul>
-							<c:choose>
-								<c:when test="${empty sessionScope.customInfo.id }">
-									<li><a href="${pageContext.request.contextPath}/login.action">로그인</a></li>
-								</c:when>
-								<c:otherwise>
-									<li><font color="#F2849E" style="line-height: 1.4;">${sessionScope.customInfo.name }</font> 님 환영합니다.
-		                      		<p style="text-align: left; margin-bottom: 10px; line-height: 1.4;">
-		                      			전화번호 : ${sessionScope.customInfo.tel }</br>
-		                      			포인트 : ${sessionScope.customInfo.point }
-		                      		</p>
-											
-									<a href="javascript:logout();" data-nethru_clcode="A000012">로그아웃</a></li>
-								</c:otherwise>
-							</c:choose>
-							<li><a href="<%=cp%>/updateInfo.action">내정보수정</a></li>
-							<li><a href="generic.html">장바구니</a></li>
-							<li><a href="<%=cp%>/myOrder.action">주문내역</a></li>
-							<li><a href="<%=cp%>/heartStore.action">찜 목록</a></li>
-							<li><a href="<%=cp%>/myReview.action">마이 리뷰</a></li>
+							<li>
+								<font color="#F2849E">${sessionScope.customInfo.name }</font>님 환영합니다.
+								<p style="text-align: left">
+									전화번호 : ${sessionScope.customInfo.tel }</br> 포인트 :
+									${sessionScope.customInfo.point }
+								</p> 
+								<a href="logout.action" data-nethru_clcode="A000012">로그아웃</a>
+							</li>
+							<li><a href="updateInfo.action">내정보수정</a></li>
+							<li><a href="myPage.action">마이 페이지</a></li>
+							<li><a id="basket">장바구니</a></li>
 						</ul>
+						<form method="POST" action="" name="infoForm">
+							<div id="myInfo"></div>
+						</form>
 					</nav>
-				<!-- ----------------------------------------------------------------------------------------- -->	
-					<div class="nav-top clearfix"
-						ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
-						<a href="<%=cp%>/main.action" style="text-decoration: none;">
-							<img alt="" src="/eatswill/resources/img/icon3.png" width="125px" height="40px" style=" margin: 20px 10px;" >
-						</a>
-				<%-- 		<h1 class="logor pull-left" ng-click="<%=cp%>/main.action" ></h1>  --%><!-- 로고로고 -->
-						<div id="cart" class="pull-right">
-							<span class="gps-status ng-binding"
-								ng-show="check_show_location_button()"
-								ng-click="toggle_location_block()" ng-bind="current_location">서초동</span>
-							<a class="visible-xs" ng-show="check_show_location_button()"
-								ng-click="toggle_location_block()"> <span
-								class="ico-set-pic"></span>
-							</a> <a id="button-cart" href="" class="visible-xs ng-hide"
-								ng-click="click_cart_button()"
-								ng-show="check_show_cart_button()"> <span class="ico-cart"></span>
-								<span class="badge ng-binding"
-								ng-bind="global_cart.get_amount()">0</span>
-							</a>
-							<%-- <button type="button" class="btn btn-login ng-binding" 
-								ng-click="login()"
-								ng-bind-html="check_login() ? '로그아웃' : '로그인 <span>|</span> 회원가입'"
-								ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next"> --%>
-							
-							<c:choose>
-								<c:when test="${empty sessionScope.customInfo.id }">
-									<button type="button" class="btn btn-login ng-binding" style="width: 95px"
-									onclick="javascript:location.href='<%=cp %>/login.action';">로그인</button>
-									<button type="button" class="btn btn-login ng-binding" style="width: 95px"
-									onclick="javascript:location.href='<%=cp %>/signup.action';">회원가입</button>
-								</c:when>
-								<c:otherwise>
-									<button type="button" class="btn btn-login ng-binding" style="width: 150px"
-									onclick="javascript:location.href='<%=cp %>/logout.action';">로그아웃</button>
-								</c:otherwise>
-							</c:choose>
-
-							<!-- <button type="button"
-								class="btn btn-warning hidden-xs ng-binding"
-								ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
-								ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;" style="font-size: 1.2em;background-color: red;">주문표(0)</button> -->
-							<button type="button" class="btn btn-warning hidden-xs ng-binding" id="cartList" style="width: 150px;font-size: 1.2em;background-color: red"
-									onclick="javascript:location.href='<%=cp %>/logout.action';">주문표(0)</button>	
+				</c:when>
+			</c:choose>
+			<!-- ----------------------------------------------------------------------------------------- -->
+			<div class="nav-top clearfix"
+				ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
+				<a href="main.action" style="text-decoration: none;"><img
+					alt="" src="/eatswill/resources/img/icon3.png" width="125px"
+					height="40px" style="margin: 20px 10px;"></a>
+				<%--       <h1 class="logor pull-left" ng-click="<%=cp%>/main.action" ></h1>  --%>
+				<!-- 로고로고 -->
+				<div id="cart" class="pull-right">
+					<span class="gps-status ng-binding"
+						ng-show="check_show_location_button()"
+						ng-click="toggle_location_block()" ng-bind="current_location"></span>
+					<a class="visible-xs" ng-show="check_show_location_button()"
+						ng-click="toggle_location_block()"> <span
+						class="ico-set-pic"></span>
+					</a> <a id="button-cart" href="" class="visible-xs ng-hide"
+						ng-click="click_cart_button()"
+						ng-show="check_show_cart_button()"> <span class="ico-cart"></span>
+						<span class="badge ng-binding"
+						ng-bind="global_cart.get_amount()">0</span>
+					</a>
+					<form method="POST" action="" name="cartForm">
+						<%-- <button type="button" class="btn btn-login ng-binding" 
+						ng-click="login()"
+						ng-bind-html="check_login() ? '로그아웃' : '로그인 <span>|</span> 회원가입'"
+						ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next"> --%>
+		
+		
+		
+		
+						<!-- 상단 버튼 부분 ----------------------------------------------------------------------------->
+		
+						<c:choose>
+							<c:when test="${empty sessionScope.customInfo.id }">
+								<button type="button"
+									class="button button--ujarak button--border-thin button--text-thick"
+									style="width: 150px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 14.4px; font-weight: bold; 
+									font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
+									onclick="javascript:location.href='login.action';">로그인</button>
+								<button type="button"
+									class="button button--ujarak button--border-thin button--text-thick"
+									style="width: 150px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 14.4px; font-weight: bold;
+									font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
+									onclick="javascript:location.href='signup.action';">회원가입</button>
+							</c:when>
+							<c:otherwise>
+								<button type="button"
+									class="button button--ujarak button--border-thin button--text-thick"
+									style="width: 150px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 14.4px; font-weight: bold;
+									font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
+									onclick="javascript:location.href='logout.action';">로그아웃</button>
+									
+								<button type="button"
+									class="button button--ujarak button--border-thin button--text-thick"
+									id="cartList"
+									style="width: 150px; height: 38px; font-size: 14.4px; background-color: #FDCD8C; border-color: #FDCD8C; font-weight: bold;
+									font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';">주문표(0)</button>
+								<div id="cartInfo"></div>	
+							</c:otherwise>
+						</c:choose>
+		
+						<!-- <button type="button"
+						class="btn btn-warning hidden-xs ng-binding"
+						ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
+						ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;" style="font-size: 1.2em;background-color: red;">주문표(0)</button> -->
+		
 						
-						</div>
+					</form>
+		
+					<!--------------------------------------------------------------------------------------------------------------------------->
 					</div>
-				</div>				
+				</div>
 			</div>
 		</div>
-</div>
+	</div>
 
 <br><br>
    <div id="HeaderScriptContainer">
@@ -582,7 +620,7 @@ function sendIt() {
                   
                      <div class="btn-type2">
                      <img id="send" src="http://image.gmarket.co.kr/challenge/webzine_img/img_110617/btn/register.gif" alt="등록" border="0" onclick="javascript:sendIt();"/>
-                     <img src="http://image.gmarket.co.kr/challenge/webzine_img/img_110617/btn/cancel.gif" alt="취소" border="0" onclick="javascript:location.href='<%=cp%>/myOrder.action';">
+                     <img src="http://image.gmarket.co.kr/challenge/webzine_img/img_110617/btn/cancel.gif" alt="취소" border="0" onclick="javascript:location.href='<%=cp%>/myPage.action';">
                      </div>
                   </div>
                </div>
@@ -592,12 +630,72 @@ function sendIt() {
       </div>
    </div>
    
+   <!------------------------------------------------------------------------------------------------- -->
+	<div class="footer" style="background-color: #FDF5E6; display: block;">
+		<div class="footer-menu"></div>
+	
+		<!-- =========================================================================================== 하단끝 -->
+	
+		<div class="company-wrap">
+			<div class="company-logo"></div>
+			<div class="company-info">
+				<p>
+					<strong>(유) 윗츠윌 코리아 </strong>
+				</p>
+	
+			</div>
+		</div>
+	
+		<!-- ========================================================================= 하단 부분 -->
+	
+		<div class="service-info" style="font-family: '맑은고딕', malgun gothic,'돋움',Dotum,'Apple SD Gothic Neo',Helvetica,sans-serif;">
+			<div class="bpg">
+				<a href="#/trust/"><span class="img"></span><span class="text">잇츠윌<br>안심센터
+				</span></a>
+			</div>
+			<div class="cleanreview">
+				<a href="#/cleanreview/"><span class="img"></span><span
+					class="text">잇츠윌 100%<br>클린리뷰
+				</span></a>
+			</div>
+			<div class="csc">
+				<em>고객만족센터</em> <strong>1661-5270</strong> <span>24시간, 연중무휴</span>
+			</div>
+		</div>
+		<div class="guide">
+			<p style="color: #989898; font-size: 12px;">(유) 잇츠윌 코리아는 통신판매중개자이며 통신판매의 당사자가 아닙니다. 따라서 상품/ 거래정보 및 거래와
+				관련하여 잇츠윌에 등록된 판매자의 고의 또는 과실로 소비자에게 발생하는 손해에 대해 (유)잇츠윌 코리아는 책임을 지지
+				않습니다. 상품 및 거래에 관하여 보다 정확한 정보는 해당 판매자에게 직접 확인하여 주시기 바랍니다. Copyright
+				EATSWILL. All Rights Reserved.</p>
+		</div>
+	</div>
+   
    <!-- Scripts -->
-			<script src="/eatswill/resources/assets/js/jquery.min.js"></script>
-			<script src="/eatswill/resources/assets/js/skel.min.js"></script>
-			<script src="/eatswill/resources/assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="/eatswill/resources/assets/js/main.js"></script>
+	<script src="/eatswill/resources/assets/js/jquery.min.js"></script>
+	<script src="/eatswill/resources/assets/js/skel.min.js"></script>
+	<script src="/eatswill/resources/assets/js/util.js"></script>
+	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+	<script src="/eatswill/resources/assets/js/main.js"></script>
+	
+	<!-- 카카오톡 채팅 시작 -->
+	<div style="position: fixed; right: 10px; bottom: 10px;"
+		class="talk_image">
+		<a id="channel-chat-button" onclick="void chatChannel();">
+			<img src="/eatswill/resources/img/consult_small_yellow_pc1.png"
+			width="70" height="70" />
+		</a>
+		<script type="text/javascript">
+           // 웹 플랫폼 도메인 등 초기화한 앱의 설정이 그대로 적용됩니다.
+           // 초기화한 앱에 현재 도메인이 등록되지 않은 경우 에러가 발생합니다.
+           Kakao.init('c089c8172def97eb00c07217cae17495')
+           function chatChannel() {
+             Kakao.Channel.chat({
+               channelPublicId: '_Yfaxoxb',
+             })
+           }
+         </script>
+	</div>
+	<!-- 카카오톡 채팅 끝 -->
 
 
 </body>
