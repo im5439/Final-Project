@@ -122,9 +122,14 @@ ng\:form {
 	  	$(f).append($('<input/>', {type: 'hidden', name: 'searchKey', value: searchKey}));
 	  	$(f).append($('<input/>', {type: 'hidden', name: 'searchValue', value: searchValue}));
 	  	
+	  	if (cate!=null){
 	  	f.action="<%=cp %>/storeList.action?category=" + cate;
 	  	f.submit();
-	  
+	  	return;
+	  	}
+	  	
+	  	f.action="<%=cp %>/storeList.action";
+	  	f.submit();
   	}
 	
 	function addPage(){
@@ -167,8 +172,10 @@ ng\:form {
   	
   	function sendIt(sort){
   		
-  		location.href = sort;
+  		alert(sort);
   		
+  		document.myForm.action = "<%=cp%>/" + sort;
+  		document.myForm.submit();
   	}
   	
 	
@@ -471,7 +478,7 @@ ng\:form {
      
         <!--카테고리시작 -->
                            <li 
-                             onclick="select_category('')"><i
+                             onclick="select_category()"><i
                               class="category-icon ico-ct01"></i>
                               <span class="category-name ng-binding">전체보기</span></li>
                               
@@ -542,16 +549,27 @@ ng\:form {
     
 <!-- ====================================================================================================================  카테고리 끝 -->    
     
-      <div class="list-option" style="margin-left: 50%;">
+      <div class="list-option">
                <div class="list-option-inner">
                <form action="" method="post" name="myForm">
                   <select name="sort" onchange="sendIt(this.value)">
+                  <c:if test="${!empty category }">
+           			 <option value="storeList.action" >전체</option>
+                     <option value="storeList.action?category=${category }" >매장 이름 순</option>
+                     <option value="orderByRes.action?category=${category }" >별점순</option>
+                     <option value="orderByRe.action?category=${category }">리뷰 많은순</option>
+                     <option value="orderByO.action?category=${category }" >주문수</option>
+                  </c:if>
+                  <c:if test="${empty category }">
            			 <option value="storeList.action" >전체</option>
                      <option value="storeList.action" >매장 이름 순</option>
                      <option value="orderByRes.action" >별점순</option>
                      <option value="orderByRe.action">리뷰 많은순</option>
                      <option value="orderByO.action" >주문수</option>
+                  </c:if>
                   </select> <i class="arr-down"></i>
+                  <input type="hidden" value="${searchKey }" name="searchKey"/>
+                  <input type="hidden" value="${searchValue }" name="searchValue"/>
                   </form>
                </div>
             </div>

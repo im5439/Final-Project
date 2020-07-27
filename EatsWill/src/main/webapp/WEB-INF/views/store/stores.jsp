@@ -54,7 +54,7 @@
                                              <span> <span class="ico-star1 ng-binding"
                                                 ng-show="별점">${dto.reScore }</span>
                                              </span> <span class="review_num ng-binding" ng-show="리뷰갯수">
-                                                리뷰 갯 </span> <span class="review_num ng-binding"
+                                                리뷰 수(${dto.reCount }) </span> <span class="review_num ng-binding"
                                                 ng-show="사장님 답글"> 사장님댓글 갯 </span> <span
                                                 class="review_num ng-binding" ng-show="storecreated"
                                                 id="shopcreated"> 오픈일 ${dto.shopCreated } </span> <span

@@ -524,7 +524,7 @@ public class StoreController {
 			
 			
 			
-			int shopCount = dao.shopCount(category);
+			int shopCount = dao.shopCount(category,(searchKey + searchValue));
 
 			String articleUrl = cp + "/page.action" ;
 
@@ -540,7 +540,7 @@ public class StoreController {
 		}
 	//리뷰순 정렬
 		@RequestMapping(value="/orderByRe.action", method = {RequestMethod.GET,RequestMethod.POST})
-		public String orderByRe(HttpServletRequest request,StoreDTO dto) throws Exception{
+		public String orderByRe(HttpServletRequest request,StoreDTO dto ,String searchKey ,String searchValue) throws Exception{
 
 			System.out.println("orderByRe 들어옴");
 			String cp = request.getContextPath();
@@ -558,13 +558,15 @@ public class StoreController {
 			String articleUrl = 
 					cp + "/page.action" ;
 
-			int shopCount = dao.shopCount(category);
+			int shopCount = dao.shopCount(category,(searchKey + searchValue));
 			
 			
 			request.setAttribute("shopCount", shopCount);
 			request.setAttribute("category", category);
 			request.setAttribute("articleUrl",articleUrl);
 			request.setAttribute("sortMode",sortMode);
+			request.setAttribute("searchKey",searchKey);
+			request.setAttribute("searchValue",searchValue);
 			
 
 			return "store/storeList";
@@ -573,7 +575,7 @@ public class StoreController {
 		
 		//주문순 정렬
 		@RequestMapping(value="/orderByO.action", method = {RequestMethod.GET,RequestMethod.POST})
-		public String orderByO(HttpServletRequest request,StoreDTO dto) throws Exception{
+		public String orderByO(HttpServletRequest request,StoreDTO dto,String searchKey ,String searchValue) throws Exception{
 
 			System.out.println("orderByO 들어옴");
 			String cp = request.getContextPath();
@@ -590,20 +592,22 @@ public class StoreController {
 					cp + "/page.action" ;
 
 			
-			int shopCount = dao.shopCount(category);
+			int shopCount = dao.shopCount(category,(searchKey + searchValue));
 			
 			request.setAttribute("sortMode", sortMode);
 			request.setAttribute("shopCount", shopCount);
 			request.setAttribute("articleUrl",articleUrl);
 			request.setAttribute("category", category);
-
+			request.setAttribute("searchKey",searchKey);
+			request.setAttribute("searchValue",searchValue);
+			
 			return "store/storeList";
 
 		}
 
 		//별점순 정렬
 		@RequestMapping(value="/orderByRes.action", method = {RequestMethod.GET,RequestMethod.POST})
-		public String orderByRes(HttpServletRequest request,StoreDTO dto) throws Exception{
+		public String orderByRes(HttpServletRequest request,StoreDTO dto,String searchKey ,String searchValue) throws Exception{
 
 			System.out.println("orderByRes 들어옴");
 			String cp = request.getContextPath();
@@ -620,12 +624,14 @@ public class StoreController {
 					cp + "/page.action" ;
 
 			
-			int shopCount = dao.shopCount(category);
+			int shopCount = dao.shopCount(category,(searchKey + searchValue));
 			
 			request.setAttribute("sortMode", sortMode);
 			request.setAttribute("shopCount", shopCount);
 			request.setAttribute("category", category);
 			request.setAttribute("articleUrl",articleUrl);
+			request.setAttribute("searchKey",searchKey);
+			request.setAttribute("searchValue",searchValue);
 
 			return "store/storeList";
 

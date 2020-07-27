@@ -88,10 +88,9 @@
 			
 			},
 			error:function(e){
-				alert(e.responseText);
+				alert('이미 신고하셨습니다!');
 			}
 		});
-		
 				
 			}
 

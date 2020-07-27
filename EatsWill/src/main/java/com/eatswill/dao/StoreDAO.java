@@ -250,10 +250,11 @@ public class StoreDAO {
 	}
 
 	//음식점 카운트(category별)
-	public int shopCount(String category ) {
+	public int shopCount(String category ,String search ) {
 
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("category", category);
+		map.put("search", search);
 		int shopCount = sessionTemplate.selectOne("storeMapper.shopCount",map);
 
 		return shopCount;

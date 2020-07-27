@@ -142,7 +142,7 @@ group by c.shopCode,c.sideMenuCode,s.shopName,m.menuName
 
 <!-- 검색된거나 카테고리로 구분된 shop의 수 카테고리로 검색했을때 -->
 <select resultType="int" parameterType="hashMap" id="shopCount">
-select nvl(count(*),0) from shop where category Like '%' || #{category} || '%' 
+	select nvl(count(*),0) from shop where category Like '%' || #{category} || '%' and replace(shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%' 
 </select>
 
 <!-- 검색된거나 카테고리로 구분된 shop의 수 카테고리 검색 안했을때 -->
@@ -150,10 +150,11 @@ select nvl(count(*),0) from shop where category Like '%' || #{category} || '%'
 
 <!-- 음식점 리스트 페이징 (start,end) ,카테고리는 where 절에 조건 추가해줘야함 -->
 <select resultType="com.eatswill.dto.StoreDTO" parameterType="hashMap" id="shopPaging">
-select * from (
-	select rownum rnum, data.* from (select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,re.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated 
-	from shop s, (select avg(reScore) reScore,shopCode from review group by shopCode) re where category Like '%'||#{category}||'%' and s.shopCode=re.shopCode(+) 
-	and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%' order by s.shopname) data)
+	select * from (
+	select rownum rnum, data.* from (
+	select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,re.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated, r.reCount
+	from shop s, (select avg(reScore) reScore,shopCode from review group by shopCode) re , (select nvl(count(*),0) reCount,shopCode from review group by shopCode) r
+	where category Like '%'||#{category}||'%' and s.shopCode=re.shopCode(+) and s.shopCode=r.shopCode(+) and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%' order by s.shopname) data) 
 <![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
 	]]>
@@ -173,26 +174,28 @@ select * from (
 	order by shopname desc
 </select>
 
+
+
+
 <!-- 음식점 리스트 (리뷰순 정렬) -->
 <select resultType="com.eatswill.dto.StoreDTO" parameterType="hashMap" id="orderByRe">
-select * from (select rownum rnum, data.* from (
-	select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,re.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated 
-	from shop s, (select nvl(count(*),0) reCount, avg(reScore) reScore,shopCode from review group by shopCode) re 
-	where category Like '%' || #{category} || '%' and s.shopCode = re.shopCode(+) 
-	and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%' order by re.reCount) data)
+	select * from (
+	select rownum rnum, data.* from (
+	select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,re.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated, r.reCount 
+	from shop s, (select nvl(count(*),0) reCount, avg(reScore) reScore,shopCode from review group by shopCode) re , (select nvl(count(*),0) reCount,shopCode from review group by shopCode order by reCount desc) r
+	where category Like '%' || #{category} || '%' and s.shopCode = re.shopCode(+) and s.shopCode = r.shopCode(+)and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%') data) 
 <![CDATA[ 
-where rnum>=#{start} and rnum<=#{end}
+	where rnum>=#{start} and rnum<=#{end}
 ]]>
 </select>
 
 <!-- 음식점 리스트 (주문순 정렬) -->
 <select resultType="com.eatswill.dto.StoreDTO" parameterType="hashMap" id="orderByO">
-select * from (
+	select * from (
 	select rownum rnum, data.* from (
-		select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,re.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated 
-		from shop s,(select nvl(count(*),0) orderCount,shopCode from ordermain group by shopCode) o , (select avg(reScore) reScore,shopCode from review group by shopCode) re 
-	where category Like '%' || #{category} || '%' and s.shopcode=o.shopCode(+) and s.shopCode = re.shopCode(+) 
-	and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%' order by o.orderCount) data)
+	select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,re.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated, r.reCount, o.orderCount
+	from shop s,(select nvl(count(*),0) orderCount,shopCode from ordermain group by shopCode order by orderCount) o , (select avg(reScore) reScore,shopCode from review group by shopCode) re ,(select nvl(count(*),0) reCount,shopCode from review group by shopCode order by reCount desc) r
+	where category Like '%' || #{category} || '%' and s.shopcode=o.shopCode(+) and s.shopCode = re.shopCode(+) and s.shopCode = r.shopCode(+)and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%' ) data) 
 <![CDATA[ 
 	where rnum>=#{start} and rnum<=#{end}
 ]]>
@@ -201,16 +204,14 @@ select * from (
 <!-- 음식점 리스트 (별점순 정렬) -->
 <select resultType="com.eatswill.dto.StoreDTO" parameterType="hashMap" id="orderByRes">
 select * from (
-	select rownum rnum, data.* from (
-		select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,res.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated 
-		from shop s,(select avg(reScore) reScore,shopCode from review group by shopCode) res 
-	where category Like '%' || #{category} || '%' and s.shopcode=res.shopCode(+) 
-	and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%' order by res.rescore) data) 
+select rownum rnum, data.* from (
+select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,res.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated,r.reCount
+from shop s,(select avg(reScore) reScore,shopCode from review group by shopCode) res ,(select nvl(count(*),0) reCount,shopCode from review group by shopCode) r
+where category Like '%' || #{category} || '%' and s.shopcode=res.shopCode(+) and s.shopCode = r.shopCode(+)and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%') data) 
 <![CDATA[ 
 	where rnum>=#{start} and rnum<=#{end}
 ]]>
 </select>
-
 
 
 
@@ -264,4 +265,5 @@ update custom set userPoint=userPoint+
 	select * from (select orderCode,orderDate from (select rownum rnum,orderCode,orderDate from 
 	(select orderCode,orderDate from ordermain where userId=#{userId} order by orderDate desc)) where rnum='1')
 </select>
+
 </mapper>

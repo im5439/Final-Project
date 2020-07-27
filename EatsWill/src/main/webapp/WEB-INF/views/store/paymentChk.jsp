@@ -451,10 +451,6 @@ ng\:form {
 			</div>
 		</div>
 
-
-
-
-
 		<div id="quick-btn" class="hide-btn">
 			<a ng-click="click_cart_button()" id="button-cart-btm" href=""
 				class="btn-cart ng-hide" ng-show="check_show_cart_button('quick')"><span
