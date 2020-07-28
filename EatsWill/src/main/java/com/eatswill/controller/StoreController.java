@@ -69,17 +69,23 @@ public class StoreController {
 		// userId session처리
 		HttpSession session = request.getSession();
 		CustomDTO dto = (CustomDTO) session.getAttribute("customInfo");
-		
+
 		Map<String, ?> reaMap = RequestContextUtils.getInputFlashMap(request);
 		if (reaMap != null) {
 			shopCode = (String)reaMap.get("shopCode");
 			ceoId = (String)reaMap.get("ceoId");
 			menuCode = (String)reaMap.get("menuCode");
 		}
-		
+
 		System.out.println("page shopCode==> " + shopCode);
 		System.out.println("page ceoId==> " + ceoId);
 		System.out.println("page menuCode==> " + menuCode);
+		
+		String searchKey = request.getParameter("searchKey");
+		String searchValue = request.getParameter("searchValue");
+		
+		System.out.println("searchKey==> " + searchKey);
+		System.out.println("searchValue==> " + searchValue);
 
 		if (dto == null || dto.equals("")) {
 			userId = "guest"; // 세션값이 없을때 guest로 임의의 아이디 부여
@@ -87,6 +93,8 @@ public class StoreController {
 			request.setAttribute("userId", userId);
 			request.setAttribute("shopCode", shopCode);
 			request.setAttribute("ceoId", ceoId);
+			request.setAttribute("searchKey", searchKey);
+			request.setAttribute("searchValue", searchValue);
 
 			return "store/storePage";
 		}
@@ -94,6 +102,8 @@ public class StoreController {
 		request.setAttribute("shopCode", shopCode);
 		request.setAttribute("ceoId", ceoId);
 		request.setAttribute("userId", dto.getId());
+		request.setAttribute("searchKey", searchKey);
+		request.setAttribute("searchValue", searchValue);
 
 		return "store/storePage";
 
@@ -329,7 +339,7 @@ public class StoreController {
 
 		listSideSu = lists1.size(); //매장의 메뉴의 사이드메뉴 개수
 		int listSideGroup = lists2.size(); //각 메뉴별 사이드메뉴들의 가격의 합이 나오는 리스트 개수
-		
+
 		System.out.println("listsu->" + listsu );
 		System.out.println("listSideSu->" + listSideSu );
 		System.out.println("listSideGroup->" + listSideGroup );
@@ -411,7 +421,7 @@ public class StoreController {
 
 		//주문하는 사이드 메뉴들의 총 금액 계산
 		for(int i=0;i<listSideSu;i++) {
-			
+
 			priceSideAmount += lists1.get(i).getcAmount();
 			System.out.println("side Amount--> " + priceSideAmount);
 
@@ -503,139 +513,139 @@ public class StoreController {
 	}
 
 	//음식점 리스트 출력
-		@RequestMapping(value="/storeList.action", method = {RequestMethod.GET,RequestMethod.POST})
-		public String list(HttpServletRequest request,StoreDTO dto, String searchKey, String searchValue) throws Exception{
+	@RequestMapping(value="/storeList.action", method = {RequestMethod.GET,RequestMethod.POST})
+	public String list(HttpServletRequest request,StoreDTO dto, String searchKey, String searchValue) throws Exception{
 
-			System.out.println("storeList 들어옴");
-			
-			String cp = request.getContextPath();
-			
-			String category = request.getParameter("category");
-			String sortMode = request.getParameter("sortMode");
-			
-			if(category ==null || category.equals("")) {
-				sortMode="";
-			}
-			
-			if(category ==null || category.equals("")) {
-				category="";
-			}
-			System.out.println("category=" + category);
-			
-			
-			
-			int shopCount = dao.shopCount(category,(searchKey + searchValue));
+		System.out.println("storeList 들어옴");
 
-			String articleUrl = cp + "/page.action" ;
+		String cp = request.getContextPath();
 
-			request.setAttribute("shopCount", shopCount);
-			request.setAttribute("articleUrl",articleUrl);
-			request.setAttribute("category", category);
-			request.setAttribute("sortMode",sortMode);
-			request.setAttribute("searchKey",searchKey);
-			request.setAttribute("searchValue",searchValue);
+		String category = request.getParameter("category");
+		String sortMode = request.getParameter("sortMode");
 
-			return "store/storeList";
-
+		if(category ==null || category.equals("")) {
+			sortMode="";
 		}
+
+		if(category ==null || category.equals("")) {
+			category="";
+		}
+		System.out.println("category=" + category);
+
+
+
+		int shopCount = dao.shopCount(category,(searchKey + searchValue));
+
+		String articleUrl = cp + "/page.action" ;
+
+		request.setAttribute("shopCount", shopCount);
+		request.setAttribute("articleUrl",articleUrl);
+		request.setAttribute("category", category);
+		request.setAttribute("sortMode",sortMode);
+		request.setAttribute("searchKey",searchKey);
+		request.setAttribute("searchValue",searchValue);
+
+		return "store/storeList";
+
+	}
 	//리뷰순 정렬
-		@RequestMapping(value="/orderByRe.action", method = {RequestMethod.GET,RequestMethod.POST})
-		public String orderByRe(HttpServletRequest request,StoreDTO dto ,String searchKey ,String searchValue) throws Exception{
+	@RequestMapping(value="/orderByRe.action", method = {RequestMethod.GET,RequestMethod.POST})
+	public String orderByRe(HttpServletRequest request,StoreDTO dto ,String searchKey ,String searchValue) throws Exception{
 
-			System.out.println("orderByRe 들어옴");
-			String cp = request.getContextPath();
-			
-			String category = request.getParameter("category");
-			String sortMode = "orderByRe";
-			
-			if(category ==null || category.equals("")) {
-				category="";
-			}
-			System.out.println("category=" + category);
+		System.out.println("orderByRe 들어옴");
+		String cp = request.getContextPath();
 
-			
+		String category = request.getParameter("category");
+		String sortMode = "orderByRe";
 
-			String articleUrl = 
-					cp + "/page.action" ;
-
-			int shopCount = dao.shopCount(category,(searchKey + searchValue));
-			
-			
-			request.setAttribute("shopCount", shopCount);
-			request.setAttribute("category", category);
-			request.setAttribute("articleUrl",articleUrl);
-			request.setAttribute("sortMode",sortMode);
-			request.setAttribute("searchKey",searchKey);
-			request.setAttribute("searchValue",searchValue);
-			
-
-			return "store/storeList";
-
+		if(category ==null || category.equals("")) {
+			category="";
 		}
-		
-		//주문순 정렬
-		@RequestMapping(value="/orderByO.action", method = {RequestMethod.GET,RequestMethod.POST})
-		public String orderByO(HttpServletRequest request,StoreDTO dto,String searchKey ,String searchValue) throws Exception{
+		System.out.println("category=" + category);
 
-			System.out.println("orderByO 들어옴");
-			String cp = request.getContextPath();
-			String category = request.getParameter("category");
-			String sortMode = "orderByO";
-			
-			if(category ==null || category.equals("")) {
-				category="";
-			}
-			System.out.println("category=" + category);
 
-			
-			String articleUrl = 
-					cp + "/page.action" ;
 
-			
-			int shopCount = dao.shopCount(category,(searchKey + searchValue));
-			
-			request.setAttribute("sortMode", sortMode);
-			request.setAttribute("shopCount", shopCount);
-			request.setAttribute("articleUrl",articleUrl);
-			request.setAttribute("category", category);
-			request.setAttribute("searchKey",searchKey);
-			request.setAttribute("searchValue",searchValue);
-			
-			return "store/storeList";
+		String articleUrl = 
+				cp + "/page.action" ;
 
+		int shopCount = dao.shopCount(category,(searchKey + searchValue));
+
+
+		request.setAttribute("shopCount", shopCount);
+		request.setAttribute("category", category);
+		request.setAttribute("articleUrl",articleUrl);
+		request.setAttribute("sortMode",sortMode);
+		request.setAttribute("searchKey",searchKey);
+		request.setAttribute("searchValue",searchValue);
+
+
+		return "store/storeList";
+
+	}
+
+	//주문순 정렬
+	@RequestMapping(value="/orderByO.action", method = {RequestMethod.GET,RequestMethod.POST})
+	public String orderByO(HttpServletRequest request,StoreDTO dto,String searchKey ,String searchValue) throws Exception{
+
+		System.out.println("orderByO 들어옴");
+		String cp = request.getContextPath();
+		String category = request.getParameter("category");
+		String sortMode = "orderByO";
+
+		if(category ==null || category.equals("")) {
+			category="";
 		}
-
-		//별점순 정렬
-		@RequestMapping(value="/orderByRes.action", method = {RequestMethod.GET,RequestMethod.POST})
-		public String orderByRes(HttpServletRequest request,StoreDTO dto,String searchKey ,String searchValue) throws Exception{
-
-			System.out.println("orderByRes 들어옴");
-			String cp = request.getContextPath();
-			String category = request.getParameter("category");
-			String sortMode = "orderByRes";
-			
-			if(category ==null || category.equals("")) {
-				category="";
-			}
-			System.out.println("category=" + category);
+		System.out.println("category=" + category);
 
 
-			String articleUrl = 
-					cp + "/page.action" ;
+		String articleUrl = 
+				cp + "/page.action" ;
 
-			
-			int shopCount = dao.shopCount(category,(searchKey + searchValue));
-			
-			request.setAttribute("sortMode", sortMode);
-			request.setAttribute("shopCount", shopCount);
-			request.setAttribute("category", category);
-			request.setAttribute("articleUrl",articleUrl);
-			request.setAttribute("searchKey",searchKey);
-			request.setAttribute("searchValue",searchValue);
 
-			return "store/storeList";
+		int shopCount = dao.shopCount(category,(searchKey + searchValue));
 
+		request.setAttribute("sortMode", sortMode);
+		request.setAttribute("shopCount", shopCount);
+		request.setAttribute("articleUrl",articleUrl);
+		request.setAttribute("category", category);
+		request.setAttribute("searchKey",searchKey);
+		request.setAttribute("searchValue",searchValue);
+
+		return "store/storeList";
+
+	}
+
+	//별점순 정렬
+	@RequestMapping(value="/orderByRes.action", method = {RequestMethod.GET,RequestMethod.POST})
+	public String orderByRes(HttpServletRequest request,StoreDTO dto,String searchKey ,String searchValue) throws Exception{
+
+		System.out.println("orderByRes 들어옴");
+		String cp = request.getContextPath();
+		String category = request.getParameter("category");
+		String sortMode = "orderByRes";
+
+		if(category ==null || category.equals("")) {
+			category="";
 		}
+		System.out.println("category=" + category);
+
+
+		String articleUrl = 
+				cp + "/page.action" ;
+
+
+		int shopCount = dao.shopCount(category,(searchKey + searchValue));
+
+		request.setAttribute("sortMode", sortMode);
+		request.setAttribute("shopCount", shopCount);
+		request.setAttribute("category", category);
+		request.setAttribute("articleUrl",articleUrl);
+		request.setAttribute("searchKey",searchKey);
+		request.setAttribute("searchValue",searchValue);
+
+		return "store/storeList";
+
+	}
 
 	// 결제창
 	@RequestMapping(value = "/order", method = { RequestMethod.GET, RequestMethod.POST })
@@ -643,7 +653,7 @@ public class StoreController {
 
 		System.out.println("결제창 들어옴");
 		int priceAmount = 0;
-		
+
 		Map<String, ?> reaMap = RequestContextUtils.getInputFlashMap(request);
 		if (reaMap != null) {
 			priceAmount = (Integer) reaMap.get("priceAmount");
@@ -752,7 +762,7 @@ public class StoreController {
 				dao.updateQTY(dto1);
 			}
 		}
-		
+
 		rea.addFlashAttribute("priceAmount", priceAmount);
 
 		return "redirect:/order.action";
@@ -787,13 +797,25 @@ public class StoreController {
 
 		// 오더디테일 인서트
 		for (int i = 0; i < lists.size(); i++) {
-			
-	
+
+			StoreDTO dto2 = dao.selectOrderOne(dto1.getId());
+
+			if(dao.selectOrderDetail(dto2.getOrderCode(),lists.get(i).getSideMenuCode())!=null) {
+
+				dto.setoQty(lists.get(i).getcQty()); 
+				dto.setOrderCode(dto2.getOrderCode());
+
+				dao.updateOrderDetail(dto);
+
+			}else {
+
 
 			dto.setMenuCode(lists.get(i).getSideMenuCode());
 			dto.setoQty(lists.get(i).getcQty()); 
 
 			dao.insertOrderDetail(dto);
+			
+			}
 
 		}
 
@@ -834,82 +856,84 @@ public class StoreController {
 	//음식점 더보기로 출력 - ajax
 	@RequestMapping(value="/stores", method = {RequestMethod.GET,RequestMethod.POST})
 	public String stores(HttpServletRequest request,StoreDTO dto, String searchKey, String searchValue) throws Exception{
-		
+
 		System.out.println("stores.action 들어옴!");
 		System.out.println("searchKey: " + (searchKey+searchValue));
 		List<StoreDTO> page_lists =null;
-		
+
 		String cp = request.getContextPath();
-		
+
 		String category = request.getParameter("category");
 		System.out.println("category=" + category);
 		String sortMode = request.getParameter("sortMode");
 		System.out.println("sortMode=" + sortMode);
-		
+
 		if(category==null || category.equals("")) {
 			System.out.println("카테고리 아무것도 없음");
-			
+
 			category = "";
 		}
-		
+
 		//음식점 페이징 테스트로 하나의 페이지에 2개씩 보여줌
 		//페이징을 주고 버튼을 누를때마다 ajax로 페이지에서 값을 가져와서 보여줄 수 있도록
 		//더보기 버튼을 누를 때마다 내용물 출력
 		String pageNum = request.getParameter("pageNum");
-				
+
 		int currentPage = 1; 
-				
+
 		if(pageNum != null)
 			currentPage = Integer.parseInt(pageNum);
-		
+
 		int numPerPage =4; //한페이지의 음식점 수 , 실제로 데이터 많아지면 10개씩 
 		int shopCountall = dao.shopCountall();
 		int totalPage = myUtil.getPageCount(numPerPage, shopCountall);
-	
-		
+
+
 		if(currentPage > totalPage)
 			currentPage = totalPage;
-		
+
 		int start = (currentPage-1)*numPerPage+1;
 		int end = currentPage*numPerPage;
-		
-		
+
+
 		//if else 로 나누어서page_lists가 정렬순에 따른 카테고리로 나오도록 구분
 		if(sortMode.equals("orderByRe")) {//리뷰순
 			System.out.println("stores-if 안의 orderByRe");
 			page_lists = dao.orderByRe(start, end,category, (searchKey+searchValue));
-			
+
 		}
-		
+
 		if(sortMode.equals("orderByRes")){ 
 			System.out.println("stores-if 안의 orderByRes");
 			page_lists = dao.orderByRes(start, end,category, (searchKey+searchValue));
-			
+
 		}
-		
+
 		if(sortMode.equals("orderByO")) {
 			System.out.println("stores-if 안의 orderByO");
 			page_lists = dao.orderByO(start, end,category, (searchKey+searchValue));
 
 		}
-		
+
 		if(sortMode==null || sortMode.equals("")){
 			System.out.println("stores-if 안의 else");
 			page_lists = dao.shopPaging(start, end,category, (searchKey+searchValue));
-			
+
 		}
-		
-		
+
+
 		String pageIndexList = myUtil.pageIndexList(currentPage, totalPage, cp + "/stores.action");
 		String articleUrl = 
 				cp + "/page.action" ;
-		
+
 		request.setAttribute("page_lists",page_lists);
 		request.setAttribute("articleUrl",articleUrl);
 		request.setAttribute("pageIndexList",pageIndexList);
 		request.setAttribute("shopCountall",shopCountall);
+		request.setAttribute("pageNum", pageNum);
+		request.setAttribute("searchKey", searchKey);
+		request.setAttribute("searchValue", searchValue);
 
-		
 
 		return "store/stores";
 

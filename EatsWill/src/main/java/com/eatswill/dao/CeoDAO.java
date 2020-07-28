@@ -190,4 +190,17 @@ public class CeoDAO {
 		
 	}
 	
+	//매장별 메뉴 리스트
+	public List<CeoDTO> getMenuList1(String shopCode){
+		
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("shopCode", shopCode);
+		
+		
+		List<CeoDTO> lists = sessionTemplate.selectList("CeoMapper.getMenuList1", params);
+		
+		return lists;
+		
+	}
+	
 }

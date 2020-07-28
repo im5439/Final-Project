@@ -80,27 +80,69 @@
     		
     	}
      --%>
+
+     function deleteItem(btnIdx, pageNum ) {
+
+	    
+	    var params = "menuCode=" + $("#menuCode1" + btnIdx).val();
+	    params += "&shopCode=" + $("#shopCode").val();
+	    params += "&shopName=" + $("#shopName").val();
+	    params += "&pageNum=" + pageNum;
+
+	    	    
+	    alert('btnIdx====> ' + btnIdx);
+	    alert('params====> ' + params);
+
+	    console.log(params);
+	    
+	    $.ajax({
+	        type:"post",
+	        url:"<%=cp%>/deleteMenu.action",
+	        async: false,
+	        data:params,
+	        success: function(args){
+	        
+	           $("#menuItem").html(args);
+	        
+	        },
+	        error:function(e){
+	        	alert("실패하였습니다.");
+	          	console.log(request.status);
+	          	console.log(request.responseText);
+	          	console.log(error);
+	        }
+	        
+	     });
+	     
+	     return false;
+     }
      
-		function logout(){
+     
+ 	
+	function logout(){
     		
-    		var f = document.myForm;
+    	var f = document.myForm;
 			
-			f.action = "<%=cp%>/logout_ok.action";
-			f.submit();
-    		
-    	}
+		f.action = "<%=cp%>/logout_ok.action";
+		f.submit();
+    	
+	}
+	
+	
 		
 	$(function(){ 
 		
 		$(window).load(function(){
-			
+
+		
 			var count = parseInt("${menuCount}"/"${numPerPage}");
 			var pageNum = 1;
 			
 	        var params = "shopCode=" + $("#shopCode").val();
 	        params += "&shopName=" + $("#shopName").val();
+	        params += "&pageNum=" + "${currentPage}";
 	        
-	        console.log(params);
+	        alert(params);
 	        
 	        $.ajax({
 	            type:"post",
@@ -115,7 +157,7 @@
 	            	
 	            	if(count == (pageNum - 1)){
 						$("#review").hide();
-					}
+					} 
 		            
 	            },
 	            error:function(request, error){
@@ -127,9 +169,9 @@
 	          
 	        });
 	        return false;
+			
 		});
 		
-    	
 		$("#addMenu").click(function(){
 			
 			var formData = new FormData();
@@ -166,7 +208,9 @@
 		}); 
 		
 		function addPage(){
+			
 			index = Number(document.getElementById("nextNum").value) + 1;
+			
 			//document.getElementsById("#nextNum").value = idx;
 			//var index = index + 1;
 			document.getElementById("nextNum").value = Number(index);
@@ -184,9 +228,9 @@
 			var params = "shopCode=" + $("#shopCode").val();
 		        params += "&shopName=" + $("#shopName").val();
 		        params += "&pageNum=" + pageNum;
-		        console.log("pagenum:" + pageNum);
-		        console.log("count : " + count);
-		        console.log(params);
+		        alert("pagenum:" + pageNum);
+		        alert("count : " + count);
+		        alert(params);
 			
 			$.ajax({
 				url: "<%=cp%>/menuItem.action", 
@@ -195,13 +239,12 @@
 				type: 'POST',
 				success: function(args){ 
 					//console.log("args : " + args);
-					
+							
 					$("#menuItem").append(args);
 					
-					if(count == (pageNum - 1)){
+					if(pageNum  >= ("${menuCount}"/"${numPerPage}")){
 						$("#review").hide();
 					}
-					
 				},
 				error:function(e){
 	            	alert("실패하였습니다.");
@@ -214,53 +257,10 @@
 			
 			return false;
 		});
-		
-		
-		<%-- 
-		 $(window).on("scroll", function() {
-			 var scrollHeight = $(document).height();
-			var scrollPosition = $(window).height() + $(window).scrollTop();
-			// var scrollPosition = $(window).scrollTop();	
-			
-			$("#scrollHeight").text(scrollHeight);
-			$("#scrollPosition").text(scrollPosition);
-			$("#bottom").text(scrollHeight - scrollPosition);
-
-			if (scrollPosition > scrollHeight - 5000) {
-				var params = "shopCode=" + $("#shopCode").val();
-			        params += "&shopName=" + $("#shopName").val();
-			        params += "&pageNum=" + addPage();
-			        
-			        console.log(params);
-			        console.log("index : " + addPage());
-				
-				$.ajax({
-					url: "<%=cp%>/menuItem.action", 
-					beforeSend: addPage,
-					async: false,
-		            data: params,
-					type: 'POST',
-					success: function(args){ 
-						$("#menuItem").append(args);
-					},
-					error:function(e){
-		            	alert("실패하였습니다.");
-		            	console.log(request.status);
-		            	console.log(request.responseText);
-		            	console.log(error);
-		          }
-					
-				});
-			}
-			return false;
-		});
-		 --%>
-		
+	
 	});
 		
 </script>
-
-
 
 </head>
 <body>

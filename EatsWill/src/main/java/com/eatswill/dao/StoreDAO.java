@@ -264,13 +264,13 @@ public class StoreDAO {
 
 	//음식점 리스트 리뷰순 정렬
 	public List<StoreDTO> orderByRe(int start, int end, String category, String search){
-		
+
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("start", start);
 		map.put("end", end);
 		map.put("category", category);
 		map.put("search", search);
-		
+
 		List<StoreDTO> lists = 
 				sessionTemplate.selectList("storeMapper.orderByRe",map);
 
@@ -280,7 +280,7 @@ public class StoreDAO {
 
 	//음식점 리스트 주문순 정렬
 	public List<StoreDTO> orderByO(int start, int end, String category, String search){
-		
+
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("start", start);
 		map.put("end", end);
@@ -296,7 +296,7 @@ public class StoreDAO {
 
 	//음식점 리스트 별점순 정렬
 	public List<StoreDTO> orderByRes(int start, int end, String category, String search){
-		
+
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("start", start);
 		map.put("end", end);
@@ -364,6 +364,23 @@ public class StoreDAO {
 		StoreDTO dto = sessionTemplate.selectOne("storeMapper.selectOrderOne",userId);
 		return dto;
 
+	}
+
+	//오더디테일 셀렉트
+	public StoreDTO selectOrderDetail(String orderCode,String menuCode) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("orderCode", orderCode);
+		map.put("menuCode", menuCode);
+
+		StoreDTO dto =  sessionTemplate.selectOne("storeMapper.selectOrderDetail",map);
+		return dto;
+
+	}
+
+	//오더디테일 업데이트
+	public void updateOrderDetail(StoreDTO dto) {	
+		sessionTemplate.update("storeMapper.updateOrderDetail",dto);	
 	}
 
 

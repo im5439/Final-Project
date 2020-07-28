@@ -160,10 +160,8 @@ ng\:form {
 			$("#storeList").append(args);
 		});
 		
-		var btnCount = parseInt(shopCount/4); 
-		//btnCount : 총음식점수/한번에 보이는 음식점수 의 몫, 즉 마지막 음식점까지 나올 때까지의 버튼을 누른 횟수
-		//alert(btnCount);
-		if((index-1) >= btnCount){ // 처음나오는 페이지로부터 (listSize/4)+1 번째 페이지까지 나와야하는데 index가 1부터 들어와 -1을 해줌
+	
+		if(index >= (shopCount/4)){
 			$("#showNextShop").hide();
 		}
 			

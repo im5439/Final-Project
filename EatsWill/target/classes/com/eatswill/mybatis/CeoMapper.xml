@@ -116,5 +116,13 @@
 	where rnum>=#{start} and rnum<=#{end}
 	]]>
 </select>
+<!-- 메뉴개수별 데이터 불러오기 -->
+<select id="getMenuList1" parameterType="hashMap" resultType="com.eatswill.dto.CeoDTO">
+	select rnum, menuName, menuCode, menuPrice, menuImg, part from (
+	select rownum rnum, data.* from (
+	select menuName, menuCode, menuPrice, menuImg, part
+	from menu where shopCode = #{shopCode} order by rownum desc) data)
+
+</select>
 
 </mapper>

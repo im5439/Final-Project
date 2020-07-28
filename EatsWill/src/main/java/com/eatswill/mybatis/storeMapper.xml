@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 음식점 정보  -->
 <select id="shopInfo" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
 select s.shoptel,s.shopCode,s.shopname,s.shopImg,s.shopAddr,s.ceoid,c.CEONAME,a.CODENAME timeName, r.reScore
-from shop s, ceo c, common_code a, (select avg(reScore) reScore,shopCode from review group by shopCode) r
+from shop s, ceo c, common_code a, (select round(avg(reScore),1) reScore,shopCode from review group by shopCode) r
 where s.CEOID=c.CEOID and s.timeCODE=a.CODE and s.shopCode=r.shopCode(+) and s.CEOID=#{ceoId} and s.shopCode=#{shopCode}
 </select>
 
@@ -153,7 +153,7 @@ group by c.shopCode,c.sideMenuCode,s.shopName,m.menuName
 	select * from (
 	select rownum rnum, data.* from (
 	select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,re.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated, r.reCount
-	from shop s, (select avg(reScore) reScore,shopCode from review group by shopCode) re , (select nvl(count(*),0) reCount,shopCode from review group by shopCode) r
+	from shop s, (select round(avg(reScore),1) reScore,shopCode from review group by shopCode) re , (select nvl(count(*),0) reCount,shopCode from review group by shopCode) r
 	where category Like '%'||#{category}||'%' and s.shopCode=re.shopCode(+) and s.shopCode=r.shopCode(+) and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%' order by s.shopname) data) 
 <![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
@@ -182,7 +182,7 @@ group by c.shopCode,c.sideMenuCode,s.shopName,m.menuName
 	select * from (
 	select rownum rnum, data.* from (
 	select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,re.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated, r.reCount 
-	from shop s, (select nvl(count(*),0) reCount, avg(reScore) reScore,shopCode from review group by shopCode) re , (select nvl(count(*),0) reCount,shopCode from review group by shopCode order by reCount desc) r
+	from shop s, (select nvl(count(*),0) reCount, round(avg(reScore),1) reScore,shopCode from review group by shopCode) re , (select nvl(count(*),0) reCount,shopCode from review group by shopCode order by reCount desc) r
 	where category Like '%' || #{category} || '%' and s.shopCode = re.shopCode(+) and s.shopCode = r.shopCode(+)and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%') data) 
 <![CDATA[ 
 	where rnum>=#{start} and rnum<=#{end}
@@ -194,7 +194,7 @@ group by c.shopCode,c.sideMenuCode,s.shopName,m.menuName
 	select * from (
 	select rownum rnum, data.* from (
 	select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,re.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated, r.reCount, o.orderCount
-	from shop s,(select nvl(count(*),0) orderCount,shopCode from ordermain group by shopCode order by orderCount) o , (select avg(reScore) reScore,shopCode from review group by shopCode) re ,(select nvl(count(*),0) reCount,shopCode from review group by shopCode order by reCount desc) r
+	from shop s,(select nvl(count(*),0) orderCount,shopCode from ordermain group by shopCode order by orderCount) o , (select round(avg(reScore),1) reScore,shopCode from review group by shopCode) re ,(select nvl(count(*),0) reCount,shopCode from review group by shopCode order by reCount desc) r
 	where category Like '%' || #{category} || '%' and s.shopcode=o.shopCode(+) and s.shopCode = re.shopCode(+) and s.shopCode = r.shopCode(+)and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%' ) data) 
 <![CDATA[ 
 	where rnum>=#{start} and rnum<=#{end}
@@ -206,7 +206,7 @@ group by c.shopCode,c.sideMenuCode,s.shopName,m.menuName
 select * from (
 select rownum rnum, data.* from (
 select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,res.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated,r.reCount
-from shop s,(select avg(reScore) reScore,shopCode from review group by shopCode) res ,(select nvl(count(*),0) reCount,shopCode from review group by shopCode) r
+from shop s,(select round(avg(reScore),1) reScore,shopCode from review group by shopCode) res ,(select nvl(count(*),0) reCount,shopCode from review group by shopCode) r
 where category Like '%' || #{category} || '%' and s.shopcode=res.shopCode(+) and s.shopCode = r.shopCode(+)and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%') data) 
 <![CDATA[ 
 	where rnum>=#{start} and rnum<=#{end}
@@ -249,6 +249,11 @@ insert into orderdetail (orderCode,menuCode,oQty)
 values((select orderCode from (select rownum rnum,orderCode from (select orderCode,orderDate from ordermain where userId=#{userId} order by orderDate desc)) where rnum='1'),#{menuCode},#{oQty})
 </insert>
 
+<!-- 오더디테일 업데이트  -->
+<update id="updateOrderDetail" parameterType="com.eatswill.dto.StoreDTO">
+update orderDetail set oQty=oQty+#{oQty} where orderCode=#{orderCode}
+</update>
+
 <!-- 결제 후 포인트 차감  -->
 <update id="useUserPoint" parameterType="com.eatswill.dto.StoreDTO">
 update custom set userPoint=userPoint-#{userPoint} where userId=#{userId}
@@ -265,5 +270,12 @@ update custom set userPoint=userPoint+
 	select * from (select orderCode,orderDate from (select rownum rnum,orderCode,orderDate from 
 	(select orderCode,orderDate from ordermain where userId=#{userId} order by orderDate desc)) where rnum='1')
 </select>
+
+
+<!-- 오더디테일 조회  -->
+<select id="selectOrderDetail" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
+	select orderCode,menuCode,oQty from orderDetail where orderCode=#{orderCode} and menuCode=#{menuCode}
+</select>
+
 
 </mapper>

@@ -349,12 +349,16 @@ ng\:form {
  //카테검색
 	function select_category(cate){
 		
-	 	alert(cate);
-	 
 	  	var f = document.formCate;
 	  	
-	  	f.action="<%=cp %>/storeList.action?category=" + cate;
-	  	f.submit();
+	  	if (cate!=null){
+		  	f.action="<%=cp %>/storeList.action?category=" + cate;
+		  	f.submit();
+		  	return;
+		}
+		  	
+		f.action="<%=cp %>/storeList.action";
+		f.submit();
 	  
 	}
    
@@ -602,6 +606,9 @@ ng\:form {
   
   <!-- ------------------------------------------------------------------------------------------------- 리스트 상단 카테고리 -->
   <form action="" name="formCate" method="post">
+  <input type="hidden" name="searchKey" value="${searchKey }"/>
+  <input type="hidden" name="searchValue" value="${searchValue }"/>
+
   <div id="category" class="category-menu clearfix collapse in" aria-expanded="true">
     <ul>
 
@@ -609,7 +616,7 @@ ng\:form {
      
       <!--카테고리시작 -->
       
-      <li  onclick="select_category('');"><i class="category-icon ico-ct01"></i><span ng-bind="ct.title" class="category-name ng-binding">전체보기</span></li>
+      <li  onclick="select_category();"><i class="category-icon ico-ct01"></i><span ng-bind="ct.title" class="category-name ng-binding">전체보기</span></li>
       <li  onclick="select_category('kr')"><i class="category-icon ico-ct02"></i><span ng-bind="ct.title" class="category-name ng-binding">한식</span></li>
       <li  onclick="select_category('ch')"><i class="category-icon ico-ct03"></i><span ng-bind="ct.title" class="category-name ng-binding">중식</span></li>
       

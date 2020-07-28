@@ -12,11 +12,21 @@
 
 <link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
 <link rel="stylesheet" href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
+<script type="text/javascript">
+
+	function test(index){
+
+		$("#storeForm"+index ).submit();
+		
+	}
+
+
+</script>
 </head>
 <body>
 
-<form action="<%=cp %>/page.action" name="storesForm" method="post">
-<c:forEach var="dto" items="${page_lists}">
+
+<c:forEach var="dto" items="${page_lists}" varStatus="status">
                      <div class="col-sm-6 contract" ng-repeat="restaurant in list">
                         <div class="item clearfix"
                            ng-click="select_restaurant(restaurant, $index)"
@@ -44,11 +54,14 @@
 
                                           <div class="restaurant-name ng-binding"
                                              ng-bind="storename" id="storename" title="">
-                                             <a onclick="javascript:storesForm.submit();">
+                                             <a onclick="test(${status.index + ((pageNum-1)*4)});">
                                                 ${dto.shopName }</a>
-                                             <input type="hidden" name="shopCode" value="${dto.shopCode}">
-                                             <input type="hidden" name="ceoId" value="${dto.ceoId}">
-                           
+                                                <form action="<%=cp%>/page.action" method="post" id="storeForm${status.index + ((pageNum-1)*4)}">
+	                                             	<input type="hidden" name="shopCode" value="${dto.shopCode}">
+	                                             	<input type="hidden" name="ceoId" value="${dto.ceoId}">
+	                                             	<input type="hidden" name="searchKey" value="${searchKey }"/>
+	                                             	<input type="hidden" name="searchValue" value="${searchValue }"/>
+                           						</form>
                                           </div>
                                           <div class="stars">
                                              <span> <span class="ico-star1 ng-binding"
@@ -91,7 +104,7 @@
                      <!-- end ngRepeat: restaurant in list -->
                   </c:forEach>
 
-</form>
+
 
 
 </body>

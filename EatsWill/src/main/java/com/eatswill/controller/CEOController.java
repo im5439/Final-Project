@@ -493,13 +493,16 @@ public class CEOController {
 		
 		List<CeoDTO> menu = dao.getMenuList(shopCode, start, end);
 		
+		
 		System.out.println("메뉴총개수 : " + menuCount);
 		System.out.println("총페이지 : " + totalPage);
+		
 		
 		request.setAttribute("numPerPage", numPerPage);
 		request.setAttribute("currentPage", currentPage);
 		request.setAttribute("menu", menu);
 		request.setAttribute("menuCount",menuCount);
+
 		
 		return "CEO/addMenu";
 
@@ -531,6 +534,8 @@ public class CEOController {
 		//전체페이지수
 		int numPerPage = 4;
 		int totalPage = myUtil.getPageCount(numPerPage, menuCount);
+		System.out.println("totalPage : " + totalPage);
+		System.out.println("currentPage : " + currentPage);
 		
 		if(currentPage > totalPage)
 			currentPage = totalPage;
@@ -538,14 +543,22 @@ public class CEOController {
 		int start = (currentPage - 1 ) * numPerPage + 1;
 		int end = currentPage * numPerPage;
 		
+		//by hklee
+		if(currentPage > totalPage)	
+			end = totalPage * numPerPage;
+		
 		List<CeoDTO> menu = dao.getMenuList(shopCode, start, end);
 		
+		
 		request.setAttribute("numPerPage", numPerPage);
-		request.setAttribute("currentPage", currentPage);
 		request.setAttribute("shopCode", shopCode);
 		request.setAttribute("shopName", shopName);
 		request.setAttribute("menu", menu);
-		request.setAttribute("totalPage", totalPage);
+		request.setAttribute("totalPage", totalPage);		
+		if(currentPage > totalPage)		
+			request.setAttribute("currentPage", totalPage);
+		else
+			request.setAttribute("currentPage", currentPage);		
 		request.setAttribute("menuCount",menuCount);
 		
 		return "CEO/menuItem";
@@ -664,7 +677,11 @@ public class CEOController {
 		System.out.println("총페이지 : " + totalPage);
 		
 		request.setAttribute("numPerPage", numPerPage);
-		request.setAttribute("currentPage", currentPage);
+		request.setAttribute("totalPage", totalPage);		
+		if(currentPage > totalPage)		
+			request.setAttribute("currentPage", totalPage);
+		else
+			request.setAttribute("currentPage", currentPage);
 		request.setAttribute("menu", menu);
 		request.setAttribute("menuCount",menuCount);
 		
@@ -692,6 +709,8 @@ public class CEOController {
 		String pageNum = request.getParameter("pageNum");
 		System.out.println("pageNum : " + pageNum);
 		int currentPage = 1;
+		System.out.println("currentPage : " + currentPage);
+		
 		
 		if(pageNum != null)
 			currentPage = Integer.parseInt(pageNum);
@@ -706,13 +725,20 @@ public class CEOController {
 		if(currentPage > totalPage)
 			currentPage = totalPage;
 		
-		int start = (currentPage - 1 ) * numPerPage + 1;
+		int start = 1;
 		int end = currentPage * numPerPage;
+		//by hklee
+		if(currentPage > totalPage)	
+			end = totalPage * numPerPage;		
 		
 		List<CeoDTO> menu = dao.getMenuList(shopCode, start, end);
 		
 		request.setAttribute("menu", menu);
 		request.setAttribute("totalPage", totalPage);
+		if(currentPage > totalPage)		
+			request.setAttribute("currentPage", totalPage);
+		else
+			request.setAttribute("currentPage", currentPage);
 		request.setAttribute("menuCount",menuCount);
 		
 		return "CEO/menuItem";
