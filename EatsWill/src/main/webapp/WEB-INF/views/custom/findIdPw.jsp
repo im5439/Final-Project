@@ -403,7 +403,7 @@ ng\:form {
 </div-->
 	</div>
 	
-	  <div class="footer" style="background-color: #FBFBEF; display: block; padding-bottom: 160px;">
+	  <div class="footer" style="background-color: #FDF5E6; display: block; padding-bottom: 160px;">
 		<div class="footer-menu">
 		
 		</div>

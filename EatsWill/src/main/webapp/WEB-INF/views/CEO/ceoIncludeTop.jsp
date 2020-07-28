@@ -39,7 +39,7 @@
 				<i aria-hidden="true" class="icon-menu"> </i> Menu</button>					
 					<ul>
 						<li>
-							<a href="<%=cp %>/storeList.action?mode=orderChk">
+							<a href="<%=cp %>/ceoStoreList.action?mode=orderChk">
 								<span class="icon">
 									<i aria-hidden="true" class="icon-home"></i>
 								</span>
@@ -55,7 +55,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="<%=cp %>/storeList.action?mode=addMenu">
+							<a href="<%=cp %>/ceoStoreList.action?mode=addMenu">
 								<span class="icon">
 									<i aria-hidden="true" class="icon-portfolio"></i>
 								</span>
@@ -63,7 +63,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="<%=cp %>/storeList.action?mode=ceoReview">
+							<a href="<%=cp %>/ceoStoreList.action?mode=ceoReview">
 								<span class="icon">
 									<i aria-hidden="true" class="icon-blog"></i>
 								</span>

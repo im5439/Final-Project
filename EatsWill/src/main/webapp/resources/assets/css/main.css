@@ -1693,9 +1693,9 @@
 		font-style: italic;
 	}
 
-	p {
+	/* p {
 		margin: 0 0 2em 0;
-	}
+	} */
 
 	h1 {
 		font-size: 2.75em;
@@ -1849,9 +1849,9 @@
 		text-align: center;
 	}
 
-	 p {
+	/*  p {
 		margin-top: -1em;
-	}
+	} */
 
 	@media screen and (max-width: 736px) {
 

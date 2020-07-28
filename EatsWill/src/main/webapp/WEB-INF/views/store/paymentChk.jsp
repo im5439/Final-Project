@@ -451,10 +451,6 @@ ng\:form {
 			</div>
 		</div>
 
-
-
-
-
 		<div id="quick-btn" class="hide-btn">
 			<a ng-click="click_cart_button()" id="button-cart-btm" href=""
 				class="btn-cart ng-hide" ng-show="check_show_cart_button('quick')"><span
@@ -533,7 +529,7 @@ ng\:form {
 
 						<!-- 더보기 기능 -->
 						<li class="list-group-item btn-more" ng-show="check_more_review()" >
-							<a href="<%=cp%>/myOrder.action" >주문확인 바로가기</a>
+							<a href="<%=cp%>/myPage.action" >주문확인 바로가기</a>
 							
 						</li>
 					</ul>

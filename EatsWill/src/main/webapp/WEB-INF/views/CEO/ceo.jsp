@@ -102,10 +102,10 @@
 			<ul class="nav clearfix">
 				<li class="n1"><a href="<%=cp %>/orderChk.action" style="cursor: pointer">주문확인</a></li>
 				<li class="n2"><a href="<%=cp %>/addStore.action" style="cursor: pointer">매장관리</a></li>
-				<li class="n3"><a href="<%=cp %>/storeList.action" style="cursor: pointer">메뉴관리</a></li>
+				<li class="n3"><a href="<%=cp %>/ceoStoreList.action" style="cursor: pointer">메뉴관리</a></li>
 				<li class="n5"><a href="<%=cp %>/ceoReview.action" style="cursor: pointer">리뷰 관리</a></li>
 				<li class="n6"><a href="<%=cp %>/sales.action" style="cursor: pointer">매출관리</a></li>
-				<li class="n4"><a href="<%=cp %>/storeList.action" style="cursor: pointer">매장목록</a></li>
+				<li class="n4"><a href="<%=cp %>/ceoStoreList.action" style="cursor: pointer">매장목록</a></li>
 			</ul>
  		-->
 			<div class="mid clearfix">
@@ -196,7 +196,6 @@
 									</div>
 								</form>
 								<a href="<%=cp%>/ceoSignup.action"
-									onclick="ga_event_tracker('OWNER_AUTH', this, event)"
 									class="btn-own-auth">사장님 회원가입</a>
 
 								<p class="txt">

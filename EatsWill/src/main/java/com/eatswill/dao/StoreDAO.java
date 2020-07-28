@@ -215,22 +215,23 @@ public class StoreDAO {
 
 
 	//음식점 전체 리스트
-	public List<StoreDTO> shopList(String search){
+	public List<StoreDTO> shopList(){
 
 		List<StoreDTO> lists = 
-				sessionTemplate.selectList("storeMapper.shopList",search);
+				sessionTemplate.selectList("storeMapper.shopList");
 
 		return lists;
 
 	}
 
 	//음식점 리스트 페이징(start, end) + 카테고리
-	public List<StoreDTO> shopPaging(int start, int end, String category){
-
+	public List<StoreDTO> shopPaging(int start, int end, String category, String search){
+		System.out.println("search: " + search);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("start", start);
 		map.put("end", end);
 		map.put("category", category);
+		map.put("search", search);
 
 		List<StoreDTO> lists = 
 				sessionTemplate.selectList("storeMapper.shopPaging",map);
@@ -249,10 +250,11 @@ public class StoreDAO {
 	}
 
 	//음식점 카운트(category별)
-	public int shopCount(String category ) {
+	public int shopCount(String category ,String search ) {
 
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("category", category);
+		map.put("search", search);
 		int shopCount = sessionTemplate.selectOne("storeMapper.shopCount",map);
 
 		return shopCount;
@@ -261,13 +263,14 @@ public class StoreDAO {
 
 
 	//음식점 리스트 리뷰순 정렬
-	public List<StoreDTO> orderByRe(int start, int end, String category){
-		
+	public List<StoreDTO> orderByRe(int start, int end, String category, String search){
+
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("start", start);
 		map.put("end", end);
 		map.put("category", category);
-		
+		map.put("search", search);
+
 		List<StoreDTO> lists = 
 				sessionTemplate.selectList("storeMapper.orderByRe",map);
 
@@ -276,12 +279,13 @@ public class StoreDAO {
 	}
 
 	//음식점 리스트 주문순 정렬
-	public List<StoreDTO> orderByO(int start, int end, String category){
-		
+	public List<StoreDTO> orderByO(int start, int end, String category, String search){
+
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("start", start);
 		map.put("end", end);
 		map.put("category", category);
+		map.put("search", search);
 
 		List<StoreDTO> lists = 
 				sessionTemplate.selectList("storeMapper.orderByO",map);
@@ -291,12 +295,13 @@ public class StoreDAO {
 	}
 
 	//음식점 리스트 별점순 정렬
-	public List<StoreDTO> orderByRes(int start, int end, String category){
-		
+	public List<StoreDTO> orderByRes(int start, int end, String category, String search){
+
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("start", start);
 		map.put("end", end);
 		map.put("category", category);
+		map.put("search", search);
 
 		List<StoreDTO> lists = 
 				sessionTemplate.selectList("storeMapper.orderByRes",map);
@@ -359,6 +364,23 @@ public class StoreDAO {
 		StoreDTO dto = sessionTemplate.selectOne("storeMapper.selectOrderOne",userId);
 		return dto;
 
+	}
+
+	//오더디테일 셀렉트
+	public StoreDTO selectOrderDetail(String orderCode,String menuCode) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("orderCode", orderCode);
+		map.put("menuCode", menuCode);
+
+		StoreDTO dto =  sessionTemplate.selectOne("storeMapper.selectOrderDetail",map);
+		return dto;
+
+	}
+
+	//오더디테일 업데이트
+	public void updateOrderDetail(StoreDTO dto) {	
+		sessionTemplate.update("storeMapper.updateOrderDetail",dto);	
 	}
 
 

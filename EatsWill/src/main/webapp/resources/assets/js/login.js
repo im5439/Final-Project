@@ -277,6 +277,12 @@ $(function() {
 		cartList();
 	});
 	
+	$("#searchKey").show(function(){
+		if($('#searchKeyin').val() != null && $('#searchKeyin').val() != "") {
+			$('#searchKey').val($('#searchKeyin').val());
+		}
+	});
+	
 	$("#kakao-login-btn").show(function(){
 
 		// 사용할 앱의 JavaScript 키를 설정해 주세요.
@@ -286,7 +292,6 @@ $(function() {
 	   	Kakao.Auth.createLoginButton({
 	    	container: '#kakao-login-btn',
 	    	success: function(authObj) {
-	    		alert("A");
 	    		// 로그인 창을 매번 새로 띄웁니다.
 	     		Kakao.Auth.loginForm({
 	     			success: function(authObj) {
@@ -342,9 +347,9 @@ $(function() {
 		var f = document.findAddr;
 		var index = $(this).attr("index");
 		
-		$(f).append($('<input/>', {type: 'hidden', name: 'index', value: index}));
+		$(f).append($('<input/>', {type: 'hidden', name: 'category', value: index}));
 		
-		f.action = "storeList.action";
+		// f.action = "storeList.action";
 		f.submit();
 		
 	});

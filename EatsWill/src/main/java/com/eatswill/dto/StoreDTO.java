@@ -113,6 +113,7 @@ public class StoreDTO {
 	private int count;
 	private String ceoContent;
 	private int sidePrice;
+	private int reCount;
 	
 	public int getSidePrice() {
 		return sidePrice;
@@ -331,6 +332,12 @@ public class StoreDTO {
 	}
 	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
+	}
+	public int getReCount() {
+		return reCount;
+	}
+	public void setReCount(int reCount) {
+		this.reCount = reCount;
 	}
 	
 

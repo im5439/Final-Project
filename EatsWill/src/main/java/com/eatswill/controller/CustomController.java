@@ -40,6 +40,12 @@ public class CustomController {
 	@Autowired
 	private JavaMailSenderImpl mailSender;
 
+	// 테스트용
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String home() {
+		return "main2";
+	}
+
 	// 메인 페이지
 	@RequestMapping(value = "/main.action", method = RequestMethod.GET)
 	public String main(HttpServletRequest req, String message) {
@@ -107,7 +113,7 @@ public class CustomController {
 	}
 
 	// 로그인 페이지
-	@RequestMapping(value = "/login.action", method = RequestMethod.GET)
+	@RequestMapping(value = "/login.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String login(HttpServletRequest req, String message) {
 
 		if (message != null && !message.equals("")) {
