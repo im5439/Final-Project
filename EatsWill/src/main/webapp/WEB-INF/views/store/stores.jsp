@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -38,10 +39,9 @@
                                     <td>
                                        <!-- 이미지 storeimg 적용해야됨 -->
 
-                                       <div ng-show="restaurant|restaurant_is_available"
-                                          class="logo"
-                                          ng-style="{'background-image':'url(' + get_logo_url(restaurant.logo_url) + '), url(\'image/default_restaurant_logo.png\')'}"
-                                          style="background-image: url(), url();"></div>
+                                       <div class="logo">
+                                       		<img src="<spring:url value='/shopImg/${dto.shopImg }'/>" width="80px" height="80px" style="width: 70px;max-height: 70px;">
+                                       </div>
 
                                        <div ng-show="! (restaurant|restaurant_is_available)"
                                           class="logo not-available ng-binding ng-hide">

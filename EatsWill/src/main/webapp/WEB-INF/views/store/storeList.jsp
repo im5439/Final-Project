@@ -547,7 +547,7 @@ ng\:form {
     
 <!-- ====================================================================================================================  카테고리 끝 -->    
     
-      <div class="list-option">
+      <div class="list-option" style="margin-left: 50%;">
                <div class="list-option-inner">
                <form action="" method="post" name="myForm">
                   <select name="sort" onchange="sendIt(this.value)">

@@ -61,8 +61,8 @@ ORDER BY recreated desc
 
 <!-- 장바구니 인서트  -->
 <insert id="insertCart" parameterType="com.eatswill.dto.StoreDTO">
-	insert into cart (userId,menuCode,sideMenuCode,cQty,cAmount,shopCode) values
-	(#{userId},#{menuCode},#{sideMenuCode},#{cQty},#{cAmount},#{shopCode})
+	insert into cart (userId,menuCode,sideMenuCode,cQty,cAmount,shopCode,cartDate) values
+	(#{userId},#{menuCode},#{sideMenuCode},#{cQty},#{cAmount},#{shopCode},sysdate)
 </insert>
 
 <!-- 장바구니 업데이트(같은메뉴코드일시 수량과 가격만 변경)  -->
@@ -92,9 +92,9 @@ where c.shopCode=s.shopCode and c.sidemenuCode=m.menuCode and m.shopCode=s.SHOPC
 group by c.shopCode,c.sideMenuCode,s.shopName,m.menuName
 </select>
 <select id="selectCartMain" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
-	select c.menuCode,c.cAmount,c.cQty,c.userId,m.menuName,m.menuPrice
+	select c.menuCode,c.cAmount,c.cQty,c.cartDate,c.userId,m.menuName,m.menuPrice
 	from cart c, menu m
-	where c.menuCode=m.menuCode and c.menuCode=c.sideMenuCode and c.userId=#{userId}
+	where c.menuCode=m.menuCode and c.menuCode=c.sideMenuCode and c.userId=#{userId} order by cartDate desc
 </select>
 <select id="selectCartSide" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
 	select c.menuCode, c.sideMenuCode,c.cAmount,c.cQty,c.userId,m.menuName,m.menuPrice
@@ -213,11 +213,6 @@ where category Like '%' || #{category} || '%' and s.shopcode=res.shopCode(+) and
 ]]>
 </select>
 
-
-
-
-
-
 <!-- 결제창  -->
 <!-- 고객정보  -->
 <select id="selectOrderInfo" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
@@ -232,9 +227,10 @@ where c.shopCode=s.shopCode and userId=#{userId}
 
 <!-- order menuCode select  -->
 <select id="selectPreOrderDe" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
-	select c.menuCode, c.sideMenuCode,c.cAmount,c.cQty,c.userId,m.menuName,m.menuPrice
+	select c.sideMenuCode,sum(c.cQty) cQty
 	from cart c, menu m
 	where c.sideMenuCode=m.menuCode and c.userId=#{userId}
+	group by c.sideMenuCode
 </select>
 
 <!-- 오더메인 인서트  -->
@@ -251,7 +247,7 @@ values((select orderCode from (select rownum rnum,orderCode from (select orderCo
 
 <!-- 오더디테일 업데이트  -->
 <update id="updateOrderDetail" parameterType="com.eatswill.dto.StoreDTO">
-update orderDetail set oQty=oQty+#{oQty} where orderCode=#{orderCode}
+update orderDetail set oQty=oQty+#{oQty} where orderCode=#{orderCode} and menuCode=#{menuCode}
 </update>
 
 <!-- 결제 후 포인트 차감  -->
@@ -269,12 +265,6 @@ update custom set userPoint=userPoint+
 <select id="selectOrderOne" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
 	select * from (select orderCode,orderDate from (select rownum rnum,orderCode,orderDate from 
 	(select orderCode,orderDate from ordermain where userId=#{userId} order by orderDate desc)) where rnum='1')
-</select>
-
-
-<!-- 오더디테일 조회  -->
-<select id="selectOrderDetail" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
-	select orderCode,menuCode,oQty from orderDetail where orderCode=#{orderCode} and menuCode=#{menuCode}
 </select>
 
 

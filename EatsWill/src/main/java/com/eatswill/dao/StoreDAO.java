@@ -358,29 +358,12 @@ public class StoreDAO {
 		sessionTemplate.update("storeMapper.updateOrderPoint",userId);	
 	}
 
-	//결제후 결제금액 5프로 포인트 적립
+	//주문번호 조회
 	public StoreDTO selectOrderOne(String userId) {	
 
 		StoreDTO dto = sessionTemplate.selectOne("storeMapper.selectOrderOne",userId);
 		return dto;
 
-	}
-
-	//오더디테일 셀렉트
-	public StoreDTO selectOrderDetail(String orderCode,String menuCode) {
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("orderCode", orderCode);
-		map.put("menuCode", menuCode);
-
-		StoreDTO dto =  sessionTemplate.selectOne("storeMapper.selectOrderDetail",map);
-		return dto;
-
-	}
-
-	//오더디테일 업데이트
-	public void updateOrderDetail(StoreDTO dto) {	
-		sessionTemplate.update("storeMapper.updateOrderDetail",dto);	
 	}
 
 

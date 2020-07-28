@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%
    request.setCharacterEncoding("UTF-8");
    String cp = request.getContextPath();
@@ -99,7 +100,7 @@
                       <!-- 사진 -->
                       <td class="photo-area" ng-show="item.image">
                         <div>
-                        <img  src="resources/img/${dto.menuImg }" width="80px" height="80px" >
+                        <img src="<spring:url value='/menuImg/${dto.menuImg }'/>" width="80px" height="80px" >
                         </div>
                       </td>
                       

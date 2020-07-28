@@ -80,10 +80,10 @@ public class StoreController {
 		System.out.println("page shopCode==> " + shopCode);
 		System.out.println("page ceoId==> " + ceoId);
 		System.out.println("page menuCode==> " + menuCode);
-		
+
 		String searchKey = request.getParameter("searchKey");
 		String searchValue = request.getParameter("searchValue");
-		
+
 		System.out.println("searchKey==> " + searchKey);
 		System.out.println("searchValue==> " + searchValue);
 
@@ -798,24 +798,11 @@ public class StoreController {
 		// 오더디테일 인서트
 		for (int i = 0; i < lists.size(); i++) {
 
-			StoreDTO dto2 = dao.selectOrderOne(dto1.getId());
-
-			if(dao.selectOrderDetail(dto2.getOrderCode(),lists.get(i).getSideMenuCode())!=null) {
-
-				dto.setoQty(lists.get(i).getcQty()); 
-				dto.setOrderCode(dto2.getOrderCode());
-
-				dao.updateOrderDetail(dto);
-
-			}else {
-
-
 			dto.setMenuCode(lists.get(i).getSideMenuCode());
 			dto.setoQty(lists.get(i).getcQty()); 
 
 			dao.insertOrderDetail(dto);
-			
-			}
+
 
 		}
 

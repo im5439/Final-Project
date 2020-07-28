@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -51,8 +52,8 @@ $(document).ready(function(){
         <span class="restaurant-name ng-binding" ng-bind="restaurant.name"> ${dto.shopName}</span>
       </div>
       <div class="restaurant-content">
-        <div ng-show="restaurant|restaurant_is_open" class="logo" ng-style="{'background-image':'url(' + get_logo_url(restaurant.logo_url) + '), url(\'image/default_restaurant_logo.png\')'}" 
-        style="background-image: url(resources/img/${dto.shopImg});">
+        <div class="logo">
+        	<img src="<spring:url value='/shopImg/${dto.shopImg }'/>" width="80px" height="80px" >
         </div>
        
        <!-- --------------------------------------------------------------------------------------------------- list -->

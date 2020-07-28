@@ -23,20 +23,28 @@
     <link rel="stylesheet" type="text/css" href="https://owner.yogiyo.co.kr/media/owners/css/owners_new.css?v=587f2d4">
     <link href="https://owner.yogiyo.co.kr/media/compressed/owners_page_base.rffe6aa724bb156908393fab4f615e785.css" rel="stylesheet" type="text/css">
     
-    <!--[if lte IE 8]>
-      <link type="text/css" href="/media/owners/css/owners_ie.css" rel="stylesheet">
-      <script type="text/javascript">
-        window.is_IE8LTE = true;
-      </script>
-    <![endif]-->
-    <!--[if lt IE 9]><script src="/media/js/html5.js"></script><![endif]-->
-    <!--[if lte IE 9]>
-    <script type="text/javascript">
-      window.is_IE9LTE = true;
-    </script>
-    <![endif]-->
-    <!-- Google GA -->
-    <script type="text/javascript">
+<style type="text/css">
+
+	.control-group {
+		margin-bottom: 15px;
+	}
+	
+	.control-label {
+		position: absolute;
+	}
+	
+	.controls {
+		margin-left: 16%;
+	}
+	
+	 .control-text {
+	 	width: 40%;
+	 }
+
+</style>
+
+<!-- Google GA -->
+<script type="text/javascript">
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -52,10 +60,10 @@
         window.location.href = '/owner/login/?next_url=' + next_url;
         
     }
-    </script>
+</script>
 
-    <!-- //Google GA -->
-    <script>
+<!-- //Google GA -->
+<script>
         try {
             var sc = document.cookie.match(/(?:(?:^|.*;\s*)sessionid\s*\=\s*([^;]*).*$)|^.*$/);
             if (sc.length > 1 && sc[1]) {
@@ -92,72 +100,75 @@
 
 </script>    
 
+<div id="nav" class="own-header">
+	<div class="clearfix">
+		<h1>
+			<a href="<%=cp%>/CEO.action/">사장님 사이트</a>
+		</h1>
+		<!-- 
+		<ul class="nav">
+			<li class="n1 "><a nohref=""
+				onclick="javascript:alert('로그인 후 이용하실 수 있습니다.'); window.location.href='/owner/login/?next_url=/owner/orders/'"
+				style="cursor: pointer">내 업소 관리</a></li>
+			<li class="n2 "><a href="/owner/benefit/restaurant/">사장님 혜택</a></li>
+			<li class="n3 "><a href="/owner/join/intro/">입점 안내</a></li>
+		</ul>
+			-->
+		<ul class="ext">
+			<li class="outlink"><a href="https://boss.yogiyo.co.kr/"
+				target="_blank"></a></li>
+		</ul>
+		
+	</div>
+</div>
 
-<div class="rd-wrapper contact-wrapper">
+<div class="rd-wrapper contact-wrapper" style="margin: 8% 28% 9.5% 22%;text-align: center;">
     
     <form class="form-horizontal form-signin" method="POST" action="" name="myForm">
-      <div class="registration-wrap">
+      <div class="registration-wrap" style="text-align: left;">
     
-<div class="control-group">
-    
-        <div class="control-label">사업자번호</div>
-
-        <div class="controls">
-            <input type="text" name="company_number" id="id_company_number"><span class="alert-text">"-" 포함하고 입력 필요. ex) 111-11-11111</span>
-        </div>
-    
-</div>
-    
-<div class="control-group">
-    
-        <div class="control-label">아이디</div>
-
-        <div class="controls">
-            <input type="text" name="ceoId" id="id_phone_number"><span class="alert-text">"-" 제외하고 입력 필요. ex) 0101234567</span>
-        </div>
-    
-</div>
-
-<div class="control-group">
-    
-        <div class="control-label">비밀번호</div>
-
-        <div class="controls">
-            <input type="password" name="ceoPw" id="id_phone_number"><span class="alert-text">"-" 제외하고 입력 필요. ex) 0101234567</span>
-        </div>
-    
-</div>
-
-<div class="control-group">
-    
-        <div class="control-label">비밀번호확인</div>
-
-        <div class="controls">
-            <input type="password" name="" id="id_phone_number"><span class="alert-text">"-" 제외하고 입력 필요. ex) 0101234567</span>
-        </div>
-    
-</div>
-
-<div class="control-group">
-    
-        <div class="control-label">이름</div>
-
-        <div class="controls">
-            <input type="text" name="ceoName" id="id_phone_number"><span class="alert-text">"-" 제외하고 입력 필요. ex) 0101234567</span>
-        </div>
-    
-</div>
-
-<div class="control-group">
-    
-        <div class="control-label">이메일</div>
-
-        <div class="controls">
-            <input type="text" name="ceoEmail" id="id_phone_number"><span class="alert-text">"-" 제외하고 입력 필요. ex) 0101234567</span>
-        </div>
-    
-</div>
-
+		<div class="control-group">
+			<div class="control-label">사업자번호</div>
+			<div class="controls">
+				<input type="text" name="company_number" id="id_company_number" class="control-text">
+				<span class="alert-text">"-" 포함하고 입력 필요. ex) 111-11-11111</span>
+			</div>    
+		</div>
+		    
+		<div class="control-group">  
+			<div class="control-label">아이디</div>
+		    <div class="controls">	
+		    	<input type="text" name="ceoId" id="id_phone_number" class="control-text">
+		    </div>
+		</div>
+		
+		<div class="control-group">
+			<div class="control-label">패스워드</div>
+			<div class="controls">
+				<input type="password" name="ceoPw" id="id_phone_number" class="control-text">
+		    </div>
+		</div>
+		
+		<div class="control-group">
+			<div class="control-label">비밀번호확인</div>
+			<div class="controls">
+	            <input type="password" name="" id="id_phone_number" class="control-text">
+	        </div>
+		</div>
+		
+		<div class="control-group"> 
+		  	<div class="control-label">이름</div>
+		    <div class="controls">	
+		    	<input type="text" name="ceoName" id="id_phone_number" class="control-text">
+		    </div>
+		</div>
+		
+		<div class="control-group">
+			<div class="control-label">이메일</div>
+			<div class="controls">
+				<input type="text" name="ceoEmail" id="id_phone_number" class="control-text">
+		  	</div>
+		</div>
       
       </div>
 
@@ -171,73 +182,11 @@
 
     </form>
       <div class="btn-wrapper">
-        <button type="submit" name="contact_yogiyo" class="btn" onclick="sendIt();">다음</button>
+        <button type="submit" name="contact_yogiyo" class="btn" onclick="sendIt();">회원 가입</button>
       </div>
   </div>
 
 
-    <script type="text/javascript" src="https://owner.yogiyo.co.kr/media/owners/js/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="https://owner.yogiyo.co.kr/media/owners/js/bootstrap-2.3.2.min.js"></script>
-    <script type="text/javascript" src="https://owner.yogiyo.co.kr/media/owners/js/soundmanager2.js?v=587f2d4"></script>
-    <script type="text/javascript" src="https://owner.yogiyo.co.kr/media/js/lib/jquery-ui-1.10.3.min.js"></script>
-    <script type="text/javascript" src="https://owner.yogiyo.co.kr/media/owners/js/google_analytics.js"></script>
-    <script type="text/javascript" src="https://owner.yogiyo.co.kr/jsi18n/"></script>
-    <script>
-        (function($) {
-            if (typeof(window.Yogiyo) == 'undefined') {
-                window.Yogiyo = {};
-            }
-            window.Yogiyo.OWNER_RELAY_PING_INTERVAL = 20000;
-
-            function refreshPauseBadge() {
-                $badge = $('.nav .n21 span');
-                $.get('/owner/ajax/company/oe_pause/exist/', function(data) {
-                    if (data.paused) {
-                        $badge.css('display', 'inline-block');
-                    } else {
-                        $badge.hide();
-                    }
-                }).fail(function() {
-                    $badge.hide();
-                });
-            }
-            refreshPauseBadge();
-            window.refreshPauseBadge = refreshPauseBadge;
-        })(jQuery);
-    </script>
-    <div class="modal fade popup-pwd-notice" id="modal-pwd-notice">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">비밀번호 변경 안내</h3>
-    </div>
-    <div class="modal-body">
-        고객님의 소중한 정보를 보호하기 위해 <strong>3개월 주기로 비밀번호 변경</strong>을 안내해 드리고 있습니다.<br>
-        불편하시더라도 주기적으로 비밀번호를 변경하여 사용해 주시길 부탁드립니다.
-    </div>
-    <div class="pop-btns">
-        <a href="#" data-dismiss="modal" class="btn btn1">다음에 변경하기</a>
-        <a href="#" onclick="redirectLogin('/owner/password_change/')" data-dismiss="modal" class="btn btn2">비밀번호 변경하기</a>
-    </div>
-</div>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        var regexS = "[\\?&]login=([^&#]*)";
-        var regex = new RegExp( regexS );
-        var results = regex.exec(window.location.href);
-        if (results) {
-            $('.popup-pwd-notice').modal('show');
-        }
-    });
-</script>
-
-    
-    <script type="text/javascript" src="https://owner.yogiyo.co.kr/media/owners/js/registration.js?tag=587f2d4"></script>
-    <script type="text/javascript">
-      
-    </script>
-
-    <script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","queueTime":0,"licenseKey":"060998d475","agent":"","transactionName":"NgQDY0YEWhICVEFQWg9OJ0JaBkAIDFkaXVoWAA9DGgpDDwZFRhdDCAQWRBoXUQYKREFLVBUIDlkOF1EGCkRBS1QVCA5ZaxZABBMG","applicationID":"2104228","errorBeacon":"bam.nr-data.net","applicationTime":44}</script>
-
+<jsp:include page="ceoIncludeBottom.jsp" flush="false"/>
 
 </body></html>

@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <!-- css---------------------------------------------------------- -->
 
@@ -93,9 +93,7 @@
 
 											<td class="first_cell" rowspan="1">
 												<div class="td_detail">
-
-													<img src="/eatswill/resources/images/${dto.shopImg}"
-														width="90" height="90">
+													<img src="<spring:url value='/shopImg/${dto.shopImg }'/>" width="90px" height="90px" style="width: 90px;max-height: 90px;">
 												</div>
 											</td>
 											<td style="width: 100; padding: 0; vertical-align: middle">
