@@ -7,24 +7,23 @@
 %>
 <html lang="en">
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
     <!-- Title -->
 <title>EATSWILL 사장님 사이트</title>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
 <link rel="shortcut icon"
-	href="https://owner.yogiyo.co.kr/media/images/owners/favicon.ico">
+	href="/eatswill/resources/images/sicon.jpg">
 <link rel="apple-touch-icon-precomposed"
-	href="https://owner.yogiyo.co.kr/media/images/owners/ygyshop_ios_57x57.png">
+	href="/eatswill/resources/images/sicon.jpg">
 <link rel="apple-touch-icon-precomposed"
-	href="https://owner.yogiyo.co.kr/media/images/owners/ygyshop_ios_72x72.png"
+	href="/eatswill/resources/images/sicon.jpg"
 	sizes="72x72">
 <link rel="apple-touch-icon-precomposed"
-	href="https://owner.yogiyo.co.kr/media/images/owners/ygyshop_ios_114x114.png"
+	href="/eatswill/resources/images/sicon.jpg"
 	sizes="114x114">
 <link rel="apple-touch-icon-precomposed"
-	href="https://owner.yogiyo.co.kr/media/images/owners/ygyshop_ios_144x144.png"
+	href="/eatswill/resources/images/sicon.jpg"
 	sizes="144x144">
     <!-- Favicon -->
     <link rel="shortcut icon" href="public/img/favicon.ico">
@@ -41,50 +40,60 @@
 	src="https://owner.yogiyo.co.kr/media/owners/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript"
 	src="https://owner.yogiyo.co.kr/media/owners/js/jquery.validate.min.js"></script>
+	
+	 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
 
 </head>
+
+
+	
+
+
 <body class="has-sidebar has-fixed-sidebar-and-header">
 
-	<div class="own-header" style="border-bottom: 1px solid #E0E0E0; font: 14px/1.5 'Malgun Gothic','맑은 고딕', '나눔고딕', NanumGothic, '돋움', Dotum, tahoma, helvetica, sans-serif; font-family: '나눔고딕','Nanum Gothic',sans-serif;
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-    background: #fff;">
-		<div class="clearfix" style="display: table;
-    line-height: 0; clear: both;">
-			<h1 style="float: left;
-    background: url(/media/images/owners/img-nav-owners.png) no-repeat;
-    width: 191px;
-    height: 35px; margin: 0;
-    padding: 0; font-size: 2em;
-    margin: 0.67em 0; font: 14px/1.5 'Malgun Gothic','맑은 고딕', '나눔고딕', NanumGothic, '돋움', Dotum, tahoma, helvetica, sans-serif;
-    color: #666666;" >
-				<a href="<%=cp%>/CEO.action/" style="
-    text-indent: -999em;
-    text-decoration: none;
-    overflow: auto; text-decoration: none; background: transparent;">사장님 사이트</a>
-			</h1>
-			<!-- 
-			<ul class="nav">
-				<li class="n1 "><a nohref=""
-					onclick="javascript:alert('로그인 후 이용하실 수 있습니다.'); window.location.href='/owner/login/?next_url=/owner/orders/'"
-					style="cursor: pointer">내 업소 관리</a></li>
-				<li class="n2 "><a href="/owner/benefit/restaurant/">사장님 혜택</a></li>
-				<li class="n3 "><a href="/owner/join/intro/">입점 안내</a></li>
-			</ul>
- 			-->
-			<ul class="ext">
-				<li class="outlink"><a href="https://boss.yogiyo.co.kr/"
-					target="_blank"></a></li>
-			</ul>
-			
+
+<div class="navigation ver-pc" ng-class="header_show()"
+	style="background-color: #f3f5fa;">
+	<!--  색상수정예정예정 -->
+	<div class="app-down-banner clearfix ng-hide"
+		ng-show="is_show_promotion_banner()">
+		<div class="landing-banner">
+			<div class="landing-header"></div>
+
+
 		</div>
 	</div>
+	<!-- ----------------------------------------------------------------------------------------- -->
 
+	
 
+	
+	<!-- ----------------------------------------------------------------------------------------- -->
+	<div class="nav-top clearfix"
+		ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
+		<a href="<%=cp%>/CEO.action/">
+				<img alt="" src="/eatswill/resources/img/1sajang.png" width="128px" height="58px" style=" margin-left: 60px; margin-top: 20px;"> 
+				<img alt="" src="/eatswill/resources/img/sajang.png" width="96px"  height="22px" style="margin-bottom: -30px;"></a>
+		<%--       <h1 class="logor pull-left" ng-click="<%=cp%>/main.action" ></h1>  --%>
+		<!-- 로고로고 -->
+	
+		
+	
+	</div>
+</div>
+
+<!-- -------------------------------------------------------------------------------------------------- -->
 <main class="main" style="padding-top: 50px; padding-right: 200px; padding-left: 200px; padding-bottom: 200px">
 
     <div class="content">
         <div class="py-4 px-3 px-md-4">
+
+<a href="<%=cp %>/ceoStoreList.action?mode=sales" style="width: 95px; height: 38px;  font-size: 4em; font-weight: bold; margin-top: -30px; float: right; " ><i class="fas fa-angle-double-left" ></i></a>
+
 
             <div class="mb-3 mb-md-4 d-flex justify-content-between">
                 <div class="h3 mb-0">매출관리</div>

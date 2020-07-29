@@ -82,11 +82,13 @@ public class CeoDAO {
 	
 	
 	//해당 매장의 리뷰가져오기
-	public List<CeoDTO> getStoreReview(String ceoId, String shopCode){
+	public List<CeoDTO> getStoreReview(String ceoId, String shopCode, int start, int end){
 		
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("shopCode", shopCode);
 		params.put("ceoId", ceoId);
+		params.put("start", start);
+		params.put("end", end);
 		
 		List<CeoDTO> reviewList = sessionTemplate.selectList("CeoMapper.getStoreReivew", params);
 		
@@ -264,5 +266,25 @@ public class CeoDAO {
 		return result;
 		
 	}
+	
+	//매장별 주문상태별 카운트
+	public int getOSCount100(String shopCode) {
+		
+		int result = sessionTemplate.selectOne("CeoMapper.getOSCount100", shopCode);
+		
+		return result;
+		
+	}
+
+	//매장별 주문상태별 카운트
+	public int getOSCount200(String shopCode) {
+		
+		
+		int result = sessionTemplate.selectOne("CeoMapper.getOSCount200", shopCode);
+		
+		return result;
+		
+	}
+	
 	
 }

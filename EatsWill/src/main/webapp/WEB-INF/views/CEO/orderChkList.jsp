@@ -16,6 +16,7 @@
 	        
 	        var params = "orderCode=" + $("#orderCode" + btnIdx).val();
 	        params += "&orderStatus=" + $("#orderStatus" + btnIdx).val();
+	        params += "&shopCode=" + $("#shopCode").val();
 	        console.log(params);
 	        
 	        $.ajax({
@@ -44,6 +45,7 @@
 	        console.log("index : " + btnIdx);
 	        
 	        var params = "orderCode=" + $("#orderCode" + btnIdx).val();
+	        params += "&shopCode=" + $("#shopCode").val();
 	        console.log(params);
 	        
 	        $.ajax({
@@ -129,6 +131,7 @@
                                             	</c:if>
 												<input type="hidden" id="orderCode${status.index }" value="${dto.orderCode }">
 												<input type="hidden" id="orderStatus${status.index }" value="${dto.orderStatus }">
+												<input type="hidden" id="shopCode" value="${shopCode }">
                                             </div>
                                         </td>
                                     </tr>

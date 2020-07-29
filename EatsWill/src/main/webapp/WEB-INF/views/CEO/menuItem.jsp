@@ -7,48 +7,6 @@
 	String cp = request.getContextPath();
 %>
 
-<script type="text/javascript">
-	
-	$('.btn-del').click(function(){
-		var count = parseInt("${menuCount}"/"${numPerPage}");
-		var pageNum = "${currentPage}";
-	    var btnIdx = $(this).attr('index');
-	    console.log("index : " + btnIdx);
-	    
-	    var params = "menuCode=" + $("#menuCode" + btnIdx).val();
-	    params += "&shopCode=" + $("#shopCode").val();
-	    params += "&shopName=" + $("#shopName").val();
-	    
-	    console.log(params);
-	    
-	    $.ajax({
-	        type:"post",
-	        url:"<%=cp%>/deleteMenu.action",
-	        async: false,
-	        data:params,
-	        success: function(args){
-	        
-	           $("#menuItem").html(args);
-	        
-	        },
-	        error:function(e){
-	        	alert("실패하였습니다.");
-	          	console.log(request.status);
-	          	console.log(request.responseText);
-	          	console.log(error);
-	        }
-	        
-	     });
-	     
-	     return false;
-	     
-	 });
-	
-	
-
-</script>
-
-   
 
     <c:if test="${menu != null }">
     <c:forEach var="dto" items="${menu }" varStatus="status">
@@ -81,10 +39,13 @@
                       	<c:if test="${dto.part == '0' }">메인메뉴</c:if><c:if test="${dto.part == '1' }">사이드메뉴</c:if>
                       </li>
                       <li class="delivery-time ng-binding" ng-show="restaurant.estimated_delivery_time">
-                      <a href="#">수정</a>&nbsp;&nbsp;<a href="#" class="btn-del" index="${status.index }">삭제</a>
-                      <input type="hidden" value="${dto.menuCode }" id="menuCode${status.index }">
+                      <!-- <a href="#">수정</a>&nbsp;&nbsp; -->
+                      <a onClick="deleteItem(${(currentPage-1)*4 + status.index }, ${currentPage})" class="btn-del" index="${(currentPage-1)*4 + status.index }">삭제</a>
+                      
+                      <!--  input type="text" value="${currentPage}-1)*4 + ${status.index }" id="finalIdx" -->
                       <input type="hidden" value="${shopCode }" id="shopCode">
                       <input type="hidden" value="${shopName }" id="shopName">
+                      <input type="hidden" value="${dto.menuCode }" id="menuCode1${(currentPage-1)*4 + status.index }">
                       </li>
                     </ul>
                   </div>
@@ -97,7 +58,5 @@
         
       </div>
     </c:forEach>
-    </c:if>
-      
+    </c:if>    
      
-      

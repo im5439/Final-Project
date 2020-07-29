@@ -10,10 +10,24 @@
 <script type="text/javascript" src="/eatswill/resources/js/modernizr.custom.js" ></script>
 <!-- ------------ -->
 
-<div id="nav" class="own-header">
+<script type="text/javascript">
+	
+	function loginChk(){
+		
+		alert("로그인 후 이용해주세요!");
+		return;
+		
+	}
+	
+</script>
+
+<div id="nav" >
 		<div class="clearfix">
+		
 			<h1>
-				<a href="<%=cp%>/CEO.action/">사장님 사이트</a>
+				<a href="<%=cp%>/CEO.action/">
+				<img alt="" src="/eatswill/resources/img/1sajang.png" width="128px" height="58px" style=" margin-left: 60px; margin-top: 20px;"> 
+				<img alt="" src="/eatswill/resources/img/sajang.png" width="96px"  height="22px" style="margin-bottom: 10px;"></a>
 			</h1>
 			<!-- 
 			<ul class="nav">
@@ -25,14 +39,64 @@
 			</ul>
  			-->
 			<ul class="ext">
-				<li class="outlink"><a href="https://boss.yogiyo.co.kr/"
-					target="_blank"></a></li>
+				<li class="outlink"><a href="" target="_blank"></a></li>
 			</ul>
 			
 		</div>
 	</div>
 	
-	
+	<c:choose>
+		<c:when test="${empty sessionScope.ceoInfo.ceoId }">
+			<div class="main clearfix">
+				<nav id="menu" class="nav">
+				<button type="button" id="menutoggle" class="navtoogle" aria-hidden="true">
+				<i aria-hidden="true" class="icon-menu"> </i> Menu</button>					
+					<ul>
+						<li>
+							<a href="<%=cp %>/CEO.action" onclick="loginChk()">
+								<span class="icon">
+									<i aria-hidden="true" class="icon-home"></i>
+								</span>
+								<span>주문확인</span>
+							</a>
+						</li>
+						<li>
+							<a href="<%=cp %>/CEO.action" onclick="loginChk()">
+								<span class="icon"> 
+									<i aria-hidden="true" class="icon-services"></i>
+								</span>
+								<span>매장관리</span>
+							</a>
+						</li>
+						<li>
+							<a href="<%=cp %>/CEO.action" onclick="loginChk()">
+								<span class="icon">
+									<i aria-hidden="true" class="icon-portfolio"></i>
+								</span>
+								<span>메뉴관리</span>
+							</a>
+						</li>
+						<li>
+							<a href="<%=cp %>/CEO.action" onclick="loginChk()">
+								<span class="icon">
+									<i aria-hidden="true" class="icon-blog"></i>
+								</span>
+								<span>리뷰 관리</span>
+							</a>
+						</li>
+						<li>
+							<a href="<%=cp %>/CEO.action" onclick="loginChk()">
+								<span class="icon">
+									<i aria-hidden="true" class="icon-team"></i>
+								</span>
+								<span>매출관리</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</c:when>
+		<c:otherwise>
 			<div class="main clearfix">
 				<nav id="menu" class="nav">
 				<button type="button" id="menutoggle" class="navtoogle" aria-hidden="true">
@@ -81,4 +145,6 @@
 					</ul>
 				</nav>
 			</div>
+		</c:otherwise>
+	</c:choose>
 			
