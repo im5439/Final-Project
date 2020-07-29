@@ -35,7 +35,7 @@
 
 <!-- 사장님 보유매장 -->
 <select id="getStoreList" parameterType="String" resultType="com.eatswill.dto.CeoDTO">
-	select shopCode, shopName, category, shopAddr, shopTel, shopImg, shopCreated, franchise, s.timeCode, codeName from shop s, common_code c where s.timeCode = c.code and s.ceoId = #{ceoId} order by shopCreated
+	select shopCode, shopName, category, shopAddr, shopTel, shopImg, to_char(shopCreated, 'yyyy-mm-dd') shopCreated, franchise, s.timeCode, codeName from shop s, common_code c where s.timeCode = c.code and s.ceoId = #{ceoId} order by shopCreated
 </select>
 
 <!-- 사장님 보유매장 개수 -->
@@ -128,7 +128,7 @@
 	select rnum, menuName, menuCode, menuPrice, menuImg, part from (
 	select rownum rnum, data.* from (
 	select menuName, menuCode, menuPrice, menuImg, part
-	from menu where shopCode = #{shopCode} order by rownum desc) data)
+	from menu where shopCode = #{shopCode} order by menuDate desc) data)
 	<![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
 	]]>
@@ -152,7 +152,7 @@
 
 <!-- 매장별 총매출 -->
 <select id="getTotSales" parameterType="String" resultType="int">
-	select sum(oamount) totSales from ordermain where shopCode = #{shopCode}
+	select nvl(sum(oamount),0) totSales from ordermain where shopCode = #{shopCode}
 </select>
 
 <!-- 매장별 주문횟수 -->

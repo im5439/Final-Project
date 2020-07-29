@@ -1008,13 +1008,15 @@ public class CEOController {
 		
 		List<SalesDTO> dayLists = dao.getDaySales(shopCode); // 일별 매출
 		List<SalesDTO> monthLists = dao.getMonthSales(shopCode); // 월별 매출
+		
+			
 		int totSales = dao.getTotSales(shopCode); // 매장별 총매출
 		int profit = (int) (totSales * 0.9); // 순이익
 		int orderCount = dao.getOrderCount(shopCode); //매장별 주문횟수
 		int heartCount = dao.getHeartCount(shopCode); //매장별 찜횟수
 		
 		ObjectMapper mapper = new ObjectMapper();
-
+		
 		String jsonDay = null;
 		String jsonMonth = null;
 		
@@ -1022,7 +1024,7 @@ public class CEOController {
 			
 			jsonDay = mapper.writeValueAsString(dayLists); // json 형식으로 파싱
 			jsonMonth = mapper.writeValueAsString(monthLists);
-
+			
 		} catch (JsonProcessingException e) {
 			System.out.println(e.toString());
 			e.printStackTrace();

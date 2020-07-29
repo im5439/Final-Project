@@ -102,6 +102,7 @@
                             <c:if test="${mode == 'addMenu' }"><h5 class="font-weight-semi-bold mb-0">메뉴추가 매장리스트</h5></c:if>
                             <c:if test="${mode == 'orderChk' }"><h5 class="font-weight-semi-bold mb-0">주문확인 매장리스트</h5></c:if>
                             <c:if test="${mode == 'ceoReview' }"><h5 class="font-weight-semi-bold mb-0">리뷰관리 매장리스트</h5></c:if>
+                            <c:if test="${mode == 'sales' }"><h5 class="font-weight-semi-bold mb-0">매출관리 매장리스트</h5></c:if>
                         </div>
 
                         <div class="card-body pt-0">
