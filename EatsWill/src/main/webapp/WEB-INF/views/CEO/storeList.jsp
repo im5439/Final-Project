@@ -40,7 +40,7 @@
 	href="https://owner.yogiyo.co.kr/media/owners/css/owners_new.css?v=3c43aea">
 
 <!-- list css -->
-<link rel="stylesheet" href="/eatswill/resources/css/graindashboard.css" type="text/css"/>
+<link rel="stylesheet" href="/eatswill/resources/css/graindashboard2.css" type="text/css"/>
 
 <script type="text/javascript"
 	src="https://owner.yogiyo.co.kr/media/owners/js/jquery-1.9.1.min.js"></script>
@@ -99,7 +99,7 @@
 
 	<jsp:include page="ceoIncludeTop.jsp" flush="false"/>
 
-	<div class="own-container" style="padding-bottom: 300;">
+	<div class="own-container" style="padding-bottom: 0; overflow: auto;">
 		<div class="own-main">
 		<%-- 
 			<ul class="nav clearfix">
@@ -110,7 +110,7 @@
 				<li class="n6"><a href="<%=cp %>/sales.action" style="cursor: pointer">매출관리</a></li>
 				<li class="n4"><a href="<%=cp %>/storeList.action" style="cursor: pointer">매장목록</a></li>
 			</ul>
- --%>
+ 		--%>
 			<div class="mid clearfix" >
 				<div id="carousel-img" class="own-slide carousel slide"
 					data-ride="carousel">
@@ -189,8 +189,10 @@
                                         </td>
                                         <td class="py-3">
                                             <div class="position-relative">
+                                            	<!-- 
 												<div><span class="badge badge-pill badge-danger" style="background-color: #00ff33;'">주문확인</span></div>
 												<div><span class="badge badge-pill badge-danger" style="background-color: #ff0033;'">주문취소</span></div>
+												 -->
                                             </div>
                                         </td>
                                     </tr>
@@ -217,8 +219,10 @@
                                         </td>
                                         <td class="py-3">
                                             <div class="position-relative">
+												<!-- 
 												<div><span class="badge badge-pill badge-danger" style="background-color: #00ff33;'">주문확인</span></div>
 												<div><span class="badge badge-pill badge-danger" style="background-color: #ff0033;'">주문취소</span></div>
+												 -->
                                             </div>
                                         </td>
                                     </tr>
@@ -245,8 +249,40 @@
                                         </td>
                                         <td class="py-3">
                                             <div class="position-relative">
+												<!-- 
 												<div><span class="badge badge-pill badge-danger" style="background-color: #00ff33;'">주문확인</span></div>
 												<div><span class="badge badge-pill badge-danger" style="background-color: #ff0033;'">주문취소</span></div>
+												 -->
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </c:forEach>
+                                    </c:if>
+
+                                    <c:if test="${mode == 'sales' }">
+                                    <c:forEach var="dto" items="${shopList }" varStatus="status">
+                                    <tr>
+                                        <td class="py-3"><a href="<%=cp%>/sales.action?shopCode=${dto.shopCode}">${dto.shopName }</a></td>
+                                        <td class="py-3">
+                                            <div><a href="<%=cp%>/sales.action?shopCode=${dto.shopCode}">${dto.shopAddr }</a></div>
+                                            <div class="text-muted"></div>
+                                        </td>
+                                        <td class="py-3">
+                                        	<div><a href="<%=cp%>/sales.action?shopCode=${dto.shopCode}">${dto.shopCreated }</a></div>
+                                        </td>
+                                        
+                                        <td class="py-3"></td>
+                                        <td class="py-3">
+                                            <span class="badge badge-pill badge-warning">영업중</span>
+                                            <span class="badge badge-pill badge-success">준비중</span>
+                                            <span class="badge badge-pill badge-light">영업종료</span>
+                                        </td>
+                                        <td class="py-3">
+                                            <div class="position-relative">
+												<!-- 
+												<div><span class="badge badge-pill badge-danger" style="background-color: #00ff33;'">주문확인</span></div>
+												<div><span class="badge badge-pill badge-danger" style="background-color: #ff0033;'">주문취소</span></div>
+												 -->
                                             </div>
                                         </td>
                                     </tr>

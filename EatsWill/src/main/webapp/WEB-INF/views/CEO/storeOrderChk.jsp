@@ -40,7 +40,7 @@
 	href="https://owner.yogiyo.co.kr/media/owners/css/owners_new.css?v=3c43aea">
 
 <!-- list css -->
-<link rel="stylesheet" href="/eatswill/resources/css/graindashboard.css" type="text/css"/>
+<link rel="stylesheet" href="/eatswill/resources/css/graindashboard2.css" type="text/css"/>
 
 
 <script type="text/javascript"
@@ -166,7 +166,7 @@
 			</div>
 
 
-			<span id="orderChkList"></span> <!-- storeOrderChk.jsp 불러옴 -->
+			<span id="orderChkList"></span> <!-- orderChkList.jsp 불러옴 -->
 
 			<input type="hidden" value="${shopCode }" id="shopCode">
 			<input type="hidden" value="${shopName }" id="shopName">
@@ -195,7 +195,7 @@
             $('.popup-pwd-notice').modal('show');
         }
     });
-</script>
+	</script>
 
 
 	<script type="text/javascript"

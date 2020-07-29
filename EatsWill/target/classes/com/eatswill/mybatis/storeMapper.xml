@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 음식점 정보  -->
 <select id="shopInfo" parameterType="hashMap" resultType="com.eatswill.dto.StoreDTO">
 select s.shoptel,s.shopCode,s.shopname,s.shopImg,s.shopAddr,s.ceoid,c.CEONAME,a.CODENAME timeName, r.reScore
-from shop s, ceo c, common_code a, (select avg(reScore) reScore,shopCode from review group by shopCode) r
+from shop s, ceo c, common_code a, (select round(avg(reScore),1) reScore,shopCode from review group by shopCode) r
 where s.CEOID=c.CEOID and s.timeCODE=a.CODE and s.shopCode=r.shopCode(+) and s.CEOID=#{ceoId} and s.shopCode=#{shopCode}
 </select>
 
@@ -61,8 +61,8 @@ ORDER BY recreated desc
 
 <!-- 장바구니 인서트  -->
 <insert id="insertCart" parameterType="com.eatswill.dto.StoreDTO">
-	insert into cart (userId,menuCode,sideMenuCode,cQty,cAmount,shopCode) values
-	(#{userId},#{menuCode},#{sideMenuCode},#{cQty},#{cAmount},#{shopCode})
+	insert into cart (userId,menuCode,sideMenuCode,cQty,cAmount,shopCode,cartDate) values
+	(#{userId},#{menuCode},#{sideMenuCode},#{cQty},#{cAmount},#{shopCode},sysdate)
 </insert>
 
 <!-- 장바구니 업데이트(같은메뉴코드일시 수량과 가격만 변경)  -->
@@ -88,13 +88,13 @@ ORDER BY recreated desc
 <select id="selectCartAll" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
 select c.shopCode,c.sideMenuCode,sum(c.cqty) cqty,sum(c.cAmount) cAmount,s.shopName,m.menuName,(select sum(cAmount) from cart where userId=#{userId}) orderSum
 from Cart c, shop s,menu m
-where c.shopCode=s.shopCode and c.sidemenuCode=m.menuCode and m.shopCode=s.shopCode and userId=#{userId}
-group by c.shopCode,c.sideMenuCode,c.cqty,s.shopName,m.menuName
+where c.shopCode=s.shopCode and c.sidemenuCode=m.menuCode and m.shopCode=s.SHOPCODE and userId=#{userId}
+group by c.shopCode,c.sideMenuCode,s.shopName,m.menuName
 </select>
 <select id="selectCartMain" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
-	select c.menuCode,c.cAmount,c.cQty,c.userId,m.menuName,m.menuPrice
+	select c.menuCode,c.cAmount,c.cQty,c.cartDate,c.userId,m.menuName,m.menuPrice
 	from cart c, menu m
-	where c.menuCode=m.menuCode and c.menuCode=c.sideMenuCode and c.userId=#{userId}
+	where c.menuCode=m.menuCode and c.menuCode=c.sideMenuCode and c.userId=#{userId} order by cartDate desc
 </select>
 <select id="selectCartSide" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
 	select c.menuCode, c.sideMenuCode,c.cAmount,c.cQty,c.userId,m.menuName,m.menuPrice
@@ -142,7 +142,7 @@ group by c.shopCode,c.sideMenuCode,c.cqty,s.shopName,m.menuName
 
 <!-- 검색된거나 카테고리로 구분된 shop의 수 카테고리로 검색했을때 -->
 <select resultType="int" parameterType="hashMap" id="shopCount">
-select nvl(count(*),0) from shop where category Like '%' || #{category} || '%' 
+	select nvl(count(*),0) from shop where category Like '%' || #{category} || '%' and replace(shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%' 
 </select>
 
 <!-- 검색된거나 카테고리로 구분된 shop의 수 카테고리 검색 안했을때 -->
@@ -150,10 +150,11 @@ select nvl(count(*),0) from shop where category Like '%' || #{category} || '%'
 
 <!-- 음식점 리스트 페이징 (start,end) ,카테고리는 where 절에 조건 추가해줘야함 -->
 <select resultType="com.eatswill.dto.StoreDTO" parameterType="hashMap" id="shopPaging">
-select * from (
-	select rownum rnum, data.* from (select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,re.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated 
-	from shop s, (select avg(reScore) reScore,shopCode from review group by shopCode) re where category Like '%'||#{category}||'%' and s.shopCode=re.shopCode(+) 
-	and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%' order by s.shopname) data)
+	select * from (
+	select rownum rnum, data.* from (
+	select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,re.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated, r.reCount
+	from shop s, (select round(avg(reScore),1) reScore,shopCode from review group by shopCode) re , (select nvl(count(*),0) reCount,shopCode from review group by shopCode) r
+	where category Like '%'||#{category}||'%' and s.shopCode=re.shopCode(+) and s.shopCode=r.shopCode(+) and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%' order by s.shopname) data) 
 <![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
 	]]>
@@ -173,26 +174,28 @@ select * from (
 	order by shopname desc
 </select>
 
+
+
+
 <!-- 음식점 리스트 (리뷰순 정렬) -->
 <select resultType="com.eatswill.dto.StoreDTO" parameterType="hashMap" id="orderByRe">
-select * from (select rownum rnum, data.* from (
-	select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,re.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated 
-	from shop s, (select nvl(count(*),0) reCount, avg(reScore) reScore,shopCode from review group by shopCode) re 
-	where category Like '%' || #{category} || '%' and s.shopCode = re.shopCode(+) 
-	and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%' order by re.reCount) data)
+	select * from (
+	select rownum rnum, data.* from (
+	select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,re.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated, r.reCount 
+	from shop s, (select nvl(count(*),0) reCount, round(avg(reScore),1) reScore,shopCode from review group by shopCode) re , (select nvl(count(*),0) reCount,shopCode from review group by shopCode order by reCount desc) r
+	where category Like '%' || #{category} || '%' and s.shopCode = re.shopCode(+) and s.shopCode = r.shopCode(+)and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%') data) 
 <![CDATA[ 
-where rnum>=#{start} and rnum<=#{end}
+	where rnum>=#{start} and rnum<=#{end}
 ]]>
 </select>
 
 <!-- 음식점 리스트 (주문순 정렬) -->
 <select resultType="com.eatswill.dto.StoreDTO" parameterType="hashMap" id="orderByO">
-select * from (
+	select * from (
 	select rownum rnum, data.* from (
-		select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,re.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated 
-		from shop s,(select nvl(count(*),0) orderCount,shopCode from ordermain group by shopCode) o , (select avg(reScore) reScore,shopCode from review group by shopCode) re 
-	where category Like '%' || #{category} || '%' and s.shopcode=o.shopCode(+) and s.shopCode = re.shopCode(+) 
-	and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%' order by o.orderCount) data)
+	select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,re.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated, r.reCount, o.orderCount
+	from shop s,(select nvl(count(*),0) orderCount,shopCode from ordermain group by shopCode order by orderCount) o , (select round(avg(reScore),1) reScore,shopCode from review group by shopCode) re ,(select nvl(count(*),0) reCount,shopCode from review group by shopCode order by reCount desc) r
+	where category Like '%' || #{category} || '%' and s.shopcode=o.shopCode(+) and s.shopCode = re.shopCode(+) and s.shopCode = r.shopCode(+)and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%' ) data) 
 <![CDATA[ 
 	where rnum>=#{start} and rnum<=#{end}
 ]]>
@@ -201,21 +204,14 @@ select * from (
 <!-- 음식점 리스트 (별점순 정렬) -->
 <select resultType="com.eatswill.dto.StoreDTO" parameterType="hashMap" id="orderByRes">
 select * from (
-	select rownum rnum, data.* from (
-		select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,res.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated 
-		from shop s,(select avg(reScore) reScore,shopCode from review group by shopCode) res 
-	where category Like '%' || #{category} || '%' and s.shopcode=res.shopCode(+) 
-	and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%' order by res.rescore) data) 
+select rownum rnum, data.* from (
+select s.shopname,s.shopcode,s.ceoid,s.category,s.shoptel,s.shopimg,s.franchise,s.shopaddr,s.timecode,res.reScore,to_char(s.shopcreated,'YYYY-MM-DD') shopcreated,r.reCount
+from shop s,(select round(avg(reScore),1) reScore,shopCode from review group by shopCode) res ,(select nvl(count(*),0) reCount,shopCode from review group by shopCode) r
+where category Like '%' || #{category} || '%' and s.shopcode=res.shopCode(+) and s.shopCode = r.shopCode(+)and replace(s.shopaddr, ' ', '') like '%' || replace(#{search}, ' ', '') || '%') data) 
 <![CDATA[ 
 	where rnum>=#{start} and rnum<=#{end}
 ]]>
 </select>
-
-
-
-
-
-
 
 <!-- 결제창  -->
 <!-- 고객정보  -->
@@ -231,9 +227,10 @@ where c.shopCode=s.shopCode and userId=#{userId}
 
 <!-- order menuCode select  -->
 <select id="selectPreOrderDe" parameterType="String" resultType="com.eatswill.dto.StoreDTO">
-	select c.menuCode, c.sideMenuCode,c.cAmount,c.cQty,c.userId,m.menuName,m.menuPrice
+	select c.sideMenuCode,sum(c.cQty) cQty
 	from cart c, menu m
 	where c.sideMenuCode=m.menuCode and c.userId=#{userId}
+	group by c.sideMenuCode
 </select>
 
 <!-- 오더메인 인서트  -->
@@ -247,6 +244,11 @@ where c.shopCode=s.shopCode and userId=#{userId}
 insert into orderdetail (orderCode,menuCode,oQty) 
 values((select orderCode from (select rownum rnum,orderCode from (select orderCode,orderDate from ordermain where userId=#{userId} order by orderDate desc)) where rnum='1'),#{menuCode},#{oQty})
 </insert>
+
+<!-- 오더디테일 업데이트  -->
+<update id="updateOrderDetail" parameterType="com.eatswill.dto.StoreDTO">
+update orderDetail set oQty=oQty+#{oQty} where orderCode=#{orderCode} and menuCode=#{menuCode}
+</update>
 
 <!-- 결제 후 포인트 차감  -->
 <update id="useUserPoint" parameterType="com.eatswill.dto.StoreDTO">
@@ -264,4 +266,6 @@ update custom set userPoint=userPoint+
 	select * from (select orderCode,orderDate from (select rownum rnum,orderCode,orderDate from 
 	(select orderCode,orderDate from ordermain where userId=#{userId} order by orderDate desc)) where rnum='1')
 </select>
+
+
 </mapper>

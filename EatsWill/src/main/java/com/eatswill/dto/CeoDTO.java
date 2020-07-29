@@ -59,10 +59,14 @@ public class CeoDTO {
 	private String request;
 	private String orderStatus;
 	private String userTel;
-	private String userAddr1;
-	private String userAddr2;
+	private String deliveryAddr1;
+	private String deliveryAddr2;
 	private List<OrderDTO> orderDetail;
 	//=======================
+	
+	//∏≈√‚===================
+	private String orderDay;
+	private String sumDay;
 	
 	
 	public String getCeoId() {
@@ -287,23 +291,35 @@ public class CeoDTO {
 	public void setUserTel(String userTel) {
 		this.userTel = userTel;
 	}
-	public String getUserAddr1() {
-		return userAddr1;
+	public String getDeliveryAddr1() {
+		return deliveryAddr1;
 	}
-	public void setUserAddr1(String userAddr1) {
-		this.userAddr1 = userAddr1;
+	public void setDeliveryAddr1(String deliveryAddr1) {
+		this.deliveryAddr1 = deliveryAddr1;
 	}
-	public String getUserAddr2() {
-		return " " + userAddr2;
+	public String getDeliveryAddr2() {
+		return " " + deliveryAddr2;
 	}
-	public void setUserAddr2(String userAddr2) {
-		this.userAddr2 = userAddr2;
+	public void setDeliveryAddr2(String deliveryAddr2) {
+		this.deliveryAddr2 = deliveryAddr2;
 	}
 	public List<OrderDTO> getOrderDetail() {
 		return orderDetail;
 	}
 	public void setOrderDetail(List<OrderDTO> orderDetail) {
 		this.orderDetail = orderDetail;
+	}
+	public String getOrderDay() {
+		return orderDay;
+	}
+	public void setOrderDay(String orderDay) {
+		this.orderDay = orderDay;
+	}
+	public String getSumDay() {
+		return sumDay;
+	}
+	public void setSumDay(String sumDay) {
+		this.sumDay = sumDay;
 	}
 	
 	

@@ -4,8 +4,8 @@
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 %>
-<div class="footer">
-		<div class="service-info">
+<div class="footer" style="text-align: -webkit-center;">
+		<div class="service-info" style="margin-left: 26%;">
 			<div class="bpg">
 				<a href="https://www.yogiyo.co.kr/mobile/#/trust/"><span
 					class="img"></span><span class="text">요기요<br>안심센터

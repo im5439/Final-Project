@@ -15,7 +15,7 @@
 	        console.log("index : " + btnIdx);
 	        
 	        var params = "orderCode=" + $("#orderCode" + btnIdx).val();
-	        
+	        params += "&orderStatus=" + $("#orderStatus" + btnIdx).val();
 	        console.log(params);
 	        
 	        $.ajax({
@@ -25,7 +25,35 @@
 	            data: params,
 	            success: function(args){
 	               
-	               $("#orderChkList").innerhtml(args);
+	               $("#orderChkList").html(args);
+	               
+	            },
+	            error:function(e){
+	            	console.log(request.status);
+	            	console.log(request.responseText);
+	            	console.log(error);
+	          }
+	          
+	        });
+	        return false;
+	    });
+
+		$('.orderCancel').click(function(){
+			
+	        var btnIdx = $(this).attr('index');
+	        console.log("index : " + btnIdx);
+	        
+	        var params = "orderCode=" + $("#orderCode" + btnIdx).val();
+	        console.log(params);
+	        
+	        $.ajax({
+	            type:"post",
+	            url:"<%=cp%>/storeOrderChk_cancel.action",
+	            async: false,
+	            data: params,
+	            success: function(args){
+	               
+	               $("#orderChkList").html(args);
 	               
 	            },
 	            error:function(e){
@@ -75,7 +103,7 @@
                                         	<div>주문ID : ${dto.userId }</div>
                                         	<div>주문 일시 : ${dto.orderDate }</div>
                                         	<div>Tel : ${dto.userTel }</div>
-                                        	<div>주소 : ${dto.userAddr1 }${dto.userAddr2 }</div>
+                                        	<div>주소 : ${dto.deliveryAddr1 }${dto.deliveryAddr2 }</div>
                                         	<div>요청사항 : ${dto.request}</div>
                                         </td>
                                         
@@ -87,14 +115,20 @@
                                             <span class="badge badge-pill badge-success">준비중</span></c:if>
                                             <c:if test="${dto.orderStatus == '300' }">
                                             <span class="badge badge-pill badge-light">배달완료</span></c:if>
+                                            <c:if test="${dto.orderStatus == '400' }">
+                                            <span class="badge badge-pill badge-light">주문취소</span></c:if>
                                         </td>
                                         <td class="py-3">
                                             <div class="position-relative">
                                             	<c:if test="${dto.orderStatus == '100' }">
 												<div><a href="" class="orderChk" index="${status.index }"><span class="badge badge-pill badge-danger" style="background-color: #00ff33;'">주문확인</span></a></div>
-												<div><a href="" class="orderChk" index="${status.index }"><span class="badge badge-pill badge-danger" style="background-color: #ff0033;'">주문취소</span></a></div>
-												<input type="hidden" id="orderCode${status.index }" value="${dto.orderCode }">
+												<div><a href="" class="orderCancel" index="${status.index }"><span class="badge badge-pill badge-danger" style="background-color: #ff0033;'">주문취소</span></a></div>
                                             	</c:if>
+                                            	<c:if test="${dto.orderStatus == '200' }">
+												<div><a href="" class="orderChk" index="${status.index }"><span class="badge badge-pill badge-light" style="background-color: #0033ff;'">배달완료</span></a></div>
+                                            	</c:if>
+												<input type="hidden" id="orderCode${status.index }" value="${dto.orderCode }">
+												<input type="hidden" id="orderStatus${status.index }" value="${dto.orderStatus }">
                                             </div>
                                         </td>
                                     </tr>
@@ -105,5 +139,4 @@
                             </div>
                         </div>
                     </div>
-
 

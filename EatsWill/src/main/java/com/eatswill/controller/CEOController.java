@@ -11,9 +11,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
@@ -22,7 +25,10 @@ import com.eatswill.dao.CeoDAO;
 import com.eatswill.dto.CeoDTO;
 import com.eatswill.dto.CeoInfo;
 import com.eatswill.dto.OrderDTO;
+import com.eatswill.dto.SalesDTO;
 import com.eatswill.util.MyUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SessionAttributes("CeoInfo")
 @Controller("CEOController")
@@ -69,6 +75,22 @@ public class CEOController {
 
 		ceoId = "";
 		ceoPw = "";
+		
+		CeoInfo info = (CeoInfo) session.getAttribute("ceoInfo");
+		if(info != null) {
+			
+			int storeCount = dao.getStoreCount(info.getCeoId());
+			int orderChk = dao.ceoIdOrderStatus(info.getCeoId(), "100"); // 주문확인
+			int orderReady = dao.ceoIdOrderStatus(info.getCeoId(), "200"); // 준비중
+			
+			System.out.println("주문확인 : " + orderChk);
+			System.out.println("준비중 : " + orderReady);
+			
+			request.setAttribute("orderChk", orderChk);
+			request.setAttribute("orderReady", orderReady);
+			request.setAttribute("storeCount", storeCount);
+			
+		}
 
 		return "CEO/ceo";
 
@@ -226,14 +248,13 @@ public class CEOController {
 
 	//매장리스트 mode (주문확인,메뉴관리,리뷰관리)
 		@RequestMapping(value = "/ceoStoreList.action", method = { RequestMethod.POST, RequestMethod.GET })
-		public String ceoStoreList(HttpServletRequest request, HttpSession session, CeoDTO dto) {
+		public String storeList(HttpServletRequest request, HttpSession session, CeoDTO dto) {
 			
 			String mode = request.getParameter("mode");
 			System.out.println(mode);
+			CeoInfo info = (CeoInfo) session.getAttribute("ceoInfo");
+			String ceoId = info.getCeoId();
 			if(mode.equals("addMenu")) {
-				
-				CeoInfo info = (CeoInfo) session.getAttribute("ceoInfo");
-				String ceoId = info.getCeoId();
 				
 				List<CeoDTO> shopList = dao.getStoreList(ceoId);
 				
@@ -244,9 +265,6 @@ public class CEOController {
 				
 			} else if(mode.equals("orderChk")) {
 				
-				CeoInfo info = (CeoInfo) session.getAttribute("ceoInfo");
-				String ceoId = info.getCeoId();
-				
 				List<CeoDTO> shopList = dao.getStoreList(ceoId);
 				
 				request.setAttribute("mode", mode);
@@ -256,9 +274,6 @@ public class CEOController {
 				
 			} else if(mode.equals("ceoReview")) {
 				
-				CeoInfo info = (CeoInfo) session.getAttribute("ceoInfo");
-				String ceoId = info.getCeoId();
-
 				List<CeoDTO> shopList = dao.getStoreList(ceoId);
 
 				int storeCount = dao.getStoreCount(ceoId);
@@ -267,6 +282,18 @@ public class CEOController {
 				request.setAttribute("shopList", shopList);
 				request.setAttribute("storeCount", storeCount);
 
+				return "CEO/storeList";
+				
+			} else if(mode.equals("sales")) {
+				
+				List<CeoDTO> shopList = dao.getStoreList(ceoId);
+				
+				int storeCount = dao.getStoreCount(ceoId);
+				
+				request.setAttribute("mode", mode);
+				request.setAttribute("shopList", shopList);
+				request.setAttribute("storeCount", storeCount);
+				
 				return "CEO/storeList";
 				
 			}
@@ -357,15 +384,25 @@ public class CEOController {
 
 	//해당매장의 리뷰리스트 페이지
 	@RequestMapping(value = "/storeReview.action", method = { RequestMethod.POST, RequestMethod.GET })
-	public String storeReiew(HttpServletRequest request, HttpSession session, CeoDTO dto) {
+	public String storeReiew(HttpServletRequest request, HttpSession session) {
 
 		CeoInfo info = (CeoInfo) session.getAttribute("ceoInfo");
 		String ceoId = info.getCeoId();
 		String shopCode = request.getParameter("shopCode");
 		
 		List<CeoDTO> reviewList = dao.getStoreReview(ceoId, shopCode);
+		Iterator<CeoDTO> it = reviewList.iterator();
+		while(it.hasNext()) {
+
+			CeoDTO dto = it.next();
+			String orderCode = dto.getOrderCode();
+			List<OrderDTO> orderDetail = dao.getOrderDetail(orderCode);
+			dto.setOrderDetail(orderDetail);
+			
+		}
+		
 		int reviewCount = dao.getReviewCount(shopCode);
-		dto = dao.getStoreName(shopCode);
+		CeoDTO shopdto = dao.getStoreName(shopCode);
 		
 		if(reviewCount != 0) {
 			double avgReScore = dao.getAvgReScore(shopCode); // 해당 매장 평균별점
@@ -374,7 +411,7 @@ public class CEOController {
 			request.setAttribute("avgReScore2", avgReScore2);
 		}
 		
-		request.setAttribute("dto", dto);
+		request.setAttribute("shopdto", shopdto);
 		request.setAttribute("shopCode", shopCode);
 		request.setAttribute("reviewList", reviewList);
 		request.setAttribute("reviewCount", reviewCount);
@@ -432,16 +469,41 @@ public class CEOController {
 	}
 	
 	
-	//주문상태 업데이트 ajax
+	//주문상태(준비중,배달완료) 업데이트 ajax
 	@RequestMapping(value = "/storeOrderChk_ok.action", method = { RequestMethod.POST, RequestMethod.GET })
 	public String storeOderChk_ok(HttpServletRequest request, HttpSession session) {
 		
 		String orderCode = request.getParameter("orderCode");
 		String shopCode = request.getParameter("shopCode");
 		String shopName = request.getParameter("shopName");
+		String orderStatus = request.getParameter("orderStatus");
 		
-		System.out.println(orderCode);
-		dao.orderUpdate(orderCode);
+		System.out.println("주문코드 : " + orderCode);
+		System.out.println("주문상태코드 : " + orderStatus);
+		
+		dao.orderUpdate(orderCode, orderStatus); //주문상태 업데이트 자세한설명은 CeoDAO
+		
+		List<CeoDTO> orderList = dao.getOrderChk(shopCode);
+		
+		request.setAttribute("shopCode", shopCode);
+		request.setAttribute("shopName", shopName);
+		request.setAttribute("orderList", orderList);
+		
+		return "CEO/orderChkList";
+		
+	}
+
+	//주문상태(주문취소) 업데이트 ajax
+	@RequestMapping(value = "/storeOrderChk_cancel.action", method = { RequestMethod.POST, RequestMethod.GET })
+	public String storeOrderChk_cancel(HttpServletRequest request, HttpSession session) {
+		
+		String orderCode = request.getParameter("orderCode");
+		String shopCode = request.getParameter("shopCode");
+		String shopName = request.getParameter("shopName");
+		
+		System.out.println("주문코드 : " + orderCode + " 주문취소");
+		
+		dao.orderCancel(orderCode);//배달상태 주문취소
 		
 		List<CeoDTO> orderList = dao.getOrderChk(shopCode);
 		
@@ -723,13 +785,45 @@ public class CEOController {
 	
 	//매출 페이지
 	@RequestMapping(value = "/sales.action", method = { RequestMethod.POST, RequestMethod.GET })
-	public String sales(HttpServletRequest request, HttpSession session, CeoDTO dto) {
+	public String sales(HttpServletRequest request, HttpSession session) {
+		
+		System.out.println("sales.action");
+		String shopCode = request.getParameter("shopCode");
+		System.out.println(shopCode);
+		
+		List<SalesDTO> dayLists = dao.getDaySales(shopCode); // 일별 매출
+		List<SalesDTO> monthLists = dao.getMonthSales(shopCode); // 월별 매출
+		int totSales = dao.getTotSales(shopCode); // 매장별 총매출
+		int profit = (int) (totSales * 0.9); // 순이익
+		int orderCount = dao.getOrderCount(shopCode); //매장별 주문횟수
+		int heartCount = dao.getHeartCount(shopCode); //매장별 찜횟수
+		
+		ObjectMapper mapper = new ObjectMapper();
+
+		String jsonDay = null;
+		String jsonMonth = null;
+		
+		try {
+			
+			jsonDay = mapper.writeValueAsString(dayLists); // json 형식으로 파싱
+			jsonMonth = mapper.writeValueAsString(monthLists);
+
+		} catch (JsonProcessingException e) {
+			System.out.println(e.toString());
+			e.printStackTrace();
+		}
+		System.out.println(jsonDay);
+		System.out.println(jsonMonth);
+		request.setAttribute("heartCount", heartCount);
+		request.setAttribute("orderCount", orderCount);
+		request.setAttribute("profit", profit);
+		request.setAttribute("totSales", totSales);
+		request.setAttribute("jsonDay", jsonDay);
+		request.setAttribute("jsonMonth", jsonMonth);
+		request.setAttribute("shopCode", shopCode);
 		
 		return "CEO/sales";
 		
 	}
-	
-	
-	
 	
 }

@@ -161,7 +161,7 @@ input[type=button]{
 		        
 		        obj1.value = val;
 		
-		        if((Number(obj3.value) - Number(obj2.value))>0) {
+		        if((Number(obj3.value) - Number(obj2.value))>Number(obj3.value)) {
 		        	obj3.value =  Number(obj3.value) - Number(obj2.value);
 		        }
 		       // addsidesel(btnIdx);

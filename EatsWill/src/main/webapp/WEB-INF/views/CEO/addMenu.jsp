@@ -214,47 +214,6 @@
 			return false;
 		});
 		
-		
-		<%-- 
-		 $(window).on("scroll", function() {
-			 var scrollHeight = $(document).height();
-			var scrollPosition = $(window).height() + $(window).scrollTop();
-			// var scrollPosition = $(window).scrollTop();	
-			
-			$("#scrollHeight").text(scrollHeight);
-			$("#scrollPosition").text(scrollPosition);
-			$("#bottom").text(scrollHeight - scrollPosition);
-
-			if (scrollPosition > scrollHeight - 5000) {
-				var params = "shopCode=" + $("#shopCode").val();
-			        params += "&shopName=" + $("#shopName").val();
-			        params += "&pageNum=" + addPage();
-			        
-			        console.log(params);
-			        console.log("index : " + addPage());
-				
-				$.ajax({
-					url: "<%=cp%>/menuItem.action", 
-					beforeSend: addPage,
-					async: false,
-		            data: params,
-					type: 'POST',
-					success: function(args){ 
-						$("#menuItem").append(args);
-					},
-					error:function(e){
-		            	alert("실패하였습니다.");
-		            	console.log(request.status);
-		            	console.log(request.responseText);
-		            	console.log(error);
-		          }
-					
-				});
-			}
-			return false;
-		});
-		 --%>
-		
 	});
 		
 </script>

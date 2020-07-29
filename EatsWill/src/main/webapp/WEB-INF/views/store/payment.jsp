@@ -53,6 +53,11 @@ ng\:form {
    <link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
    <link rel="stylesheet"
    href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
+   <link rel="stylesheet" href="/eatswill/resources/assets/ButtonStylesInspiration/css/buttons.css" />
+   	<link rel="stylesheet" href="/eatswill/resources/assets/ButtonStylesInspiration/css/normalize.css" />
+   	<link rel="stylesheet" href="/eatswill/resources/assets/ButtonStylesInspiration/css/vicons-font.css" />
+   	<link rel="stylesheet" href="/eatswill/resources/assets/css/bootstrap.min.css" />
+   	
     <script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
    <script type="text/javascript" src="/eatswill/resources/assets/js/login.js"></script>
    <script type="text/javascript" src="/eatswill/resources/assets/js/payment2.js"></script>
@@ -100,7 +105,7 @@ ng\:form {
       document
             .write('<link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://www.yogiyo.co.kr/mobile/image/app_144x144.png">');
       document
-            .write('<link rel="icon" type="image/png" href="https://www.yogiyo.co.kr/mobile/image/favicon.ico" />');
+			.write('<link rel="icon" type="image/png" href="/eatswill/resources/images/sicon.jpg" />');
    }
    
 
@@ -111,19 +116,18 @@ ng\:form {
 <meta property="og:title" content="lets eats will !">
 <meta property="og:url" content="http://www.yogiyo.co.kr/">
 <meta property="og:image"
-   content="https://www.yogiyo.co.kr/mobile/image/app_img_560x292.png">
-<meta property="og:description"
-   content="">
+	content="https://www.yogiyo.co.kr/mobile/image/app_img_560x292.png">
+<meta property="og:description" content="">
 <!-- ngIf: ! page.title -->
-<title ng-if="! page.title" class="ng-scope"> 다함께 eats will </title>
+<title ng-if="! page.title" class="ng-scope">다함께 eats will</title>
 <!-- end ngIf: ! page.title -->
 <!-- ngIf: page.title -->
 <link rel="apple-touch-icon-precomposed"
-   href="https://www.yogiyo.co.kr/mobile/image/app_128x128.png">
+	href="/eatswill/resources/images/sicon.jpg">
 <link rel="apple-touch-icon-precomposed" sizes="144x144"
-   href="https://www.yogiyo.co.kr/mobile/image/app_144x144.png">
+	href="/eatswill/resources/images/sicon.jpg">
 <link rel="icon" type="image/png"
-   href="https://www.yogiyo.co.kr/mobile/image/favicon.ico">
+	href="/eatswill/resources/images/sicon.jpg">
 
 <!-- Start location.search generate Code for Naver 검색 유입 -->
 
@@ -194,7 +198,6 @@ function switchScreen() {
 }
 //]]>
 </script>
-----------------------------------------------------------------  -->
 
 
 <noscript>
@@ -261,131 +264,10 @@ function switchScreen() {
 
    <div yogiyo-header="">
       <div id="header" class="header">
-
          <div role="navigation" class="nav-bar">
-            <div class="navigation ver-pc" ng-class="header_show()" style="background-color:orange;   "> <!--  색상수정예정예정 -->
-               <div class="app-down-banner clearfix ng-hide"
-                  ng-show="is_show_promotion_banner()">
-                  <div class="landing-banner">
-                     <div class="landing-header">
-                        
-                     </div>
-                     
-                  
-                  </div>
-               </div>
-            <!-- ----------------------------------------------------------------------------------------- -->   
-               
-              <nav>
-					<ul>
-						<li><a href="#menu">Menu</a></li>
-					</ul>
-				</nav>
-					
-				<nav id="menu">
-					<h2>Menu</h2>
-					<br/>
-					<input type="hidden" id="sessionId" value="${sessionScope.customInfo.id }"/>
-					<ul>
-						<c:choose>
-							<c:when test="${empty sessionScope.customInfo.id }">
-								<li><a href="${pageContext.request.contextPath}/login.action">로그인</a></li>
-							</c:when>
-							<c:otherwise>
-								<li><font color="#F2849E">${sessionScope.customInfo.name }</font> 님 환영합니다.
-	                      		<p style="text-align: left">
-	                      			전화번호 : ${sessionScope.customInfo.tel }</br>
-	                      			포인트 : ${sessionScope.customInfo.point }
-	                      		</p>
-										
-								<a href="javascript:logout();" data-nethru_clcode="A000012">로그아웃</a></li>
-							</c:otherwise>
-						</c:choose>
-						<li><a href="<%=cp%>/updateInfo.action">내정보수정</a></li>
-						<li><a href="generic.html">장바구니</a></li>
-						<li><a href="<%=cp%>/myOrder.action">주문내역</a></li>
-						<li><a href="<%=cp%>/heartStore.action">찜 목록</a></li>
-						<li><a href="<%=cp%>/myReview.action">마이 리뷰</a></li>
-					</ul>
-				</nav>
-            <!-- ----------------------------------------------------------------------------------------- -->   
-               <div class="nav-top clearfix"
-                  ng-hide="$location.path() == '/login/' &amp;&amp; is_mobile_device">
-                  <a href="<%=cp%>/main.action" style="text-decoration: none;"><img alt="" src="/eatswill/resources/img/icon3.png" width="125px"
-                  height="40px" style=" margin: 20px 10px;" ></a>
-            <%--       <h1 class="logor pull-left" ng-click="<%=cp%>/main.action" ></h1>  --%><!-- 로고로고 -->
-                  <div id="cart" class="pull-right">
-                     <span class="gps-status ng-binding"
-                        ng-show="check_show_location_button()"
-                        ng-click="toggle_location_block()" ng-bind="current_location">서초동</span>
-                     <a class="visible-xs" ng-show="check_show_location_button()"
-                        ng-click="toggle_location_block()"> <span
-                        class="ico-set-pic"></span>
-                     </a> <a id="button-cart" href="" class="visible-xs ng-hide"
-                        ng-click="click_cart_button()"
-                        ng-show="check_show_cart_button()"> <span class="ico-cart"></span>
-                        <span class="badge ng-binding"
-                        ng-bind="global_cart.get_amount()">0</span>
-                     </a>
-                  <%--    <button type="button" class="btn btn-login ng-binding" 
-                        ng-click="login()"
-                        ng-bind-html="check_login() ? '로그아웃' : '로그인 <span>|</span> 회원가입'"
-                        ng-show="is_yogiyo &amp;&amp; !session_storage.oauth_next" style="font-size: 1.2em; background-color: red;">
-                     로그인 <span>|</span> 회원가입 
-                     </button> --%>
-                     <c:choose>
-						<c:when test="${empty sessionScope.customInfo.id }">
-							<button type="button" class="btn btn-login ng-binding" style="width: 95px"
-							onclick="javascript:location.href='<%=cp %>/login.action';">로그인</button>
-							<button type="button" class="btn btn-login ng-binding" style="width: 95px"
-							onclick="javascript:location.href='<%=cp %>/signup.action';">회원가입</button>
-						</c:when>
-						<c:otherwise>
-							<button type="button" class="btn btn-login ng-binding" style="width: 150px"
-							onclick="javascript:location.href='<%=cp %>/logout.action';">로그아웃</button>
-						</c:otherwise>
-					</c:choose>
-                    <!--  <button type="button"
-                        class="btn btn-warning hidden-xs ng-binding"
-                        ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
-                        ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;" style="font-size: 1.2em; background-color: red;">주문표(0)</button> -->
-                  
-                  
-                  </div>
-               </div>
-            </div>
-
-            <div id="search" class="clearfix search search-show" style="background:url('/eatswill/resources/images/th.gif'); color: white;">
-               
-               <div class="input-group">
-                  <span class="input-group-btn loc">
-                     <button class="btn btn-default ico-loc" type="button"
-                        ng-click="get_current_location()">&nbsp;</button>
-                  </span>
-                  <form action="." onsubmit="return false"
-                     class="ng-pristine ng-valid-minlength ng-valid ng-valid-required">
-                     <input type="search"
-                        class="form-control ng-pristine ng-scope ng-valid-minlength ng-valid ng-valid-required ng-touched"
-                        name="address_input" autocomplete="off" autocorrect="off"
-                        autocapitalize="off" spellcheck="false"
-                        placeholder="건물명, 도로명, 지번으로 검색하세요." ng-minlength="1"
-                        ng-required="true"
-                        ng-model="session_storage.location.address_input" bs-dropdown=""
-                        ng-focus="show_location_search()" required="required">
-                  </form>
-                  <span id="button_search_address"
-                     class="input-group-btn always-show-search-buttons">
-                     <button
-                        class="btn-search-location-cancel btn-search-location btn btn-default ng-hide"
-                        type="button" ng-click="clear_search_location_input($event)"
-                        ng-show="is_shown_location_search.v">
-                        <span class="searchfield-cancel-button">&nbsp;</span>
-                     </button>
-                     <button class="btn btn-default ico-pick" type="button"
-                        ng-click="select_location($event)" style="background-color: red;">검색</button>
-                  </span>
-               </div>
-            </div>
+            <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+				
+			<%@ include file="/WEB-INF/views/layout/banner.jsp" %>
          </div>
       </div>
     		
@@ -410,10 +292,10 @@ function switchScreen() {
 	
 <!-- ------------------------------------------------------------------------------------------------- -->	
     
-	<div id="content" class="container-fluid ng-scope" ng-view="">
+	<div id="content" class="container-fluid ng-scope" ng-view="" style="font-size: 1.2em;">
 	
 <div class="checkout-wrap ng-scope">
-    <div class="col-sm-8">
+    <div class="col-sm-8" style="width: 66.66666667%;">
     	<form name="orderForm" method="post" action="">
       <div class="sub-title">
         <span>결제하기</span>
@@ -458,7 +340,10 @@ function switchScreen() {
 
                   <div class="ol-sm-offset-2 col-sm-10">
                     <div class="">
-                      <input type="tel" class="form-control input-type1 ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-pattern" placeholder="(필수)휴대전화 번호 입력" name="phone" ng-pattern="/^[0-9]+$/" ng-model="session_storage.checkout_input.phone" value="${dto1.userTel }" readonly="readonly" ng-required="true" ng-valid="" ng-change="update_phone_number()" ng-class="sms_verified ? 'success' : ''" required="required">
+                      <input type="tel" class="form-control input-type1 ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-pattern" 
+                      placeholder="(필수)휴대전화 번호 입력" name="phone" ng-pattern="/^[0-9]+$/" ng-model="session_storage.checkout_input.phone" 
+                      value="${dto1.userTel }" readonly="readonly" ng-required="true" ng-valid="" ng-change="update_phone_number()" 
+                      ng-class="sms_verified ? 'success' : ''" required="required" style="padding-left: 5px;font-size: 14px;">
                     </div>
 
                     <span class="help-block mar0 ng-hide" ng-show="form_checkout.$submitted || form_checkout.phone.$touched">
@@ -492,7 +377,8 @@ function switchScreen() {
           <div class="panel-collapse collapse am-collapse in" bs-collapse-target="">
             <div class="panel-body">
               <textarea class="form-control ng-pristine ng-untouched ng-valid ng-valid-maxlength" rows="3" ng-blur="check_order_request($event)" 
-              name="orderRequest" id="orderRequest" ng-model="session_storage.checkout_input.comment" maxlength="100" placeholder="코로나19 예방을 위해 비대면 배달 권장드립니다. 요기서 결제 선택 후, &quot;문 앞 배달&quot;을 요청사항에 남겨주세요.">${dto1.request}</textarea>
+              name="orderRequest" id="orderRequest" ng-model="session_storage.checkout_input.comment" maxlength="100" style="font-size: 14px;"
+              placeholder="코로나19 예방을 위해 비대면 배달 권장드립니다. 결제 선택 후, &quot;문 앞 배달&quot;을 요청사항에 남겨주세요.">${dto1.request}</textarea>
               <div class="txt-limit">
                 <div class="txt-length ng-binding">0 / 100</div>
                 <span class="help-block ng-hide" ng-show="(session_storage.checkout_input.comment.length) >= 100">
@@ -541,7 +427,7 @@ function switchScreen() {
                
                 <!-- active 달면 빨간줄 -->
                 
-                <label class="btn btn-default active" ng-show="is_show_creditcard" ng-class="is_show_cash ? '':'btn-full'">
+                <label class="btn btn-default active" ng-show="is_show_creditcard" ng-class="is_show_cash ? '':'btn-full'" style="font-size: 14px;">
                   <i class="icon-check icon-card"></i>
                    <input type="radio" id="orderMode" 
                   class="btn btn-default ng-pristine ng-untouched ng-valid ng-valid-required" 
@@ -549,7 +435,7 @@ function switchScreen() {
                   ng-required="true" bs-radio="" required="required" onclick="onSite();">신용카드
                 </label>
                 
-                <label class="btn btn-default" ng-show="is_show_cash" ng-class="is_show_creditcard ? '':'btn-full'">
+                <label class="btn btn-default" ng-show="is_show_cash" ng-class="is_show_creditcard ? '':'btn-full'" style="font-size: 14px;">
                   <i class="icon-check icon-money"></i> <input type="radio" id="orderMode" class="btn btn-default ng-pristine ng-untouched ng-valid ng-valid-required" 
                   ng-model="session_storage.checkout_input.payment"  ng-required="true" bs-radio="" onclick="onSite();" required="required">현금
                 </label>
@@ -666,22 +552,11 @@ function switchScreen() {
           </span></small>
         </div>
 <!-- ------------------------------------------------------------------------------------------------------------------------ -->
-		<button class="btn btn-lg btn-block btn-ygy1 ng-binding" onclick="requestPay('yes');" value="바로결제하기">바로결제하기</button>
+		<button class="btn btn-lg btn-block btn-ygy1 ng-binding" onclick="requestPay('yes');" value="바로결제하기" style="color: white;font-size: 18px;">바로결제하기</button>
 		</div>
 	</div>
 </div>
 </div>
-
-
-    
-
-       
-        
-        
-     
-  
-
-
 
 
 <form id="payment_form" action="" target="inicis_frame" method="POST" class="ng-pristine ng-valid"></form>
@@ -692,50 +567,8 @@ function switchScreen() {
 
 </div></div>
  
-	
-     <!--  ====================================================================하단바 시작 내용 수정 가능 -->
-     <div class="footer" >
-		<div class="footer-menu">
-		
-		</div>
-		
-		<!-- =========================================================================================== 하단끝 -->
-		
-		<div class="company-wrap">
-			<div class="company-logo">
-				<a href="" ng-click="click_home()">잇츠윌</a>
-			</div>
-			<div class="company-info">
-				<p>
-					<strong>(유) 윗츠윌 코리아 </strong>
-				</p>
-				
-			</div>
-		</div>
-		
-		<!-- ========================================================================= 하단 부분 -->
-		
-		<div class="service-info">
-			<div class="bpg">
-				<a href="#/trust/"><span class="img"></span><span class="text">잇츠윌<br>안심센터
-				</span></a>
-			</div>
-			<div class="cleanreview">
-				<a href="#/cleanreview/"><span class="img"></span><span
-					class="text">잇츠윌 100%<br>클린리뷰
-				</span></a>
-			</div>
-			<div class="csc">
-				<em>고객만족센터</em> <strong>1661-5270</strong> <span>24시간, 연중무휴</span>
-			</div>
-		</div>
-		<div class="guide">
-			<p>(유) 잇츠윌 코리아는 통신판매중개자이며 통신판매의 당사자가 아닙니다. 따라서 상품/ 거래정보 및 거래와
-				관련하여 잇츠윌에 등록된 판매자의 고의 또는 과실로 소비자에게 발생하는 손해에 대해 (유)잇츠윌 코리아는 책임을
-				지지 않습니다. 상품 및 거래에 관하여 보다 정확한 정보는 해당 판매자에게 직접 확인하여 주시기 바랍니다.
-				Copyright EATSWILL. All Rights Reserved.</p>
-		</div>
-	</div>
+	<!-- hi  -->
+    <%@ include file="/WEB-INF/views/layout/footer.jsp" %>
 	
 	<!-- ========================================================================= 하단 부분 -->
 	
@@ -781,11 +614,43 @@ function switchScreen() {
 		}
 	</script>
 		<script src="/eatswill/resources/assets/js/jquery.min.js"></script>
-			<script src="/eatswill/resources/assets/js/skel.min.js"></script>
-			<script src="/eatswill/resources/assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="/eatswill/resources/assets/js/main.js"></script>
-</div>
+		<script src="/eatswill/resources/assets/js/skel.min.js"></script>
+		<script src="/eatswill/resources/assets/js/util.js"></script>
+		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+		<script src="/eatswill/resources/assets/js/main.js"></script>
+		
+		<!-- 시연 - 슬라이드 -->
+
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+			crossorigin="anonymous"></script>
+		<script
+			src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+			integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+			crossorigin="anonymous"></script>
+		<script> $('.carousel').carousel({ interval: 1200 //기본 5초 }) </script>
+
+	<!-- 카카오톡 채팅 시작 -->
+	<div style="position: fixed; right: 10px; bottom: 10px;"
+		class="talk_image">
+		<a id="channel-chat-button" onclick="void chatChannel();">
+			<img src="/eatswill/resources/img/consult_small_yellow_pc1.png"
+			width="70" height="70" />
+		</a>
+		<script type="text/javascript">
+           // 웹 플랫폼 도메인 등 초기화한 앱의 설정이 그대로 적용됩니다.
+           // 초기화한 앱에 현재 도메인이 등록되지 않은 경우 에러가 발생합니다.
+           Kakao.init('c089c8172def97eb00c07217cae17495')
+           function chatChannel() {
+             Kakao.Channel.chat({
+               channelPublicId: '_Yfaxoxb',
+             })
+           }
+         </script>
+	</div>
+	<!-- 카카오톡 채팅 끝 -->
+
 
 </body>
 </html>

@@ -5,8 +5,8 @@
 	String cp = request.getContextPath();
 %>
 <!-- menu bar CSS -->
-<link rel="stylesheet" type="text/css" href="/eatswill/resources/css/default.css">
-<link rel="stylesheet" type="text/css" href="/eatswill/resources/css/component.css">
+<link rel="stylesheet" type="text/css" href="/eatswill/resources/css/default.css"> 
+<link rel="stylesheet" type="text/css" href="/eatswill/resources/css/component.css"> 
 <script type="text/javascript" src="/eatswill/resources/js/modernizr.custom.js" ></script>
 <!-- ------------ -->
 
@@ -71,7 +71,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="<%=cp %>/sales.action">
+							<a href="<%=cp %>/ceoStoreList.action?mode=sales">
 								<span class="icon">
 									<i aria-hidden="true" class="icon-team"></i>
 								</span>

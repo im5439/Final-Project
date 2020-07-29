@@ -219,7 +219,7 @@ ng\:form {
    $(function(){
       menuPage();
    }); 
-   
+   8
 
    $(document).ready(function(){
       
@@ -256,27 +256,60 @@ ng\:form {
    
    
    function menuPage(){
+	   
+	  var shopCode = "${shopCode}";
+	  var userId = "${userId}";
+	  var ceoId = "${ceoId}";
+	  
+	  
+	  var params =  "shopCode=" + shopCode 
+		+ "&userId=" + userId
+		+ "&ceoId=" + ceoId;
+	  
+  	$.ajax({
+		type:"POST",
+		url:"<%=cp%>/menu.action",
+		data:params,
+		success:function(args){
+
+		$("#menuData").html(args);
+			
+		},
+		error:function(e){
+			alert(e.responseText);
+		}
+		
+	});
+  	
+  	 $("#menuData").show();
+     $("#reviewData").hide();
+     $("#infoData").hide();
       
-      var url = "<%=cp%>/menu.action?shopCode=" + "${shopCode}" + "&userId=" + "${userId}" + "&ceoId=" + "${ceoId}";
-      
-      $.post(url,function(args){
-         $("#menuData").html(args);
-      });
-      
-         $("#menuData").show();
-         $("#reviewData").hide();
-         $("#infoData").hide();
-         
-      
+  
    }
    
    function reviewPage(){
-      
-      var url = "<%=cp%>/review.action?shopCode=" +"${shopCode}" + "&userId=" + "${userId}";
-      
-      $.post(url,function(args){
-         $("#reviewData").html(args);
-      });
+	  
+	   var shopCode = "${shopCode}";
+	   var userId = "${userId}";
+	   
+	   var params =  "shopCode=" + shopCode 
+		+ "&userId=" + userId;
+     
+      $.ajax({
+  		type:"POST",
+  		url: "<%=cp%>/review.action",
+  		data:params,
+  		success:function(args){
+  					
+  		$("#reviewData").html(args);
+  			
+  		},
+  		error:function(e){
+  			alert(e.responseText);
+  		}
+  		
+  	});
       
          $("#reviewData").show();
          $("#menuData").hide();
@@ -285,12 +318,27 @@ ng\:form {
    }
    
    function infoPage(){
-      
-      var url = "<%=cp%>/info.action?shopCode=" +"${shopCode}" + "&ceoId=" + "${ceoId}";
-      
-      $.post(url,function(args){
-         $("#infoData").html(args);
-      });
+	   
+	   var shopCode = "${shopCode}";
+		  var ceoId = "${ceoId}";
+	  
+	  var params =  "shopCode=" + shopCode 
+		+ "&ceoId=" + ceoId;
+     
+      $.ajax({
+    		type:"POST",
+    		url: "<%=cp%>/info.action",
+    		data:params,
+    		success:function(args){
+    					
+    		$("#infoData").html(args);
+    			
+    		},
+    		error:function(e){
+    			alert(e.responseText);
+    		}
+    		
+    	});
       
       $("#infoData").show();
       $("#reviewData").hide();
@@ -298,18 +346,19 @@ ng\:form {
       
    }
    
-   
-   
-   
  //카테검색
 	function select_category(cate){
 		
-	 	alert(cate);
-	 
 	  	var f = document.formCate;
 	  	
-	  	f.action="<%=cp %>/storeList.action?category=" + cate;
-	  	f.submit();
+	  	if (cate!=null){
+		  	f.action="<%=cp %>/storeList.action?category=" + cate;
+		  	f.submit();
+		  	return;
+		}
+		  	
+		f.action="<%=cp %>/storeList.action";
+		f.submit();
 	  
 	}
    
@@ -557,6 +606,9 @@ ng\:form {
   
   <!-- ------------------------------------------------------------------------------------------------- 리스트 상단 카테고리 -->
   <form action="" name="formCate" method="post">
+  <input type="hidden" name="searchKey" value="${searchKey }"/>
+  <input type="hidden" name="searchValue" value="${searchValue }"/>
+
   <div id="category" class="category-menu clearfix collapse in" aria-expanded="true">
     <ul>
 
@@ -564,7 +616,7 @@ ng\:form {
      
       <!--카테고리시작 -->
       
-      <li  onclick="select_category('');"><i class="category-icon ico-ct01"></i><span ng-bind="ct.title" class="category-name ng-binding">전체보기</span></li>
+      <li  onclick="select_category();"><i class="category-icon ico-ct01"></i><span ng-bind="ct.title" class="category-name ng-binding">전체보기</span></li>
       <li  onclick="select_category('kr')"><i class="category-icon ico-ct02"></i><span ng-bind="ct.title" class="category-name ng-binding">한식</span></li>
       <li  onclick="select_category('ch')"><i class="category-icon ico-ct03"></i><span ng-bind="ct.title" class="category-name ng-binding">중식</span></li>
       

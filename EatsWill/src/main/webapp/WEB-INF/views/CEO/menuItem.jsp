@@ -62,7 +62,7 @@
                 <td>
                   <div ng-show="restaurant|restaurant_is_available" class="logo" ng-style="{'background-image':'url(' + get_logo_url(restaurant.logo_url) + ')'}" style="background-image: url(&quot;/media/franchise_logos/나우픽_20191220_Franchise_crop_200x200.jpg&quot;);">
                   	<c:if test="${dto.menuImg != null }">
-                  	<img src="<spring:url value='/menuimg/${dto.menuImg }'/>"  style="width : 68; height : 68; max-height: max-content;"/>
+                  	<img src="<spring:url value='/menuImg/${dto.menuImg }'/>"  style="width : 68; height : 68; max-height: max-content;"/>
                   	</c:if>
 					<c:if test="${dto.menuImg == null }">
                   	<div class="logo not-available ng-binding ng-hide"><br/>이미지가<br/>없습니다.</div>

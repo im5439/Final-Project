@@ -253,12 +253,12 @@
 							<div>
 								<select class="inp-txt pwd" name="category" id="category">
 									<option value="">카테고리</option>
-									<option value="CK">치킨</option>
-									<option value="PY">피자/양식</option>
-									<option value="KR">한식</option>
-									<option value="BS">분식</option>
-									<option value="CH">중식</option>
-									<option value="JP">일식</option>
+									<option value="ck">치킨</option>
+									<option value="py">피자/양식</option>
+									<option value="kr">한식</option>
+									<option value="bs">분식</option>
+									<option value="ch">중식</option>
+									<option value="jp">일식</option>
 								</select>
 							</div>
 							<br/>

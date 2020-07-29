@@ -154,7 +154,7 @@
 	<input type="hidden" value="${shopCode}" id="shopCode">
 
 	<div class="own-container">
-		<div class="own-main">
+		<div class="own-main" style="margin-top: 0px;">
 		<%-- 
 			<ul class="nav clearfix" style="width: 861;">
 				<li class="n1"><a href="<%=cp %>/orderChk.action" style="cursor: pointer">주문확인</a></li>
@@ -192,8 +192,8 @@
 					            
 					          </div>
 					          <div style="width: 1000;">
-					             매장명 : ${dto.shopName }<br/>
-					             매장주소 : ${dto.shopAddr }
+					             매장명 : ${shopdto.shopName }<br/>
+					             매장주소 : ${shopdto.shopAddr }
 					          </div>
 					        </div>
 					      </div>

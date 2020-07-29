@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.eatswill.dto.CeoDTO;
 import com.eatswill.dto.OrderDTO;
+import com.eatswill.dto.SalesDTO;
 
 public class CeoDAO {
 
@@ -57,6 +58,20 @@ public class CeoDAO {
 		return result;
 		
 	}
+	
+	//사장님 해당 아이디의 총주문상태
+	public int ceoIdOrderStatus(String ceoId, String orderStatus) {
+		
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("ceoId", ceoId);
+		params.put("orderStatus", orderStatus);
+		
+		int result = sessionTemplate.selectOne("CeoMapper.ceoIdOrderStatus", params);
+		
+		return result;
+		
+	}
+	
 	
 	//해당 매장 삭제
 	public void deleteStore(String shopCode) {
@@ -151,10 +166,25 @@ public class CeoDAO {
 		
 	}
 	
-	//주문상태 업데이트
-	public void orderUpdate(String orderCode) {
+	//주문상태 업데이트 - 100들어오면 준비중(200) / 200 들어오면 배달완료(300)
+	public void orderUpdate(String orderCode, String orderStatus) {
 		
-		sessionTemplate.update("CeoMapper.orderUpdate", orderCode);
+		Map<String, Object> params = new HashMap<String, Object>();
+		if(orderStatus.equals("100")) {
+			params.put("orderStatus", "200");
+		} else if(orderStatus.equals("200")) {
+			params.put("orderStatus", "300");
+		}
+		params.put("orderCode", orderCode);
+		
+		sessionTemplate.update("CeoMapper.orderUpdate", params);
+		
+	}
+	
+	//주문상태 업데이트 - 배달취소 '400'
+	public void orderCancel(String orderCode) {
+		
+		sessionTemplate.update("CeoMapper.orderCancel", orderCode);
 		
 	}
 	
@@ -187,6 +217,51 @@ public class CeoDAO {
 		List<CeoDTO> lists = sessionTemplate.selectList("CeoMapper.getMenuList", params);
 		
 		return lists;
+		
+	}
+	
+	//일별 매출 가져오기 
+	public List<SalesDTO> getDaySales(String shopCode){
+		
+		List<SalesDTO> lists = sessionTemplate.selectList("CeoMapper.getDaySales", shopCode);
+		
+		return lists;
+		
+	}
+
+	//월별 매출 가져오기 
+	public List<SalesDTO> getMonthSales(String shopCode){
+		
+		List<SalesDTO> lists = sessionTemplate.selectList("CeoMapper.getMonthSales", shopCode);
+		
+		return lists;
+		
+	}
+	
+	//매장별 총매출
+	public int getTotSales(String shopCode) {
+		
+		int result = sessionTemplate.selectOne("CeoMapper.getTotSales", shopCode);
+		
+		return result;
+		
+	}
+	
+	//매장별 주문count
+	public int getOrderCount(String shopCode) {
+		
+		int result = sessionTemplate.selectOne("CeoMapper.getOrderCount", shopCode);
+		
+		return result;
+		
+	}
+
+	//매장별 찜count
+	public int getHeartCount(String shopCode) {
+		
+		int result = sessionTemplate.selectOne("CeoMapper.getHeartCount", shopCode);
+		
+		return result;
 		
 	}
 	

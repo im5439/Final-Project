@@ -250,10 +250,11 @@ public class StoreDAO {
 	}
 
 	//음식점 카운트(category별)
-	public int shopCount(String category ) {
+	public int shopCount(String category ,String search ) {
 
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("category", category);
+		map.put("search", search);
 		int shopCount = sessionTemplate.selectOne("storeMapper.shopCount",map);
 
 		return shopCount;
@@ -263,13 +264,13 @@ public class StoreDAO {
 
 	//음식점 리스트 리뷰순 정렬
 	public List<StoreDTO> orderByRe(int start, int end, String category, String search){
-		
+
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("start", start);
 		map.put("end", end);
 		map.put("category", category);
 		map.put("search", search);
-		
+
 		List<StoreDTO> lists = 
 				sessionTemplate.selectList("storeMapper.orderByRe",map);
 
@@ -279,7 +280,7 @@ public class StoreDAO {
 
 	//음식점 리스트 주문순 정렬
 	public List<StoreDTO> orderByO(int start, int end, String category, String search){
-		
+
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("start", start);
 		map.put("end", end);
@@ -295,7 +296,7 @@ public class StoreDAO {
 
 	//음식점 리스트 별점순 정렬
 	public List<StoreDTO> orderByRes(int start, int end, String category, String search){
-		
+
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("start", start);
 		map.put("end", end);
@@ -357,7 +358,7 @@ public class StoreDAO {
 		sessionTemplate.update("storeMapper.updateOrderPoint",userId);	
 	}
 
-	//결제후 결제금액 5프로 포인트 적립
+	//주문번호 조회
 	public StoreDTO selectOrderOne(String userId) {	
 
 		StoreDTO dto = sessionTemplate.selectOne("storeMapper.selectOrderOne",userId);
