@@ -414,7 +414,7 @@ $(document).ready(function() {
 	
 						<article>
 							<span class="image"> 
-								<a class="thumbnail" index="fr">
+								<a class="thumbnail" index="Y">
 									<div class="category-title">프랜차이즈</div> 
 									<img src="https://www.yogiyo.co.kr/mobile/image/category-10.png">
 								</a>

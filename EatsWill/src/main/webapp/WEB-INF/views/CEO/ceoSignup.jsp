@@ -23,14 +23,20 @@
     <link rel="stylesheet" type="text/css" href="https://owner.yogiyo.co.kr/media/owners/css/owners_new.css?v=587f2d4">
     <link href="https://owner.yogiyo.co.kr/media/compressed/owners_page_base.rffe6aa724bb156908393fab4f615e785.css" rel="stylesheet" type="text/css">
     
+    <script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
+    
 <style type="text/css">
 
 	.control-group {
-		margin-bottom: 15px;
+		padding-top: 15px;
+		padding-bottom: 15px;
+		border-top: 1px solid #d0d0d0;
 	}
 	
 	.control-label {
 		position: absolute;
+		font-weight: bold;
+		padding-top: 3px;
 	}
 	
 	.controls {
@@ -38,82 +44,180 @@
 	}
 	
 	 .control-text {
-	 	width: 40%;
+	 	width: 200px;
+	 	height: 30px;
+	 }
+	 
+	 .alert-text {
+	 	color: crimson;
+	 	font-weight: bold;
+	 	font-size: 12px;
 	 }
 
 </style>
 
-<!-- Google GA -->
-<script type="text/javascript">
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-47867637-1', {'cookieDomain': 'yogiyo.co.kr'});
-    
-    ga('send', 'pageview');
-    
-
-    function redirectLogin(next_url) {
-        
-        alert('로그인 후 이용하실 수 있습니다.');
-        window.location.href = '/owner/login/?next_url=' + next_url;
-        
-    }
-</script>
-
-<!-- //Google GA -->
-<script>
-        try {
-            var sc = document.cookie.match(/(?:(?:^|.*;\s*)sessionid\s*\=\s*([^;]*).*$)|^.*$/);
-            if (sc.length > 1 && sc[1]) {
-                document.cookie = 'sessionid='+sc[1]+'; path=/';
-            }
-        } catch (err) {}
-    </script>
-</head>
 
 <body>
     
 <script type="text/javascript">
+	
+	function inNumber(){
+	    if(event.keyCode<48 || event.keyCode>57){
+	       event.returnValue=false;
+	    }
+	}
+	
+	function inPwd(){
+	    var f = document.myForm;
+	    if(!f.ceoPw.value){
+	       event.returnValue=false;
+	    }
+	}
+	
+	function isValidEmail(email) {
+		var format = /^((\w|[\-\.])+)@((\w|[\-\.])+)\.([A-Za-z]+)$/;
+	    if (email.search(format) != -1)
+	        return true; //올바른 포맷 형식
+	    return false;
+	}	
 
 	function sendIt(){
 		
 		var f = document.myForm;
 		
+		var numCheck = /[0-9]/; 
+
+		if(!f.company_number.value){
+			alert("사업자번호를 입력하세요");
+			f.company_number.focus();
+			return;
+		}
+		
 		if(!f.ceoId.value){
 			alert("아이디를 입력하세요");
-			f.focus();
+			f.ceoId.focus();
 			return;
 		}
 
 		if(!f.ceoPw.value){
 			alert("비밀번호를 입력하세요");
-			f.focus();
+			f.ceoPw.focus();
 			return;
 		}
 		
-		f.action = "<%=cp%>/ceoSignup_ok.action";
-		f.submit();
+		if(!f.ceoPwChk.value){
+			alert("비밀번호를 확인하세요");
+			f.ceoPwChk.focus();
+			return;
+		}
 		
+		if(f.ceoPw.value != f.ceoPwChk.value){
+			alert("비밀번호가 일치하지 않습니다");
+			f.ceoPwChk.focus();
+			return;
+		}
+		
+		if(!f.ceoName.value){
+			alert("이름을 입력하세요");
+			f.ceoName.focus();
+			return;
+		}
+		
+		if(!f.ceoEmail.value){
+			alert("이메일을 입력하세요");
+			f.ceoEmail.focus();
+			return;
+		}
+		
+		if(!isValidEmail(f.ceoEmail.value)) {
+	       	 	alert("\n정상적인 E-Mail을 입력하세요. ");
+	        	f.ceoEmail.focus();
+	        	return;
+		}
+		
+		$.ajax({
+	            url: "ceoIdCheck.action",
+	            type: "POST",            
+	            data: param,
+	            success: function(data){
+	            	if(data=="fail") {
+	            		alert("이미 사용중인 아이디입니다");
+	            		f.ceoId.focus();
+	            		return;
+	            	} else {
+	            		f.action = "<%=cp%>/ceoSignup_ok.action";
+	            		f.submit();
+	            	}
+	            },	
+	            error: function(){
+	                alert("Error");
+	            }
+	        });
 	}
 
-</script>    
+</script>   
+
+<script type="text/javascript">
+
+$(function() {
+	$("#ceoId").blur(function(){
+		if($("#ceoId").val() != "") {
+			var param = "ceoId=" + $("#ceoId").val();
+            
+		        $.ajax({
+		            url: "ceoIdCheck.action",
+		            type: "POST",            
+		            data: param,
+		            success: function(data){
+		            	if(data=="fail") {
+		            		$("#ceoIds").text("이미 사용중인 아이디입니다");
+		            	} else {
+		            		$("#ceoIds").text("");
+		            	}
+		            },
+		            error: function(){
+		                alert("Error");
+		            }
+		        });
+		}
+	});
+	
+	$("#ceoPw").blur(function(){
+		if($("#ceoPw").val() == "") {
+			$("#ceoPwChk").val("");
+		}
+	});
+	
+	$("#ceoPwChk").blur(function(){
+		if($("#ceoPw").val() != "" && $("#ceoPwChk").val() != "") {
+			if($("#ceoPw").val() != $("#ceoPwChk").val()) {
+				$("#ceoPwChks").text("패스워드가 일치하지 않습니다");
+			} else {
+				$("#ceoPwChks").text("");
+			}
+		}
+	});
+	
+	$("#ceoEmail").blur(function(){
+		if($("#ceoEmail").val() != "") {
+			if(!isValidEmail($("#ceoEmail").val())) {
+				$("#ceoEmails").text("\n정상적인 E-Mail이 아닙니다 ");
+			} else {
+				$("#ceoEmails").text("");
+			}
+		}
+	});
+	
+});
+
+</script> 
 
 <div id="nav" class="own-header">
 	<div class="clearfix">
 		<h1>
 			<a href="<%=cp%>/CEO.action/">사장님 사이트</a>
 		</h1>
-		<!-- 
-		<ul class="nav">
-			<li class="n1 "><a nohref=""
-				onclick="javascript:alert('로그인 후 이용하실 수 있습니다.'); window.location.href='/owner/login/?next_url=/owner/orders/'"
-				style="cursor: pointer">내 업소 관리</a></li>
-			<li class="n2 "><a href="/owner/benefit/restaurant/">사장님 혜택</a></li>
-			<li class="n3 "><a href="/owner/join/intro/">입점 안내</a></li>
-		</ul>
-			-->
+
 		<ul class="ext">
 			<li class="outlink"><a href="https://boss.yogiyo.co.kr/"
 				target="_blank"></a></li>
@@ -122,7 +226,7 @@
 	</div>
 </div>
 
-<div class="rd-wrapper contact-wrapper" style="margin: 8% 28% 9.5% 22%;text-align: center;">
+<div class="rd-wrapper contact-wrapper" style="margin: 4% 28% 6.5% 22%;text-align: center;">
     
     <form class="form-horizontal form-signin" method="POST" action="" name="myForm">
       <div class="registration-wrap" style="text-align: left;">
@@ -130,59 +234,57 @@
 		<div class="control-group">
 			<div class="control-label">사업자번호</div>
 			<div class="controls">
-				<input type="text" name="company_number" id="id_company_number" class="control-text">
-				<span class="alert-text">"-" 포함하고 입력 필요. ex) 111-11-11111</span>
+				<input type="text" name="company_number" id="company_number" class="control-text" maxlength="10" 
+				onkeypress="inNumber();">
+				<span id="company_numbers">"-" 제외하고 입력 필요. ex) 1234512345</span>
 			</div>    
 		</div>
 		    
 		<div class="control-group">  
 			<div class="control-label">아이디</div>
 		    <div class="controls">	
-		    	<input type="text" name="ceoId" id="id_phone_number" class="control-text">
+		    	<input type="text" name="ceoId" id="ceoId" class="control-text">
+		    	<span class="alert-text" id="ceoIds"></span>
 		    </div>
 		</div>
 		
 		<div class="control-group">
 			<div class="control-label">패스워드</div>
 			<div class="controls">
-				<input type="password" name="ceoPw" id="id_phone_number" class="control-text">
+				<input type="password" name="ceoPw"  id="ceoPw" class="control-text">
 		    </div>
 		</div>
 		
 		<div class="control-group">
-			<div class="control-label">비밀번호확인</div>
+			<div class="control-label">패스워드확인</div>
 			<div class="controls">
-	            <input type="password" name="" id="id_phone_number" class="control-text">
+	            		<input type="password"  name="ceoPwChk"  id="ceoPwChk" class="control-text" onkeypress="inPwd();">
+	            		<span class="alert-text" id="ceoPwChks"></span>
 	        </div>
 		</div>
 		
 		<div class="control-group"> 
 		  	<div class="control-label">이름</div>
 		    <div class="controls">	
-		    	<input type="text" name="ceoName" id="id_phone_number" class="control-text">
+		    	<input type="text" name="ceoName" id="ceoName" class="control-text">
 		    </div>
 		</div>
 		
-		<div class="control-group">
-			<div class="control-label">이메일</div>
+		<div class="control-group" style="border-bottom: 1px solid #d0d0d0;">
+			<div class="control-label" >이메일</div>
 			<div class="controls">
-				<input type="text" name="ceoEmail" id="id_phone_number" class="control-text">
+				<input type="text" name="ceoEmail" id="ceoEmail" class="control-text">
+				<span class="alert-text" id="ceoEmails"></span>
 		  	</div>
 		</div>
       
       </div>
 
-      
-      <div class="txts">
-        <p class="bs-callout-info"><i class="spr"></i>‘회원가입 인증하기’는 입점신청이 완료된 사장님에 한해 이용이 가능합니다.</p>
-        <p><i class="spr"></i>아직 요기요 입점을 신청하지 않으셨다면 온라인 입점신청을 진행해주세요. <a href="/owner/join/process/" class="link">온라인 입점신청하기</a></p>
-        <p><i class="spr"></i>아이디/비밀번호를 분실한 경우, 본 페이지에서 사업자번호와 휴대폰번호를 인증하시면 아이디/비밀번호를 재등록하실 수 있습니다.</p>
-      </div>
-      
 
     </form>
       <div class="btn-wrapper">
-        <button type="submit" name="contact_yogiyo" class="btn" onclick="sendIt();">회원 가입</button>
+        <button type="submit" class="btn" onclick="sendIt();"
+        style="width: 150px;height: 40px;margin-top: 40px;font-weight: bold;">회원 가입</button>
       </div>
   </div>
 

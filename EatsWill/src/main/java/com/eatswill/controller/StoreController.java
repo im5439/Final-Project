@@ -530,6 +530,8 @@ public class StoreController {
 		if(category ==null || category.equals("")) {
 			category="";
 		}
+		
+		
 		System.out.println("category=" + category);
 
 

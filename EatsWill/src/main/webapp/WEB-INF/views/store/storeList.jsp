@@ -511,7 +511,7 @@ ng\:form {
                               class="category-name ng-binding">일식</span></li>
                               
                            <li 
-                              onclick="select_category('fr')"><i
+                              onclick="select_category('Y')"><i
                               class="category-icon ico-ct08"></i><span ng-bind="ct.title"
                               class="category-name ng-binding">프렌차이즈</span></li>
 
@@ -547,7 +547,7 @@ ng\:form {
     
 <!-- ====================================================================================================================  카테고리 끝 -->    
     
-      <div class="list-option">
+      <div class="list-option" style="margin-left: 50%;">
                <div class="list-option-inner">
                <form action="" method="post" name="myForm">
                   <select name="sort" onchange="sendIt(this.value)">

@@ -624,7 +624,7 @@ ng\:form {
       <li onclick="select_category('py')"><i class="category-icon ico-ct05"></i><span ng-bind="ct.title" class="category-name ng-binding">피자/양식</span></li>
       <li onclick="select_category('bs')"><i class="category-icon ico-ct06"></i><span ng-bind="ct.title" class="category-name ng-binding">분식</span></li>
 	  <li onclick="select_category('jp')"><i class="category-icon ico-ct07"></i><span ng-bind="ct.title" class="category-name ng-binding">일식</span></li>
-	  <li onclick="select_category('fr')"><i class="category-icon ico-ct08"></i><span ng-bind="ct.title" class="category-name ng-binding">프렌차이즈</span></li> 
+	  <li onclick="select_category('Y')"><i class="category-icon ico-ct08"></i><span ng-bind="ct.title" class="category-name ng-binding">프렌차이즈</span></li> 
       <li class="main-search hide">
       <form action="." onsubmit="return false" class="ng-pristine ng-valid">
         <div class="input-group">
