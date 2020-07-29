@@ -11,7 +11,7 @@
 		<div class="company-logo"></div>
 		<div class="company-info">
 			<p>
-				<strong>(유) 윗츠윌 코리아 </strong>
+				<strong>(유) 윗츠윌 코리아</strong>
 			</p>
 
 		</div>

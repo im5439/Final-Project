@@ -9563,11 +9563,11 @@ figure {
 img {
 	border-style: none
 }
-
+/* 
 img, svg {
 	vertical-align: middle
 }
-
+ */
 svg {
 	overflow: hidden
 }

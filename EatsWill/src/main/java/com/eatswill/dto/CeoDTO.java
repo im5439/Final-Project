@@ -62,12 +62,16 @@ public class CeoDTO {
 	private String deliveryAddr1;
 	private String deliveryAddr2;
 	private List<OrderDTO> orderDetail;
+	private int osCount100;
+	private int osCount200;
 	//=======================
 	
 	//∏≈√‚===================
 	private String orderDay;
 	private String sumDay;
+	//=======================
 	
+	private String codeName;
 	
 	public String getCeoId() {
 		return ceoId;
@@ -309,6 +313,18 @@ public class CeoDTO {
 	public void setOrderDetail(List<OrderDTO> orderDetail) {
 		this.orderDetail = orderDetail;
 	}
+	public int getOsCount100() {
+		return osCount100;
+	}
+	public void setOsCount100(int osCount100) {
+		this.osCount100 = osCount100;
+	}
+	public int getOsCount200() {
+		return osCount200;
+	}
+	public void setOsCount200(int osCount200) {
+		this.osCount200 = osCount200;
+	}
 	public String getOrderDay() {
 		return orderDay;
 	}
@@ -320,6 +336,12 @@ public class CeoDTO {
 	}
 	public void setSumDay(String sumDay) {
 		this.sumDay = sumDay;
+	}
+	public String getCodeName() {
+		return codeName;
+	}
+	public void setCodeName(String codeName) {
+		this.codeName = codeName;
 	}
 	
 	

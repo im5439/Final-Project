@@ -375,6 +375,7 @@ public class StoreController {
 		request.setAttribute("lists", lists);
 		request.setAttribute("lists2", lists2);
 
+		request.setAttribute("userId", userId);
 
 		return "store/cart";
 	}

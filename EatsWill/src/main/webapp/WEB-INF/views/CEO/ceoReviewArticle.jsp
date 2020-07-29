@@ -11,7 +11,7 @@
 
 
 $(function(){
-
+	<%-- 
 	var btnIdx;
 	  
 	  $(".btn-modal").click(function(){
@@ -49,8 +49,7 @@ $(function(){
 	        });
 		  
 	  });
-	  
-	  
+	 --%>  
 	  /* 
 	  $('.modal').on('hidden.bs.modal', function (e) {
 		    console.log('modal close');
@@ -58,7 +57,7 @@ $(function(){
 		});
 	   */
 	  
-
+<%-- 
 	  var delIdx;
 
 	  $(".btn-del").click(function(){
@@ -98,25 +97,96 @@ $(function(){
 	        });
 	        
 	    });
+	   --%>
 	  
+
 		
 });
 
+function modal(btnIdx, pageNum ) {
+    
+    var params = "renum=" + $("#renum" + btnIdx).val();
+    params += "&shopCode=" + $("#shopCode").val();
+    //params += "&shopName=" + $("#shopName").val();
+    params += "&pageNum=" + pageNum;
+    params += "&end=" + "${end}";
+
+    	    
+    console.log("modal");
+    console.log('btnIdx====> ' + btnIdx);
+    console.log('params====> ' + params);
+
+    $.ajax({
+        type:"post",
+        url:"<%=cp%>/reviewModal.action",
+        async: false,
+        data:params,
+        success: function(args){
+        
+           $("#reviewModal").html(args);
+        
+        },
+        error:function(e){
+        	alert("실패하였습니다.??");
+          	console.log(request.status);
+          	console.log(request.responseText);
+          	console.log(error);
+        }
+        
+     });
+     
+     return false;
+ }
+
+function deleteItem(btnIdx, pageNum ) {
+    
+    var params = "renum=" + $("#renum" + btnIdx).val();
+    params += "&shopCode=" + $("#shopCode").val();
+    //params += "&shopName=" + $("#shopName").val();
+    params += "&pageNum=" + pageNum;
+
+    console.log("delete");
+    console.log('btnIdx====> ' + btnIdx);
+    console.log('params====> ' + params);
+
+    $.ajax({
+        type:"post",
+        url:"<%=cp%>/ajaxCeoReviewDel.action",
+        async: false,
+        data:params,
+        success: function(args){
+        
+           $("#ceoReviewArticle").html(args);
+        
+        },
+        error:function(e){
+        	console.log("실패하였습니다.");
+          	console.log(request.status);
+          	console.log(request.responseText);
+          	console.log(error);
+        }
+        
+     });
+     
+     return false;
+ }
+
+
+
 </script>
 
-<div>
 		<c:forEach var="dto" items="${reviewList }" varStatus="status">
 	        <!-- ngRepeat: review in restaurant.reviews -->
 	        <!-- end ngRepeat: review in restaurant.reviews -->
 	        <li class="list-group-item star-point ng-scope" ng-repeat="review in restaurant.reviews" on-finish-render="scrollCartArea()" id="ceoreply">
 	          <div>
 	            <span ng-show="review.phone" class="review-id ng-binding">${dto.userId }</span>
-	            <span ng-bind="review.time|since" class="review-time ng-binding">어제</span>
+	            <span ng-bind="review.time|since" class="review-time ng-binding">&nbsp;&nbsp; 주문일시 : ${dto.reCreated }</span>
 		        
 		        <c:if test="${dto.ceoContent == null }">
-		        <a href="#ex1" rel="modal:open" class="btn-modal" index="${status.index }">답글</a>
+		        <a href="#ex1" onClick="modal(${(currentPage-1)*4 + status.index }, ${currentPage})" rel="modal:open" class="btn-modal" index="${(currentPage-1)*4 + status.index }" style="padding-left: 553px;">답글</a>
 		        </c:if>
-				<input type="hidden" value="${dto.renum }" id="renum${status.index }"/>
+				<input type="hidden" value="${dto.renum }" id="renum${(currentPage-1)*4 + status.index }"/>
 	          </div>
 	          
 	          <div>
@@ -167,11 +237,9 @@ $(function(){
 	          <!-- ngIf: review.review_images.length == 3 -->
 	
 	          <div class="order-items default ng-binding" ng-click="show_review_menu($event)">
-	          <%-- 
 	          <c:forEach var="dedto" items="${dto.orderDetail }">
-	            	${dedto.menuName }
+	            	${dedto.menuName }/${dedto.oqty } &nbsp;&nbsp;
 	          </c:forEach>
-	           --%>
 	          </div>
 	
 	          <p ng-show="review.comment" ng-bind-html="review.comment|strip_html" class="ng-binding"> ${dto.reContent } </p>
@@ -182,7 +250,8 @@ $(function(){
 	            <div>
 	              <span class="owner-review-id">사장님</span>
 	              <!-- <span ng-bind="review.owner_reply.created_at|since" class="review-time ng-binding">어제</span> -->
-	              <a class="btn-del" index2="${status.index }">삭제</a>
+	              <%-- <a class="btn-del" index2="${status.index }">삭제</a> --%>
+	              <a onClick="deleteItem(${(currentPage-1)*4 + status.index }, ${currentPage})" class="btn-del" index2="${(currentPage-1)*4 + status.index }" style="padding-left: 692px;">삭제</a>
 	            </div>
 	
 	            <p ng-bind-html="review.owner_reply.comment|strip_html" class="ng-binding">
@@ -193,23 +262,19 @@ $(function(){
 	        </li><!-- end ngRepeat: review in restaurant.reviews -->
 	        <!-- end ngRepeat: review in restaurant.reviews -->
 	   </c:forEach>
-			 <ul id="review" class="list-group review-list">
 		      <c:if test="${reviewList == null } ">
+			 <ul class="list-group review-list">
 		        <li class="list-group-item ng-hide" ng-show="restaurant.reviews.length < 1">
 		          <p class="review-empty clearfix ng-binding">리뷰가 없습니다.</p>
 		        </li>
-		      </c:if>
-		        <li class="list-group-item btn-more" ng-show="check_more_review()">
-		          <a ng-click="get_next_reviews()"><span>더 보기<i class="arr-down"></i></span></a>
-		        </li>
 	      	</ul>
+		      </c:if>
 	      	
 	      	
 								
-		<span id="reviewModal" style="display: none"></span><!-- ceoReviewArticle.jsp 불러옴 -->
+		<span id="reviewModal" style="display: none"></span><!-- reviewModal.jsp 불러옴 -->
 			
 		
 				
-</div>			
 					   
 

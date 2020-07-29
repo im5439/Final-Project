@@ -81,5 +81,6 @@
 				ng-click="select_location($event)"
 				style="background-color: #FE642E; left: 2em; font-size: 10pt; border-radius: 20px 20px 20px 20px">검색</button>
 		</span>
+		<input type="hidden" name="category" value="${category }">
 	</div>
 </form>

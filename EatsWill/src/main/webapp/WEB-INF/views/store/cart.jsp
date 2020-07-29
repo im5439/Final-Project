@@ -91,13 +91,13 @@ input[type=button]{
     function addside(){
 
     	var listsu = "${listsu}";
-    	var listSideSu = "${listSideSu}";
+    	//var listSideSu = "${listSideSu}";
 	
 	    for(var i=0;i<listsu;i++){
 	    	document.getElementById("cAmount"+i).value = 
 	    		Number(document.getElementById("cAmount"+i).value); 
 	    		//+ Number(document.getElementById("sidePrice"+i).value);
-		    	for(var j=0;j<listSideSu;j++){
+		    	for(var j=0;j<listsu;j++){
 		    		if(document.getElementById("cAmountSide"+i+"_"+j)){
 			    		document.getElementById("cAmount"+i).value = 
 			    			Number(document.getElementById("cAmount"+i).value)
@@ -137,12 +137,13 @@ input[type=button]{
     	 
 	         var val = Number(obj1.value) + 1;
 	         
-	         priceAmount.value = Number(priceAmount.value) + Number(obj2.value);
+	         
 	         obj1.value = val;
 
 	         obj3.value =  (Number(obj3.value) + Number(obj2.value));
 	         // addsidesel(btnIdx);
 	         //기존의 주문 총 금액에서 선택한 메뉴의 금액을 더함
+	         priceAmount.value = Number(priceAmount.value) + Number(obj2.value);
 	       
 	     
 		}
@@ -157,13 +158,15 @@ input[type=button]{
 		        	priceAmount.value = Number(priceAmount.value) - Number(obj2.value);
 		        }				
 		     
-		        if(val <= 0){ val=1; }
+		        if(val>0){
+			        if((Number(obj3.value) - Number(obj2.value))>=Number(obj2.value)) {
+			        	obj3.value =  Number(obj3.value) - Number(obj2.value);
+			        }
+		        }
+		        
+				if(val <= 0){ val=1; }
 		        
 		        obj1.value = val;
-		
-		        if((Number(obj3.value) - Number(obj2.value))>Number(obj3.value)) {
-		        	obj3.value =  Number(obj3.value) - Number(obj2.value);
-		        }
 		       // addsidesel(btnIdx);
 		}
 	    
@@ -185,7 +188,7 @@ input[type=button]{
     		data:params,
     		success:function(args){
     					
-    		$("#cartHere").html(args);
+    			$("#cartHere").html(args);
     			
     		},
     		error:function(e){
@@ -210,7 +213,7 @@ input[type=button]{
 		var cartAmount = "";
 		var sidePrice = "";
 		
-		for(var i=0; i<size; i++) {
+		for(var i=1; i<size; i++) {
 			
 			mainQty +=  document.getElementById("amount" + i).value + ',';
 			cartMenuCode +=  document.getElementById("cartMenuCode" + i).value + ',';
@@ -219,7 +222,7 @@ input[type=button]{
 			
 		}
 		
-		for(var i=0; i<size2; i++) {
+		for(var i=1; i<size2; i++) {
 			
 			sidePrice +=  document.getElementById("sidePrice" + i).value + ',';
 		}
@@ -237,6 +240,32 @@ input[type=button]{
 		
 		alert("끝");
 	
+	}
+	
+	function sendIt1() {
+	      
+	      var f = document.storeForm;
+	      var userId = "${userId }";
+	   
+	      
+	      if(userId=="guest"){
+	         
+	         alert("로그인을 먼저 해주세요!");
+	         f.action = "<%=cp %>/login.action";
+	         f.submit();   
+	         return;   
+	         
+	      } 
+	      
+	      if(userId!="guest" && $("#priceAmount").val()==null || $("#priceAmount").val()==0 ){
+	         
+	         alert("주문표에 음식을 담아주세요!");
+	         return;
+	      }
+	      
+	      f.action = "<%=cp%>/cartUpdate.action";
+	      f.submit(); 
+	   
 	}
  
     </script>
@@ -265,7 +294,7 @@ input[type=button]{
       <!-- ngRepeat: item in cart.get().items -->
     </ul>
  
-        <form name="storeForm" method="post" action="<%=cp%>/cartUpdate.action">
+        <form name="storeForm" method="post" action="">
         <c:forEach var="dto" items="${lists }" varStatus="status">
  
         <div align="center"  style="">
@@ -304,9 +333,9 @@ input[type=button]{
        		
        			<input type="text" id="cAmount${status.index}" name="cAmount" value="${dto.cAmount }" size="11" readonly="readonly" style="text-align: right;"/>
        			
-       			<c:forEach var="dto1" items="${lists1 }" varStatus="statusSide">
-	       			 <c:if test="${lists1!=null && dto.menuCode==dto1.menuCode}" >
-		       			 <input type="hidden" id="cAmountSide${status.index}_${statusSide.index}"  value="${dto1.cAmount }" size="11" readonly="readonly" style="text-align: right;"/>
+       			<c:forEach var="dto2" items="${lists2 }" varStatus="statusSide">
+	       			 <c:if test="${lists2!=null && dto.menuCode==dto2.menuCode}" >
+		       			 <input type="hidden" id="cAmountSide${status.index}_${statusSide.index}"  value="${dto2.sideSum }" size="11" readonly="readonly" style="text-align: right;"/>
 		       		</c:if>
         		</c:forEach>
        			
@@ -364,7 +393,7 @@ input[type=button]{
             <span ng-show="! cart.is_empty()" class="ng-hide">메뉴추가</span>
             <span ng-show="cart.is_empty()">홈으로 가기</span>
       </a>
-      <a class="btn btn-lg btn-ygy1 btn-block" ng-disabled="cart.get_restaurant_id() != restaurant.id || cart.get_amount() < 1" onclick="cQtyChk();javascript:storeForm.submit();">주문하기</a>
+      <a class="btn btn-lg btn-ygy1 btn-block" ng-disabled="cart.get_restaurant_id() != restaurant.id || cart.get_amount() < 1" onclick="cQtyChk();sendIt1();">주문하기</a>
     </div>
   </div>
 </div>

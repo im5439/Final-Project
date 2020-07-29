@@ -248,7 +248,7 @@ public class CEOController {
 
 	//매장리스트 mode (주문확인,메뉴관리,리뷰관리)
 		@RequestMapping(value = "/ceoStoreList.action", method = { RequestMethod.POST, RequestMethod.GET })
-		public String storeList(HttpServletRequest request, HttpSession session, CeoDTO dto) {
+		public String storeList(HttpServletRequest request, HttpSession session) {
 			
 			String mode = request.getParameter("mode");
 			System.out.println(mode);
@@ -266,6 +266,15 @@ public class CEOController {
 			} else if(mode.equals("orderChk")) {
 				
 				List<CeoDTO> shopList = dao.getStoreList(ceoId);
+				Iterator<CeoDTO> it = shopList.iterator();
+				while(it.hasNext()) {
+					CeoDTO sdto = it.next();
+					String shopCode = sdto.getShopCode();
+					int osCount100 = dao.getOSCount100(shopCode); //매장별 주문확인 카운트
+					int osCount200 = dao.getOSCount200(shopCode); //매장별 준비중 카운트
+					sdto.setOsCount100(osCount100);
+					sdto.setOsCount200(osCount200);
+				}
 				
 				request.setAttribute("mode", mode);
 				request.setAttribute("shopList", shopList);
@@ -275,7 +284,7 @@ public class CEOController {
 			} else if(mode.equals("ceoReview")) {
 				
 				List<CeoDTO> shopList = dao.getStoreList(ceoId);
-
+				
 				int storeCount = dao.getStoreCount(ceoId);
 				
 				request.setAttribute("mode", mode);
@@ -303,25 +312,124 @@ public class CEOController {
 		}
 	
 	//리뷰관리 START=============================================================================================================================
-	//리뷰페이지 ajax
-	@RequestMapping(value = "/ceoReviewArticle.action", produces = "application/String;charset=utf8", method = RequestMethod.POST)
-	public String ajaxStoreRiview(HttpServletRequest request, HttpSession session) {
+	//해당매장의 리뷰리스트 페이지
+	@RequestMapping(value = "/storeReview.action", method = { RequestMethod.POST, RequestMethod.GET })
+	public String storeReiew(HttpServletRequest request, HttpSession session) {
 
+//		CeoInfo info = (CeoInfo) session.getAttribute("ceoInfo");
+//		String ceoId = info.getCeoId();
+		String shopCode = request.getParameter("shopCode");
+		
+//		List<CeoDTO> reviewList = dao.getStoreReview(ceoId, shopCode);
+		
+		int reviewCount = dao.getReviewCount(shopCode);
+		CeoDTO shopdto = dao.getStoreName(shopCode);
+		
+		if(reviewCount != 0) {
+			double avgReScore = dao.getAvgReScore(shopCode); // 해당 매장 평균별점
+			double avgReScore2 = Math.round(avgReScore); // 매장 평균 별점 반올림함
+			request.setAttribute("avgReScore", avgReScore);
+			request.setAttribute("avgReScore2", avgReScore2);
+		}
+		
+		//전체페이지수
+		int numPerPage = 4;
+		int currentPage = 1;
+		
+		request.setAttribute("currentPage", currentPage);
+		request.setAttribute("numPerPage", numPerPage);
+		request.setAttribute("shopdto", shopdto);
+		request.setAttribute("shopCode", shopCode);
+//		request.setAttribute("reviewList", reviewList);
+		request.setAttribute("reviewCount", reviewCount);
+		
+		return "CEO/storeReview";
+		
+	}
+		
+	//리뷰페이지 ajax (onload or 더보기)
+	@RequestMapping(value = "/ceoReviewArticle.action", produces = "application/String;charset=utf8", method = {RequestMethod.POST, RequestMethod.GET})
+	public String ajaxStoreReview(HttpServletRequest request, HttpSession session) {
+		System.out.println("ceoReviewArticle.action");
 		CeoInfo info = (CeoInfo) session.getAttribute("ceoInfo");
 		String ceoId = info.getCeoId();
 		String shopCode = request.getParameter("shopCode");
+		
 		System.out.println("리뷰페이지 : " + shopCode);
-		List<CeoDTO> reviewList = dao.getStoreReview(ceoId, shopCode);
+		
+		String shopName = request.getParameter("shopName");
+		String pageNum = request.getParameter("pageNum");
+		
+//		List<CeoDTO> menuSize = dao.getStoreMenu(shopCode);
+//		
+//		int maxMenu = menuSize.size();
+		
+		System.out.println("리뷰페이지 shopCode : " + shopCode);
+		
+		System.out.println("pageNum : " + pageNum);
+		int currentPage = 1;
+		
+		if(pageNum != null)
+			currentPage = Integer.parseInt(pageNum);
+		
+		//전체데이터갯수
+		int reviewCount = dao.getReviewCount(shopCode);
+		
+		System.out.println("reviewCount : " + reviewCount);
+		
+		//전체페이지수
+		int numPerPage = 4;
+		int totalPage = myUtil.getPageCount(numPerPage, reviewCount);
+		System.out.println("totalPage : " + totalPage);
+		System.out.println("currentPage : " + currentPage);
+		
+		if(currentPage > totalPage)
+			currentPage = totalPage;
+		
+		int start = (currentPage - 1 ) * numPerPage + 1;
+		int end = currentPage * numPerPage;
+		request.setAttribute("end", end);
+		
+		System.out.println("start : " + start);
+		System.out.println("end : " + end);
+		
+		//by hklee
+		if(currentPage > totalPage)	
+			end = totalPage * numPerPage;
+		List<CeoDTO> reviewList = dao.getStoreReview(ceoId, shopCode, start, end);
+		Iterator<CeoDTO> it = reviewList.iterator();
+		while(it.hasNext()) {
+
+			CeoDTO dto = it.next();
+			String orderCode = dto.getOrderCode();
+			List<OrderDTO> orderDetail = dao.getOrderDetail(orderCode);
+			dto.setOrderDetail(orderDetail);
+			
+			System.out.println(dto.getReContent());
+			
+		}
+		
+		
+		request.setAttribute("numPerPage", numPerPage);
+		request.setAttribute("shopCode", shopCode);
+		request.setAttribute("shopName", shopName);
+		
+		if(currentPage > totalPage)		
+			request.setAttribute("currentPage", totalPage);
+		else
+			request.setAttribute("currentPage", currentPage);
+		
+		request.setAttribute("reviewCount",reviewCount);
 		request.setAttribute("reviewList", reviewList);
 
 		return "CEO/ceoReviewArticle";
 
 	}
 
-	//리뷰페이지 사장님 답글처리 ajax
-	@RequestMapping(value = "/ajaxCeoReview.action", produces = "application/String;charset=utf8", method = RequestMethod.POST)
+	//리뷰페이지 사장님 답글달기 ajax
+	@RequestMapping(value = "/ajaxCeoReview.action", method = {RequestMethod.POST, RequestMethod.GET})
 	public String ajaxCeoReview(HttpServletRequest request, HttpSession session, CeoDTO dto) {
-		
+		System.out.println("ajaxCeoReview.action");
 		String renum = request.getParameter("renum");
 		String ceoContent = request.getParameter("ceoContent");
 		System.out.println("답글처리renum :" + renum);
@@ -335,7 +443,63 @@ public class CEOController {
 		String ceoId = info.getCeoId();
 		String shopCode = request.getParameter("shopCode");
 		System.out.println(shopCode);
-		List<CeoDTO> reviewList = dao.getStoreReview(ceoId, shopCode);
+		String shopName = request.getParameter("shopName");
+		String pageNum = request.getParameter("pageNum");
+		
+//		List<CeoDTO> menuSize = dao.getStoreMenu(shopCode);
+//		
+//		int maxMenu = menuSize.size();
+		
+		System.out.println("메뉴추가페이지 shopCode : " + shopCode);
+		
+		System.out.println("pageNum : " + pageNum);
+		int currentPage = 1;
+		
+		if(pageNum != null)
+			currentPage = Integer.parseInt(pageNum);
+		
+		//전체데이터갯수
+		int reviewCount = dao.getReviewCount(shopCode);
+		
+		//전체페이지수
+		int numPerPage = 4;
+		int totalPage = myUtil.getPageCount(numPerPage, reviewCount);
+		System.out.println("totalPage : " + totalPage);
+		System.out.println("currentPage : " + currentPage);
+		
+		if(currentPage > totalPage)
+			currentPage = totalPage;
+		
+		int start = (currentPage - 1 ) * numPerPage + 1;
+		//int end = currentPage * numPerPage;
+		int end = Integer.parseInt(request.getParameter("end"));
+		System.out.println("답글달기 end : " + end);
+		
+		//by hklee
+//		if(currentPage > totalPage)	
+//			end = totalPage * numPerPage;
+		
+		List<CeoDTO> reviewList = dao.getStoreReview(ceoId, shopCode, start, end);
+		Iterator<CeoDTO> it = reviewList.iterator();
+		while(it.hasNext()) {
+
+			CeoDTO rdto = it.next();
+			String orderCode = rdto.getOrderCode();
+			List<OrderDTO> orderDetail = dao.getOrderDetail(orderCode);
+			rdto.setOrderDetail(orderDetail);// dto안에 orderDetail 메뉴종류수량 list형식으로 넣음
+			
+		}
+		
+		request.setAttribute("numPerPage", numPerPage);
+		request.setAttribute("shopName", shopName);
+		
+		if(currentPage > totalPage)		
+			request.setAttribute("currentPage", totalPage);
+		else
+			request.setAttribute("currentPage", currentPage);
+		
+		request.setAttribute("reviewCount",reviewCount);
+		request.setAttribute("shopCode", shopCode);
 		request.setAttribute("reviewList", reviewList);
 		
 		return "CEO/ceoReviewArticle";
@@ -348,9 +512,14 @@ public class CEOController {
 		
 		String renum = request.getParameter("renum");
 		String shopCode = request.getParameter("shopCode");
+		String pageNum = request.getParameter("pageNum");
+		String end = request.getParameter("end");
 		System.out.println("모달창renum :" + renum);
 		System.out.println("모달창shopCode : " + shopCode);
+		System.out.println("모달창end : " + end);
 		
+		request.setAttribute("end", end);
+		request.setAttribute("pageNum", pageNum);
 		request.setAttribute("renum", renum);
 		request.setAttribute("shopCode", shopCode);
 		
@@ -373,7 +542,61 @@ public class CEOController {
 		String ceoId = info.getCeoId();
 		String shopCode = request.getParameter("shopCode");
 		System.out.println(shopCode);
-		List<CeoDTO> reviewList = dao.getStoreReview(ceoId, shopCode);
+		String shopName = request.getParameter("shopName");
+		String pageNum = request.getParameter("pageNum");
+		
+//		List<CeoDTO> menuSize = dao.getStoreMenu(shopCode);
+//		
+//		int maxMenu = menuSize.size();
+		
+		System.out.println("메뉴추가페이지 shopCode : " + shopCode);
+		
+		System.out.println("pageNum : " + pageNum);
+		int currentPage = 1;
+		
+		if(pageNum != null)
+			currentPage = Integer.parseInt(pageNum);
+		
+		//전체데이터갯수
+		int reviewCount = dao.getReviewCount(shopCode);
+		
+		//전체페이지수
+		int numPerPage = 4;
+		int totalPage = myUtil.getPageCount(numPerPage, reviewCount);
+		System.out.println("totalPage : " + totalPage);
+		System.out.println("currentPage : " + currentPage);
+		
+		if(currentPage > totalPage)
+			currentPage = totalPage;
+		
+		int start = 1;
+		int end = currentPage * numPerPage;
+		
+		//by hklee
+		if(currentPage > totalPage)	
+			end = totalPage * numPerPage;
+		
+		List<CeoDTO> reviewList = dao.getStoreReview(ceoId, shopCode, start, end);
+		Iterator<CeoDTO> it = reviewList.iterator();
+		while(it.hasNext()) {
+
+			CeoDTO rdto = it.next();
+			String orderCode = rdto.getOrderCode();
+			List<OrderDTO> orderDetail = dao.getOrderDetail(orderCode);
+			rdto.setOrderDetail(orderDetail);
+			
+		}
+		
+		
+		request.setAttribute("numPerPage", numPerPage);
+		request.setAttribute("shopName", shopName);
+		
+		if(currentPage > totalPage)		
+			request.setAttribute("currentPage", totalPage);
+		else
+			request.setAttribute("currentPage", currentPage);
+		
+		request.setAttribute("reviewCount",reviewCount);
 		request.setAttribute("reviewList", reviewList);
 		
 		
@@ -381,44 +604,6 @@ public class CEOController {
 		
 	}
 	
-
-	//해당매장의 리뷰리스트 페이지
-	@RequestMapping(value = "/storeReview.action", method = { RequestMethod.POST, RequestMethod.GET })
-	public String storeReiew(HttpServletRequest request, HttpSession session) {
-
-		CeoInfo info = (CeoInfo) session.getAttribute("ceoInfo");
-		String ceoId = info.getCeoId();
-		String shopCode = request.getParameter("shopCode");
-		
-		List<CeoDTO> reviewList = dao.getStoreReview(ceoId, shopCode);
-		Iterator<CeoDTO> it = reviewList.iterator();
-		while(it.hasNext()) {
-
-			CeoDTO dto = it.next();
-			String orderCode = dto.getOrderCode();
-			List<OrderDTO> orderDetail = dao.getOrderDetail(orderCode);
-			dto.setOrderDetail(orderDetail);
-			
-		}
-		
-		int reviewCount = dao.getReviewCount(shopCode);
-		CeoDTO shopdto = dao.getStoreName(shopCode);
-		
-		if(reviewCount != 0) {
-			double avgReScore = dao.getAvgReScore(shopCode); // 해당 매장 평균별점
-			double avgReScore2 = Math.round(avgReScore); // 매장 평균 별점 반올림함
-			request.setAttribute("avgReScore", avgReScore);
-			request.setAttribute("avgReScore2", avgReScore2);
-		}
-		
-		request.setAttribute("shopdto", shopdto);
-		request.setAttribute("shopCode", shopCode);
-		request.setAttribute("reviewList", reviewList);
-		request.setAttribute("reviewCount", reviewCount);
-		
-		return "CEO/storeReview";
-		
-	}
 	//리뷰관리 END=============================================================================================================================
 	
 	
@@ -480,6 +665,7 @@ public class CEOController {
 		
 		System.out.println("주문코드 : " + orderCode);
 		System.out.println("주문상태코드 : " + orderStatus);
+		System.out.println("매장코드 : " + shopCode);
 		
 		dao.orderUpdate(orderCode, orderStatus); //주문상태 업데이트 자세한설명은 CeoDAO
 		
@@ -518,166 +704,210 @@ public class CEOController {
 	
 	
 	//메뉴추가 START=============================================================================================================================
-	// 메뉴추가 페이지
-	@RequestMapping(value = "/addMenu.action", method = {RequestMethod.POST, RequestMethod.GET})
-	public String addMenu(HttpServletRequest request) {
+		// 메뉴추가 페이지
+		@RequestMapping(value = "/addMenu.action", method = {RequestMethod.POST, RequestMethod.GET})
+		public String addMenu(HttpServletRequest request) {
 
-		String shopCode = request.getParameter("shopCode");
-		String shopName = request.getParameter("shopName");
-		
-//		List<CeoDTO> menuSize = dao.getStoreMenu(shopCode);
-		
-//		request.setAttribute("menu", menu);
-		request.setAttribute("shopCode", shopCode);
-		request.setAttribute("shopName", shopName);
-		
-		System.out.println("shopCode : " + shopCode);
-		System.out.println("shopCode : " + shopName);
-		
-		String pageNum = request.getParameter("pageNum");
-		int currentPage = 1;
-		
-		if(pageNum != null)
-			currentPage = Integer.parseInt(pageNum);
-		
-		//전체데이터갯수
-		int menuCount = dao.getMenuCount(shopCode);
-		
-		//전체페이지수
-		int numPerPage = 4;
-		int totalPage = myUtil.getPageCount(numPerPage, menuCount);
-		
-		if(currentPage > totalPage)
-			currentPage = totalPage;
-		
-		int start = (currentPage - 1) * numPerPage + 1;
-		int end = currentPage * numPerPage;
-		
-		List<CeoDTO> menu = dao.getMenuList(shopCode, start, end);
-		
-		System.out.println("메뉴총개수 : " + menuCount);
-		System.out.println("총페이지 : " + totalPage);
-		
-		request.setAttribute("numPerPage", numPerPage);
-		request.setAttribute("currentPage", currentPage);
-		request.setAttribute("menu", menu);
-		request.setAttribute("menuCount",menuCount);
-		
-		return "CEO/addMenu";
+			String shopCode = request.getParameter("shopCode");
+			String shopName = request.getParameter("shopName");
+			
+//			List<CeoDTO> menuSize = dao.getStoreMenu(shopCode);
+			
+//			request.setAttribute("menu", menu);
+			request.setAttribute("shopCode", shopCode);
+			request.setAttribute("shopName", shopName);
+			
+			System.out.println("shopCode : " + shopCode);
+			System.out.println("shopCode : " + shopName);
+			
+			String pageNum = request.getParameter("pageNum");
+			int currentPage = 1;
+			
+			if(pageNum != null)
+				currentPage = Integer.parseInt(pageNum);
+			
+			//전체데이터갯수
+			int menuCount = dao.getMenuCount(shopCode);
+			
+			//전체페이지수
+			int numPerPage = 4;
+			int totalPage = myUtil.getPageCount(numPerPage, menuCount);
+			
+			if(currentPage > totalPage)
+				currentPage = totalPage;
+			
+			int start = (currentPage - 1) * numPerPage + 1;
+			int end = currentPage * numPerPage;
+			
+			List<CeoDTO> menu = dao.getMenuList(shopCode, start, end);
+			
+			
+			System.out.println("메뉴총개수 : " + menuCount);
+			System.out.println("총페이지 : " + totalPage);
+			
+			
+			request.setAttribute("numPerPage", numPerPage);
+			request.setAttribute("currentPage", currentPage);
+			request.setAttribute("menu", menu);
+			request.setAttribute("menuCount",menuCount);
 
-	}
-	
-	// 메뉴추가 페이지ajax (더보기 클릭시)
-	@RequestMapping(value = "/menuItem.action", method = {RequestMethod.POST, RequestMethod.GET})
-	public String menuItem(HttpServletRequest request, HttpSession session, CeoDTO dto) {
-		
-		String shopCode = request.getParameter("shopCode");
-		String shopName = request.getParameter("shopName");
-		String pageNum = request.getParameter("pageNum");
-		
-//		List<CeoDTO> menuSize = dao.getStoreMenu(shopCode);
-//		
-//		int maxMenu = menuSize.size();
-		
-		System.out.println("메뉴추가페이지 shopCode : " + shopCode);
-		
-		System.out.println("pageNum : " + pageNum);
-		int currentPage = 1;
-		
-		if(pageNum != null)
-			currentPage = Integer.parseInt(pageNum);
-		
-		//전체데이터갯수
-		int menuCount = dao.getMenuCount(shopCode);
-		
-		//전체페이지수
-		int numPerPage = 4;
-		int totalPage = myUtil.getPageCount(numPerPage, menuCount);
-		
-		if(currentPage > totalPage)
-			currentPage = totalPage;
-		
-		int start = (currentPage - 1 ) * numPerPage + 1;
-		int end = currentPage * numPerPage;
-		
-		List<CeoDTO> menu = dao.getMenuList(shopCode, start, end);
-		
-		request.setAttribute("numPerPage", numPerPage);
-		request.setAttribute("currentPage", currentPage);
-		request.setAttribute("shopCode", shopCode);
-		request.setAttribute("shopName", shopName);
-		request.setAttribute("menu", menu);
-		request.setAttribute("totalPage", totalPage);
-		request.setAttribute("menuCount",menuCount);
-		
-		return "CEO/menuItem";
-		
-	}
-	
+			
+			return "CEO/addMenu";
 
-	// 메뉴추가ajax
-	@RequestMapping(value = "/addMenu_ok.action", method = { RequestMethod.POST, RequestMethod.GET })
-	public String addMenu_ok(HttpServletRequest request, HttpSession session, CeoDTO dto, MultipartRequest req) {
-
-		CeoInfo info = (CeoInfo) session.getAttribute("ceoInfo");
-		String ceoId = info.getCeoId();
-		String menuName = request.getParameter("menuName");
-		String menuPrice = request.getParameter("menuPrice");
-		String part = request.getParameter("part");
-		System.out.println("메뉴이름 : " + menuName);
-		System.out.println("메뉴가격 : " + menuPrice);
-		System.out.println("메뉴종류 : " + part);
+		}
 		
-		String shopCode = request.getParameter("shopCode");
-		String shopName = request.getParameter("shopName");
-
-		dto.setCeoId(ceoId);
-		dto.setShopCode(shopCode);
-		dto.setPart(part);
-
-		request.setAttribute("shopCode", shopCode);
-		request.setAttribute("shopName", shopName);
+		// 메뉴추가 페이지ajax (더보기 클릭시)
+		@RequestMapping(value = "/menuItem.action", method = {RequestMethod.POST, RequestMethod.GET})
+		public String menuItem(HttpServletRequest request, HttpSession session, CeoDTO dto) {
+			
+			String shopCode = request.getParameter("shopCode");
+			String shopName = request.getParameter("shopName");
+			String pageNum = request.getParameter("pageNum");
+			
+//			List<CeoDTO> menuSize = dao.getStoreMenu(shopCode);
+//			
+//			int maxMenu = menuSize.size();
+			
+			System.out.println("메뉴추가페이지 shopCode : " + shopCode);
+			
+			System.out.println("pageNum : " + pageNum);
+			int currentPage = 1;
+			
+			if(pageNum != null)
+				currentPage = Integer.parseInt(pageNum);
+			
+			//전체데이터갯수
+			int menuCount = dao.getMenuCount(shopCode);
+			
+			//전체페이지수
+			int numPerPage = 4;
+			int totalPage = myUtil.getPageCount(numPerPage, menuCount);
+			System.out.println("totalPage : " + totalPage);
+			System.out.println("currentPage : " + currentPage);
+			
+			if(currentPage > totalPage)
+				currentPage = totalPage;
+			
+			int start = (currentPage - 1 ) * numPerPage + 1;
+			int end = currentPage * numPerPage;
+			
+			//by hklee
+			if(currentPage > totalPage)	
+				end = totalPage * numPerPage;
+			
+			List<CeoDTO> menu = dao.getMenuList(shopCode, start, end);
+			
+			
+			request.setAttribute("numPerPage", numPerPage);
+			request.setAttribute("shopCode", shopCode);
+			request.setAttribute("shopName", shopName);
+			request.setAttribute("menu", menu);
+			request.setAttribute("totalPage", totalPage);
+			
+			if(currentPage > totalPage)		
+				request.setAttribute("currentPage", totalPage);
+			else
+				request.setAttribute("currentPage", currentPage);
+			
+			request.setAttribute("menuCount",menuCount);
+			
+			return "CEO/menuItem";
+			
+		}
 		
-		
-		String pageNum = request.getParameter("pageNum");
-		int currentPage = 1;
-		
-		if(pageNum != null)
-			currentPage = Integer.parseInt(pageNum);
-		
-		
-		// 메뉴이미지사진파일 업로드
-		MultipartFile uploadMenu = req.getFile("uploadMenu");
-		System.out.println("업로드파일 : " + uploadMenu);
-//		String path = request.getSession().getServletContext().getRealPath("resources/menuimg/");
-		String path = "D://menuimg/"; //메뉴사진 업로드경로
-//		System.out.println(path);
-		String newFileName = null;
-		File dir = new File(path);
-		if (!dir.exists())
-			dir.mkdirs();
-		if (uploadMenu != null) {
-			String menuImg = uploadMenu.getOriginalFilename();
 
-			// 파일 확장자
-			String fileExt = menuImg.substring(menuImg.lastIndexOf("."));
-			if (fileExt == null || fileExt.equals(""))
-				return null;
+		// 메뉴추가ajax
+		@RequestMapping(value = "/addMenu_ok.action", method = { RequestMethod.POST, RequestMethod.GET })
+		public String addMenu_ok(HttpServletRequest request, HttpSession session, CeoDTO dto, MultipartRequest req) {
 
-			// 서버에 저장할 새로운 파일명을 만든다.
-			newFileName = String.format("%1$tY%1$tm%1$td%1$tH%1$tM%1$tS", Calendar.getInstance());
-			newFileName += System.nanoTime();
-			newFileName += fileExt;
+			CeoInfo info = (CeoInfo) session.getAttribute("ceoInfo");
+			String ceoId = info.getCeoId();
+			String menuName = request.getParameter("menuName");
+			String menuPrice = request.getParameter("menuPrice");
+			String part = request.getParameter("part");
+			System.out.println("메뉴이름 : " + menuName);
+			System.out.println("메뉴가격 : " + menuPrice);
+			System.out.println("메뉴종류 : " + part);
+			
+			String shopCode = request.getParameter("shopCode");
+			String shopName = request.getParameter("shopName");
 
-			dto.setMenuImg(newFileName);
-			System.out.println("newFileName : " + newFileName);
-			try {
-				File file2 = new File(path + newFileName);
-				uploadMenu.transferTo(file2);
-				dao.insertMenu(dto);
-			} catch (Exception e) {
-				e.printStackTrace();
+			dto.setCeoId(ceoId);
+			dto.setShopCode(shopCode);
+			dto.setPart(part);
+
+			request.setAttribute("shopCode", shopCode);
+			request.setAttribute("shopName", shopName);
+			
+			
+			String pageNum = request.getParameter("pageNum");
+			int currentPage = 1;
+			
+			if(pageNum != null)
+				currentPage = Integer.parseInt(pageNum);
+			
+			
+			// 메뉴이미지사진파일 업로드
+			MultipartFile uploadMenu = req.getFile("uploadMenu");
+			System.out.println("업로드파일 : " + uploadMenu);
+//			String path = request.getSession().getServletContext().getRealPath("resources/menuimg/");
+			String path = "D://menuimg/"; //메뉴사진 업로드경로
+//			System.out.println(path);
+			String newFileName = null;
+			File dir = new File(path);
+			if (!dir.exists())
+				dir.mkdirs();
+			if (uploadMenu != null) {
+				String menuImg = uploadMenu.getOriginalFilename();
+
+				// 파일 확장자
+				String fileExt = menuImg.substring(menuImg.lastIndexOf("."));
+				if (fileExt == null || fileExt.equals(""))
+					return null;
+
+				// 서버에 저장할 새로운 파일명을 만든다.
+				newFileName = String.format("%1$tY%1$tm%1$td%1$tH%1$tM%1$tS", Calendar.getInstance());
+				newFileName += System.nanoTime();
+				newFileName += fileExt;
+
+				dto.setMenuImg(newFileName);
+				System.out.println("newFileName : " + newFileName);
+				try {
+					File file2 = new File(path + newFileName);
+					uploadMenu.transferTo(file2);
+					dao.insertMenu(dto);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				//전체데이터갯수
+				int menuCount = dao.getMenuCount(shopCode);
+				
+				//전체페이지수
+				int numPerPage = 4;
+				int totalPage = myUtil.getPageCount(numPerPage, menuCount);
+				
+				if(currentPage > totalPage)
+					currentPage = totalPage;
+				
+				int start = (currentPage - 1) * numPerPage + 1;
+				int end = currentPage * numPerPage;
+				
+				List<CeoDTO> menu = dao.getMenuList(shopCode, start, end);
+				
+				System.out.println("메뉴총개수 : " + menuCount);
+				System.out.println("총페이지 : " + totalPage);
+				
+				request.setAttribute("numPerPage", numPerPage);
+				request.setAttribute("currentPage", currentPage);
+				request.setAttribute("menu", menu);
+				request.setAttribute("menuCount",menuCount);
+				
+				
+				return "CEO/menuItem";
 			}
+			
+			dao.insertMenu(dto);
 			
 			//전체데이터갯수
 			int menuCount = dao.getMenuCount(shopCode);
@@ -698,90 +928,75 @@ public class CEOController {
 			System.out.println("총페이지 : " + totalPage);
 			
 			request.setAttribute("numPerPage", numPerPage);
-			request.setAttribute("currentPage", currentPage);
+			request.setAttribute("totalPage", totalPage);		
+			if(currentPage > totalPage)		
+				request.setAttribute("currentPage", totalPage);
+			else
+				request.setAttribute("currentPage", currentPage);
 			request.setAttribute("menu", menu);
 			request.setAttribute("menuCount",menuCount);
 			
 			return "CEO/menuItem";
+
 		}
 		
-		dao.insertMenu(dto);
-		
-		//전체데이터갯수
-		int menuCount = dao.getMenuCount(shopCode);
-		
-		//전체페이지수
-		int numPerPage = 4;
-		int totalPage = myUtil.getPageCount(numPerPage, menuCount);
-		
-		if(currentPage > totalPage)
-			currentPage = totalPage;
-		
-		int start = (currentPage - 1) * numPerPage + 1;
-		int end = currentPage * numPerPage;
-		
-		List<CeoDTO> menu = dao.getMenuList(shopCode, start, end);
-		
-		System.out.println("메뉴총개수 : " + menuCount);
-		System.out.println("총페이지 : " + totalPage);
-		
-		request.setAttribute("numPerPage", numPerPage);
-		request.setAttribute("currentPage", currentPage);
-		request.setAttribute("menu", menu);
-		request.setAttribute("menuCount",menuCount);
-		
-		return "CEO/menuItem";
+		//메뉴삭제 ajax
+		@RequestMapping(value = "/deleteMenu.action", method = { RequestMethod.POST, RequestMethod.GET })
+		public String deleteMenu(HttpServletRequest request, HttpSession session, CeoDTO dto) {
+			
+			String menuCode = request.getParameter("menuCode");
+			System.out.println("메뉴코드 : " + menuCode + " 삭제");
+			dao.deleteMenu(menuCode);
+			
+			String shopCode = request.getParameter("shopCode");
+			String shopName = request.getParameter("shopName");
+			
+//			List<CeoDTO> menu = dao.getStoreMenu(shopCode);
+			
+//			request.setAttribute("menu", menu);
+			request.setAttribute("shopCode", shopCode);
+			request.setAttribute("shopName", shopName);
+			
+			String pageNum = request.getParameter("pageNum");
+			System.out.println("pageNum : " + pageNum);
+			int currentPage = 1;
+			System.out.println("currentPage : " + currentPage);
+			
+			
+			if(pageNum != null)
+				currentPage = Integer.parseInt(pageNum);
+			
+			//전체데이터갯수
+			int menuCount = dao.getMenuCount(shopCode);
+			
+			//전체페이지수
+			int numPerPage = 4;
+			int totalPage = myUtil.getPageCount(numPerPage, menuCount);
+			
+			if(currentPage > totalPage)
+				currentPage = totalPage;
+			
+			int start = 1;
+			int end = currentPage * numPerPage;
+			//by hklee
+			if(currentPage > totalPage)	
+				end = totalPage * numPerPage;		
+			
+			List<CeoDTO> menu = dao.getMenuList(shopCode, start, end);
+			
+			request.setAttribute("menu", menu);
+			request.setAttribute("totalPage", totalPage);
+			if(currentPage > totalPage)		
+				request.setAttribute("currentPage", totalPage);
+			else
+				request.setAttribute("currentPage", currentPage);
+			request.setAttribute("menuCount",menuCount);
+			
+			return "CEO/menuItem";
+			
+		}
 
-	}
-	
-	//메뉴삭제 ajax
-	@RequestMapping(value = "/deleteMenu.action", method = { RequestMethod.POST, RequestMethod.GET })
-	public String deleteMenu(HttpServletRequest request, HttpSession session, CeoDTO dto) {
-		
-		String menuCode = request.getParameter("menuCode");
-		System.out.println("메뉴코드 : " + menuCode + " 삭제");
-		dao.deleteMenu(menuCode);
-		
-		String shopCode = request.getParameter("shopCode");
-		String shopName = request.getParameter("shopName");
-		
-//		List<CeoDTO> menu = dao.getStoreMenu(shopCode);
-		
-//		request.setAttribute("menu", menu);
-		request.setAttribute("shopCode", shopCode);
-		request.setAttribute("shopName", shopName);
-		
-		String pageNum = request.getParameter("pageNum");
-		System.out.println("pageNum : " + pageNum);
-		int currentPage = 1;
-		
-		if(pageNum != null)
-			currentPage = Integer.parseInt(pageNum);
-		
-		//전체데이터갯수
-		int menuCount = dao.getMenuCount(shopCode);
-		
-		//전체페이지수
-		int numPerPage = 4;
-		int totalPage = myUtil.getPageCount(numPerPage, menuCount);
-		
-		if(currentPage > totalPage)
-			currentPage = totalPage;
-		
-		int start = (currentPage - 1 ) * numPerPage + 1;
-		int end = currentPage * numPerPage;
-		
-		List<CeoDTO> menu = dao.getMenuList(shopCode, start, end);
-		
-		request.setAttribute("menu", menu);
-		request.setAttribute("totalPage", totalPage);
-		request.setAttribute("menuCount",menuCount);
-		
-		return "CEO/menuItem";
-		
-	}
-
-	//메뉴추가 END===============================================================================================================================
+		//메뉴추가 END===============================================================================================================================
 	
 	//매출 페이지
 	@RequestMapping(value = "/sales.action", method = { RequestMethod.POST, RequestMethod.GET })

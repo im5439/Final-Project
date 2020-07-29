@@ -5,7 +5,7 @@
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 %>
-<html lang="ko" slick-uniqueid="3">
+<html lang="ko" >
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,19 +20,19 @@
 	src="https://bam.nr-data.net/1/060998d475?a=2104228&amp;v=1169.7b094c0&amp;to=NgQDY0YEWhICVEFQWg9OJ0JaBkAIDFkaXVoWAA9DGgpDDwZFRhdDCAQWRBoNWwwGDVxXUQQZ&amp;rst=366&amp;ck=1&amp;ref=https://owner.yogiyo.co.kr/owner/&amp;ap=105&amp;be=181&amp;fe=360&amp;dc=247&amp;af=err,xhr,stn,ins&amp;perf=%7B%22timing%22:%7B%22of%22:1594016825867,%22n%22:0,%22u%22:158,%22ue%22:158,%22f%22:4,%22dn%22:4,%22dne%22:4,%22c%22:4,%22ce%22:4,%22rq%22:9,%22rp%22:151,%22rpe%22:155,%22dl%22:160,%22di%22:246,%22ds%22:246,%22de%22:255,%22dc%22:359,%22l%22:359,%22le%22:360%7D,%22navigation%22:%7B%7D%7D&amp;fp=242&amp;fcp=242&amp;jsonp=NREUM.setToken"></script>
 <script src="https://js-agent.newrelic.com/nr-1169.min.js"></script>
 <script async="" src="//www.google-analytics.com/analytics.js"></script>
-<title>요기요 사장님 사이트</title>
+<title>EATSWILL 사장님 사이트</title>
 <link rel="shortcut icon"
-	href="https://owner.yogiyo.co.kr/media/images/owners/favicon.ico">
+	href="/eatswill/resources/images/sicon.jpg">
 <link rel="apple-touch-icon-precomposed"
-	href="https://owner.yogiyo.co.kr/media/images/owners/ygyshop_ios_57x57.png">
+	href="/eatswill/resources/images/sicon.jpg">
 <link rel="apple-touch-icon-precomposed"
-	href="https://owner.yogiyo.co.kr/media/images/owners/ygyshop_ios_72x72.png"
+	href="/eatswill/resources/images/sicon.jpg"
 	sizes="72x72">
 <link rel="apple-touch-icon-precomposed"
-	href="https://owner.yogiyo.co.kr/media/images/owners/ygyshop_ios_114x114.png"
+	href="/eatswill/resources/images/sicon.jpg"
 	sizes="114x114">
 <link rel="apple-touch-icon-precomposed"
-	href="https://owner.yogiyo.co.kr/media/images/owners/ygyshop_ios_144x144.png"
+	href="/eatswill/resources/images/sicon.jpg"
 	sizes="144x144">
 <link rel="stylesheet" type="text/css"
 	href="https://owner.yogiyo.co.kr/media/owners/css/owners_new.css?v=3c43aea">
@@ -41,6 +41,11 @@
 	<script src="https://cdn.optimizely.com/js/9026702317.js"></script>
 	 <script>var w=window;if(w.performance||w.mozPerformance||w.msPerformance||w.webkitPerformance){var d=document;AKSB=w.AKSB||{},AKSB.q=AKSB.q||[],AKSB.mark=AKSB.mark||function(e,_){AKSB.q.push(["mark",e,_||(new Date).getTime()])},AKSB.measure=AKSB.measure||function(e,_,t){AKSB.q.push(["measure",e,_,t||(new Date).getTime()])},AKSB.done=AKSB.done||function(e){AKSB.q.push(["done",e])},AKSB.mark("firstbyte",(new Date).getTime()),AKSB.prof={custid:"708645",ustr:"",originlat:"0",clientrtt:"10",ghostip:"173.223.227.108",ipv6:false,pct:"10",clientip:"1.234.209.30",requestid:"28c50461",region:"30609",protocol:"h2",blver:14,akM:"b",akN:"ae",akTT:"O",akTX:"1",akTI:"28c50461",ai:"462223",ra:"false",pmgn:"",pmgi:"",pmp:"",qc:""},function(e){var _=d.createElement("script");_.async="async",_.src=e;var t=d.getElementsByTagName("script"),t=t[t.length-1];t.parentNode.insertBefore(_,t)}(("https:"===d.location.protocol?"https:":"http:")+"//ds-aksb-a.akamaihd.net/aksb.min.js")}</script>
 	
+		<!-- menu bar CSS -->
+<link rel="stylesheet" type="text/css" href="/eatswill/resources/css/default.css"> 
+<link rel="stylesheet" type="text/css" href="/eatswill/resources/css/component.css"> 
+<script type="text/javascript" src="/eatswill/resources/js/modernizr.custom.js" ></script>
+<!-- ------------ -->
 
 <script type="text/javascript"
 	src="https://owner.yogiyo.co.kr/media/owners/js/jquery-1.9.1.min.js"></script>
@@ -53,51 +58,96 @@
 
 <script type="text/javascript">
     
-    <%-- 
-    	function sendIt(){
+    	function showRequest(){
+			
+    		var menuName = $.trim($("#menuName").val());
+    		var menuPrice = $.trim($("#menuPrice").val());
+    		var part = $.trim($("#part").val());
+    		var uploadMenu = $("#uploadMenu").val();
     		
-    		var f = document.myForm;
-    		
-    		if(!f.shopName.value){
-				alert("매장명을 입력하십시오");
-				f.focus();
-				return;
+    		if(!menuName){
+				alert("메뉴이름을 입력하십시오");
+				$("#menuName").focus();
+				return false;
 			}
+			if(!menuPrice){
+				alert("메뉴가격를 입력하십시오");
+				$("#menuPrice").focus();
+				return false;
+			}
+			if(!part){
+				alert("메뉴구분을 선택해주십시오");
+				$("#part").focus();
+				return false;
+			}
+			if(!uploadMenu){
+				alert("메뉴이미지를 선택해주십시오");
+				$("#uploadMenu").focus();
+				return false;
+			}
+			
+			return true;    		
+    	}
 
-			if(!f.shopTel.value){
-				alert("매장전화번호를 입력하십시오");
-				f.focus();
-				return;
-			}
+     function deleteItem(btnIdx, pageNum ) {
+	    
+	    var params = "menuCode=" + $("#menuCode1" + btnIdx).val();
+	    params += "&shopCode=" + $("#shopCode").val();
+	    params += "&shopName=" + $("#shopName").val();
+	    params += "&pageNum=" + pageNum;
+
+	    	    
+	    console.log('btnIdx====> ' + btnIdx);
+	    console.log('params====> ' + params);
+
+	    console.log(params);
+	    
+	    $.ajax({
+	        type:"post",
+	        url:"<%=cp%>/deleteMenu.action",
+	        async: false,
+	        data:params,
+	        success: function(args){
+	        
+	           $("#menuItem").html(args);
+	        
+	        },
+	        error:function(e){
+	        	console.log("실패하였습니다.");
+	          	console.log(request.status);
+	          	console.log(request.responseText);
+	          	console.log(error);
+	        }
+	        
+	     });
+	     
+	     return false;
+     }
+     
+     
+ 	
+	function logout(){
+    		
+    	var f = document.myForm;
 			
-			if(!f.shopAddr1.value){
-				alert("매장주소를 입력하십시오");
-				f.focus();
-				return;
-			}
-			f.action = "<%=cp%>/addMenu_ok.action?shopCode=${shopCode}&shopName=${shopName}";
-			f.submit();
-    		
-    	}
-     --%>
-		function logout(){
-    		
-    		var f = document.myForm;
-			
-			f.action = "<%=cp%>/logout_ok.action";
-			f.submit();
-    		
-    	}
+		f.action = "<%=cp%>/logout_ok.action";
+		f.submit();
+    	
+	}
+	
+	
 		
 	$(function(){ 
 		
 		$(window).load(function(){
-			
+
+		
 			var count = parseInt("${menuCount}"/"${numPerPage}");
 			var pageNum = 1;
 			
 	        var params = "shopCode=" + $("#shopCode").val();
 	        params += "&shopName=" + $("#shopName").val();
+	        params += "&pageNum=" + "${currentPage}";
 	        
 	        console.log(params);
 	        
@@ -114,11 +164,11 @@
 	            	
 	            	if(count == (pageNum - 1)){
 						$("#review").hide();
-					}
+					} 
 		            
 	            },
 	            error:function(request, error){
-	            	alert("실패하였습니다.");
+	            	console.log("실패하였습니다.");
 	            	console.log(request.status);
 	            	console.log(request.responseText);
 	            	console.log(error);
@@ -126,9 +176,9 @@
 	          
 	        });
 	        return false;
+			
 		});
 		
-    	
 		$("#addMenu").click(function(){
 			
 			var formData = new FormData();
@@ -145,6 +195,7 @@
 				processData: false, 
 				contentType: false, 
 				type: 'POST', 
+				beforeSend: showRequest,
 				success: function(args){ 
 					$("#menuItem").html(args);
 				
@@ -155,7 +206,7 @@
 					
 				},
 				error:function(e){
-	            	alert("실패하였습니다.");
+					console.log("실패하였습니다.");
 	            	console.log(request.status);
 	            	console.log(request.responseText);
 	            	console.log(error);
@@ -165,7 +216,9 @@
 		}); 
 		
 		function addPage(){
+			
 			index = Number(document.getElementById("nextNum").value) + 1;
+			
 			//document.getElementsById("#nextNum").value = idx;
 			//var index = index + 1;
 			document.getElementById("nextNum").value = Number(index);
@@ -194,16 +247,15 @@
 				type: 'POST',
 				success: function(args){ 
 					//console.log("args : " + args);
-					
+							
 					$("#menuItem").append(args);
 					
-					if(count == (pageNum - 1)){
+					if(pageNum  >= ("${menuCount}"/"${numPerPage}")){
 						$("#review").hide();
 					}
-					
 				},
 				error:function(e){
-	            	alert("실패하였습니다.");
+					console.log("실패하였습니다.");
 	            	console.log(request.status);
 	            	console.log(request.responseText);
 	            	console.log(error);
@@ -213,17 +265,140 @@
 			
 			return false;
 		});
-		
+	
 	});
 		
 </script>
 
-
-
 </head>
 <body>
 
-<jsp:include page="ceoIncludeTop.jsp" flush="false"/>
+<div id="nav" >
+		<div class="clearfix">
+		
+			<h1 style="margin: auto;">
+				<a href="<%=cp%>/CEO.action/">
+				<img alt="" src="/eatswill/resources/img/1sajang.png" width="128px" height="58px" style=" margin-left: 60px; margin-top: 20px;"> 
+				<img alt="" src="/eatswill/resources/img/sajang.png" width="96px"  height="22px" style="margin-bottom: 10px; vertical-align: bottom;"></a>
+			</h1>
+			<!-- 
+			<ul class="nav">
+				<li class="n1 "><a nohref=""
+					onclick="javascript:alert('로그인 후 이용하실 수 있습니다.'); window.location.href='/owner/login/?next_url=/owner/orders/'"
+					style="cursor: pointer">내 업소 관리</a></li>
+				<li class="n2 "><a href="/owner/benefit/restaurant/">사장님 혜택</a></li>
+				<li class="n3 "><a href="/owner/join/intro/">입점 안내</a></li>
+			</ul>
+ 			-->
+			<ul class="ext">
+				<li class="outlink"><a href="https://boss.yogiyo.co.kr/" target="_blank"></a></li>
+			</ul>
+			
+		</div>
+	</div>
+	
+	<c:choose>
+		<c:when test="${empty sessionScope.ceoInfo.ceoId }">
+			<div class="main clearfix">
+				<nav id="menu" class="nav">
+				<button type="button" id="menutoggle" class="navtoogle" aria-hidden="true">
+				<i aria-hidden="true" class="icon-menu"> </i> Menu</button>					
+					<ul>
+						<li>
+							<a href="<%=cp %>/CEO.action" onclick="loginChk()">
+								<span class="icon">
+									<i aria-hidden="true" class="icon-home"></i>
+								</span>
+								<span>주문확인</span>
+							</a>
+						</li>
+						<li>
+							<a href="<%=cp %>/CEO.action" onclick="loginChk()">
+								<span class="icon"> 
+									<i aria-hidden="true" class="icon-services"></i>
+								</span>
+								<span>매장관리</span>
+							</a>
+						</li>
+						<li>
+							<a href="<%=cp %>/CEO.action" onclick="loginChk()">
+								<span class="icon">
+									<i aria-hidden="true" class="icon-portfolio"></i>
+								</span>
+								<span>메뉴관리</span>
+							</a>
+						</li>
+						<li>
+							<a href="<%=cp %>/CEO.action" onclick="loginChk()">
+								<span class="icon">
+									<i aria-hidden="true" class="icon-blog"></i>
+								</span>
+								<span>리뷰 관리</span>
+							</a>
+						</li>
+						<li>
+							<a href="<%=cp %>/CEO.action" onclick="loginChk()">
+								<span class="icon">
+									<i aria-hidden="true" class="icon-team"></i>
+								</span>
+								<span>매출관리</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</c:when>
+		<c:otherwise>
+			<div class="main clearfix">
+				<nav id="menu" class="nav">
+				<button type="button" id="menutoggle" class="navtoogle" aria-hidden="true">
+				<i aria-hidden="true" class="icon-menu"> </i> Menu</button>					
+					<ul>
+						<li>
+							<a href="<%=cp %>/ceoStoreList.action?mode=orderChk">
+								<span class="icon">
+									<i aria-hidden="true" class="icon-home"></i>
+								</span>
+								<span>주문확인</span>
+							</a>
+						</li>
+						<li>
+							<a href="<%=cp %>/addStore.action">
+								<span class="icon"> 
+									<i aria-hidden="true" class="icon-services"></i>
+								</span>
+								<span>매장관리</span>
+							</a>
+						</li>
+						<li>
+							<a href="<%=cp %>/ceoStoreList.action?mode=addMenu">
+								<span class="icon">
+									<i aria-hidden="true" class="icon-portfolio"></i>
+								</span>
+								<span>메뉴관리</span>
+							</a>
+						</li>
+						<li>
+							<a href="<%=cp %>/ceoStoreList.action?mode=ceoReview">
+								<span class="icon">
+									<i aria-hidden="true" class="icon-blog"></i>
+								</span>
+								<span>리뷰 관리</span>
+							</a>
+						</li>
+						<li>
+							<a href="<%=cp %>/ceoStoreList.action?mode=sales">
+								<span class="icon">
+									<i aria-hidden="true" class="icon-team"></i>
+								</span>
+								<span>매출관리</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</c:otherwise>
+	</c:choose>
 <!-- 
 	<span>scrollHeight: <b id="scrollHeight">0</b></span><br/>
 	<span>scrollPosition: <b id="scrollPosition">0</b></span><br/>
@@ -240,7 +415,7 @@
 				<li class="n6"><a href="<%=cp %>/sales.action" style="cursor: pointer">매출관리</a></li>
 				<li class="n4"><a href="<%=cp %>/storeList.action" style="cursor: pointer">매장목록</a></li>
 			</ul>
- --%>
+ 		--%>
 			<div class="mid clearfix" >
 				<div id="carousel-img" class="own-slide carousel slide"
 					data-ride="carousel">
@@ -271,7 +446,7 @@
 							</div>
 							<br/>
 							<div>
-								<select class="inp-txt pwd" name="part">
+								<select class="inp-txt pwd" name="part" id="part">
 									<option value="">메뉴구분</option>
 									<option value="0">메인메뉴</option>
 									<option value="1">사이트메뉴</option>
