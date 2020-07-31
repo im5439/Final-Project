@@ -29,11 +29,11 @@
 							전화번호 : ${sessionScope.customInfo.tel }</br> 포인트 :
 							${sessionScope.customInfo.point }
 						</p> 
-						<a href="logout.action" data-nethru_clcode="A000012">로그아웃</a>
+						<a href="#" onclick="logout();" data-nethru_clcode="A000012">로그아웃</a>
 					</li>
 					<li><a href="updateInfo.action">내정보수정</a></li>
 					<li><a href="myPage.action">마이 페이지</a></li>
-					<li><a id="basket">장바구니</a></li>
+					<li><a href="#" id="basket">장바구니</a></li>
 				</ul>
 				<form method="POST" action="" name="infoForm">
 					<div id="myInfo"></div>
@@ -86,7 +86,7 @@
 						<button type="button"
 							class="button button--ujarak button--border-thin button--text-thick"
 							style="width: 150px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 1.2em; font-weight: bold;"
-							onclick="javascript:location.href='logout.action';">로그아웃</button>
+							onclick="logout();">로그아웃</button>
 						<button type="button"
 							class="button button--ujarak button--border-thin button--text-thick"
 							id="cartList"

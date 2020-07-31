@@ -20,9 +20,6 @@ ng\:form {
 	
 }
 
-
-
-
 </style>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -63,7 +60,7 @@ ng\:form {
 <script type="text/javascript" src="<%=cp%>/resources/data/js/jquery-ui.js"></script>
    <script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
    <script type="text/javascript" src="/eatswill/resources/assets/js/cart.js"></script>
-
+	<script type="text/javascript" src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
 	
 	
@@ -211,51 +208,55 @@ ng\:form {
 <!-- ------------------------------------------------------------------------------------------****** -->
 <script type="text/javascript">
 
-   $(function(){
-      $("#container").tabs();
+
+$(function(){
+   $("#container").tabs();
+});
+
+
+$(function(){
+   menuPage();
+}); 
+8
+
+$(document).ready(function(){
+   
+   $("#sendReview").click(function(){ 
+      
+      $(function(){
+         reviewPage();
+   
+      });  
+      
+      
    });
    
-   
-   $(function(){
-      menuPage();
-   }); 
-   8
 
-   $(document).ready(function(){
-      
-      $("#sendReview").click(function(){ 
+   $("#sendMenu").click(function(){ 
          
-         $(function(){
-            reviewPage();
-         });  
-         
-         
-      });
-      
-
-      $("#sendMenu").click(function(){ 
-            
-         $(function(){
-            menuPage();
-         }); 
-             
-            
-      });
-         
-      
-      $("#sendInfo").click(function(){ 
-         
-         $(function(){
-            infoPage();
-         }); 
+      $(function(){
+         menuPage();
+         //nextItMenu(1);
+      }); 
           
-      });
+         
+   });
       
+   
+   $("#sendInfo").click(function(){ 
       
+      $(function(){
+         infoPage();
+        
+      }); 
+       
    });
    
    
-   function menuPage(){
+});
+
+
+function menuPage(){
 	   
 	  var shopCode = "${shopCode}";
 	  var userId = "${userId}";
@@ -266,13 +267,14 @@ ng\:form {
 		+ "&userId=" + userId
 		+ "&ceoId=" + ceoId;
 	  
-  	$.ajax({
+	$.ajax({
 		type:"POST",
 		url:"<%=cp%>/menu.action",
 		data:params,
 		success:function(args){
 
 		$("#menuData").html(args);
+		
 			
 		},
 		error:function(e){
@@ -280,74 +282,86 @@ ng\:form {
 		}
 		
 	});
-  	
-  	 $("#menuData").show();
-     $("#reviewData").hide();
-     $("#infoData").hide();
-      
+	
+	 $("#menuData").show();
+	$("#menuMore").show();
+  $("#reviewData").hide();
+  $("#infoData").hide();
   
-   }
    
-   function reviewPage(){
+
+}
+
+function reviewPage(){
 	  
 	   var shopCode = "${shopCode}";
 	   var userId = "${userId}";
 	   
 	   var params =  "shopCode=" + shopCode 
 		+ "&userId=" + userId;
-     
-      $.ajax({
-  		type:"POST",
-  		url: "<%=cp%>/review.action",
-  		data:params,
-  		success:function(args){
-  					
-  		$("#reviewData").html(args);
-  			
-  		},
-  		error:function(e){
-  			alert(e.responseText);
-  		}
-  		
-  	});
-      
-         $("#reviewData").show();
-         $("#menuData").hide();
-         $("#infoData").hide();
-      
-   }
+  
+   $.ajax({
+		type:"POST",
+		url: "<%=cp%>/review.action",
+		data:params,
+		success:function(args){
+					
+		$("#reviewData").html(args);
+			
+		},
+		error:function(e){
+			alert(e.responseText);
+		}
+		
+	});
    
-   function infoPage(){
+      $("#reviewData").show();
+      $("#menuData").hide();
+      $("#infoData").hide();
+      $("#menuMore").hide();
+   
+}
+
+function infoPage(){
 	   
 	   var shopCode = "${shopCode}";
 		  var ceoId = "${ceoId}";
 	  
 	  var params =  "shopCode=" + shopCode 
 		+ "&ceoId=" + ceoId;
-     
-      $.ajax({
-    		type:"POST",
-    		url: "<%=cp%>/info.action",
-    		data:params,
-    		success:function(args){
-    					
-    		$("#infoData").html(args);
-    			
-    		},
-    		error:function(e){
-    			alert(e.responseText);
-    		}
-    		
-    	});
-      
-      $("#infoData").show();
-      $("#reviewData").hide();
-      $("#menuData").hide();
-      
-   }
+  
+   $.ajax({
+ 		type:"POST",
+ 		url: "<%=cp%>/info.action",
+ 		data:params,
+ 		success:function(args){
+ 					
+ 		$("#infoData").html(args);
+ 			
+ 		},
+ 		error:function(e){
+ 			alert(e.responseText);
+ 		}
+ 		
+ 	});
+   
+   $("#infoData").show();
+   $("#reviewData").hide();
+   $("#menuData").hide();
+   $("#menuMore").hide();
+   
+}
    
  //카테검색
 	function select_category(cate){
+	 
+		var searchKey = "${searchKey}";
+		var searchValue = "${searchValue}";
+  		
+	  	var f = document.form;
+	  	
+	  	$(f).append($('<input/>', {type: 'hidden', name: 'searchKey', value: searchKey}));
+	  	$(f).append($('<input/>', {type: 'hidden', name: 'searchValue', value: searchValue}));
 		
 	  	var f = document.formCate;
 	  	
@@ -483,7 +497,7 @@ ng\:form {
 							</li>
 							<li><a href="updateInfo.action">내정보수정</a></li>
 							<li><a href="myPage.action">마이 페이지</a></li>
-							<li><a id="basket">장바구니</a></li>
+							<li><a href="#" id="basket">장바구니</a></li>
 						</ul>
 						<form method="POST" action="" name="infoForm">
 							<div id="myInfo"></div>
@@ -536,7 +550,7 @@ ng\:form {
 								<button type="button"
 									class="button button--ujarak button--border-thin button--text-thick"
 									style="width: 150px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 1.2em; font-weight: bold;"
-									onclick="javascript:location.href='logout.action';">로그아웃</button>
+									onclick="logout();">로그아웃</button>
 								<button type="button"
 									class="button button--ujarak button--border-thin button--text-thick"
 									id="cartList"
@@ -605,14 +619,65 @@ ng\:form {
   </button>
   
   <!-- ------------------------------------------------------------------------------------------------- 리스트 상단 카테고리 -->
+  
+  <script type="text/javascript">
+
+	$(function(){
+		
+	$("#searchshops1").click(function(){
+			
+			if($("#searchShop1").css('display')=='none'){
+				
+				
+				$("#searchShop1").show();
+				document.getElementById("searchShopName1").value=null;
+				
+			}else{
+				
+				$("#searchShop1").hide();
+				document.getElementById("searchShopName1").value=null;
+			}
+			
+			
+		});
+	  
+		$("#searchShopBtn1").click(function(){
+			
+	
+			var searchKey = "${searchKey}";
+			var searchValue = "${searchValue}";
+	  		
+		  	var f = document.formCate;
+		  	
+		  	$(f).append($('<input/>', {type: 'hidden', name: 'searchKey', value: searchKey}));
+		  	$(f).append($('<input/>', {type: 'hidden', name: 'searchValue', value: searchValue}));
+		  	$(f).append($('<input/>', {type: 'hidden', name: 'searchShopName', value: $("#searchShopName1").val() }));
+			
+			document.formCate.action="<%=cp%>/storeList.action";
+			document.formCate.submit();
+			
+		});
+		
+	});
+
+	
+  
+  
+</script>
+  
+  
+  
+  
+  
   <form action="" name="formCate" method="post">
-  <input type="hidden" name="searchKey" value="${searchKey }"/>
-  <input type="hidden" name="searchValue" value="${searchValue }"/>
 
   <div id="category" class="category-menu clearfix collapse in" aria-expanded="true">
     <ul>
 
-      <li class="hidden-xs menu-search"><a class="btn btn-default ico-search1" ng-click="toggle_category_block()">검색</a></li><!--pc button-->
+     <li class="hidden-xs menu-search"><a class="btn btn-default ico-search1" ng-click="toggle_category_block()" id="searchshops1">검색</a>
+     
+      </li>
+      <!--pc button-->
      
       <!--카테고리시작 -->
       
@@ -645,6 +710,12 @@ ng\:form {
 </div>
     </div>
 
+<span id="searchShop1" style="display: none; margin-left: 21%; margin-top: 5;">
+            <table border="0">
+  			<tr><td><input type="text" placeholder="매장명을 입력하세요" name="searchShopName" id="searchShopName1" style="width: 200px;" /></td>
+  			<td height="100%"><button id="searchShopBtn1" style="border:0; background-color: orange;  height: 48;" >검색</button></td></tr>
+  			</table>
+  			</span>
     
 <!-- ====================================================================================================================  카테고리 끝 -->    
 
@@ -722,10 +793,15 @@ function heartPage() {
       <li ng-class="active_tab == &quot;info&quot; ? &quot;active&quot; : &quot;&quot;">
       <a ng-click="toggle_tab(&quot;info&quot;)" data-toggle="tab" href="#f3" id="sendInfo">가게정보</a></li>
     </ul>
-   <div id ="f1">
+   	<div id ="f1" style="text-align: -webkit-center; margin-bottom: 10px;">
       <span id="menuData" style="display: none;"></span>
+      	<table style="text-align: center;">
+				<tr align="center">
+				<td><a id="menuMore" onclick="addPageMenu();" style="width: 110px; height: 38px; border: 0px; font-size: 14pt; background-color: white; color: ff7f27;">더 보기 ▼</a>
+				<input type="hidden" value="1" id="nextNumMenu"/></td>
+				</tr>
+		</table>
    </div>
-   
    <div id ="f2">
       <span id="reviewData" style="display: none;"></span>
    </div>
@@ -797,6 +873,26 @@ function deletePage() {
 			<script src="/eatswill/resources/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/eatswill/resources/assets/js/main.js"></script>
+
+	<!-- 카카오톡 채팅 시작 -->
+	<div style="position: fixed; right: 10px; bottom: 10px;"
+		class="talk_image">
+		<a id="channel-chat-button" onclick="void chatChannel();">
+			<img src="/eatswill/resources/img/consult_small_yellow_pc1.png"
+			width="70" height="70" />
+		</a>
+		<script type="text/javascript">
+           // 웹 플랫폼 도메인 등 초기화한 앱의 설정이 그대로 적용됩니다.
+           // 초기화한 앱에 현재 도메인이 등록되지 않은 경우 에러가 발생합니다.
+           Kakao.init('c089c8172def97eb00c07217cae17495')
+           function chatChannel() {
+             Kakao.Channel.chat({
+               channelPublicId: '_Yfaxoxb',
+             })
+           }
+         </script>
+	</div>
+	<!-- 카카오톡 채팅 끝 -->	
 
 </body>
 </html>

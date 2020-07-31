@@ -112,6 +112,7 @@ public class StoreDTO {
 	private String reImg;
 	private int count;
 	private String ceoContent;
+	private int ceoContentCount;
 	private int sidePrice;
 	private int reCount;
 	
@@ -338,6 +339,12 @@ public class StoreDTO {
 	}
 	public void setReCount(int reCount) {
 		this.reCount = reCount;
+	}
+	public int getCeoContentCount() {
+		return ceoContentCount;
+	}
+	public void setCeoContentCount(int ceoContentCount) {
+		this.ceoContentCount = ceoContentCount;
 	}
 	
 

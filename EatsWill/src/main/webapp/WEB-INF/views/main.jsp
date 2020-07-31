@@ -245,6 +245,22 @@ ng\:form {
    var dataLayer = [];
 </script>
 
+<!-- 로딩창 스크립---------------------------------------------------- -->
+<script type="text/javascript">
+
+	function switchScreen() {
+	   	setTimeout("switchScreenTime()", 1300);
+	}
+	
+	function switchScreenTime() {
+	   	document.getElementById("divLoading").style.display = "none";
+		document.getElementById("divBody").style.display = "";
+	}
+
+
+</script>
+<!------------------------------------------------------------------  -->
+
 <noscript>
 	<iframe src="//www.googletagmanager.com/ns.html?id=GTM-NSQ8BP"
 		height="0" width="0" style="display: none; visibility: hidden"></iframe>
@@ -304,9 +320,16 @@ $(document).ready(function() {
 </script>
 
 </head>
-
   
-<body>
+<!--  로딩창 div ----------------------------------------------------------------------------- --> 
+<body onload="switchScreen();">
+
+<div id="divLoading" style="position:absolute; top:30%; left:0;  text-align:center; margin:0 auto; width: 100%;">
+    <img src="/eatswill/resources/images/hicon2.gif" alt="잠시만 기다려 주세요. 로딩중입니다."  style="height: 30em; width: 30em;"/>
+</div>
+
+<div id="divBody" style="display:none;">
+<!--  로딩창 div ----------------------------------------------------------------------------- 맨밑에 /div 있음  --> 
 
 	<!-- 시연 - 팝업창 -->
 	<form name="notice_form">
@@ -321,39 +344,6 @@ $(document).ready(function() {
  		</div>
 	</div>
 	</form>
-
-	<!-- ---------------------------------------------------------- -->
-<body class="asp_check" style="margin-top: 0px;">
-	<div class="newSb" style="display: none">
-		<div class="newSb__close">
-			<button type="button" id="newSb_btn_close">
-				<svg version="1.1" xmlns="http://www.w3.org/2000/svg"
-					xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 15 15"
-					width="10" height="10">
-               <path style="stroke:rgb(105,105,105);stroke-width:2"
-						d="M7.5 7.03L0.47 0L0 0.48L7 7.5L0 14.53L0.47 15L7.5 7.98L14.5 15L15 14.53L7.98 7.5L15 0.48L14.5 0L7.5 7.03Z"></path></svg>
-			</button>
-		</div>
-		<img class="newSb__logo" src="image/ico-5000-coupon.png"
-			alt="banner image">
-		<div class="newSb__meta">
-			<header class="newSb__header"> </header>
-		</div>
-		<div class="newSb__applink">
-			<a class="newSb__applink__btn">열기</a>
-		</div>
-	</div>
-	<script type="text/javascript">
-      if (is_11st) {
-         HeaderExtra.init();
-      }
-   </script>
-
-
-
-
-
-
 
 	<div yogiyo-header="">
 		<div id="header" class="header">
@@ -490,16 +480,17 @@ $(document).ready(function() {
 				<div class="company-logo"></div>
 				<div class="company-info">
 					<p>
-						<strong>(유) 윗츠윌 코리아</strong>
+						<strong style="padding: 0;">(유) 윗츠윌 코리아</strong>
 					</p>
 		
 				</div>
+				
+				<div style="padding-left: 118px;padding-bottom: 10px;"><a href="CEO.action">사장님 페이지 바로가기</a></div>
 			</div>
 		
 			<!-- ========================================================================= 하단 부분 -->
-		
-			<div class="service-info" style="margin-top: 0px;">
-				<div>사장님 페이지 바로가기</div>
+			
+			<div class="service-info" style="margin-top: 0px;">	
 				<div class="bpg">
 					<a href="#/trust/"><span class="img"></span><span class="text">잇츠윌<br>안심센터
 					</span></a>
@@ -793,6 +784,7 @@ $(document).ready(function() {
          </script>
 	</div>
 	<!-- 카카오톡 채팅 끝 -->
+</div>
 
 </body>
 </html>

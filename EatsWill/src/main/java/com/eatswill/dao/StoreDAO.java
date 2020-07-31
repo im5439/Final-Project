@@ -18,9 +18,26 @@ public class StoreDAO {
 	}
 
 	//메인메뉴 전체출력
-	public List<StoreDTO> menuList(String shopCode) {
+	public List<StoreDTO> menuList(String shopCode,int start,int end) {
 
-		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.menuList",shopCode);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("shopCode", shopCode);
+		map.put("start", start);
+		map.put("end", end);
+
+		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.menuList",map);
+
+		return lists;
+	}
+
+	//메인메뉴 전체출력
+	public List<StoreDTO> menuListAll(String shopCode) {
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("shopCode", shopCode);
+
+
+		List<StoreDTO> lists = sessionTemplate.selectList("storeMapper.menuListAll",map);
 
 		return lists;
 	}
@@ -219,6 +236,25 @@ public class StoreDAO {
 
 		List<StoreDTO> lists = 
 				sessionTemplate.selectList("storeMapper.shopList");
+
+		return lists;
+
+	}
+
+	//음식점 이름 검색 카운트
+	public int searchShopCount(String searchShopName) {
+
+		int searchShopCount = sessionTemplate.selectOne("storeMapper.searchShopCount",searchShopName);
+
+		return searchShopCount;
+
+	}
+
+	//음식점 이름으로 검색
+	public List<StoreDTO> searchShopName(String searchShopName){
+
+		List<StoreDTO> lists = 
+				sessionTemplate.selectList("storeMapper.searchShopName",searchShopName);
 
 		return lists;
 

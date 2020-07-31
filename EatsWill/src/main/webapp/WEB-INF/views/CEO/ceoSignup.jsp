@@ -29,6 +29,7 @@
     
     <script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
     
+    
 <style type="text/css">
 
 	.control-group {
@@ -134,29 +135,54 @@
 		}
 		
 		if(!isValidEmail(f.ceoEmail.value)) {
-	       	 	alert("\n정상적인 E-Mail을 입력하세요. ");
-	        	f.ceoEmail.focus();
-	        	return;
+       	 	alert("\n정상적인 E-Mail을 입력하세요. ");
+        	f.ceoEmail.focus();
+        	return;
+		}
+		
+		var param = "ceoId=" + $("#ceoId").val();
+		var params = "ceoNumber=" + $("#company_number").val();
+		var saupjaExists = 0;
+	            
+        $.ajax({
+            url: "saupjaCheck.action",
+            type: "POST",            
+            data: params,
+            async: false,
+            success: function(data){
+            	if(data=="fail") {
+            		saupjaExists = 1;
+            	}
+            },
+            error: function(){
+                alert("Error");
+            }
+        });
+        
+        if(saupjaExists == 1) {
+       	 	alert("사업자번호를 확인해주세요");
+        	f.company_number.focus();
+        	return;
 		}
 		
 		$.ajax({
-	            url: "ceoIdCheck.action",
-	            type: "POST",            
-	            data: param,
-	            success: function(data){
-	            	if(data=="fail") {
-	            		alert("이미 사용중인 아이디입니다");
-	            		f.ceoId.focus();
-	            		return;
-	            	} else {
-	            		f.action = "<%=cp%>/ceoSignup_ok.action";
-	            		f.submit();
-	            	}
-	            },	
-	            error: function(){
-	                alert("Error");
-	            }
-	        });
+            url: "ceoIdCheck.action",
+            type: "POST",            
+            data: param,
+            success: function(data){
+            	if(data=="fail") {
+            		alert("이미 사용중인 아이디입니다");
+            		f.ceoId.focus();
+            		return;
+            	} else {
+            		f.action = "<%=cp%>/ceoSignup_ok.action";
+            		f.submit();
+            	}
+            },	
+            error: function(){
+                alert("Error");
+            }
+	    });
 	}
 
 </script>   
@@ -164,6 +190,32 @@
 <script type="text/javascript">
 
 $(function() {
+	$("#company_number").blur(function(){
+		if($("#company_number").val() != "") {
+			var params = "ceoNumber=" + $("#company_number").val();
+            
+		        $.ajax({
+		            url: "saupjaCheck.action",
+		            type: "POST",            
+		            data: params,
+		            success: function(data){
+		            	if(data=="fail") {
+		            		$("#company_numbers").attr('class', 'alert-text');
+		            		$("#company_numbers").text("사업자번호를 확인해주세요");
+		            	} else {
+		            		$("#company_numbers").text("");
+		            	}
+		            },
+		            error: function(){
+		                alert("Error");
+		            }
+		        });
+		} else {
+			$("#company_numbers").attr('class', '');
+			$("#company_numbers").text("'-' 제외하고 입력 필요. ex) 1234");
+		}
+	});
+	
 	$("#ceoId").blur(function(){
 		if($("#ceoId").val() != "") {
 			var param = "ceoId=" + $("#ceoId").val();
@@ -183,12 +235,15 @@ $(function() {
 		                alert("Error");
 		            }
 		        });
+		} else {
+			$("#ceoIds").text("");
 		}
 	});
 	
 	$("#ceoPw").blur(function(){
 		if($("#ceoPw").val() == "") {
 			$("#ceoPwChk").val("");
+			$("#ceoPwChks").text("");
 		}
 	});
 	
@@ -199,6 +254,8 @@ $(function() {
 			} else {
 				$("#ceoPwChks").text("");
 			}
+		} else {
+			$("#ceoPwChks").text("");
 		}
 	});
 	
@@ -209,6 +266,8 @@ $(function() {
 			} else {
 				$("#ceoEmails").text("");
 			}
+		} else {
+			$("#ceoEmails").text("");
 		}
 	});
 	
@@ -216,21 +275,19 @@ $(function() {
 
 </script> 
 
-<div id="nav" >
+	<div id="nav" >
 		<div class="clearfix">
 		
 			<h1>
-				<a href="<%=cp%>/CEO.action/">
+				<a href="<%=cp%>/CEO.action/" style="text-decoration: none;">
 				<img alt="" src="/eatswill/resources/img/1sajang.png" width="128px" height="58px" style=" margin-left: 60px; margin-top: 20px;"> 
-				<img alt="" src="/eatswill/resources/img/sajang.png" width="96px"  height="22px" style="margin-bottom: 10px;"></a>
+				<img alt="" src="/eatswill/resources/img/sajang.png" width="96px"  height="22px" style="margin-bottom: 10px;">
+				</a>
 			</h1>
-			<!-- 
-			<ul class="ext">
-				<li class="outlink"><a href="" target="_blank"></a></li>
-			</ul>
-			 -->
 		</div>
 	</div>
+	
+	
 
 <div class="rd-wrapper contact-wrapper" style="margin: 4% 28% 6.5% 22%;text-align: center;">
     
@@ -242,7 +299,7 @@ $(function() {
 			<div class="controls">
 				<input type="text" name="company_number" id="company_number" class="control-text" maxlength="10" 
 				onkeypress="inNumber();">
-				<span id="company_numbers">"-" 제외하고 입력 필요. ex) 1234512345</span>
+				<span id="company_numbers">"-" 제외하고 입력 필요. ex) 1234</span>
 			</div>    
 		</div>
 		    

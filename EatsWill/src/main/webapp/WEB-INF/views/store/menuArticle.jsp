@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -177,12 +178,12 @@ function sendIt() {
 
 <!-- 자리 확인하고 border 0으로 주기 -->
 <table border="1" width="585px">
-<tr>
-	<td colspan="3">메뉴 사진띄우기<br/><br/></td>
+<tr style="border: 0 white;">
+	<td colspan="3" align="center"><img src="<spring:url value='/menuImg/${dto.menuImg }'/>" width="150px" height="150px" style="width: 150px;max-height: 150px;"></td>
 </tr>
 
-<tr>
-	<td colspan="3"><b style="font-size: 12pt;">메뉴명: ${dto.menuName }</b><br/><br/></td>
+<tr style="text-align: center;">
+	<td colspan="3"><b style="font-size: 12pt;">${dto.menuName }</b><br/><br/></td>
 </tr>
 
 

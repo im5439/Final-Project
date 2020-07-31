@@ -116,7 +116,6 @@ ng\:form {
   		var searchKey = "${searchKey}";
 		var searchValue = "${searchValue}";
   		
-		alert("탄다");
 	  	var f = document.form;
 	  	
 	  	$(f).append($('<input/>', {type: 'hidden', name: 'searchKey', value: searchKey}));
@@ -152,8 +151,10 @@ ng\:form {
 		var sortMode = "${sortMode}";
 		var searchKey = "${searchKey}";
 		var searchValue = "${searchValue}";
+		var searchShopName ="${searchShopName}"
 		
-		var params ="pageNum="+index +"&category="+category+"&sortMode="+sortMode + "&searchKey="+searchKey + "&searchValue="+searchValue;
+		var params ="pageNum="+index +"&category="+category+"&sortMode="+sortMode 
+		+ "&searchKey="+searchKey + "&searchValue="+searchValue +"&searchShopName=" + searchShopName;
 		var url="<%=cp%>/stores.action";
 		
 		$.post(url,params,function(args){
@@ -170,7 +171,6 @@ ng\:form {
   	
   	function sendIt(sort){
   		
-  		alert(sort);
   		
   		document.myForm.action = "<%=cp%>/" + sort;
   		document.myForm.submit();
@@ -345,7 +345,7 @@ ng\:form {
 							</li>
 							<li><a href="updateInfo.action">내정보수정</a></li>
 							<li><a href="myPage.action">마이 페이지</a></li>
-							<li><a id="basket">장바구니</a></li>
+							<li><a href="#" id="basket">장바구니</a></li>
 						</ul>
 						<form method="POST" action="" name="infoForm">
 							<div id="myInfo"></div>
@@ -463,15 +463,65 @@ ng\:form {
   </button>
   
   <!-- ------------------------------------------------------------------------------------------------- 리스트 상단 카테고리 -->
+<script type="text/javascript">
+
+	$(function(){
+		
+		$("#searchshops").click(function(){
+			
+			if($("#searchShop").css('display')=='none'){
+				
+				
+				$("#searchShop").show();
+				document.getElementById("searchShopName").value=null;
+				
+			}else{
+				
+				$("#searchShop").hide();
+				document.getElementById("searchShopName").value=null;
+			}
+			
+			
+		});
+	  
+		$("#searchShopBtn").click(function(){
+			
+			var searchKey = "${searchKey}";
+			var searchValue = "${searchValue}";
+	  		
+		  	var f = document.form;
+		  	
+		  	$(f).append($('<input/>', {type: 'hidden', name: 'searchKey', value: searchKey}));
+		  	$(f).append($('<input/>', {type: 'hidden', name: 'searchValue', value: searchValue}));
+		  	$(f).append($('<input/>', {type: 'hidden', name: 'searchShopName', value: $("#searchShopName").val() }));
+			
+			document.form.action="<%=cp%>/storeList.action";
+			document.form.submit();
+			
+		});
+		
+	});
+
+	
+  
+  
+</script>
+  
   <form name="form" method="post">
   <div id="category" class="category-menu clearfix collapse in" aria-expanded="true">
+  
+  
     <ul>
 
 
-       <li class="hidden-xs menu-search"><a
+       						<li class="hidden-xs menu-search"><a
                               class="btn btn-default ico-search1"
-                              ng-click="toggle_category_block()">검색</a></li>
+                              ng-click="toggle_category_block()" id="searchshops">검색</a>
+                              
+                            </li>
                            <!--pc button-->
+                           
+                         
 
      
         <!--카테고리시작 -->
@@ -536,13 +586,21 @@ ng\:form {
                               </form>
                            </li>
                         </ul>
+                        
                      </div>
+                     
                      </form>
                      
                   </div>
 
                </div>
             </div>
+            <span id="searchShop" style="display: none; margin-left: 23%; margin-top: 5;">
+            <table border="0">
+  			<tr><td><input type="text" placeholder="매장명을 입력하세요" name="searchShopName" id="searchShopName" style="width: 200px;" /></td>
+  			<td height="100%"><button id="searchShopBtn" style="border:0; background-color: orange;  height: 48;" >검색</button></td></tr>
+  			</table>
+  			</span>
 
     
 <!-- ====================================================================================================================  카테고리 끝 -->    
@@ -579,8 +637,7 @@ ng\:form {
     <div ng-show="list.length > 0" class="">
       <!-- 음식점 리스트 타이틀  -->
       <div ng-if="key === 'superlist'" class="ranking-guide ng-scope">
-        <p>우리동네 맛집<button type="button" class="btn-tooltip ad" data-toggle="tooltip" data-html="true" id="adtooltip" data-placement="bottom" title="" data-original-title="잇츠윌와 계약된 우리동네 플러스 음식점 광고 영역입니다.
-        <br>음식점 이름은 사업자등록증 상호와 다를 수 있습니다.">&nbsp;</button></p>
+        <p>${searchKey } ${searchValue } 맛집</p>
       </div>
       
       
@@ -595,7 +652,8 @@ ng\:form {
 
 				<table width="1020" height="100" border="0">
 				<tr align="center">
-				<td><input type="button" id="showNextShop" value="더보기 ▼"  onclick="addPage();" style="width: 1020; height: 100; border: 0; font-size: 17pt;"  />
+				<td><input type="button" id="showNextShop" value="더 보기 ▼"  onclick="addPage();" 
+				style="width: 1000; height: 100; border: 1px solid #d9d9d9; font-size: 12pt; color: red; background-color: white;"/>
 				<input type="hidden" value="1" id="nextNum"/></td>
 				</tr>
 				</table>

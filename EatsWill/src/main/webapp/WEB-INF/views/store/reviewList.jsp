@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%
    request.setCharacterEncoding("UTF-8");
    String cp = request.getContextPath();
@@ -38,6 +39,8 @@
 	<link rel="stylesheet" href="/eatswill/resources/assets/css/main.css" />
 	<link rel="stylesheet"
 	href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
+	
+	<script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
 	
 <meta name="theme-color" content="#DC1400">
 <meta property="og:title" content="요기요 - 즐거움은 요기부터. 배달음식 주문은 역시 요기요!">
@@ -92,7 +95,14 @@
 			}
 		});
 				
-			}
+	}
+	
+	$(function() {
+		if("${lists.size() }" == 0) {
+			var f = document.reviewForm;
+			$(f).append($('<span/>', {style: 'margin-left: 37%;font-size: 17px', text: "등록된 리뷰가 없습니다"}));
+		}
+	});
 
 
 </script>
@@ -144,8 +154,8 @@
                 <div style="width: 569px; height: 284px;">
                 	
                 
-                  <img alt="" src="resources/img/${dto.reImg}"
-                  style="visibility: visible; width: 569px; height: 758.37px; left: 0px; top: -237px;">
+                  <img alt="" src="<spring:url value='/reImg/${dto.reImg }'/>"
+                  style="visibility: visible; width: 300px; height: 300px; left: 0px;">
                 </div>
                 </c:if>
                 
@@ -165,7 +175,7 @@
       
         <div style="background-color: #FDF5E6;">
             <span ng-show="review.phone" class="review-id ng-binding">
-            <img alt="" src="/eatswill/resources/img/dat.png" style="height: 2.5em; width: 2.5em;">&nbsp;사장님 &nbsp;${dto.userId } 님</span>
+            <img alt="" src="/eatswill/resources/img/dat.png" style="height: 2.5em; width: 2.5em;">&nbsp;사장님</span>
             <span ng-bind="review.time|since" class="review-time ng-binding"> 작성날짜 ${dto.reCreated } </span>
             
             <p ng-show="review.comment" ng-bind-html="review.comment|strip_html" class="ng-binding">&nbsp;${dto.ceoContent }</p>

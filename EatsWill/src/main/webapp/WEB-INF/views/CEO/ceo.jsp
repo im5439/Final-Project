@@ -56,6 +56,7 @@
 
 <script type="text/javascript">
     
+
     	function login(){
     		
     		var f = document.myForm;
@@ -81,11 +82,14 @@
     		
     		var f = document.myForm;
 			
-			f.action = "<%=cp%>/logout_ok.action";
-			f.submit();
+    		  var delConfirm = confirm('정말로 로그아웃 하시겠습니까?');
+    		   if (delConfirm) {
+    				f.action = "<%=cp%>/logout_ok.action";
+    				f.submit();
+    		   }
     		
     	}
-    	
+		
 		
     </script>
 
@@ -190,6 +194,11 @@
 										<button type="submit" class="btn-own-login" onclick="login();">로그인</button>
 									</div>
 								</form>
+								<c:if test="${message != null }">
+									<div style="margin-top: 5; margin-bottom: -25;">
+										<span style="color: red;">${message }</span>
+									</div> 
+								</c:if>
 								<a href="<%=cp%>/ceoSignup.action" class="btn-own-auth">사장님 회원가입</a>
 
 								<p class="txt">
@@ -238,12 +247,9 @@
 			</div>
 
 
-			<ul class="info clearfix">
-				<li class="n1"><a href="" onclick="">EATSWILL 입점신청하기</a></li>
-				<li class="n2"><a href="" onclick="">EATSWILL 알뜰쇼핑 바로가기</a></li>
-				<li class="n4"><a href="">EATSWILL
-						이용약관 동의하기</a></li>
-			</ul>
+				<img src="/eatswill/resources/img/사장님메인img1.png" style="max-width: 100%; height: auto; border: 1px solid #eaeaea; padding: 0px;">
+				<img src="/eatswill/resources/img/사장님메인img2.png" style="max-width: 100%; height: auto; border: 1px solid #eaeaea; padding: 0px; margin-left: 15px; margin-right: 15px;">
+				<img src="/eatswill/resources/img/사장님메인img3.png" style="max-width: 100%; height: auto; border: 1px solid #eaeaea; padding: 0px;">
 
 			<div class="sms-app-down">
 				<div class="sms">

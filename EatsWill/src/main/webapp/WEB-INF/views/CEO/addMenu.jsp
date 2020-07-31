@@ -89,6 +89,14 @@
 			return true;    		
     	}
 
+   	function delConfirm(){
+   		var delConfirm = confirm('정말로 삭제하시겠습니까?');
+   		if (delConfirm)
+   			return false;
+   		else 
+   			return true;
+   	}
+   	
      function deleteItem(btnIdx, pageNum ) {
 	    
 	    var params = "menuCode=" + $("#menuCode1" + btnIdx).val();
@@ -107,6 +115,7 @@
 	        url:"<%=cp%>/deleteMenu.action",
 	        async: false,
 	        data:params,
+	        beforeSend : delConfirm(),
 	        success: function(args){
 	        
 	           $("#menuItem").html(args);
@@ -165,6 +174,12 @@
 	            	if(count == (pageNum - 1)){
 						$("#review").hide();
 					} 
+	            	
+	            	if("${menuCount}" == 0){
+						$("#menuChk").show();
+					} else
+						$("#menuChk").hide();
+						
 		            
 	            },
 	            error:function(request, error){
@@ -197,6 +212,7 @@
 				type: 'POST', 
 				beforeSend: showRequest,
 				success: function(args){ 
+					
 					$("#menuItem").html(args);
 				
 					$("#menuName").val('');
@@ -434,7 +450,7 @@
 					<div class="status-logout">
 						<form method="POST" name="myForm" enctype="multipart/form-data">
 
-							<div>매장명 : ${shopName }</div>
+							<div style="font-size: large;">매장명 : ${shopName }</div>
 
 							<br/>
 							<div>
@@ -446,16 +462,18 @@
 							</div>
 							<br/>
 							<div>
-								<select class="inp-txt pwd" name="part" id="part">
+								<select class="inp-txt pwd" name="part" id="part" style="margin-bottom: auto;">
 									<option value="">메뉴구분</option>
 									<option value="0">메인메뉴</option>
-									<option value="1">사이트메뉴</option>
+									<option value="1">사이드메뉴</option>
 								</select>
 							</div>
 							<br/>
 							<div>
 								<input type="file" class="inp-txt pwd"  name="uploadMenu" id="uploadMenu" placeholder=" ">
 							</div>
+							&nbsp;&nbsp;&nbsp;<span style="color: red;">*메뉴 이미지를 선택해주세요.</span>
+							<br/>
 							<br/>
 							<div>
 								<button type="submit" class="btn-own-login" id="addMenu">메뉴등록</button>
@@ -471,7 +489,7 @@
 			
 		 <div class="ng-scope">
 		    <div class="" style="overflow: auto;" id="menuList">
-		      <div ng-if="key === 'contract'" class="ranking-guide ng-scope">
+		      <div class="ranking-guide ng-scope">
 		        <p>메뉴 목록</p>
 		      </div>
 		      
@@ -480,17 +498,23 @@
 			</div>
 		</div>
       		<div >
-				<ul id="review" class="list-group review-list">
-			        <%--  
-			        <li class="list-group-item ng-hide" ng-show="restaurant.reviews.length < 1">
-			          <p class="review-empty clearfix ng-binding">리뷰가 없습니다.</p>
-			        </li> 
-			        --%>
+      		<c:choose>
+			<c:when test="${menuCount == 0 }">
+				 <ul class="list-group review-list" id="menuChk">
+			        <li class="list-group-item ng-hide" >
+			          <p class="review-empty clearfix ng-binding">등록된 메뉴가 없습니다.</p>
+			        </li>
+		      	</ul>
+	      	</c:when>
+	      	<c:otherwise>
+				<ul id="review" class="list-group review-list" style="margin-left: 10; margin-right: 30;">
 			        <li class="list-group-item btn-more">
 			          <a href="" id="nextSee"><span>더 보기<i class="arr-down"></i></span></a>
 			        </li>
 		      	</ul>
-					<input type="hidden" value="1" id="nextNum"/>
+		      	<input type="hidden" value="1" id="nextNum"/>
+	      	</c:otherwise>
+	    </c:choose>
 			</div>
 		</div>
 	</div>

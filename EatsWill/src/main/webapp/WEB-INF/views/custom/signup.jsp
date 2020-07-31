@@ -20,7 +20,10 @@ ng\:form {
 	
 }
 
-
+.btnColor:hover {
+	color: #585858;
+	background-color: #e1e1e1;
+}
 
 
 </style>
@@ -297,7 +300,8 @@ ng\:form {
 	        		<div class="controls">
 	            		<input type="text" name="id" id="id" style="display: inline;height: 34px"/>
 	            		<span class="alert-text">영문과 숫자로 입력 필요(6~20자)</span>
-	            		<input type="button" value="중복확인" id="idcheck"/>
+	            		<input type="button" value="중복확인" id="idcheck" class="btnColor" style="width: 70px;height: 27px;text-align-last: center;
+	            			margin-left: 10px;border: 1px solid;font-weight: bold;border-color: rgb(170, 170, 170);"/>
 					</div>
 				</div>	
 	
@@ -340,7 +344,8 @@ ng\:form {
 	
 	        		<div class="controls">
 	            		<input type="text" name="addr1" id="addr1" style="display: inline;height: 34px"/>
-	            		<input type="button" value="주소검색" id="addrcheck" onclick="sample3_execDaumPostcode();"/>
+	            		<input type="button" value="주소검색" id="addrcheck" class="btnColor" onclick="sample3_execDaumPostcode();" style="width: 70px;height: 28px;text-align-last: center;
+            				margin-left: 10px;border: 1px solid;font-weight: bold;border-color: rgb(170, 170, 170);"/>
 					</div>
 				</div>
 				

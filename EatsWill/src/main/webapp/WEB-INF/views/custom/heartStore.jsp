@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <link rel="stylesheet"
 	href="https://www.yogiyo.co.kr/mobile/css/app.css?v=254ddffd1cab420620ca23002fe458eea88e05db">
 
@@ -31,7 +32,7 @@
                        <td class="first_cell" rowspan="1" style="vertical-align: middle">
                           <div class="td_detail">
                              <img
-                                src="/eatswill/resources/images/${dto.shopImg}" width="80"
+                                src="<spring:url value='/shopImg/${dto.shopImg }'/>" width="80"
                                 height="80">
                           </div>
                        </td>

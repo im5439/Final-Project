@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 
 <!-- css---------------------------------------------------------- -->
@@ -62,6 +63,18 @@
 	src="http://script.gmarket.co.kr/_Net/js/MygSmileClubBanner.js"></script>
 <script type="text/javascript"
 	src="http://script.gmarket.co.kr/_Net/js/MygSmileStamp.js"></script>
+	
+<script type="text/javascript">
+
+	function orderCancel(){
+		
+		var delConfirm = confirm('정말로 취소하시겠습니까?');
+		if (delConfirm) {
+			$('#orderForm').submit();
+		}	
+	}
+
+</script>
 
 
 	
@@ -94,7 +107,7 @@
 											<td class="first_cell" rowspan="1">
 												<div class="td_detail">
 
-													<img src="/eatswill/resources/images/${dto.shopImg}"
+													<img src="<spring:url value='/shopImg/${dto.shopImg }'/>"
 														width="90" height="90">
 												</div>
 											</td>
@@ -130,17 +143,18 @@
 											</td>
 											<td><c:choose>
 													<c:when test="${dto.orderStatus == '주문완료' }">
-														<span class="btn_bg btn_w81_2"><a
-															href="javascript:location.href='myOrderCancel.action?orderCode=${dto.orderCode}'">주문
-																취소</a></span>
+														<span class="btn_bg btn_w81_2">
+															<a href="#" onclick="orderCancel();">주문 취소</a></span>
+															<form method="POST" action="myOrderCancel.action" id="orderForm">
+																<input type="hidden" name="orderCode" value="${dto.orderCode}"/>
+															</form>
 													</c:when>
 													<c:when test="${dto.orderStatus == '배달완료' }">
-														<c:if
-																test="${dto.cnt == 0 }"><span class="btn_bg btn_w81_2"> 
-																<a href="${reviewUrl }orderCode=${dto.orderCode}">리뷰
-																	쓰기</a>
-															
-														</span></c:if> 
+														<c:if test="${dto.cnt == 0 }">
+															<span class="btn_bg btn_w81_2"> 
+																<a href="${reviewUrl }orderCode=${dto.orderCode}">리뷰 쓰기</a>
+															</span>
+														</c:if> 
 													</c:when>
 													<c:otherwise></c:otherwise>
 												</c:choose></td>

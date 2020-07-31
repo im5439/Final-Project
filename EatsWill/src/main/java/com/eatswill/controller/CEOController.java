@@ -11,9 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -60,6 +58,7 @@ public class CEOController {
 			if (dto == null || !dto.getCeoPw().equals(ceoPw)) {
 
 				System.out.println("아이디비번틀림");
+				request.setAttribute("message", "ID및 비밀번호가 다릅니다.");
 				return "CEO/ceo";
 
 			} else {
@@ -92,6 +91,8 @@ public class CEOController {
 			
 		}
 
+		request.setAttribute("message", null);
+		
 		return "CEO/ceo";
 
 	}
@@ -123,6 +124,34 @@ public class CEOController {
 		return "redirect:/CEO.action";
 
 	}
+	
+	// 사업자번호 확인 기능
+		@RequestMapping(value = "/saupjaCheck.action", method = RequestMethod.POST)
+		@ResponseBody
+		public String saupjaCheck(String ceoNumber) {
+
+			// 사업자번호가 없을시(거부)
+			if (!dao.selectSaupja(ceoNumber)) {
+				return "fail";
+			}
+
+			// 사업자번호가 존재시(통과)
+			return "pass";
+		}
+		
+		// 아이디 중복 확인 기능
+		@RequestMapping(value = "/ceoIdCheck.action", method = RequestMethod.POST)
+		@ResponseBody
+		public String ceoIdCheck(String ceoId) {
+
+			// 아이디 존재(거부)
+			if (!dao.selectCeo(ceoId)) {
+				return "fail";
+			}
+
+			// 아이디 없음(통과)
+			return "pass";
+		}
 
 	
 	//매장추가 START=============================================================================================================================
@@ -333,7 +362,7 @@ public class CEOController {
 		}
 		
 		//전체페이지수
-		int numPerPage = 4;
+		int numPerPage = 10;
 		int currentPage = 1;
 		
 		request.setAttribute("currentPage", currentPage);
@@ -378,7 +407,7 @@ public class CEOController {
 		System.out.println("reviewCount : " + reviewCount);
 		
 		//전체페이지수
-		int numPerPage = 4;
+		int numPerPage = 10;
 		int totalPage = myUtil.getPageCount(numPerPage, reviewCount);
 		System.out.println("totalPage : " + totalPage);
 		System.out.println("currentPage : " + currentPage);
@@ -462,7 +491,7 @@ public class CEOController {
 		int reviewCount = dao.getReviewCount(shopCode);
 		
 		//전체페이지수
-		int numPerPage = 4;
+		int numPerPage = 10;
 		int totalPage = myUtil.getPageCount(numPerPage, reviewCount);
 		System.out.println("totalPage : " + totalPage);
 		System.out.println("currentPage : " + currentPage);
@@ -561,7 +590,7 @@ public class CEOController {
 		int reviewCount = dao.getReviewCount(shopCode);
 		
 		//전체페이지수
-		int numPerPage = 4;
+		int numPerPage = 10;
 		int totalPage = myUtil.getPageCount(numPerPage, reviewCount);
 		System.out.println("totalPage : " + totalPage);
 		System.out.println("currentPage : " + currentPage);
@@ -730,7 +759,7 @@ public class CEOController {
 			int menuCount = dao.getMenuCount(shopCode);
 			
 			//전체페이지수
-			int numPerPage = 4;
+			int numPerPage = 10;
 			int totalPage = myUtil.getPageCount(numPerPage, menuCount);
 			
 			if(currentPage > totalPage)
@@ -780,7 +809,7 @@ public class CEOController {
 			int menuCount = dao.getMenuCount(shopCode);
 			
 			//전체페이지수
-			int numPerPage = 4;
+			int numPerPage = 10;
 			int totalPage = myUtil.getPageCount(numPerPage, menuCount);
 			System.out.println("totalPage : " + totalPage);
 			System.out.println("currentPage : " + currentPage);
@@ -884,7 +913,7 @@ public class CEOController {
 				int menuCount = dao.getMenuCount(shopCode);
 				
 				//전체페이지수
-				int numPerPage = 4;
+				int numPerPage = 10;
 				int totalPage = myUtil.getPageCount(numPerPage, menuCount);
 				
 				if(currentPage > totalPage)
@@ -913,7 +942,7 @@ public class CEOController {
 			int menuCount = dao.getMenuCount(shopCode);
 			
 			//전체페이지수
-			int numPerPage = 4;
+			int numPerPage = 10;
 			int totalPage = myUtil.getPageCount(numPerPage, menuCount);
 			
 			if(currentPage > totalPage)
@@ -970,7 +999,7 @@ public class CEOController {
 			int menuCount = dao.getMenuCount(shopCode);
 			
 			//전체페이지수
-			int numPerPage = 4;
+			int numPerPage = 10;
 			int totalPage = myUtil.getPageCount(numPerPage, menuCount);
 			
 			if(currentPage > totalPage)
@@ -1008,13 +1037,15 @@ public class CEOController {
 		
 		List<SalesDTO> dayLists = dao.getDaySales(shopCode); // 일별 매출
 		List<SalesDTO> monthLists = dao.getMonthSales(shopCode); // 월별 매출
+		
+			
 		int totSales = dao.getTotSales(shopCode); // 매장별 총매출
 		int profit = (int) (totSales * 0.9); // 순이익
 		int orderCount = dao.getOrderCount(shopCode); //매장별 주문횟수
 		int heartCount = dao.getHeartCount(shopCode); //매장별 찜횟수
 		
 		ObjectMapper mapper = new ObjectMapper();
-
+		
 		String jsonDay = null;
 		String jsonMonth = null;
 		
@@ -1022,7 +1053,7 @@ public class CEOController {
 			
 			jsonDay = mapper.writeValueAsString(dayLists); // json 형식으로 파싱
 			jsonMonth = mapper.writeValueAsString(monthLists);
-
+			
 		} catch (JsonProcessingException e) {
 			System.out.println(e.toString());
 			e.printStackTrace();

@@ -113,7 +113,7 @@ $(function() {
 <div id="info" class="info-list" ng-show="active_tab == &quot;info&quot;">
       <div class="info-item" ng-show="restaurant_info.introduction_by_owner">
         <div class="info-item-title info-icon">사장님알림</div>
-      사장님 말 말 말 말 
+      안녕하세요 ${dto.shopName } 입니다.
 <br>
 <br>
 <br>
@@ -125,8 +125,6 @@ $(function() {
 <br>
 
 </div>
-
-
 
  <div class="info-item">
         <div class="info-item-title info-icon1">업체정보</div>
@@ -146,9 +144,9 @@ $(function() {
 	  
       <div class="info-item">
         <div class="info-item-title info-icon3">사업자정보</div>
-        <p><i>상호명</i> <span ng-bind="restaurant_info.crmdata.company_name || restaurant.name" class="tc ng-binding">매장이름: ${dto.shopName }</span></p>
-        <p><i>사장님 성함</i> <span ng-bind="restaurant_info.crmdata.company_name || restaurant.name" class="tc ng-binding">사장이름: ${dto.ceoName }</span></p>
-        <p><i>사업자등록번호</i> <span ng-bind="restaurant_info.crmdata.company_number" class="tc ng-binding">${dto.shopTel}</span></p>
+        <p><i>상호명</i> <span ng-bind="restaurant_info.crmdata.company_name || restaurant.name" class="tc ng-binding">${dto.shopName }</span></p>
+        <p><i>사장님 성함</i> <span ng-bind="restaurant_info.crmdata.company_name || restaurant.name" class="tc ng-binding">${dto.ceoName }</span></p>
+        <p><i>사업자번호</i> <span ng-bind="restaurant_info.crmdata.company_number" class="tc ng-binding">1004</span></p>
       </div>
 
       

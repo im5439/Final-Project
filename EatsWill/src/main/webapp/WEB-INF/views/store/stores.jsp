@@ -40,7 +40,7 @@
                                        <!-- 이미지 storeimg 적용해야됨 -->
 
                                        <div class="logo">
-                                			<img src="<spring:url value='/shopImg/${dto.shopImg }'/>" width="80px" height="80px" style="width: 70px;max-height: 70px;">	
+                                			<img src="<spring:url value='/shopImg/${dto.shopImg }'/>" width="80px" height="80px" style="width: 68px;max-height: 68px;">	
                                        </div>
 
                                        <div ng-show="! (restaurant|restaurant_is_available)"
@@ -68,21 +68,22 @@
                                                 ng-show="별점">${dto.reScore }</span>
                                              </span> <span class="review_num ng-binding" ng-show="리뷰갯수">
                                                 리뷰 수(${dto.reCount }) </span> <span class="review_num ng-binding"
-                                                ng-show="사장님 답글"> 사장님댓글 갯 </span> <span
+                                                ng-show="사장님 답글"> 사장님 댓글 수(${dto.ceoContentCount })</span> <span
                                                 class="review_num ng-binding" ng-show="storecreated"
                                                 id="shopcreated"> 오픈일 ${dto.shopCreated } </span> <span
                                                 ng-show="restaurant.review_count < 1" class="ng-hide">
                                                 첫번째 리뷰를 남겨주세요! </span>
                                           </div>
+                                          <br/>
                                           <ul>
                                              <li class="payment-methods ng-binding yogiseo-payment"
-                                                ng-class="is_online_payment(restaurant) ? 'yogiseo-payment' : ''">잇츠윌결제</li>
-                                             <li class="min-price ng-binding">~이상배달</li>
+                                                ng-class="is_online_payment(restaurant) ? 'yogiseo-payment' : ''">현금 결제 가능</li>
+                                             <li class="min-price ng-binding"> <span class="coupon-base ng-binding"
+                                                ng-show="delivery_discount_value(restaurant) > 0">배달
+                                                   가능</span> </li>
                                              <li class="full-w"
                                                 ng-show="is_yogiyo &amp;&amp; (delivery_discount_value(restaurant) > 0 || additional_discount_value(restaurant) > 0 || restaurant.tags.length > 0 &amp;&amp; restaurant.tags.indexOf('CESCO') >= 0)">
-                                                <span class="coupon-base ng-binding"
-                                                ng-show="delivery_discount_value(restaurant) > 0">배달
-                                                   할인 얼마</span> <span
+                                                 <span
                                                 class="coupon-base coupon-style1 ng-binding ng-hide"
                                                 ng-show="additional_discount_value(restaurant) > 0">추가할인
                                                    0%</span> <span

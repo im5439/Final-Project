@@ -40,12 +40,6 @@ public class CustomController {
 	@Autowired
 	private JavaMailSenderImpl mailSender;
 
-	// 테스트용
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home() {
-		return "main2";
-	}
-
 	// 메인 페이지
 	@RequestMapping(value = "/main.action", method = RequestMethod.GET)
 	public String main(HttpServletRequest req, String message) {
@@ -169,7 +163,7 @@ public class CustomController {
 	}
 
 	// 로그아웃 기능
-	@RequestMapping(value = "/logout.action", method = RequestMethod.GET)
+	@RequestMapping(value = "/logout.action", method = {RequestMethod.GET, RequestMethod.POST})
 	public String logout(HttpServletRequest req) {
 
 		HttpSession session = req.getSession();
@@ -386,7 +380,7 @@ public class CustomController {
 		String orderCode = req.getParameter("orderCode");
 		dao.myOrderCancel(orderCode);
 
-		return "redirect:/myOrder.action";
+		return "redirect:/myPage.action";
 	}
 
 	// 리뷰 작성창 띄우기

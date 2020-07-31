@@ -371,16 +371,18 @@
 							<div>
 								<input type="text" class="inp-txt" name="shopName" placeholder=" 매장명" id="shopName">
 							</div>
-							<br/>
-							<div>
+							<div style="padding-top: 15px; padding-bottom: 7px;">
 								<input type="text" class="inp-txt" name="shopTel" placeholder=" 매장전화번호" id="shopTel">
 							</div>
-							<br/>
 							<div>
 								<!-- <input type="text" id="sample2_postcode" placeholder="우편번호"> -->
+								<div style="padding-bottom: 15px;">
 								<input type="text" class="inp-txt" id="sample2_address" name="shopAddr1" placeholder="주소" style="width: 80%;" readonly="readonly">
-								<input type="button" class="btn-own-login" onclick="sample2_execDaumPostcode()" value="주소 찾기" style="width: auto; height: 46px;">
+								<span style="padding-left: 10px;"><input type="button" class="btn-own-login" onclick="sample2_execDaumPostcode()" value="주소 찾기" style="width: 119px; height: 46px; padding: 10px;"></span>
+								</div>
+								<div>
 								<input type="text" class="inp-txt" id="sample2_detailAddress" name="shopAddr2" placeholder="상세주소">
+								</div>
 								<!-- <input type="text" class="inp-txt" id="sample2_extraAddress" placeholder="참고항목"> -->
 								
 								<!-- iOS에서는 position:fixed 버그가 있음, 적용하는 사이트에 맞게 position:absolute 등을 이용하여 top,left값 조정 필요 -->
@@ -388,8 +390,7 @@
 									<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()" alt="닫기 버튼">
 								</div>
 							</div>
-							<br/>
-							<div>
+							<div style="padding-top: 15px; padding-bottom: 6px;">
 								<select class="inp-txt pwd" name="category" id="category">
 									<option value="">카테고리</option>
 									<option value="ck">치킨</option>
@@ -400,12 +401,6 @@
 									<option value="jp">일식</option>
 								</select>
 							</div>
-							<br/>
-							
-							<div>
-								<input type="file" class="inp-txt pwd" name="uploadfile" placeholder=" " id="uploadfile">
-							</div>
-							<br/>
 							<div>
 								<select class="inp-txt pwd" name="franchise" id="franchise">
 									<option value="">프랜차이즈유무</option>
@@ -413,6 +408,11 @@
 									<option value="N">NO</option>
 								</select>
 							</div>
+							<div style="padding-top: 7px;">
+								<input type="file" class="inp-txt pwd" name="uploadfile" placeholder=" " id="uploadfile">
+							</div>
+							&nbsp;&nbsp;&nbsp;<span style="color: red;">*매장 이미지를 선택해주세요.</span>
+							<br/>
 							<br/>
 							<div>
 								<button type="submit" class="btn-own-login" id="addStore">매장등록</button>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%
    request.setCharacterEncoding("UTF-8");
    String cp = request.getContextPath();
@@ -436,11 +437,11 @@ function sendIt() {
 									전화번호 : ${sessionScope.customInfo.tel }</br> 포인트 :
 									${sessionScope.customInfo.point }
 								</p> 
-								<a href="logout.action" data-nethru_clcode="A000012">로그아웃</a>
+								<a href="#" onclick="logout();" data-nethru_clcode="A000012">로그아웃</a>
 							</li>
 							<li><a href="updateInfo.action">내정보수정</a></li>
 							<li><a href="myPage.action">마이 페이지</a></li>
-							<li><a id="basket">장바구니</a></li>
+							<li><a href="#" id="basket">장바구니</a></li>
 						</ul>
 						<form method="POST" action="" name="infoForm">
 							<div id="myInfo"></div>
@@ -498,7 +499,7 @@ function sendIt() {
 									class="button button--ujarak button--border-thin button--text-thick"
 									style="width: 150px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 14.4px; font-weight: bold;
 									font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
-									onclick="javascript:location.href='logout.action';">로그아웃</button>
+									onclick="logout();">로그아웃</button>
 									
 								<button type="button"
 									class="button button--ujarak button--border-thin button--text-thick"
@@ -510,7 +511,7 @@ function sendIt() {
 						</c:choose>
 		
 						<!-- <button type="button"
-						class="btn btn-warning hidden-xs ng-binding"
+							class="btn btn-warning hidden-xs ng-binding"
 						ng-show="show_pc_cart_button()" ng-click="click_cart_button()"
 						ng-bind="&quot;주문표(&quot; + global_cart.get_amount() + &quot;)&quot;" style="font-size: 1.2em;background-color: red;">주문표(0)</button> -->
 		
@@ -568,7 +569,7 @@ function sendIt() {
                         <div class="product-info">
                            <span class="img"> <a
                               href="http://item.gmarket.co.kr/detailview/Item.asp?goodscode=1775279016">
-                              <img src="/eatswill/resources/images/${dto.shopImg}" width="70" height="70"></a>
+                              <img src="<spring:url value='/shopImg/${dto.shopImg }'/>" width="70" height="70"></a>
                            </span> <span class="info"> <span class="location">주문번호: [${dto.orderCode}]</span> <span class="link"><a
                                  href="">(${dto.shopName })</a>&nbsp;${dto.menuName }</span>
                                  <input type="hidden" name="orderCode" value="${dto.orderCode }">

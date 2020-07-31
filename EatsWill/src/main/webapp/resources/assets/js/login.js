@@ -1,3 +1,14 @@
+function logout(){
+    		
+	var f = document.infoForm;
+	
+	var delConfirm = confirm('로그아웃 하시겠습니까?');
+	if (delConfirm) {
+		f.action = "logout.action";
+		f.submit();
+	}
+}
+
 function cartList() {
 
 	var param = "id=" + $("#sessionId").val();
@@ -16,6 +27,11 @@ function cartList() {
 }
 
 function cartOpen(check) {
+
+	if($("#cartList").text() == "주문표(0)") {
+		alert("주문목록에 내역이 없습니다!");
+		return;
+	}
 
 	var f = "";
 	var info = "";
@@ -347,10 +363,14 @@ $(function() {
 		var f = document.findAddr;
 		var index = $(this).attr("index");
 		
-		$(f).append($('<input/>', {type: 'hidden', name: 'category', value: index}));
+		if(document.getElementsByName("category")){
+			document.getElementsByName("category")[0].value = index;
+		} else {
+			$(f).append($('<input/>', {type: 'hidden', name: 'category', value: index}));
+		}
 		
 		// f.action = "storeList.action";
-		f.submit();
+		 f.submit();
 		
 	});
 		

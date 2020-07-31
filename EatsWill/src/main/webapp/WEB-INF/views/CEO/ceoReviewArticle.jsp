@@ -9,100 +9,6 @@
 
 <script type="text/javascript">
 
-
-$(function(){
-	<%-- 
-	var btnIdx;
-	  
-	  $(".btn-modal").click(function(){
-		  btnIdx = $(this).attr('index');
-		  console.log("index : " + btnIdx);
-		  //$(".ceoContent").val("");
-		  
-	  });
-	  
-	  $(".btn-modal").click(function(){
-		  
-		  var params = "renum=" + $("#renum" + btnIdx).val();
-		  params += "&shopCode=" + $("#shopCode").val();
-		  
-		  console.log(params);
-		  
-		  $.ajax({
-	            type:"post",
-	            url:"<%=cp%>/reviewModal.action",
-	            async: false,
-	            data:params,
-	            success: function(args){
-	               
-	               $("#reviewModal").html(args);
-	               btnIdx="";
-	               
-	            },
-	            error:function(e){
-	            	alert("실패하였습니다.");
-	            	console.log(request.status);
-	            	console.log(request.responseText);
-	            	console.log(error);
-	          }
-	          
-	        });
-		  
-	  });
-	 --%>  
-	  /* 
-	  $('.modal').on('hidden.bs.modal', function (e) {
-		    console.log('modal close');
-		  $(this).find('form')[0].reset()
-		});
-	   */
-	  
-<%-- 
-	  var delIdx;
-
-	  $(".btn-del").click(function(){
-		  delIdx = $(this).attr('index2');
-		  console.log("index2 : " + delIdx);
-		  
-	  });
-	  
-	  $('.btn-del').click(function(){
-			
-	        //var btnIdx = $(this).attr('index');
-	        console.log("index2 : " + delIdx);
-	        
-	        var params = "renum=" + $("#renum" + delIdx).val();
-	        params += "&shopCode=" + $("#shopCode").val();//다음 데이터는 &를 붙여준다
-	        
-	        console.log(params);
-	        
-	        $.ajax({
-	            type:"post",
-	            url:"<%=cp%>/ajaxCeoReviewDel.action",
-	            async: false,
-	            data:params,
-	            success: function(args){
-	               
-	               $("#ceoReviewArticle").html(args);
-	               delIdx="";
-	               
-	            },
-	            error:function(e){
-	            	alert("실패하였습니다.");
-	            	console.log(request.status);
-	            	console.log(request.responseText);
-	            	console.log(error);
-	          }
-	          
-	        });
-	        
-	    });
-	   --%>
-	  
-
-		
-});
-
 function modal(btnIdx, pageNum ) {
     
     var params = "renum=" + $("#renum" + btnIdx).val();
@@ -138,6 +44,14 @@ function modal(btnIdx, pageNum ) {
      return false;
  }
 
+function delConfirm(){
+	var delConfirm = confirm('정말로 삭제하시겠습니까?');
+	if (delConfirm)
+		return;
+	else 
+		return true;
+}
+
 function deleteItem(btnIdx, pageNum ) {
     
     var params = "renum=" + $("#renum" + btnIdx).val();
@@ -154,6 +68,7 @@ function deleteItem(btnIdx, pageNum ) {
         url:"<%=cp%>/ajaxCeoReviewDel.action",
         async: false,
         data:params,
+        beforeSend : delConfirm(),
         success: function(args){
         
            $("#ceoReviewArticle").html(args);
@@ -262,13 +177,7 @@ function deleteItem(btnIdx, pageNum ) {
 	        </li><!-- end ngRepeat: review in restaurant.reviews -->
 	        <!-- end ngRepeat: review in restaurant.reviews -->
 	   </c:forEach>
-		      <c:if test="${reviewList == null } ">
-			 <ul class="list-group review-list">
-		        <li class="list-group-item ng-hide" ng-show="restaurant.reviews.length < 1">
-		          <p class="review-empty clearfix ng-binding">리뷰가 없습니다.</p>
-		        </li>
-	      	</ul>
-		      </c:if>
+		      
 	      	
 	      	
 								

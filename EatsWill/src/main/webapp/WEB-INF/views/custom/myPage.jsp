@@ -49,9 +49,10 @@ ng\:form {
 <script type="text/javascript"
 	src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>		
 
-<title ng-if="! page.title" class="ng-scope">요기요 - 즐거움은 요기부터.
-	배달음식 주문은 역시 요기요!</title>
-
+<title ng-if="! page.title" class="ng-scope">다함께 잇츠윌</title>
+<link rel="apple-touch-icon-precomposed" href="/eatswill/resources/images/sicon.jpg">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/eatswill/resources/images/sicon.jpg">
+<link rel="icon" type="image/png" href="/eatswill/resources/images/sicon.jpg">
 
 <script type="text/javascript">
 
@@ -210,11 +211,11 @@ ng\:form {
 										전화번호 : ${sessionScope.customInfo.tel }</br> 포인트 :
 										${sessionScope.customInfo.point }
 									</p> 
-									<a href="logout.action" data-nethru_clcode="A000012">로그아웃</a>
+									<a href="#" onclick="logout();" data-nethru_clcode="A000012">로그아웃</a>
 								</li>
 								<li><a href="updateInfo.action">내정보수정</a></li>
 								<li><a href="myPage.action">마이 페이지</a></li>	
-								<li><a id="basket">장바구니</a></li>		
+								<li><a href="#" id="basket">장바구니</a></li>		
 							</ul>
 							<form method="POST" action="" name="infoForm">
 								<div id="myInfo"></div>
@@ -267,7 +268,7 @@ ng\:form {
 									<button type="button"
 										class="button button--ujarak button--border-thin button--text-thick"
 										style="width: 150px; height: 38px; background-color: #FDCD8C; border-color: #FDCD8C; font-size: 14.4px; font-weight: bold; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
-										onclick="javascript:location.href='logout.action';">로그아웃</button>
+										onclick="logout();">로그아웃</button>
 								</c:otherwise>
 							</c:choose>
 

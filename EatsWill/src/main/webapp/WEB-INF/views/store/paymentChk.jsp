@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-   request.setCharacterEncoding("UTF-8");
+   	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -58,11 +58,11 @@ ng\:form {
 	class="ng-binding ng-scope">나의 주문 목록</title>
 <!-- end ngIf: page.title -->
 <link rel="apple-touch-icon-precomposed"
-	href="https://www.yogiyo.co.kr/mobile/image/app_128x128.png">
+	href="/eatswill/resources/images/sicon.jpg">
 <link rel="apple-touch-icon-precomposed" sizes="144x144"
-	href="https://www.yogiyo.co.kr/mobile/image/app_144x144.png">
+	href="/eatswill/resources/images/sicon.jpg">
 <link rel="icon" type="image/png"
-	href="https://www.yogiyo.co.kr/mobile/image/favicon.ico">
+	href="/eatswill/resources/images/sicon.jpg">
 
 
 <!-- css---------------------------------------------------------- -->
@@ -140,44 +140,36 @@ ng\:form {
 
 <script src="http://code.jquery.com/jquery-1.11.0.js"></script>
 
-<script>
-   function geo() {        
-        // Geolocation API에 액세스할 수 있는지를 확인
-        if (navigator.geolocation) {
-            //위치 정보를 얻기
-            navigator.geolocation.getCurrentPosition (function(pos) {
-                $('#latitude').html(pos.coords.latitude);     // 위도
-                $('#longitude').html(pos.coords.longitude); // 경도
-            });
-            alert("aaa");
-        } else {
-            alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
-        }
-    }
-</script>
-
-<script>
-   /* eslint-disable */(function(w, d, s, l, i) {
-      w[l] = w[l] || [];
-      w[l].push({
-         'gtm.start' : new Date().getTime(),
-         event : 'gtm.js'
-      });
-      var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l='
-            + l
-            : '';
-      j.async = true;
-      j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl;
-      f.parentNode.insertBefore(j, f);
-   })(window, document, 'script', 'dataLayer', 'GTM-NSQ8BP');/* eslint-enable */
-</script>
 <!-- End Google Tag Manager -->
 <script type="text/javascript" charset="UTF-8"
 	src="https://maps.googleapis.com/maps-api-v3/api/js/41/4/intl/ko_ALL/common.js"></script>
 <script type="text/javascript" charset="UTF-8"
 	src="https://maps.googleapis.com/maps-api-v3/api/js/41/4/intl/ko_ALL/util.js"></script>
+	
+<script type="text/javascript">
+
+	function switchScreen() {
+	   	setTimeout("switchScreenTime()", 2000);
+	}
+	
+	function switchScreenTime() {
+	   	document.getElementById("divLoading").style.display = "none";
+		document.getElementById("divBody").style.display = "";
+	}
+
+</script>	
+	
 </head>
-<body class="asp_check" style="margin-top: 0px;">
+
+<!--  로딩창 div ----------------------------------------------------------------------------- --> 
+<body class="asp_check" style="margin-top: 0px;" onload="switchScreen();">
+
+<div id="divLoading" style="position:absolute; top:30%; left:0;  text-align:center; margin:0 auto; width: 100%;">
+    <img src="/eatswill/resources/images/hicon2.gif" alt="잠시만 기다려 주세요. 로딩중입니다."  style="height: 30em; width: 30em;"/>
+</div>
+
+<div id="divBody" style="display:none;">
+<!--  로딩창 div ----------------------------------------------------------------------------- 맨밑에 /div 있음  --> 
 
 
 	<div yogiyo-header="">
@@ -317,5 +309,6 @@ ng\:form {
          </script>
 	</div>
 	<!-- 카카오톡 채팅 끝 -->
+</div>
 </body>
 </html>

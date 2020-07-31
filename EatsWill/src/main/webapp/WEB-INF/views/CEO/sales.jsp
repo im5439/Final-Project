@@ -104,7 +104,7 @@
                     <!-- Card -->
                     <div class="card h-100">
                         <div class="card-header d-flex">
-                            <h5 class="h6 font-weight-semi-bold text-uppercase mb-0">총 주문내역</h5>
+                            <h5 class="h6 font-weight-semi-bold text-uppercase mb-0">총 주문완료 내역</h5>
                         </div>
                         <div class="card-body p-0">
                             <div class="media align-items-center px-3 px-md-4 mb-3 mb-md-4">
@@ -268,14 +268,14 @@
                                     <a class="nav-link d-flex align-items-center py-2 px-3 p-xl-4 active" href="#bitcoin" role="tab" aria-selected="true"
                                        data-toggle="tab">
                                         <span>일별매출</span>
-                                        <small class="text-muted ml-auto">₩12,012.96</small>
+                                        <small class="text-muted ml-auto">최근 30일</small>
                                     </a>
                                 </li>
                                 <li class="nav-item border-bottom border-xl-bottom-0 border-xl-left">
                                     <a class="nav-link d-flex align-items-center py-2 px-3 p-xl-4" href="#bitcoinCash" role="tab" aria-selected="false"
                                        data-toggle="tab">
                                         <span>월별매출</span>
-                                        <small class="text-muted ml-auto">₩8,038.00</small>
+                                        <small class="text-muted ml-auto">최근 1년</small>
                                     </a>
                                 </li>
                             </ul>
@@ -312,13 +312,13 @@
                                      data-labels='[" 01"," 02"," 03"," 04"," 05"," 06"," 07"," 08"," 09"," 10"," 11"," 12"," 13"," 14"," 15"," 16"," 17"," 18"," 19"," 20"," 21"," 22"," 23"," 24"," 25"," 26"," 27"," 28"," 29"," 30"]'
                                      data-labels-qty="6"
                                      data-labels-start-from="1"
-                                     data-prefix="₩"
+                                     data-prefix="₩ "
                                      data-height="250"
                                      data-mobile-height="75"
-                                     data-high="100000"
+                                     data-high="600000"
                                      data-low="0"
                                      data-offset-x="30"
-                                     data-offset-y="60"
+                                     data-offset-y="70"
                                      data-is-line-smooth='[false]'
                                      data-line-width='["1px"]'
                                      data-line-colors='["#8069f2"]'
@@ -333,7 +333,7 @@
                                      data-is-show-tooltips="true"
                                      data-is-tooltip-divided="true"
                                      data-tooltip-custom-class="chart-tooltip--divided chart-tooltip__value--bg-black chart-tooltip__meta--bg-primary small text-white"
-                                     data-tooltip-currency="USD "
+                                     data-tooltip-currency="₩ "
                                      data-is-show-points="true"
                                      data-point-custom-class='chart__point--donut chart__point--has-line-helper chart__point--border-xxs border-primary rounded-circle'
                                      data-point-dimensions='{"width":8,"height":8}'></div>
@@ -370,13 +370,13 @@
                                      data-labels='["01월","02월","03월","04월","05월","06월","07월","08월","09월","10월","11월","12월"]'
                                      data-labels-qty="12"
                                      data-labels-start-from="1"
-                                     data-prefix="₩"
+                                     data-prefix="₩ "
                                      data-height="250"
                                      data-mobile-height="75"
-                                     data-high="1000000"
+                                     data-high="10000000"
                                      data-low="0"
                                      data-offset-x="30"
-                                     data-offset-y="60"
+                                     data-offset-y="70"
                                      data-is-line-smooth='[false]'
                                      data-line-width='["1px"]'
                                      data-line-colors='["#8069f2"]'

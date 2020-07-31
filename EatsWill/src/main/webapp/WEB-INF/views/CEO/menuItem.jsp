@@ -8,6 +8,7 @@
 %>
 
 
+
     <c:if test="${menu != null }">
     <c:forEach var="dto" items="${menu }" varStatus="status">
       <div class="restaurant-list" style="float: left;">

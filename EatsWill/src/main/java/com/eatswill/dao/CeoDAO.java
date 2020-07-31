@@ -18,6 +18,31 @@ public class CeoDAO {
 		this.sessionTemplate = sessionTemplate;
 	}
 	
+	// 사업자번호 인증
+	public boolean selectSaupja(String ceoNumber) {
+
+		// 사업자번호가 common_code의 사업자번호 중 있어야만 통과
+		if (ceoNumber!=null && ceoNumber.equals("1004")) {
+			return true;
+		}
+
+		return false;
+	}
+	
+	// 로그인 인증
+	public boolean selectCeo(String ceoId) {
+
+		CeoDTO ceo = sessionTemplate.selectOne("CeoMapper.getReadData", ceoId);
+
+		// 아이디가 존재하면 false 출력
+		if (ceo != null) {
+			return false;
+		}
+
+		// 아이디가 없으면 통과
+		return true;
+	}
+	
 	//사장님 회원가입
 	public void insertData(CeoDTO dto){
 		

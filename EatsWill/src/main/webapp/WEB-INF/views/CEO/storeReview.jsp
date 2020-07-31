@@ -218,7 +218,7 @@
 		
 			<h1 style="margin: auto;">
 				<a href="<%=cp%>/CEO.action/">
-				<img alt="" src="/eatswill/resources/img/1sajang.png" width="128px" height="58px" style=" margin-left: 60px; margin-top: 20px;"> 
+				<img alt="" src="/eatswill/resources/img/1sajang.png" width="128px" height="58px" style="margin-left: 60px; margin-top: 20px;"> 
 				<img alt="" src="/eatswill/resources/img/sajang.png" width="96px"  height="22px" style="margin-bottom: 10px; vertical-align: bottom;"></a>
 			</h1>
 			<!-- 
@@ -359,24 +359,24 @@
 
 					      <div class="star-point-wrap" >
 					        <div class="inner" >
-					          <div class="restaurant-star-point" >
+					          <div class="restaurant-star-point">
 					            <strong class="ng-binding">
 					              ${avgReScore }
 					            </strong>
 					            <c:if test="${avgReScore == null }">
-					            별점없음
+					            <div style="padding-top: 22px;">별점없음</div>
 					            </c:if>
 					            <c:if test="${avgReScore != null }">
-					            <span class="star-point"><!-- 별점 -->
-					            <c:forEach begin="0" end="${avgReScore2 - 1 }">
-					              <span class="full ng-scope" ng-repeat="i in review_info.average|number_to_array track by $index">★</span>
-					            </c:forEach>
-					            <c:if test="${avgReScore2 < 5 }">
-					            <c:forEach begin="0" end="${4 - avgReScore2 }">
-					              <span class="empty ng-scope" ng-repeat="i in (5.9 - (review_info.average|number:1))|number_to_array track by $index">★</span>
-					            </c:forEach>
-					            </c:if>
-					            </span>
+						            <span class="star-point"><!-- 별점 -->
+						            <c:forEach begin="0" end="${avgReScore2 - 1 }">
+						              <span class="full ng-scope" ng-repeat="i in review_info.average|number_to_array track by $index">★</span>
+						            </c:forEach>
+						            <c:if test="${avgReScore2 < 5 }">
+							            <c:forEach begin="0" end="${4 - avgReScore2 }">
+							              <span class="empty ng-scope" ng-repeat="i in (5.9 - (review_info.average|number:1))|number_to_array track by $index">★</span>
+							            </c:forEach>
+						            </c:if>
+						            </span>
 					            </c:if>
 					            
 					          </div>
@@ -395,12 +395,23 @@
 					 
 					 <!-- ceoReviewArticle.jsp 불러옴 -->
 					<span id="ceoReviewArticle"></span>
-			<ul id="review" class="list-group review-list">
-		        <li class="list-group-item btn-more" ng-show="check_more_review()">
-		          <a href="" id="nextSee"><span>더 보기<i class="arr-down"></i></span></a>
-		        </li>
-	      	</ul>
-	      	<input type="hidden" value="1" id="nextNum"/>
+		<c:choose>
+			<c:when test="${reviewCount == 0 }">
+				 <ul class="list-group review-list">
+			        <li class="list-group-item ng-hide" >
+			          <p class="review-empty clearfix ng-binding">리뷰가 없습니다.</p>
+			        </li>
+		      	</ul>
+	      	</c:when>
+	      	<c:otherwise>
+				<ul id="review" class="list-group review-list" style="margin-left: 10; margin-right: 30;">
+			        <li class="list-group-item btn-more">
+			          <a href="" id="nextSee"><span>더 보기<i class="arr-down"></i></span></a>
+			        </li>
+		      	</ul>
+		      	<input type="hidden" value="1" id="nextNum"/>
+	      	</c:otherwise>
+	    </c:choose>
 	     				</div> 	
 					   </div>
 					</div>

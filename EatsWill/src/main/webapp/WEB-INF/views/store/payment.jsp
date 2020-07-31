@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
-   request.setCharacterEncoding("UTF-8");
-String cp = request.getContextPath();
+   	request.setCharacterEncoding("UTF-8");
+	String cp = request.getContextPath();
 %>
 <html lang="ko" ng-controller="base_controller" class="ng-scope">
 <head>
@@ -20,6 +21,9 @@ ng\:form {
    
 }
 
+.btn-ygy1:hover, .btn-ygy1:focus, .btn-ygy1:active, .btn-ygy1.active, .open .dropdown-toggle.btn-ygy1 {
+    background-color: #e05929 !important;
+}
 
 
 
@@ -60,7 +64,7 @@ ng\:form {
    	
     <script type="text/javascript" src="/eatswill/resources/assets/js/jquery-3.1.1.js"></script>
    <script type="text/javascript" src="/eatswill/resources/assets/js/login.js"></script>
-   <script type="text/javascript" src="/eatswill/resources/assets/js/payment2.js"></script>
+   <script type="text/javascript" src="/eatswill/resources/assets/js/payment.js"></script>
    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
    <script src="/eatswill/resources/assets/js/postcode.v2.js"></script>
    <!-- 결제 추가  -->
@@ -297,17 +301,16 @@ function switchScreen() {
 <div class="checkout-wrap ng-scope">
     <div class="col-sm-8" style="width: 66.66666667%;">
     	<form name="orderForm" method="post" action="">
-      <div class="sub-title">
+      <div class="sub-title" style="font-weight: bold;background-color: chocolate;">
         <span>결제하기</span>
       </div>
       
       <div class="panel-group" data-allow-multiple="true" bs-collapse="">
         <div class="panel panel-default">
-          <div class="panel-heading">
+          <div class="panel-heading" style="background-color: #FDCD8C;">
             <h4 class="panel-title">
               <a bs-collapse-toggle="" class="clearfix" ng-click="delivery_collapse = !delivery_collapse" data-toggle="collapse">
                 <span class="menu-name pull-left">배달정보</span>
-                <i class="pull-right icon-arr-up" ng-class="delivery_icon_down_up"></i>
               </a>
             </h4>
           </div>
@@ -318,9 +321,9 @@ function switchScreen() {
                
                   <label for="address" class="col-sm-2 control-label">주소</label>
                   <div class="col-sm-10">
-                  <input type="text" name="deliveryAddr1" id="addr1" style="display: inline;height: 34px;width: 70%"
+                  <input type="text" name="deliveryAddr1" id="addr1" style="display: inline;height: 34px;width: 81%;margin-right: 2%;"
 	            		value="${dto1.userAddr1 }" readonly="readonly"/>
-	            <input type="button" value="주소검색" id="addrcheck" onclick="sample3_execDaumPostcode();"/>
+	            <input type="button" value="주소검색" id="addrcheck" onclick="sample3_execDaumPostcode();" style="background-color: white;"/>
 	            
 	            <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:10px 0;position:relative"></div>
                   
@@ -330,7 +333,7 @@ function switchScreen() {
                   ">
                   <div class="col-sm-offset-2 col-sm-9">
                     <%-- <input type="text" placeholder="(필수)상세주소 입력" name="deliveryAddr2" id="addr2" value="${dto.userAddr2 }" required="required"> --%>
-                    <input type="text" placeholder="(필수)상세주소 입력" name="deliveryAddr2" id="addr2" value="${dto1.userAddr2 }" required="false">
+                    <input type="text" placeholder="(필수)상세주소 입력" name="deliveryAddr2" id="addr2" value="${dto1.userAddr2 }" required="false" style="width: 91%;">
      
                   </div>
                 </div> 
@@ -365,11 +368,10 @@ function switchScreen() {
         </div>
 
         <div class="panel panel-default" bs-collapse="">
-          <div class="panel-heading">
+          <div class="panel-heading" style="background-color: #FDCD8C;">
             <h4 class="panel-title">
               <a bs-collapse-toggle="" class="clearfix" ng-click="select_order_request()" data-toggle="collapse">
                 <span class="menu-name pull-left">주문시 요청사항</span>
-                <i class="pull-right icon-arr-up" ng-class="request_icon_down_up"></i>
               </a>
               
             </h4>
@@ -390,7 +392,7 @@ function switchScreen() {
         </div>
 
         <div class="panel panel-default clearfix" ng-show="is_yogiyo">
-          <div class="panel-heading">
+          <div class="panel-heading" style="background-color: #FDCD8C;">
             <h4 class="panel-title">
               <a class="clearfix">
                 결제수단 선택 <span ng-show="!is_show_creditcard &amp;&amp; !is_show_cash" class="ng-hide">(현장 결제는 지원하지 않습니다.)</span>
@@ -494,7 +496,7 @@ function switchScreen() {
     <div class="col-sm-4 order-wrap-pc" style="top: 0px; position: relative;">
       <div class="order-list">
         <div class="panel panel-default">
-          <div class="panel-heading">
+          <div class="panel-heading" style="background-color: #FDCD8C;">
          
             <h3 class="panel-title">주문내역</h3>
           </div>
@@ -529,10 +531,10 @@ function switchScreen() {
                 <div class="order-name">포인트할인</div>
                 <div class="order-price"><span ng-bind="coupon_discount" class="ng-binding"></span></div>
               </span>
-              <span class="list-group-item total-order-price clearfix">
+              <span class="list-group-item total-order-price clearfix" style="color: #000000;">
                 <div class="order-name">총 결제 금액</div>
-                <div class="order-price">
-                  <span ng-bind="total_price|krw" class="ng-binding">${priceAmount }</span>
+                <div class="order-price" style="color: red;">
+                  ￦&nbsp;<span ng-bind="total_price|krw" class="ng-binding"><fmt:formatNumber value="${priceAmount }" type="number"/></span>
                   
                 </div>    
               </span>
@@ -552,7 +554,8 @@ function switchScreen() {
           </span></small>
         </div>
 <!-- ------------------------------------------------------------------------------------------------------------------------ -->
-		<button class="btn btn-lg btn-block btn-ygy1 ng-binding" onclick="requestPay('yes');" value="바로결제하기" style="color: white;font-size: 18px;">바로결제하기</button>
+		<button class="btn btn-lg btn-block btn-ygy1 ng-binding" onclick="requestPay('yes');" value="바로결제하기" 
+		style="color: white;font-size: 18px;background-color: #FE642E;border-radius: 7px 7px 7px 7px;height: 51px;">바로결제하기</button>
 		</div>
 	</div>
 </div>

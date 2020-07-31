@@ -8,7 +8,14 @@
 %>
 
 <script type="text/javascript">
-	
+
+	function delConfirm(){
+		var delConfirm = confirm('정말로 삭제하시겠습니까?');
+		if (delConfirm)
+			return;
+		else 
+			return true;
+	}
 	
 	$('.btn-del').click(function(){
 		
@@ -24,6 +31,7 @@
 	        url:"<%=cp%>/deleteStore.action",
 	        async: false,
 	        data:params,
+	        beforeSend : delConfirm(),
 	        success: function(args){
 	        	  
 	           $("#storeItem").html(args);

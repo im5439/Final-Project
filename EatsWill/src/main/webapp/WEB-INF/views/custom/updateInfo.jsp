@@ -20,7 +20,10 @@ ng\:form {
 	
 }
 
-
+.btnColor:hover {
+	color: #585858;
+	background-color: #e1e1e1;
+}
 
 
 </style>
@@ -338,7 +341,8 @@ ng\:form {
 	        		<div class="controls">
 	            		<input type="text" name="addr1" id="addr1" style="display: inline;height: 34px;width: 75%"
 	            		value="${sessionScope.customInfo.addr1 }"/>
-	            		<input type="button" value="주소검색" id="addrcheck" onclick="sample3_execDaumPostcode();"/>
+	            		<input type="button" value="주소검색" id="addrcheck" class="btnColor" onclick="sample3_execDaumPostcode();" style="width: 70px;height: 27px;
+	            			text-align-last: center; margin-left: 10px;border: 1px solid;font-weight: bold;border-color: rgb(170, 170, 170);"/>
 					</div>
 				</div>
 				

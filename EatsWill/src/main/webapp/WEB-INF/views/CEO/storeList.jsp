@@ -73,7 +73,7 @@
 	<jsp:include page="ceoIncludeTop.jsp" flush="false"/>
 
 	<div class="own-container" style="padding-bottom: 0; overflow: auto;">
-		<div class="own-main" style="margin-bottom: 80;">
+		<div class="own-main" style="margin-bottom: 80; width: auto; margin-left: 250px; margin-right: 250px">
 		<%-- 
 			<ul class="nav clearfix">
 				<li class="n1"><a href="<%=cp %>/orderChk.action" style="cursor: pointer">주문확인</a></li>

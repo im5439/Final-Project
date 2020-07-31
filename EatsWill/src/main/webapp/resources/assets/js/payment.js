@@ -1,18 +1,16 @@
 
  function requestPay(mode) {
- var f = document.orderForm;
-  alert("들어옴");
-  alert(mode);
 	
 	if(mode=="no") {
+	
+		var f = document.orderForm;
 		
 	    f.action="order_ok.action";	
 	    f.submit();
 	
 	}
 	
-	IMP.init("imp91142724"); 
-
+	  IMP.init("imp91142724"); 
 		 IMP.request_pay({
 			  pg : 'inicis',
 			  pay_method : 'card',
@@ -25,20 +23,19 @@
 	          buyer_addr: "서울특별시 강남구 잇츠윌",
 	          buyer_postcode: "1004"
 	}, function(rsp) {
-	
 	    if ( rsp.success ) {
-			alert("aa");
+	    	var f = document.orderForm;
+	    	
 	    	f.action="order_ok.action";	
 	    	f.submit();
 	
 	    } else {
-	    	
+	    
 	        msg = '에러내용 : ' + rsp.error_msg;
 	
 	        alert(msg);
 	    }
 });
-
 
 }
 

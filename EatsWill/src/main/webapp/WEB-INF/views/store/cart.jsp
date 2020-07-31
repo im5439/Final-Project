@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%
    request.setCharacterEncoding("UTF-8");
    String cp = request.getContextPath();
@@ -76,6 +77,14 @@ input[type=button]{
 	border-radius: 7px;
 
 }
+
+.btn-ygy1:hover, .btn-ygy1:focus, .btn-ygy1:active, .btn-ygy1.active, .open .dropdown-toggle.btn-ygy1 {
+    background-color: #e05929 !important;
+}
+
+/* input[type=button]:hover {
+	color: #B42E01;
+} */
 
 
 
@@ -201,19 +210,16 @@ input[type=button]{
 
 	function cQtyChk() {
 		
-		alert("cQtyChk 들어옴");
 		var f = document.storeForm;
 		var size = $("#cartMainListsSize").val();
 		var size2 = $("#cartMainListsSize2").val();
-	
-		alert(size);
 
 		var mainQty = "";
 		var cartMenuCode = "";
 		var cartAmount = "";
 		var sidePrice = "";
 		
-		for(var i=1; i<size; i++) {
+		for(var i=0; i<size; i++) {
 			
 			mainQty +=  document.getElementById("amount" + i).value + ',';
 			cartMenuCode +=  document.getElementById("cartMenuCode" + i).value + ',';
@@ -222,23 +228,15 @@ input[type=button]{
 			
 		}
 		
-		for(var i=1; i<size2; i++) {
+		for(var i=0; i<size2; i++) {
 			
 			sidePrice +=  document.getElementById("sidePrice" + i).value + ',';
 		}
-		
-		alert(mainQty);
-		alert(cartMenuCode);
-		alert(cartAmount);
-		alert(sidePrice);
 		
 		document.getElementById("mainQty").value = mainQty;
 		document.getElementById("cartMenuCode").value = cartMenuCode;
 		document.getElementById("cartAmount").value = cartAmount;
 		document.getElementById("sidePrice2").value = sidePrice;
-	
-		
-		alert("끝");
 	
 	}
 	
@@ -263,8 +261,16 @@ input[type=button]{
 	         return;
 	      }
 	      
-	      f.action = "<%=cp%>/cartUpdate.action";
-	      f.submit(); 
+	      var con = confirm("결제창으로 이동하시겠습니까?");
+	        
+	        if(con==true) {
+	           
+	           f.action = "<%=cp%>/cartUpdate.action";
+	           f.submit(); 
+	           
+	        }else{
+	           return;
+	        }
 	   
 	}
  
@@ -372,7 +378,8 @@ input[type=button]{
 
         <div class="clearfix">
           <span class="list-group-item clearfix text-right ng-binding" ng-show="cart.get_delivery_fee(restaurant) > 0">
-           총금액 : <input type="text"  id="priceAmount" value="${priceAmount }" name="priceAmount" size="11" readonly="readonly" > <span ng-show="restaurant.free_delivery_threshold > 0" class="ng-binding ng-hide"> (0원 이상 주문시 배달무료)</span>
+          	<font style="font-size: 18px;float: left;">총&nbsp;금액 :</font>
+          	<input type="text" id="priceAmount" value="${priceAmount }" name="priceAmount" size="11" readonly="readonly" style="text-align: right;font-size: 23px;font-weight: bold;">
           </span>
           <span class="list-group-item minimum-order-price ng-hide" ng-show="!cart.is_empty() &amp;&amp; (restaurant.min_order_amount > cart.get_total() || (cart.has_discounted_item() &amp;&amp; restaurant.discounts.additional.delivery.discount_mov > restaurant.min_order_amount))">
             <p class="discount-color ng-binding ng-hide" ng-show="cart.has_discounted_item() &amp;&amp; restaurant.discounts.additional.delivery.discount_mov > restaurant.min_order_amount">
@@ -393,7 +400,9 @@ input[type=button]{
             <span ng-show="! cart.is_empty()" class="ng-hide">메뉴추가</span>
             <span ng-show="cart.is_empty()">홈으로 가기</span>
       </a>
-      <a class="btn btn-lg btn-ygy1 btn-block" ng-disabled="cart.get_restaurant_id() != restaurant.id || cart.get_amount() < 1" onclick="cQtyChk();sendIt1();">주문하기</a>
+      <input type="button" value="주문하기" onclick="cQtyChk();sendIt1();" class="btn btn-lg btn-ygy1 btn-block"
+      style="height: 50px;background-color: #FE642E;"/>
+      <%-- <a class="btn btn-lg btn-ygy1 btn-block" ng-disabled="cart.get_restaurant_id() != restaurant.id || cart.get_amount() < 1" onclick="cQtyChk();sendIt1();">주문하기</a> --%>
     </div>
   </div>
 </div>

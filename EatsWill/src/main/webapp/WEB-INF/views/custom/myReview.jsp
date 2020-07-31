@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <style type="text/css">
 @charset "UTF-8";
@@ -114,7 +115,7 @@ ng\:form {
 					<div class="order-items default ng-binding"
 						ng-click="show_review_menu($event)" style="text-align: left;">${dto.menuName}
 					</div> <c:if test="${dto.reImg != null }">
-						<img src="http://localhost:8080/menuImg/${dto.reImg }"
+						<img src="<spring:url value='/reImg/${dto.reImg }'/>"
 							align="center" width="300" height="300">
 					</c:if>
 					<p ng-show="review.comment"

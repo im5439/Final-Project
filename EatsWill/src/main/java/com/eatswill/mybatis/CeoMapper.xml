@@ -47,8 +47,8 @@
 <select id="getStoreReivew" parameterType="hashMap" resultType="com.eatswill.dto.CeoDTO">
 	select * from (
 	select rownum rnum, data.* from (
-	select rpad(substr(r.userId,1,3),6,'*') userId, r.reScore,to_char(reCreated,'yyyy-mm-dd hh:mm:ss'), r.orderCode, r.reCreated,r.reContent, r.reImg, r.shopCode, r.renum, r.ceocontent 
-	from review r, shop s, ordermain d where r.shopcode = s.shopcode and d.orderCode = r.orderCode and r.shopCode = #{shopCode} and s.ceoId = #{ceoId} order by rownum desc) data) 
+	select rpad(substr(r.userId,1,3),6,'*') userId, r.reScore,to_char(reCreated,'yyyy-mm-dd hh:mm:ss') , r.orderCode, r.reCreated,r.reContent, r.reImg, r.shopCode, r.renum, r.ceocontent 
+	from review r, shop s, ordermain d where r.shopcode = s.shopcode and d.orderCode = r.orderCode and r.shopCode = #{shopCode} and s.ceoId = #{ceoId} order by reCreated desc) data) 
 	<![CDATA[
 	where rnum >= #{start} and rnum <= #{end}
 	]]>
@@ -128,7 +128,7 @@
 	select rnum, menuName, menuCode, menuPrice, menuImg, part from (
 	select rownum rnum, data.* from (
 	select menuName, menuCode, menuPrice, menuImg, part
-	from menu where shopCode = #{shopCode} order by rownum desc) data)
+	from menu where shopCode = #{shopCode} order by menuDate desc) data)
 	<![CDATA[
 	where rnum>=#{start} and rnum<=#{end}
 	]]>
@@ -152,12 +152,12 @@
 
 <!-- 매장별 총매출 -->
 <select id="getTotSales" parameterType="String" resultType="int">
-	select sum(oamount) totSales from ordermain where shopCode = #{shopCode}
+	select nvl(sum(oamount),0) totSales from ordermain where shopCode = #{shopCode} and orderStatus = '300'
 </select>
 
-<!-- 매장별 주문횟수 -->
+<!-- 매장별 주문완료횟수 -->
 <select id="getOrderCount" parameterType="String" resultType="int">
-	select count(orderCode) from ordermain where shopCode = #{shopCode}
+	select count(orderCode) from ordermain where shopCode = #{shopCode} and orderStatus = '300'
 </select>
 
 <!-- 매장별 찜횟수 -->
